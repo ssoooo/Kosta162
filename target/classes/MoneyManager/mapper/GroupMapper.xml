@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   <mapper namespace="GeneralAffairs.store.mapper.GrouptMapper">
+  
+  <insert id="registGroup" parameterType="Group">
+  </insert>
+  
+  <insert id="registMemberToGroup" parameterType="map">
+  </insert>
+  
+  <update id="updateGroup" parameterType="Group">
+  </update>
+  
+  <delete id="deleteGroup" parameterType="int">
+  </delete>
+  
+  <select id="retrieveAllmyGroups" parameterType="String" resultType="Group">
+  </select>
+  
+  <select id="retrieveGroupById" parameterType="int" resultType="Group">
+  </select>
+  
+  <select id="retrieveAllGroupsByMemberId" parameterType="String" resultType="Group">
+  </select>
+  
+  <select id="retrieveAllGroupsByName" parameterType="String" resultType="Group">
+  </select>
+  
+  <select id="retrieveMyInvitationsByMyMemberId" parameterType="int" resultType="Group">
+  </select>
+  
+  <select id="retrieveAllRecordsByGroupId" parameterType="int" resultType="Record">
+  </select>
+  
+  <delete id="deleteMemberFromGroup" parameterType="map">
+  </delete>
+  
+  <insert id="registInvite" parameterType="map">
+  </insert>
+  
+  <delete id="deleteInvite" parameterType="map"></delete>
+  
+  
+  </mapper>
