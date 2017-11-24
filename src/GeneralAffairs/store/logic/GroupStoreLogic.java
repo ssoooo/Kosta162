@@ -25,6 +25,7 @@ public class GroupStoreLogic implements GroupStore{
 		GroupMapper mapper = session.getMapper(GroupMapper.class);
 		mapper.registGroup(group);
 		session.commit();
+		System.out.println("¿ìÇü¾Æ");
 		}finally {
 			session.close();
 		}
