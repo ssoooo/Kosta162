@@ -18,7 +18,7 @@ public class CommentController{
 	@RequestMapping("/commentRegist.do")
 	public String registComment(Comment comment,Model model) {
 		
-		return "minji.jsp";
+		return "minji2.jsp";
 	}
 	
 	@RequestMapping("/commentModify.do")
