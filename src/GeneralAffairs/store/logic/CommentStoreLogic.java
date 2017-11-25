@@ -19,8 +19,16 @@ public class CommentStoreLogic implements CommentStore{
 		SqlSession session = SessionFactory.getInstance().getSession();
 		
 		try {
+<<<<<<< HEAD
 			System.out.println("123");
 			System.out.println("123111");
+=======
+<<<<<<< HEAD
+			System.out.println("1212");
+=======
+			System.out.println("12");
+>>>>>>> master
+>>>>>>> 59e190b79547f3eebde92a9b9fd679862d72ce21
 		CommentMapper mapper = session.getMapper(CommentMapper.class);
 		mapper.registComment(comment);
 		session.commit();
