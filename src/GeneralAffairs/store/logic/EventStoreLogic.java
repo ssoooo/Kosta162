@@ -24,6 +24,7 @@ public class EventStoreLogic implements EventStore{
 		}finally {
 			session.close();
 			System.out.println("asdfa");
+			System.out.println("checkoutTestMaster");
 		}
 		
 	}
