@@ -50,7 +50,7 @@ caution VARCHAR2(20) DEFAULT '정상', -->
   <select id="retrieveRecordsByPeriod" parameterType="map" resultType="Record">
   SELECT recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,price,category
   FROM record_table
-  WHERE groupId=#{groupId}<!-- 기간 미완 -->
+  WHERE groupId=#{groupId}<!-- 기간 미완 111111111-->
   </select>
   
   <select id="retrieveRecordsByCategory" parameterType="map" resultType="Record">
