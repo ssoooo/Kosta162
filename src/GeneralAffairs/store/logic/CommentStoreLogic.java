@@ -20,6 +20,7 @@ public class CommentStoreLogic implements CommentStore{
 		
 		try {
 			System.out.println("123");
+			System.out.println("123111");
 		CommentMapper mapper = session.getMapper(CommentMapper.class);
 		mapper.registComment(comment);
 		session.commit();
