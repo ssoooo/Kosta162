@@ -28,6 +28,7 @@ public class GroupStoreLogic implements GroupStore{
 		System.out.println("¿ìÇü¾Æ");
 		System.out.println("pullTest");
 		System.out.println("ss");
+		System.out.println("branchHeesoo");
 		}finally {
 			session.close();
 		}

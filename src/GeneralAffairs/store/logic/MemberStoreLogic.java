@@ -173,7 +173,7 @@ public class MemberStoreLogic implements MemberStore{
 		}
 
 		
-		
+		System.out.println("member");
 		return check;
 	}
 

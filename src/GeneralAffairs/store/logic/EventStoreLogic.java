@@ -23,6 +23,7 @@ public class EventStoreLogic implements EventStore{
 		session.commit();
 		}finally {
 			session.close();
+			System.out.println("asdfa");
 		}
 		
 	}
