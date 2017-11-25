@@ -26,6 +26,7 @@ public class GroupStoreLogic implements GroupStore{
 		mapper.registGroup(group);
 		session.commit();
 		System.out.println("¿ìÇü¾Æ");
+		System.out.println("pullTest");
 		}finally {
 			session.close();
 		}
@@ -38,6 +39,7 @@ public class GroupStoreLogic implements GroupStore{
 		SqlSession session = SessionFactory.getInstance().getSession();
 		
 		try {
+			System.out.println("pulltest1");
 		GroupMapper mapper = session.getMapper(GroupMapper.class);
 		check=mapper.registMemberToGroup(memberId, groupId);
 		if(check>0) {
