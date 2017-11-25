@@ -23,5 +23,5 @@ public interface GroupMapper {
 	void deleteMemberFromGroup(@Param("memberId") String memberId,@Param("groupId")int groupId);
 	void registInvite(@Param("memberId") String memberId,@Param("groupId") int groupId);
 	void deleteInvite(@Param("memberId") String memberId,@Param("groupId")int groupId);
-
+	void updateGroupBalance(Group group);
 }

@@ -22,5 +22,6 @@ public interface GroupStore {
 	void deleteMemberFromGroup(String memberId,int groupId);
 	void registInvite(String memberId,int groupId);
 	void deleteInvite(String memberId,int groupId);
+	void updateGroupBalance(Group group);//
 
 }

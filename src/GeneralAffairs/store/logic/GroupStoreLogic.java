@@ -25,10 +25,6 @@ public class GroupStoreLogic implements GroupStore{
 		GroupMapper mapper = session.getMapper(GroupMapper.class);
 		mapper.registGroup(group);
 		session.commit();
-		System.out.println("¿ìÇü¾Æ");
-		System.out.println("pullTest");
-		System.out.println("ss");
-		System.out.println("branchHeesoo");
 		}finally {
 			session.close();
 		}
@@ -41,7 +37,6 @@ public class GroupStoreLogic implements GroupStore{
 		SqlSession session = SessionFactory.getInstance().getSession();
 		
 		try {
-			System.out.println("pulltest1");
 		GroupMapper mapper = session.getMapper(GroupMapper.class);
 		check=mapper.registMemberToGroup(memberId, groupId);
 		if(check>0) {
@@ -220,6 +215,20 @@ public class GroupStoreLogic implements GroupStore{
 		}
 		
 		return records;
+	}
+
+	@Override
+	public void updateGroupBalance(Group group) {
+		
+		SqlSession session = SessionFactory.getInstance().getSession();
+		try {
+			GroupMapper mapper = session.getMapper(GroupMapper.class);
+			mapper.updateGroupBalance(group);
+			session.commit();
+		}finally {
+			session.close();
+		}
+		
 	}
 
 	

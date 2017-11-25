@@ -5,6 +5,35 @@
   
   <mapper namespace="GeneralAffairs.store.mapper.CommentMapper">
   
+  <insert id="registComment" parameterType="Comment">
+  INSERT INTO
+  comment_table(commentId,recordId,memberId,content,regDate)
+  VALUES(comment_seq.nextval,#{recordId},#{memberId},SYSDATE)
+  </insert>
+  
+  <update id="updateComment" parameterType="Comment">
+  UPDATE comment_table SET
+  content=#{content}
+  WHERE commentId=#{commentId}
+  </update>
+  
+  <delete id="deleteComment" parameterType="int">
+  DELETE FROM comment_table
+  WHERE commentId=#{commentId}
+  </delete>
+  
+  <select id="retrieveCommentById" parameterType="int" resultType="Comment">
+  SELECT commentId,recordId,memberId,content,regDate
+  FROM comment_table
+  WHERE commentId=#{commentId}
+  </select>
+  
+  <select id="retrieveAllCommentsByRecordId" parameterType="int" resultType="Comment">
+  SELECT commentId,recordId,memberId,content,regDate
+  FROM comment_table
+  WHERE recordId=#{recordId}
+  </select>
+  
   </mapper>
   
  

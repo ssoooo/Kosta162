@@ -23,8 +23,6 @@ public class EventStoreLogic implements EventStore{
 		session.commit();
 		}finally {
 			session.close();
-			System.out.println("asdfa");
-			System.out.println("checkoutTestMaster");
 		}
 		
 	}
@@ -130,6 +128,19 @@ public class EventStoreLogic implements EventStore{
 		}
 		
 		return check;
+	}
+
+	@Override
+	public void updateEventBalance(Event event) {
+		SqlSession session = SessionFactory.getInstance().getSession();
+		try {
+			EventMapper mapper = session.getMapper(EventMapper.class);
+			mapper.updateEventBalance(event);
+			session.commit();
+		}finally {
+			session.close();
+		}
+		
 	}
 
 	
