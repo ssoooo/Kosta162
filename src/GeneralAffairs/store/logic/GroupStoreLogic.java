@@ -27,6 +27,7 @@ public class GroupStoreLogic implements GroupStore{
 		session.commit();
 		System.out.println("¿ìÇü¾Æ");
 		System.out.println("pullTest");
+		System.out.println("ss");
 		}finally {
 			session.close();
 		}
