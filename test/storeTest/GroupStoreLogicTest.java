@@ -2,7 +2,9 @@ package storeTest;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.junit.Before;
@@ -10,6 +12,7 @@ import org.junit.Test;
 
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Member;
+import GeneralAffairs.domain.Record;
 import GeneralAffairs.store.GroupStore;
 import GeneralAffairs.store.logic.GroupStoreLogic;
 
@@ -50,62 +53,98 @@ public class GroupStoreLogicTest {
 
 	@Test
 	public void testUpdateGroup() {
-		fail("Not yet implemented");
+		Group group = new Group();
+		group.setGroupId(1);
+		group.setAccount("123-1230");
+		store.updateGroup(group);
+		assertEquals("123-1230", group.getAccount());
 	}
 
 	@Test
 	public void testDeleteGroup() {
-		fail("Not yet implemented");
+		store.deleteGroup(1);
 	}
 
 	@Test
 	public void testRetrieveGroupById() {
-		fail("Not yet implemented");
+		Group group = new Group();
+		group = store.retrieveGroupById(2);
+		assertNotNull(group);
+//		assertEquals(expected, actual);
 	}
 
 	@Test
 	public void testRetrieveAllGroupsByMemberId() {
-		fail("Not yet implemented");
+		List<Group> list = new ArrayList<Group>();
+		list = store.retrieveAllGroupsByMemberId("양희수");
+		assertEquals(3, list.size());
 	}
 
+	// 이거 메소드 어떻게 구현되는거지? -> 뮤직플레이어 확인해보기
 	@Test
 	public void testRetrieveAllGroupsByName() {
-		fail("Not yet implemented");
+		List<Group> list = new ArrayList<Group>();
+		list = store.retrieveAllGroupsByName("우형");
+		
 	}
 
 	@Test
 	public void testDeleteMemberFromGroup() {
-		fail("Not yet implemented");
+		String memberId = "양희수";
+		int groupId = 1;
+		
+		store.deleteMemberFromGroup(memberId, groupId);
 	}
 
 	@Test
 	public void testRegistInvite() {
-		fail("Not yet implemented");
+		int groupId = 1;
+		String receivedMemberId = "백민지";
+		store.registInvite(receivedMemberId, groupId);
+		
 	}
 
 	@Test
 	public void testDeleteInvite() {
-		fail("Not yet implemented");
+		int groupId = 1;
+		String receivedMemberId = "백민지";
+		store.deleteInvite(receivedMemberId, groupId);
 	}
 
+	// 지우기
 	@Test
 	public void testRetrieveAllmyGroups() {
-		fail("Not yet implemented");
+		List<Group> list = new ArrayList<Group>();
+		list = store.retrieveAllGroupsByMemberId("양희수");
+		assertEquals(3, list.size());
 	}
 
+	// resultType가 없는데 어떻게 받나? -> 초대 도메인을 만들던지 아니면 select groupId만 해서 resultType를 int?
+	// 아니면 map같은거 써서 두개를 받나? (result map)
+	
 	@Test
 	public void testRetrieveMyInvitationsByMyMemberId() {
-		fail("Not yet implemented");
+//		String receiveMemberId = "양희수";
+		
 	}
 
+	
 	@Test
 	public void testRetrieveAllRecordsByGroupId() {
-		fail("Not yet implemented");
+		List<Record> list = new ArrayList<Record>();
+		list = store.retrieveAllRecordsByGroupId(1);
+		assertEquals(2, list.size());
+		
+		
 	}
 
 	@Test
 	public void testUpdateGroupBalance() {
-		fail("Not yet implemented");
+		Group group = new Group();
+		group.setGroupId(1);
+		group.setBalance(12300000);
+		store.updateGroupBalance(group);
+		
 	}
 
 }

@@ -77,7 +77,7 @@
 	<insert id="registInvite" parameterType="map">
 		INSERT INTO
 		invite_table(groupId,receiveMemberId)
-		VALUES(#{groupId},{memberId}
+		VALUES(#{groupId},{memberId})
 	</insert>
 
 	<delete id="deleteInvite" parameterType="map">
