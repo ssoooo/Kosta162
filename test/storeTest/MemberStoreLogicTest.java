@@ -21,22 +21,22 @@ public class MemberStoreLogicTest {
 	public void setUp() {
 		store = new MemberStoreLogic();
 	}
-	//testOK
+//	//testOK
 //	@Test
 //	public void testRegistMember() {
 //		Member member = new Member();
-//		member.setAccount("111-23");
-//		member.setEmail("easf@nsdfe.com");
-//		member.setMemberId("양희수");
-//		member.setName("희수");
+//		member.setAccount("111-233");
+//		member.setEmail("e1111f@nsdfe.com");
+//		member.setMemberId("성우형");
+//		member.setName("우형");
 //		member.setNickname("닉네임");
-//		member.setPassword("123");
-//		member.setPhoneNumber("010-0909-0909");
+//		member.setPassword("1234");
+//		member.setPhoneNumber("010-1119-2209");
 //		
 //		store.registMember(member);
 //	}
-
-	//testOk
+//
+//	//testOk
 //	@Test
 //	public void testUpdateMember() {
 //		Member member = new Member();
@@ -51,55 +51,78 @@ public class MemberStoreLogicTest {
 //		store.updateMember(member);
 //		assertEquals("수정희수111", member.getName());
 //	}
-
-	//testOK
+//
+//	//testOK
 //	@Test
 //	public void testDeleteMember() {
 //		store.deleteMember("양희수");
 //	}
-
-	//testOk
+//
+//	//testOk
 //	@Test
 //	public void testRetrieveMemberById() {
 //		Member member = new Member();
 //		member = store.retrieveMemberById("수정양희수");
 //		assertEquals("수정닉네임", member.getNickname());
 //	}
-
+//	//testOK
 	@Test
 	public void testRetrieveAllMembersByGroup() {
-//		List<Member> list = new ArrayList<Member>();
-//		list = store.retrieveAllMembersByGroup(groupId)
+		List<Member> list = new ArrayList<Member>();
+		list = store.retrieveAllMembersByGroup(1);
+		assertEquals(4, list.size());
 	}
 
+	//testOK
 	@Test
 	public void testRetrieveMembersByEvent() {
-		fail("Not yet implemented");
+		List<Member> list = new ArrayList<Member>();
+		list = store.retrieveMembersByEvent(8);
+		
+//		assertEquals(3, list.size());
 	}
-
-	@Test
-	public void testUpdateGrade() {
-		fail("Not yet implemented");
-	}
-
+// //testOK(파라미터값변경)
+//	@Test
+//	public void testUpdateGrade() {
+//		String memberId = "양희수";
+//		int groupId = 1;
+//		String grade = "총무";
+//		
+//		
+//		assertTrue(store.updateGrade(memberId, groupId, grade)>0);
+//		
+//	}
+//	//testOK
 	@Test
 	public void testRegistReqSignInMember() {
-		fail("Not yet implemented");
+		String memberId = "민지";
+		int groupId = 5;
+		store.registReqSignInMember(memberId, groupId);
+		
 	}
-
-	@Test
-	public void testDeleteSignInGroupReq() {
-		fail("Not yet implemented");
-	}
-
-	@Test
-	public void testCheckMemberHasGroup() {
-		fail("Not yet implemented");
-	}
-
+//	//testOk
+//	@Test
+//	public void testDeleteSignInGroupReq() {
+//		String memberId = "성우형";
+//		int groupId = 1;
+//		store.deleteSignInGroupReq(memberId, groupId);
+//	}
+//
+//	//testOk 리턴값 arrayList<Integer>로 바꿈. 
+//	@Test
+//	public void testCheckMemberHasGroup() {
+//		ArrayList<Integer> list = new ArrayList<Integer>();
+//		String memberId = "양희수";
+//		list = store.checkMemberHasGroup(memberId);
+//		assertEquals(2, list.size());
+//		
+//	}
+//	//testOk
 	@Test
 	public void testRetrieveAllSignInGroupReq() {
-		fail("Not yet implemented");
+		List<Member> list = new ArrayList<Member>();
+		list = store.retrieveAllSignInGroupReq(5);
+		assertEquals(3, list.size());
 	}
 
 }

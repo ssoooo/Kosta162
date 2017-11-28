@@ -186,7 +186,7 @@ public class GroupStoreLogic implements GroupStore{
 	}
 
 	@Override
-	public List<Group> retrieveMyInvitationsByMyMemberId(int memberId) {
+	public List<Group> retrieveMyInvitationsByMyMemberId(String memberId) {
 		List<Group> groups =null;
 		
 		SqlSession session = SessionFactory.getInstance().getSession();

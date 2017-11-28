@@ -74,7 +74,7 @@
 
 	<select id="checkMemberHasGroup" parameterType="String"
 		resultType="int">
-		SELECT memberId
+		SELECT groupId
 		FROM groupMember_table
 		WHERE memberId=#{memberId}
 	</select>

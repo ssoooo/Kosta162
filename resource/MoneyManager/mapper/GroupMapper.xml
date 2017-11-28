@@ -19,8 +19,8 @@
 
 	<update id="updateGroup" parameterType="Group">
 		UPDATE group_table SET
-		account=#{account},groupIntroduce=#{groupIntroduce}
-		WHERE groupId={groupId}
+		account=#{account}, groupIntroduce=#{groupIntroduce}
+		WHERE groupId=#{groupId}
 	</update>
 
 	<delete id="deleteGroup" parameterType="int">
@@ -51,14 +51,14 @@
 		resultType="Group">
 		SELECT groupId,memberId,groupName,account,groupIntroduce,balance,regDate
 		FROM group_table
-		WHERE groupName=#{groupName}
+		WHERE groupName LIKE '%'||#{groupName}||'%'
 	</select>
 
-	<select id="retrieveMyInvitationsByMyMemberId" parameterType="int"
+	<select id="retrieveMyInvitationsByMyMemberId" parameterType="String"
 		resultType="Group">
-		SELECT groupId,receiveMemberId
-		FROM invite_table
-		WHERE receiveMemberId=#{memberId}
+		SELECT group_table.groupId, group_table.groupName
+		FROM group_table INNER JOIN invite_table ON group_table.groupId = invite_table.groupId
+		WHERE invite_table.receiveMemberId = #{memberId}
 	</select>
 
 	<select id="retrieveAllRecordsByGroupId" parameterType="int"
@@ -77,7 +77,7 @@
 	<insert id="registInvite" parameterType="map">
 		INSERT INTO
 		invite_table(groupId,receiveMemberId)
-		VALUES(#{groupId},{memberId})
+		VALUES(#{groupId},#{memberId})
 	</insert>
 
 	<delete id="deleteInvite" parameterType="map">

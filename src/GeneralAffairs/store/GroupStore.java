@@ -17,7 +17,7 @@ public interface GroupStore {
 	Group retrieveGroupById(int groupId);
 	List<Group> retrieveAllGroupsByMemberId(String memberId);
 	List<Group> retrieveAllGroupsByName(String GroupName);
-	List<Group> retrieveMyInvitationsByMyMemberId(int memberId);
+	List<Group> retrieveMyInvitationsByMyMemberId(String memberId);
 	List<Record> retrieveAllRecordsByGroupId(int groupId);
 	void deleteMemberFromGroup(String memberId,int groupId);
 	void registInvite(String memberId,int groupId);
