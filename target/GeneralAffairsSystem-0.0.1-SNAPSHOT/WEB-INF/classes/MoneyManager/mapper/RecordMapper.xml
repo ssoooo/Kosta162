@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   <mapper namespace="GeneralAffairs.store.mapper.RecordMapper">
+  <!-- accounting VARCHAR2(50) DEFAULT '지출',
+caution VARCHAR2(20) DEFAULT '정상', -->
+  
+  <insert id="registRecordFromMessage" parameterType="Record">
+  INSERT INTO
+  record_table(recordId,eventId,groupId,memberId,image,title,regDate,content,price,category)
+  VALUES(record_seq.nextval,#{eventId},#{groupId},#{memberId},#{image},#{title},SYSDATE,#{content},#{price},#{category})
+  </insert>
+  
+  <insert id="registRecord" parameterType="Record">
+   INSERT INTO
+  record_table(recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,price,category)
+  VALUES(record_seq.nextval,#{eventId},#{groupId},#{memberId},#{image},#{title},SYSDATE,#{content},#{accounting},#{price},#{category})
+  </insert>
+  
+  <update id="updateRecord" parameterType="Record">
+  UPDATE record_table SET
+  image=#{image},title=#{title},regDate=SYSDATE,content=#{content},price=#{price},category=#{category}
+  WHERE=recordId=#{recordId}
+  </update>
+  
+  <delete id="deleteRecord" parameterType="int">
+  DELETE FROM record_table
+  WHERE recordId=#{recordId}
+  </delete>
+  
+  <select id="retrieveRecordById" parameterType="int" resultType="Record">
+  SELECT recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,price,category
+  FROM record_table
+  WHERE recordId=#{recordId}
+  </select>
+  
+  <select id="retrieveAllRecordsByEventId" parameterType="int" resultType="Record">
+  SELECT recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,price,category
+  FROM record_table
+  WHERE eventId=#{eventId}
+  </select>
+  
+  <select id="retrieveAllRecordsByGroupId" parameterType="int" resultType="Record">
+  SELECT recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,price,category
+  FROM record_table
+  WHERE groupId=#{groupId}
+  </select>
+  
+  <select id="retrieveRecordsByPeriod" parameterType="map" resultType="Record">
+  SELECT recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,price,category
+  FROM record_table
+  WHERE groupId=#{groupId}<!-- 기간 미완 111111111-->
+  </select>
+  
+  <select id="retrieveRecordsByCategory" parameterType="map" resultType="Record">
+  SELECT recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,price,category
+  FROM record_table
+  WHERE category=#{category} 
+  </select>
+  
+  <select id="retrieveGroupAccountingResult" parameterType="map" resultType="int">
+  SELECT recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,price,category
+  FROM record_table
+  WHERE groupId=#{groupId}
+  </select>
+  
+  <select id="retrieveEventAccountingResult" parameterType="map" resultType="int">
+  </select>
+  
+  <select id="retrieveGroupStatsRecordByEvent" parameterType="map" resultType="Record">
+  </select>
+  
+  <select id="retrieveGroupStatsRecordByCategory" parameterType="map" resultType="Record">
+  </select>
+  
+  <select id="retrieveGroupStatsRecordByPeriod" parameterType="map" resultType="Record">
+  <!-- 기간 미완 -->
+  </select>
+  
+  <select id="retrieveGroupStatsRecordByAccounting" parameterType="map" resultType="Record">
+  </select>
+  
+  <select id="retrieveEventStatsRecordByPeriod" parameterType="map" resultType="Record">
+  <!-- 기간 미완 -->
+  </select>
+  
+  <select id="retrieveEventStatsRecordByCategory" parameterType="map" resultType="Record">
+  </select>
+  
+  <select id="retrieveEventStatsRecordByAccounting" parameterType="map" resultType="Record">
+  </select>
+  
+  
+  </mapper>
