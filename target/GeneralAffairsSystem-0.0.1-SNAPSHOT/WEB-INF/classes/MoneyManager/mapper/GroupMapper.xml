@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="GeneralAffairs.store.mapper.GroupMapper">
+
+
+	<insert id="registGroup" parameterType="Group">
+		INSERT INTO
+		group_table(groupId,memberId,groupName,account,groupIntroduce,regDate)
+		VALUES(group_seq.nextval,#{memberId},#{groupName},#{account},#{groupIntroduce},sysDate)
+	</insert>
+
+	<insert id="registMemberToGroup" parameterType="map">
+		INSERT INTO
+		groupMember_table(groupId,memberId)
+		VALUES(#{groupId},#{memberId})
+	</insert>
+
+	<update id="updateGroup" parameterType="Group">
+		UPDATE group_table SET
+		account=#{account},groupIntroduce=#{groupIntroduce}
+		WHERE groupId={groupId}
+	</update>
+
+	<delete id="deleteGroup" parameterType="int">
+		DELETE FROM group_table
+		WHERE groupId=#{groupId}
+	</delete>
+
+	<select id="retrieveAllmyGroups" parameterType="String"
+		resultType="Group">
+		SELECT groupId,memberId,grade
+		FROM groupMember_table
+		WHERE memberId=#{memberId}
+	</select>
+
+	<select id="retrieveGroupById" parameterType="int" resultType="Group">
+		SELECT
+		groupId,memberId,groupName,account,groupIntroduce,balance,regDate
+		FROM group_table
+		WHERE groupId=#{groupId}
+	</select>
+
+	<select id="retrieveAllGroupsByMemberId" parameterType="String"
+		resultType="Group">
+	<!-- 필요? -->
+	</select>
+
+	<select id="retrieveAllGroupsByName" parameterType="String"
+		resultType="Group">
+		SELECT groupId,memberId,groupName,account,groupIntroduce,balance,regDate
+		FROM group_table
+		WHERE groupName=#{groupName}
+	</select>
+
+	<select id="retrieveMyInvitationsByMyMemberId" parameterType="int"
+		resultType="Group">
+		SELECT groupId,receiveMemberId
+		FROM invite_table
+		WHERE receiveMemberId=#{memberId}
+	</select>
+
+	<select id="retrieveAllRecordsByGroupId" parameterType="int"
+		resultType="Record">
+		SELECT
+		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,caution,price,category
+		FROM record_table
+		WHERE groupId=#{groupId}
+	</select>
+
+	<delete id="deleteMemberFromGroup" parameterType="map">
+		DELETE FROM groupMember_table
+		WHERE memberId=#{memberId} AND groupId=#{groupId}
+	</delete>
+
+	<insert id="registInvite" parameterType="map">
+		INSERT INTO
+		invite_table(groupId,receiveMemberId)
+		VALUES(#{groupId},{memberId}
+	</insert>
+
+	<delete id="deleteInvite" parameterType="map">
+		DELETE FROM invite_table
+		WHERE groupId=#{groupId} AND receiveMemberId=#{memberId}
+	</delete>
+	
+	<update id="updateGroupBalance" parameterType="Group">
+	UPDATE group_table SET
+	balance=#{balance}
+	WHERE groupId=#{groupId}
+	</update>
+</mapper>

@@ -5,6 +5,10 @@
 
 <mapper namespace="GeneralAffairs.store.mapper.EventMapper">
 
+	<resultMap type="Event" id="eventMap">
+		<result property="payment" column="payment" />
+	</resultMap>
+
 	<insert id="registEvent" parameterType="Event">
 		INSERT INTO
 		event_table(eventId,groupId,memberId,eventName,regDate)
@@ -12,9 +16,9 @@
 	</insert>
 
 	<update id="updateEvent" parameterType="Event">
-		UPDATE event_table SET
-		eventName={eventName}
-		WHERE eventId=#{eventId}
+		UPDATE event_table
+		SET eventName = #{eventName}
+		WHERE eventId = #{eventId}
 	</update>
 
 	<delete id="deleteEvent" parameterType="int">
@@ -30,14 +34,17 @@
 
 	<select id="retrieveAllEventsByGroupId" parameterType="int"
 		resultType="Event">
-		SELECT eventId,groupId,memberId,balance,eventName,collection,regDate
-		FROM event_table
+		SELECT
+		eventId,groupId,memberId,balance,eventName,collection,regDate
+		FROM
+		event_table
 		WHERE groupId=#{groupId}
 	</select>
 
 	<delete id="deleteMemberFromEvent" parameterType="map">
-		DELETE FROM eventMember_table
-		WHERE memberId=#{memberId} AND eventId={eventId}
+		DELETE FROM
+		eventMember_table
+		WHERE memberId = #{memberId} AND eventId = #{eventId}
 	</delete>
 
 	<insert id="registMemberToEvent" parameterType="map">
@@ -46,14 +53,17 @@
 		VALUES(#{memberId},#{eventId})
 	</insert>
 
-	<update id="updatePayment" parameterType="map">
-		UPDATE eventMember_table SET
-		payment=#{payment}
-		WHERE memberId=#{memberId} AND eventId=#{eventId}
+	<update id="updatePayment" parameterType="Map">
+		UPDATE
+		eventMember_table SET
+		payment = #{payment}
+		WHERE eventId = #{eventId} AND
+		memberId= #{memberId}
 	</update>
 
 	<update id="updateEventBalance" parameterType="Event">
-		UPDATE event_table SET
+		UPDATE event_table
+		SET
 		balance=#{balance}
 		WHERE eventId=#{eventId}
 	</update>

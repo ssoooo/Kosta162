@@ -6,7 +6,7 @@
 
 	<insert id="registMessage" parameterType="Message">
 		INSERT INTO
-		message_table(messsageId,eventId,sendMemberId,title,content,regDate)
+		message_table(messageId,eventId,sendMemberId,title,content,regDate)
 		VALUES(message_seq.nextval,#{eventId},#{memberId},#{title},#{content},SYSDATE)
 	</insert>
 

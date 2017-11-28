@@ -13,7 +13,7 @@ public interface EventStore {
 	List<Event> retrieveAllEventsByGroupId(int groupId);
 	void deleteMemberFromEvent(String memberId,int eventId);
 	void registMemberToEvent(String memberId,int eventId);
-	int updatePayment(String memberId,int eventId);
+	int updatePayment(int eventId, String memberId, String payment);
 	void updateEventBalance(Event event);//
 
 }

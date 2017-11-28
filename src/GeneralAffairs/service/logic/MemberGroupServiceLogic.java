@@ -141,10 +141,11 @@ public class MemberGroupServiceLogic implements MemberGroupService{
 	}
 
 	@Override
-	public boolean modifyGroupBalance(Group group, int price) {
+	public void modifyGroupBalance(Group group) {
 		// TODO Auto-generated method stub
-		return false;
+		
 	}
+
 	
 	
 

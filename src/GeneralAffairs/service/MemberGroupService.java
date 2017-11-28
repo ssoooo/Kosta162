@@ -30,7 +30,7 @@ public interface MemberGroupService {
 	void removeMemberFromGroup(String memberId,int groupId);
 	void acceptInvite(String memberId,int groupId);
 	void denyInvite(String memberId,int groupId);
-	boolean modifyGroupBalance(Group group,int price);
+	void modifyGroupBalance(Group group);
 	
 
 }
