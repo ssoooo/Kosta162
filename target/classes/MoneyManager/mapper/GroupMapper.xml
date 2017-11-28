@@ -28,13 +28,14 @@
 		WHERE groupId=#{groupId}
 	</delete>
 
+<!--
 	<select id="retrieveAllmyGroups" parameterType="String"
 		resultType="Group">
 		SELECT groupId,memberId,grade
 		FROM groupMember_table
 		WHERE memberId=#{memberId}
 	</select>
-
+-->
 	<select id="retrieveGroupById" parameterType="int" resultType="Group">
 		SELECT
 		groupId,memberId,groupName,account,groupIntroduce,balance,regDate
@@ -44,7 +45,9 @@
 
 	<select id="retrieveAllGroupsByMemberId" parameterType="String"
 		resultType="Group">
-	<!-- 필요? -->
+		SELECT groupId,memberId,grade
+		FROM groupMember_table
+		WHERE memberId=#{memberId}
 	</select>
 
 	<select id="retrieveAllGroupsByName" parameterType="String"

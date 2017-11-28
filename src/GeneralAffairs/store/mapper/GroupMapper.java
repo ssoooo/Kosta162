@@ -14,7 +14,7 @@ public interface GroupMapper {
 	int registMemberToGroup(@Param("memberId") String memberId,@Param("groupId")int groupId);
 	int updateGroup(Group group);
 	void deleteGroup(int groupId);
-	List<Group> retrieveAllmyGroups(String memberId);
+//	List<Group> retrieveAllmyGroups(String memberId);
 	Group retrieveGroupById(int groupId);
 	List<Group> retrieveAllGroupsByMemberId(String memberId);
 	List<Group> retrieveAllGroupsByName(String GroupName);

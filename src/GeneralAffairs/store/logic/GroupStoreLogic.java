@@ -168,22 +168,22 @@ public class GroupStoreLogic implements GroupStore{
 		}
 	}
 
-	@Override
-	public List<Group> retrieveAllmyGroups(String memberId) {
-		List<Group> groups = null;
-		
-		SqlSession sqlSession = SessionFactory.getInstance().getSession();
-		try {
-		GroupMapper mapper = sqlSession.getMapper(GroupMapper.class);
-		groups = mapper.retrieveAllmyGroups(memberId);
-			
-		}finally {
-			sqlSession.close();
-		}
-		
-		
-		return groups;
-	}
+//	@Override
+//	public List<Group> retrieveAllmyGroups(String memberId) {
+//		List<Group> groups = null;
+//		
+//		SqlSession sqlSession = SessionFactory.getInstance().getSession();
+//		try {
+//		GroupMapper mapper = sqlSession.getMapper(GroupMapper.class);
+//		groups = mapper.retrieveAllmyGroups(memberId);
+//			
+//		}finally {
+//			sqlSession.close();
+//		}
+//		
+//		
+//		return groups;
+//	}
 
 	@Override
 	public List<Group> retrieveMyInvitationsByMyMemberId(String memberId) {
