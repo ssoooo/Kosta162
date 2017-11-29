@@ -12,7 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import GeneralAffairs.domain.Message;
 import GeneralAffairs.domain.Record;
 import GeneralAffairs.service.EventService;
-import GeneralAffairs.service.GroupService;
+
+import GeneralAffairs.service.MemberGroupService;
 import GeneralAffairs.service.RecordService;
 
 @Controller
@@ -25,7 +26,7 @@ public class RecordController {
 	private EventService eventService;
 	
 	@Autowired
-	private GroupService groupService;
+	private MemberGroupService msService;
 	
 	
 	@RequestMapping("/registGroupRecord.do")

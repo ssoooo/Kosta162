@@ -255,6 +255,21 @@ public class RecordStoreLogic implements RecordStore{
 		return records;
 	}
 
+	@Override
+	public void registRecordFromMessage(Record record) {
+		
+		SqlSession session = SessionFactory.getInstance().getSession();
+		
+		try {
+			RecordMapper mapper=session.getMapper(RecordMapper.class);
+			mapper.registRecordFromMessage(record);
+			session.commit();
+		}finally {
+			session.close();
+		}
+		
+	}
+
 
 	
 }

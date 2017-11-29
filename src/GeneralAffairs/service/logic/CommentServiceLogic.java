@@ -17,32 +17,31 @@ public class CommentServiceLogic implements CommentService {
 
 	@Override
 	public void createComment(Comment comment) {
-		// TODO Auto-generated method stub
+		store.registComment(comment);
 		
 	}
 
 	@Override
 	public void modifyComment(Comment comment) {
-		// TODO Auto-generated method stub
+		store.updateComment(comment);
 		
 	}
 
 	@Override
 	public void removeComment(int commentId) {
-		// TODO Auto-generated method stub
-		
+		store.deleteComment(commentId);
 	}
 
 	@Override
 	public Comment findCommentById(int commentId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return store.retrieveCommentById(commentId);
 	}
 
 	@Override
 	public List<Comment> findAllCommentsByRecordId(int recordId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return store.retrieveAllCommentsByRecordId(recordId);
 	}
 
 	

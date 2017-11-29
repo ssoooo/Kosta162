@@ -9,7 +9,15 @@ public class Comment {
 	private String content;
 	private Date date;
 	
+	private int recordId;
 	
+	
+	public int getRecordId() {
+		return recordId;
+	}
+	public void setRecordId(int recordId) {
+		this.recordId = recordId;
+	}
 	public int getCommentId() {
 		return commentId;
 	}

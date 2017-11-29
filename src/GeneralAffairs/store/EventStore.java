@@ -14,5 +14,6 @@ public interface EventStore {
 	void deleteMemberFromEvent(String memberId,int eventId);
 	void registMemberToEvent(String memberId,int eventId);
 	int updatePayment(String memberId,int eventId);
+	void updateEventBalance(Event event);//
 
 }

@@ -15,5 +15,6 @@ public interface EventMapper {
 	void deleteMemberFromEvent(@Param("memberId") String memberId,@Param("eventId") int eventId);
 	void registMemberToEvent(@Param("memberId") String memberId,@Param("eventId") int eventId);
 	int updatePayment(@Param("memberId") String memberId,@Param("eventId") int eventId);
-
+	void updateEventBalance(Event event);
+	
 }

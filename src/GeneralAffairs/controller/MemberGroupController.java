@@ -10,16 +10,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Member;
-import GeneralAffairs.service.GroupService;
-import GeneralAffairs.service.MemberService;
+
+import GeneralAffairs.service.MemberGroupService;
+
 
 @Controller
 public class MemberGroupController {
 	
 	@Autowired
-	private MemberService memberService;
-	@Autowired
-	private GroupService groupService;
+	private MemberGroupService msService; 
 	
 	
 	@RequestMapping()

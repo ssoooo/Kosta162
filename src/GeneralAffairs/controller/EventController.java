@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import GeneralAffairs.domain.Event;
 import GeneralAffairs.service.EventService;
-import GeneralAffairs.service.GroupService;
+
+import GeneralAffairs.service.MemberGroupService;
 
 @Controller
 public class EventController {
@@ -18,7 +19,7 @@ public class EventController {
 	private EventService eventService;
 	
 	@Autowired
-	private GroupService groupService;
+	private MemberGroupService msService;
 	
 	
 	@RequestMapping("/eventRegist.do")

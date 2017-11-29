@@ -9,6 +9,7 @@ import GeneralAffairs.domain.Record;
 public interface RecordStore {
 	
 	void registRecord(Record record);
+	void registRecordFromMessage(Record record);
 	int updateRecord(Record record);
 	void deleteRecord(int recordId);
 	Record retrieveRecordById(int recordId);

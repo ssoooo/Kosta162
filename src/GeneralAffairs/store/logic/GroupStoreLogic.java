@@ -25,7 +25,6 @@ public class GroupStoreLogic implements GroupStore{
 		GroupMapper mapper = session.getMapper(GroupMapper.class);
 		mapper.registGroup(group);
 		session.commit();
-		System.out.println("¿ìÇü¾Æ");
 		}finally {
 			session.close();
 		}
@@ -169,25 +168,25 @@ public class GroupStoreLogic implements GroupStore{
 		}
 	}
 
-	@Override
-	public List<Group> retrieveAllmyGroups(String memberId) {
-		List<Group> groups = null;
-		
-		SqlSession sqlSession = SessionFactory.getInstance().getSession();
-		try {
-		GroupMapper mapper = sqlSession.getMapper(GroupMapper.class);
-		groups = mapper.retrieveAllmyGroups(memberId);
-			
-		}finally {
-			sqlSession.close();
-		}
-		
-		
-		return groups;
-	}
+//	@Override
+//	public List<Group> retrieveAllmyGroups(String memberId) {
+//		List<Group> groups = null;
+//		
+//		SqlSession sqlSession = SessionFactory.getInstance().getSession();
+//		try {
+//		GroupMapper mapper = sqlSession.getMapper(GroupMapper.class);
+//		groups = mapper.retrieveAllmyGroups(memberId);
+//			
+//		}finally {
+//			sqlSession.close();
+//		}
+//		
+//		
+//		return groups;
+//	}
 
 	@Override
-	public List<Group> retrieveMyInvitationsByMyMemberId(int memberId) {
+	public List<Group> retrieveMyInvitationsByMyMemberId(String memberId) {
 		List<Group> groups =null;
 		
 		SqlSession session = SessionFactory.getInstance().getSession();
@@ -216,6 +215,20 @@ public class GroupStoreLogic implements GroupStore{
 		}
 		
 		return records;
+	}
+
+	@Override
+	public void updateGroupBalance(Group group) {
+		
+		SqlSession session = SessionFactory.getInstance().getSession();
+		try {
+			GroupMapper mapper = session.getMapper(GroupMapper.class);
+			mapper.updateGroupBalance(group);
+			session.commit();
+		}finally {
+			session.close();
+		}
+		
 	}
 
 	

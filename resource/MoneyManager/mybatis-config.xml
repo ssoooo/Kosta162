@@ -6,7 +6,7 @@
   
   
   <configuration>
-  <properties resource="dataresource.properties"/>
+  <properties resource="MoneyManager/dataresource.properties"/>
   
    <typeAliases>
   <typeAlias type="GeneralAffairs.domain.Event" alias="Event"/>
@@ -37,12 +37,12 @@
  
   
   <mappers>
-   <mapper resource="mapper/EventMapper.xml"/>
-   <mapper resource="mapper/CommentMapper.xml"/>
-   <mapper resource="mapper/GroupMapper.xml"/>
-   <mapper resource="mapper/MessageMapper.xml"/>
-   <mapper resource="mapper/MemberMapper.xml"/>
-   <mapper resource="mapper/RecordMapper.xml"/>
+   <mapper resource="MoneyManager/mapper/EventMapper.xml"/>
+   <mapper resource="MoneyManager/mapper/CommentMapper.xml"/>
+   <mapper resource="MoneyManager/mapper/GroupMapper.xml"/>
+   <mapper resource="MoneyManager/mapper/MessageMapper.xml"/>
+   <mapper resource="MoneyManager/mapper/MemberMapper.xml"/>
+   <mapper resource="MoneyManager/mapper/RecordMapper.xml"/>
   </mappers>
   
   </configuration>
