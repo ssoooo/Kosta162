@@ -3,6 +3,7 @@ package GeneralAffairs.service.logic;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Member;
@@ -10,6 +11,7 @@ import GeneralAffairs.service.MemberGroupService;
 import GeneralAffairs.store.GroupStore;
 import GeneralAffairs.store.MemberStore;
 
+@Service
 public class MemberGroupServiceLogic implements MemberGroupService{
 	@Autowired
 	private MemberStore mStore;

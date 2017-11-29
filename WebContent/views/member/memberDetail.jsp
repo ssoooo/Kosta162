@@ -1,9 +1,6 @@
-<!DOCTYPE HTML>
-<!--
-	Verti by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>Verti by HTML5 UP</title>
@@ -14,19 +11,18 @@
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 	</head>
 	<body class="no-sidebar">
-	<%@ include file="header/header.jspf"%>
 		<div id="page-wrapper">
-
+ 
 			<!-- Header -->
 				<div id="header-wrapper">
 					<header id="header" class="container">
-
+ 
 						<!-- Logo -->
 							<div id="logo">
 								<h1><a href="main.html">Verti</a></h1>
 								<span>알뜰한 총무의 잡다한 가계부</span>
 							</div>
-
+ 
 						<!-- Nav -->
 							<nav id="nav">
 								<ul>
@@ -60,7 +56,7 @@
 							</nav>
 					</header>
 				</div>
-
+ 
 			<!-- Main -->
 				<div id="main-wrapper">
 					<div class="container">
@@ -110,12 +106,12 @@
 								<a href="#"><button class="btn_delete">탈퇴</button></a>
 							</div>
 						</div>
-
+ 
 						<br class="clear" />
 						</div>
 					</div>
 				</div>
-
+ 
 			<!-- Footer -->
 				<div id="footer-wrapper">
 					<footer id="footer" class="container">
@@ -130,17 +126,17 @@
 						</div>
 					</footer>
 				</div>
-
+ 
 			</div>
-
+ 
 		<!-- Scripts -->
-
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
+ 
+			<script src="../../resources/assets/js/jquery.min.js"></script>
+			<script src="../../resources/assets/js/jquery.dropotron.min.js"></script>
+			<script src="../../resources/assets/js/skel.min.js"></script>
+			<script src="../../resources/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
-
+			<script src="../../resources/assets/js/main.js"></script>
+ 
 	</body>
 </html>
