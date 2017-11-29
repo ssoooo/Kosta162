@@ -5,10 +5,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.eclipse.jdt.internal.compiler.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import GeneralAffairs.domain.Message;
 import GeneralAffairs.service.MessageService;
@@ -50,17 +52,13 @@ public class MessageController {
 		return "";
 	}
 	
-	@RequestMapping("/allMyMessages.do")
+	@RequestMapping(value="/allMyMessages.do", method=RequestMethod.GET)
 	public String showAllMyMessage(HttpSession session, Model model) {
 		
-		session.setAttribute("id", "kang");
-		session.setAttribute("name", "daniel");
+		List<Message> messages = service.findAllMyMessages("kang");
 		
-		String memberId = "kang";		
-		List<Message> messages = service.findAllMyMessages(memberId);
+		System.out.println(messages.size());
 		
-		
-		
-		return "redirect:/board/list.do";
+		return "";
 	}
 }
