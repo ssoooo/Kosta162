@@ -1,7 +1,10 @@
 package GeneralAffairs.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,16 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Member;
-
+import GeneralAffairs.domain.Message;
 import GeneralAffairs.service.MemberGroupService;
-
+import GeneralAffairs.service.MessageService;
 
 @Controller
+@RequestMapping("memberGroup")
 public class MemberGroupController {
 	
 	@Autowired
-	private MemberGroupService msService; 
+	private MemberGroupService mgService; 
 	
+	@Autowired
+	private MessageService messageService;
 	
 	@RequestMapping()
 	public String showLoginForm() {
@@ -45,7 +51,7 @@ public class MemberGroupController {
 		return "";
 	}
 	
-	@RequestMapping("/modifyMember.do")
+	@RequestMapping("/showModifyMember.do")
 	public String showModifyMember(String memberId,Model model) {
 		
 		return "";
@@ -63,7 +69,7 @@ public class MemberGroupController {
 		return "";
 	}
 	
-	@RequestMapping("/tradeGrade.do")
+	@RequestMapping("/showTradeGrade.do")
 	public String showTradeGrade(int groupId,Model model) {
 		
 		return "";
@@ -107,9 +113,10 @@ public class MemberGroupController {
 	
 	///
 	
-	
 	@RequestMapping("/registGroup.do")
-	public String registGroup(Group group,HttpSession session) {
+	public String registGroup(Group group, HttpSession session) {
+		
+		
 		
 		return "";
 	}
@@ -120,7 +127,7 @@ public class MemberGroupController {
 		return "";
 	}
 	
-	@RequestMapping("/registGroup.do")
+	@RequestMapping("/showRegistGroup.do")
 	public String showRegistGroup(String memberId,Model model) {
 		
 		return "";
@@ -132,7 +139,7 @@ public class MemberGroupController {
 		return "";
 	}
 	
-	@RequestMapping("/modifyGroup.do")
+	@RequestMapping("/showModifyGroup.do")
 	public String showModifyGroup(int groupId,Model model) {
 		
 		return "";
@@ -186,7 +193,7 @@ public class MemberGroupController {
 		return "";
 	}
 	
-	@RequestMapping("/searchMember.do")
+	@RequestMapping("/showSearchMember.do")
 	public String showSearchMember() {
 		
 		return "";
@@ -206,15 +213,29 @@ public class MemberGroupController {
 	
 	@RequestMapping("/group.do")
 	public String showGroup(int groupId,Model model) {
+		Group group = mgService.findGroupById(groupId);
+		List<Message> messages = messageService.findAllMyMessages("kang");
 		
-		return "";
+		model.addAttribute("group", group);
+		model.addAttribute("messages", messages);
+		
+		return "group/group";
 	}
 	
 	@RequestMapping("/groupDetail.do")
-	public String showGroupDetail(int groupId,Model model) {
+	public String showGroupDetail(int groupId, Model model) {
+		Group group = mgService.findGroupById(groupId);
+		List<Message> messages = messageService.findAllMyMessages("kang");
+		List<Member> members = mgService.findAllMembersByGroup(groupId);
+		Member manager = mgService.findMemberById(group.getMemberId());
 		
-		return "";
+		model.addAttribute("group", group);
+		model.addAttribute("messages", messages);
+		model.addAttribute("memberNum", members.size());
+		model.addAttribute("members", members);
+		model.addAttribute("manager", manager);
+		
+		return "group/groupDetail";
 	}
-	
 
 }

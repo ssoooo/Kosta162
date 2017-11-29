@@ -1,5 +1,6 @@
-<!DOCTYPE HTML>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>My Page</title>
@@ -64,7 +65,7 @@
 							</div>
 							<div class="5u 12u(medium)">
 								<ul>
-									<li><a href="registGroup.html" class="button big icon fa-arrow-circle-right">모임 생성</a></li>
+									<li><a href="${pageContext.request.contextPath}/memberGroup/registGroup.do" class="button big icon fa-arrow-circle-right">모임 생성</a></li>
 									<li><a href="memberDetail.html" class="button alt big icon fa-question-circle">내 정보</a></li>
 								</ul>
 							</div>
@@ -80,7 +81,7 @@
 
 								<!-- Box -->
 									<section class="box feature">
-										<a href="group.html" class="image featured"><img src="resources/images/pic01.jpg" alt="" /></a>
+										<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=1" class="image featured"><img src="resources/images/pic01.jpg" alt="" /></a>
 										<div class="inner">
 											<header>
 												<h2>Group1</h2></header>
