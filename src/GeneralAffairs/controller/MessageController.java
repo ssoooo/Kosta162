@@ -5,7 +5,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.eclipse.jdt.internal.compiler.util.Messages;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,49 +15,50 @@ import GeneralAffairs.domain.Message;
 import GeneralAffairs.service.MessageService;
 
 @Controller
+@RequestMapping("message")
 public class MessageController {
 	
 	@Autowired
-	private MessageService service;
+	private MessageService messageService;
 
 	
-	@RequestMapping("/sendCollection.do")
+	@RequestMapping("sendCollection.do")
 	public String sendCollectionMessage(HttpServletRequest req, List<String> receivedMember, Message message) {
 		
 		return "";
 	}
 	
-	@RequestMapping("/sendStats.do")
+	@RequestMapping("sendStats.do")
 	public String sendStatsMessage(HttpServletRequest req, List<String> receivedMember, Message message) {
 		
 		return "";
 	}
 	
-	@RequestMapping("/deleteMyMessage.do")
+	@RequestMapping("deleteMyMessage.do")
 	public String deleteMyMessage(int messageId, HttpSession session) {
 		
 		return "";
 	}
 	
-	@RequestMapping("/sendMessage.do")
+	@RequestMapping("sendMessage.do")
 	public String showSendMessage(HttpSession session,List<String> receivedMember, Model model) {
 		
 		return "";
 	}
 	
-	@RequestMapping("/receivedMessage.do")
+	@RequestMapping("receivedMessage.do")
 	public String showReceivedMessage(Message message, Model model) {
 		
 		return "";
 	}
 	
-	@RequestMapping(value="/allMyMessages.do", method=RequestMethod.GET)
+	@RequestMapping(value="allMyMessages.do", method=RequestMethod.GET)
 	public String showAllMyMessage(HttpSession session, Model model) {
 		
-		List<Message> messages = service.findAllMyMessages("kang");
+		List<Message> messages = messageService.findAllMyMessages("kang");
 		
 		System.out.println(messages.size());
 		
-		return "";
+		return "group/group";
 	}
 }

@@ -1,7 +1,13 @@
 package storeTest;
  
+import static org.junit.Assert.assertEquals;
+
+import java.util.List;
+
 import org.junit.Before;
- 
+import org.junit.Test;
+
+import GeneralAffairs.domain.Message;
 import GeneralAffairs.store.MessageStore;
 import GeneralAffairs.store.logic.MessageStoreLogic;
  
@@ -55,11 +61,11 @@ public class MessgeStoreLogicTest {
 //		messageStore.deleteMessageWithMember(message.getMemberId(), message.getMessageId());
 //	}
 //
-//	@Test
-//	public void testRetrieveAllMyMessages() {
-//		List<Message> list = messageStore.retrieveAllMyMessages("민지짱");
-//		assertEquals(3, list.size());
-//	
-//	}
+	@Test
+	public void testRetrieveAllMyMessages() {
+		List<Message> list = messageStore.retrieveAllMyMessages("kang");
+		assertEquals(3, list.size());
+	
+	}
  
 }

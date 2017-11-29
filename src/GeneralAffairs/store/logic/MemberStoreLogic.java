@@ -85,7 +85,7 @@ public class MemberStoreLogic implements MemberStore{
 	public List<Member> retrieveAllMembersByGroup(int groupId) {
 
 		SqlSession session = SessionFactory.getInstance().getSession();
-		List<Member> members =null;
+		List<Member> members = null;
 
 		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);

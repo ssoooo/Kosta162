@@ -33,7 +33,7 @@
 	</delete>
 
 	<select id="retrieveAllMyMessages" parameterType="String" resultType="Message">
-		SELECT a.messageId, a.sendmemberId, a.title, a.content, a.regdate
+		SELECT a.messageId, a.eventId, a.sendmemberId, a.title, a.content, a.regdate
 		FROM message_table a, messageMember_table b
 		WHERE a.messageId = b.messageId and b.memberId=#{memberId}
 	</select>

@@ -13,6 +13,7 @@ import GeneralAffairs.service.EventService;
 import GeneralAffairs.service.MemberGroupService;
 
 @Controller
+@RequestMapping("event")
 public class EventController {
 	
 	@Autowired
@@ -28,7 +29,7 @@ public class EventController {
 		return "";
 	}
 	
-	@RequestMapping("/eventRegist.do")
+	@RequestMapping("/showEventRegist.do")
 	public String showRegistEvent(HttpSession session,int groupId,Model model) {
 		
 		return "";
@@ -40,7 +41,7 @@ public class EventController {
 		return "";
 	}
 	
-	@RequestMapping("/eventModify.do")
+	@RequestMapping("/showEventModify.do")
 	public String showModifyEvent(int eventId,Model model) {
 		
 		return "";

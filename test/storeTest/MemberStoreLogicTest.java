@@ -74,14 +74,15 @@ public class MemberStoreLogicTest {
 	}
 
 	//testOK
-	@Test
-	public void testRetrieveMembersByEvent() {
-		List<Member> list = new ArrayList<Member>();
-		list = store.retrieveMembersByEvent(8);
-		
+//	@Test
+//	public void testRetrieveMembersByEvent() {
+//		List<Member> list = new ArrayList<Member>();
+//		list = store.retrieveMembersByEvent(8);
+//		
 //		assertEquals(3, list.size());
-	}
-// //testOK(파라미터값변경)
+//	}
+	
+	//testOK(파라미터값변경)
 //	@Test
 //	public void testUpdateGrade() {
 //		String memberId = "양희수";
@@ -90,16 +91,16 @@ public class MemberStoreLogicTest {
 //		
 //		
 //		assertTrue(store.updateGrade(memberId, groupId, grade)>0);
-//		
 //	}
+	
 //	//testOK
-	@Test
-	public void testRegistReqSignInMember() {
-		String memberId = "민지";
-		int groupId = 5;
-		store.registReqSignInMember(memberId, groupId);
-		
-	}
+//	@Test
+//	public void testRegistReqSignInMember() {
+//		String memberId = "민지";
+//		int groupId = 5;
+//		store.registReqSignInMember(memberId, groupId);
+//	}
+	
 //	//testOk
 //	@Test
 //	public void testDeleteSignInGroupReq() {
@@ -107,7 +108,7 @@ public class MemberStoreLogicTest {
 //		int groupId = 1;
 //		store.deleteSignInGroupReq(memberId, groupId);
 //	}
-//
+
 //	//testOk 리턴값 arrayList<Integer>로 바꿈. 
 //	@Test
 //	public void testCheckMemberHasGroup() {
@@ -115,14 +116,14 @@ public class MemberStoreLogicTest {
 //		String memberId = "양희수";
 //		list = store.checkMemberHasGroup(memberId);
 //		assertEquals(2, list.size());
-//		
 //	}
+	
 //	//testOk
-	@Test
-	public void testRetrieveAllSignInGroupReq() {
-		List<Member> list = new ArrayList<Member>();
-		list = store.retrieveAllSignInGroupReq(5);
-		assertEquals(3, list.size());
-	}
+//	@Test
+//	public void testRetrieveAllSignInGroupReq() {
+//		List<Member> list = new ArrayList<Member>();
+//		list = store.retrieveAllSignInGroupReq(5);
+//		assertEquals(3, list.size());
+//	}
 
 }
