@@ -21,38 +21,46 @@ public class MessageController {
 
 	
 	@RequestMapping("/sendCollection.do")
-	public String sendCollectionMessage(HttpServletRequest req,List<String> receivedMember,Message message) {
+	public String sendCollectionMessage(HttpServletRequest req, List<String> receivedMember, Message message) {
 		
 		return "";
 	}
 	
 	@RequestMapping("/sendStats.do")
-	public String sendStatsMessage(HttpServletRequest req,List<String> receivedMember,Message message) {
+	public String sendStatsMessage(HttpServletRequest req, List<String> receivedMember, Message message) {
 		
 		return "";
 	}
 	
 	@RequestMapping("/deleteMyMessage.do")
-	public String deleteMyMessage(int messageId,HttpSession session) {
+	public String deleteMyMessage(int messageId, HttpSession session) {
 		
 		return "";
 	}
 	
 	@RequestMapping("/sendMessage.do")
-	public String showSendMessage(HttpSession session,List<String> receivedMember,Model model) {
+	public String showSendMessage(HttpSession session,List<String> receivedMember, Model model) {
 		
 		return "";
 	}
 	
 	@RequestMapping("/receivedMessage.do")
-	public String showReceivedMessage(Message message,Model model) {
+	public String showReceivedMessage(Message message, Model model) {
 		
 		return "";
 	}
 	
-	@RequestMapping("/allMyMessage.do")
-	public String showAllMyMessage(HttpSession session,Model model) {
+	@RequestMapping("/allMyMessages.do")
+	public String showAllMyMessage(HttpSession session, Model model) {
 		
-		return "";
+		session.setAttribute("id", "kang");
+		session.setAttribute("name", "daniel");
+		
+		String memberId = "kang";		
+		List<Message> messages = service.findAllMyMessages(memberId);
+		
+		
+		
+		return "redirect:/board/list.do";
 	}
 }
