@@ -1,5 +1,6 @@
 package GeneralAffairs.store.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -13,10 +14,10 @@ public interface MemberMapper {
 	Member retrieveMemberById(String memberId);
 	List<Member> retrieveAllMembersByGroup(int groupId);
 	List<Member> retrieveMembersByEvent(int eventId);
-	int updateGrade(@Param("memberId") String memberId,@Param("groupId") int groupId);
+	int updateGrade(@Param("memberId") String memberId, @Param("groupId") int groupId, @Param("grade") String grade);
 	List<Member> retrieveAllSignInGroupReq(int groupId);
 	void registReqSignInMember(@Param("memberId") String memberId,@Param("groupId") int groupId);
 	void deleteSignInGroupReq(@Param("memberId") String memberId,@Param("groupId") int groupId);
-	int checkMemberHasGroup(String memberId);
+	ArrayList<Integer> checkMemberHasGroup(String memberId);
 
 }

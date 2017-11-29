@@ -13,11 +13,11 @@ public interface GroupStore {
 	int registMemberToGroup(String memberId,int groupId);
 	int updateGroup(Group group);
 	void deleteGroup(int groupId);
-	List<Group> retrieveAllmyGroups(String memberId);
+//	List<Group> retrieveAllmyGroups(String memberId);
 	Group retrieveGroupById(int groupId);
 	List<Group> retrieveAllGroupsByMemberId(String memberId);
 	List<Group> retrieveAllGroupsByName(String GroupName);
-	List<Group> retrieveMyInvitationsByMyMemberId(int memberId);
+	List<Group> retrieveMyInvitationsByMyMemberId(String memberId);
 	List<Record> retrieveAllRecordsByGroupId(int groupId);
 	void deleteMemberFromGroup(String memberId,int groupId);
 	void registInvite(String memberId,int groupId);

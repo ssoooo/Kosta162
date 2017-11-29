@@ -2,148 +2,158 @@ package GeneralAffairs.service.logic;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Member;
 import GeneralAffairs.service.MemberGroupService;
+import GeneralAffairs.store.GroupStore;
+import GeneralAffairs.store.MemberStore;
 
 public class MemberGroupServiceLogic implements MemberGroupService{
-
+	@Autowired
+	private MemberStore mStore;
+	@Autowired
+	private GroupStore gStore;
+	
 	@Override
 	public void createMember(Member member) {
-		// TODO Auto-generated method stub
+		mStore.registMember(member);
 		
 	}
 
 	@Override
 	public boolean modifyMember(Member member) {
-		// TODO Auto-generated method stub
-		return false;
+		int check = 0;
+		check = mStore.updateMember(member);
+		return check > 0;
 	}
 
 	@Override
 	public void removeMember(String memberId) {
-		// TODO Auto-generated method stub
+		mStore.deleteMember(memberId);
 		
 	}
 
 	@Override
 	public Member findMemberById(String memberId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return mStore.retrieveMemberById(memberId);
 	}
 
 	@Override
 	public List<Member> findAllMembersByGroup(int groupId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return mStore.retrieveAllMembersByGroup(groupId);
 	}
 
 	@Override
 	public List<Member> findAllMembersByEvent(int eventId) {
-		// TODO Auto-generated method stub
-		return null;
+	
+		return mStore.retrieveMembersByEvent(eventId);
 	}
 
 	@Override
 	public List<Member> findAllSignInGroupReq(int groupId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return mStore.retrieveAllSignInGroupReq(groupId);
 	}
 
 	@Override
-	public void tradeGrade(String memberId, int groupId) {
-		// TODO Auto-generated method stub
+	public void tradeGrade(String memberId, int groupId, String grade) {
+		mStore.updateGrade(memberId, groupId, grade);
 		
 	}
 
 	@Override
 	public void reqSignInGroup(String memberId, int groupId) {
-		// TODO Auto-generated method stub
+		mStore.registReqSignInMember(memberId, groupId);
 		
 	}
 
 	@Override
 	public void denySignInGroupReq(String memberId, int groupId) {
-		// TODO Auto-generated method stub
+		mStore.deleteSignInGroupReq(memberId, groupId);
 		
 	}
 
 	@Override
 	public void createGroup(Group group) {
-		// TODO Auto-generated method stub
+		gStore.registGroup(group);
 		
 	}
 
 	@Override
-	public boolean createMemberToGroup(String memberId, int groupId, String grade) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean createMemberToGroup(String memberId, int groupId) {
+		int check = 0;
+		check = gStore.registMemberToGroup(memberId, groupId);
+		return check>0;
 	}
 
 	@Override
 	public boolean modifyGroup(Group group) {
-		// TODO Auto-generated method stub
-		return false;
+		int check = 0;
+		check = gStore.updateGroup(group);
+		
+		return check>0;
 	}
 
 	@Override
 	public void removeGroup(int groupId) {
-		// TODO Auto-generated method stub
+		gStore.deleteGroup(groupId);
 		
 	}
 
-	@Override
-	public List<Group> findAllMyGroups(String memberId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+//	@Override
+//	public List<Group> findAllMyGroups(String memberId) {
+//		
+//		return null;
+//	}
 
 	@Override
 	public Group findGroupById(int groupId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return gStore.retrieveGroupById(groupId);
 	}
 
 	@Override
 	public List<Group> findAllGroupsByMemberId(String memberId) {
-		// TODO Auto-generated method stub
-		return null;
+		return gStore.retrieveAllGroupsByMemberId(memberId);
 	}
 
 	@Override
 	public List<Group> findAllGroupsByGroupName(String groupName) {
-		// TODO Auto-generated method stub
-		return null;
+		return gStore.retrieveAllGroupsByName(groupName);
 	}
 
 	@Override
 	public List<Group> findMyInvitationsByMemberId(String memberId) {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return gStore.retrieveMyInvitationsByMyMemberId(memberId);
 	}
 
 	@Override
 	public void removeMemberFromGroup(String memberId, int groupId) {
-		// TODO Auto-generated method stub
+		gStore.deleteMemberFromGroup(memberId, groupId);
 		
 	}
 
 	@Override
 	public void acceptInvite(String memberId, int groupId) {
-		// TODO Auto-generated method stub
+		gStore.registInvite(memberId, groupId);
 		
 	}
 
 	@Override
 	public void denyInvite(String memberId, int groupId) {
-		// TODO Auto-generated method stub
+		gStore.deleteInvite(memberId, groupId);
 		
 	}
 
 	@Override
-	public boolean modifyGroupBalance(Group group, int price) {
-		// TODO Auto-generated method stub
-		return false;
+	public void modifyGroupBalance(Group group) {
+		gStore.updateGroupBalance(group);
+		
 	}
 	
 	

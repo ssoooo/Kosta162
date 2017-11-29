@@ -8,7 +8,7 @@
   <insert id="registComment" parameterType="Comment">
   INSERT INTO
   comment_table(commentId,recordId,memberId,content,regDate)
-  VALUES(comment_seq.nextval,#{recordId},#{memberId},SYSDATE)
+  VALUES(comments_seq.nextval,#{recordId},#{memberId},#{content},SYSDATE)
   </insert>
   
   <update id="updateComment" parameterType="Comment">
