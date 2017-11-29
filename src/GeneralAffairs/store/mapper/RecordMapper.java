@@ -16,16 +16,26 @@ public interface RecordMapper {
 	Record retrieveRecordById(int recordId);
 	List<Record> retrieveAllRecordsByEventId(int eventId);
 	List<Record> retrieveAllRecordsByGroupId(int groupId);
-	List<Record> retrieveRecordsByPeriod(@Param("date")Date date,@Param("accounting")String accounting);
-	List<Record> retrieveRecordsByCategory(@Param("category")String category,@Param("accounting")String accounting,@Param("date")Date date);
-	int retrieveGroupAccountingResult(@Param("accounting")String accounting,@Param("groupId")int groupId,@Param("date")Date date);
-	int retrieveEventAccountingResult(@Param("accounting")String accounting,@Param("eventId")int eventId,@Param("date")Date date);
-	List<Record> retrieveGroupStatsRecordByEvent(@Param("accounting")String accounting,@Param("date")Date date,@Param("groupId")int groupId);
-	List<Record> retrieveGroupStatsRecordByCategory(@Param("category")String category,@Param("date")Date date,@Param("accounting")String accounting,@Param("groupId")int groupId);
-	List<Record> retrieveGroupStatsRecordByPeriod(@Param("date")Date date,@Param("accounting")String accounting,@Param("groupId")int groupId);
+	
+	List<Record> retrieveRecordsByDay(@Param("sDate")Date sDate,@Param("fDate")Date fDate,@Param("accounting")String accounting);
+	List<Record> retrieveRecordsByWeek(@Param("sDate")Date sDate,@Param("fDate")Date fDate,@Param("accounting")String accounting);
+	List<Record> retrieveRecordsByMonth(@Param("sDate")Date sDate,@Param("fDate")Date fDate,@Param("accounting")String accounting);
+	
+	List<Record> retrieveRecordsByCategoryDay(@Param("category")String category,@Param("accounting")String accounting,@Param("sDate")Date sDate,@Param("fDate")Date fDate);
+	List<Record> retrieveRecordsByCategoryWeek(@Param("category")String category,@Param("accounting")String accounting,@Param("sDate")Date sDate,@Param("fDate")Date fDate);
+	List<Record> retrieveRecordsByCategoryMonth(@Param("category")String category,@Param("accounting")String accounting,@Param("sDate")Date sDate,@Param("fDate")Date fDate);
+	
+	int retrieveGroupAccountingResultDay(@Param("accounting")String accounting,@Param("groupId")int groupId,@Param("sDate")Date sDate,@Param("fDate")Date fDate);
+	int retrieveGroupAccountingResultWeek(@Param("accounting")String accounting,@Param("groupId")int groupId,@Param("sDate")Date sDate,@Param("fDate")Date fDate);
+	int retrieveGroupAccountingResultMonth(@Param("accounting")String accounting,@Param("groupId")int groupId,@Param("sDate")Date sDate,@Param("fDate")Date fDate);
+	
+	int retrieveEventAccountingResult(@Param("accounting")String accounting,@Param("eventId")int eventId,@Param("sDate")Date sDate,@Param("fDate")Date fDate);
+	List<Record> retrieveGroupStatsRecordByEvent(@Param("accounting")String accounting,@Param("sDate")Date sDate,@Param("fDate")Date fDate,@Param("groupId")int groupId);
+	List<Record> retrieveGroupStatsRecordByCategory(@Param("category")String category,@Param("sDate")Date sDate,@Param("fDate")Date fDate,@Param("accounting")String accounting,@Param("groupId")int groupId);
+	List<Record> retrieveGroupStatsRecordByPeriod(@Param("sDate")Date sDate,@Param("fDate")Date fDate,@Param("accounting")String accounting,@Param("groupId")int groupId);
 	List<Record> retrieveGroupStatsRecordByAccounting(@Param("groupId")int groupId,@Param("accounting")String accounting);
-	List<Record> retrieveEventStatsRecordByPeriod(@Param("accounting")String accounting,@Param("date")Date date,@Param("eventId")int eventId);
-	List<Record> retrieveEventStatsRecordByCategory(@Param("category")String category,@Param("accounting")String accounting,Date date,@Param("eventId")int eventId);
+	List<Record> retrieveEventStatsRecordByPeriod(@Param("accounting")String accounting,@Param("sDate")Date sDate,@Param("fDate")Date fDate,@Param("eventId")int eventId);
+	List<Record> retrieveEventStatsRecordByCategory(@Param("category")String category,@Param("accounting")String accounting,@Param("sDate")Date sDate,@Param("fDate")Date fDate,@Param("eventId")int eventId);
 	List<Record> retrieveEventStatsRecordByAccounting(@Param("accounting")String accounting,@Param("eventId")int eventId);
 
 }

@@ -54,43 +54,43 @@ public class RecordServiceLogic implements RecordService{
 	}
 
 	@Override
-	public List<Record> findRecordsByPeriod(Date date, String accounting) {
+	public List<Record> findRecordsByPeriod(Date sDate,Date fDate, String accounting) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Record> findRecordsByCategory(String category, String accounting, Date date) {
+	public List<Record> findRecordsByCategory(String category, String accounting,Date sDate,Date fDate) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public int findGroupAccountingResult(String accounting, int groupId, Date date) {
+	public int findGroupAccountingResult(String accounting, int groupId,Date sDate,Date fDate) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public int findEventAccountingResult(String accounting, int eventId, Date date) {
+	public int findEventAccountingResult(String accounting, int eventId,Date sDate,Date fDate) {
 		// TODO Auto-generated method stub
 		return 0;
 	}
 
 	@Override
-	public List<Record> findGroupStatsRecordByEvent(String accounting, Date date, int groupId) {
+	public List<Record> findGroupStatsRecordByEvent(String accounting,Date sDate,Date fDate, int groupId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Record> findGroupStatsRecordByCategory(String category, Date date, String accounting, int groupId) {
+	public List<Record> findGroupStatsRecordByCategory(String category,Date sDate,Date fDate, String accounting, int groupId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Record> findGroupStatsRecordByPeriod(Date date, String accounting, int groupId) {
+	public List<Record> findGroupStatsRecordByPeriod(Date sDate,Date fDate, String accounting, int groupId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -102,13 +102,13 @@ public class RecordServiceLogic implements RecordService{
 	}
 
 	@Override
-	public List<Record> findEventStatsRecordByPeriod(String accounting, Date date, int eventId) {
+	public List<Record> findEventStatsRecordByPeriod(String accounting,Date sDate,Date fDate, int eventId) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Record> findEventStatsRecordByCategory(String category, String accounting, Date date, int eventId) {
+	public List<Record> findEventStatsRecordByCategory(String category, String accounting,Date sDate,Date fDate, int eventId) {
 		// TODO Auto-generated method stub
 		return null;
 	}

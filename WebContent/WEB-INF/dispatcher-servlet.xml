@@ -12,9 +12,9 @@
 	
 
 	<mvc:resources location="/resource/" mapping="/resource/**"/>
-	<context:component-scan base-package="GeneralAffairs"/>
-	<!--<context:component-scan base-package="GeneralAffairs.service.logic"/>
-	<context:component-scan base-package="GeneralAffairs.store.logic"/>  -->
+	<context:component-scan base-package="GeneralAffairs.controller"/>
+	<context:component-scan base-package="GeneralAffairs.service.logic"/>
+	<context:component-scan base-package="GeneralAffairs.store.logic"/>
 
 </beans>
 <!-- 원래 여기서 Bean 등록을 해야함(안하는 대신 component-scan으로 해당 패키지에서 찾도록 함)  -->
