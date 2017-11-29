@@ -9,6 +9,7 @@ import GeneralAffairs.domain.Comment;
 import GeneralAffairs.service.CommentService;
 
 @Controller
+@RequestMapping("comment")
 public class CommentController{
 	
 	@Autowired

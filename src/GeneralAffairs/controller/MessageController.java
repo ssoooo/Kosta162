@@ -9,58 +9,56 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import GeneralAffairs.domain.Message;
 import GeneralAffairs.service.MessageService;
 
 @Controller
+@RequestMapping("message")
 public class MessageController {
 	
 	@Autowired
-	private MessageService service;
+	private MessageService messageService;
 
 	
-	@RequestMapping("/sendCollection.do")
+	@RequestMapping("sendCollection.do")
 	public String sendCollectionMessage(HttpServletRequest req, List<String> receivedMember, Message message) {
 		
 		return "";
 	}
 	
-	@RequestMapping("/sendStats.do")
+	@RequestMapping("sendStats.do")
 	public String sendStatsMessage(HttpServletRequest req, List<String> receivedMember, Message message) {
 		
 		return "";
 	}
 	
-	@RequestMapping("/deleteMyMessage.do")
+	@RequestMapping("deleteMyMessage.do")
 	public String deleteMyMessage(int messageId, HttpSession session) {
 		
 		return "";
 	}
 	
-	@RequestMapping("/sendMessage.do")
+	@RequestMapping("sendMessage.do")
 	public String showSendMessage(HttpSession session,List<String> receivedMember, Model model) {
 		
 		return "";
 	}
 	
-	@RequestMapping("/receivedMessage.do")
+	@RequestMapping("receivedMessage.do")
 	public String showReceivedMessage(Message message, Model model) {
 		
 		return "";
 	}
 	
-	@RequestMapping("/allMyMessages.do")
+	@RequestMapping(value="allMyMessages.do", method=RequestMethod.GET)
 	public String showAllMyMessage(HttpSession session, Model model) {
 		
-		session.setAttribute("id", "kang");
-		session.setAttribute("name", "daniel");
+		List<Message> messages = messageService.findAllMyMessages("kang");
 		
-		String memberId = "kang";		
-		List<Message> messages = service.findAllMyMessages(memberId);
+		System.out.println(messages.size());
 		
-		
-		
-		return "redirect:/board/list.do";
+		return "group/group";
 	}
 }

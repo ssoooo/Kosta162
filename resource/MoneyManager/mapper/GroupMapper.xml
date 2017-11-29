@@ -4,7 +4,10 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="GeneralAffairs.store.mapper.GroupMapper">
 
-
+	<resultMap type="Group" id="groupMap">
+    	<result property="date" column="regDate"/>
+    </resultMap>
+   	
 	<insert id="registGroup" parameterType="Group">
 		INSERT INTO
 		group_table(groupId,memberId,groupName,account,groupIntroduce,regDate)
@@ -36,9 +39,8 @@
 		WHERE memberId=#{memberId}
 	</select>
 -->
-	<select id="retrieveGroupById" parameterType="int" resultType="Group">
-		SELECT
-		groupId,memberId,groupName,account,groupIntroduce,balance,regDate
+	<select id="retrieveGroupById" parameterType="int" resultMap="groupMap">
+		SELECT groupId, memberId, groupName, account, groupIntroduce, regDate, balance
 		FROM group_table
 		WHERE groupId=#{groupId}
 	</select>

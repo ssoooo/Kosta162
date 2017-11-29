@@ -114,7 +114,6 @@ public class MemberGroupServiceLogic implements MemberGroupService{
 
 	@Override
 	public Group findGroupById(int groupId) {
-		
 		return gStore.retrieveGroupById(groupId);
 	}
 

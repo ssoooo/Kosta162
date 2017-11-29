@@ -1,16 +1,14 @@
-<!DOCTYPE HTML>
-<!--
-	Verti by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 <html>
 	<head>
-		<title>Verti by HTML5 UP</title>
+		<title>Group Detail</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="../../resources/assets/css/main.css" />
+		<link rel="stylesheet" href="../resources/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 	</head>
 	<body class="no-sidebar">
@@ -23,7 +21,7 @@
 						<!-- Logo -->
 							<div id="logo">
 								<h1><a href="main.html">Verti</a></h1>
-								<span>Kosta 162기</span>
+								<span>${group.groupName }</span>
 							</div>
 
 						<!-- Nav -->
@@ -33,20 +31,15 @@
 								<li>
 									<a href="main.html">Message</a>
 									<ul class="ul_accept">
+									<c:forEach items="${messages }" var="message" >
 										<p class="group_invite_list">
-											제목
+											${message.title }
 											<div class="accept_reject">
 												<a href="">보기</a>
 												<a href="">삭제</a>
 											</div>
 										</p>
-										<p class="group_invite_list">
-											제목
-											<div class="accept_reject">
-												<a href="">보기</a>
-												<a href="">삭제</a>
-											</div>
-										</p>
+									</c:forEach>
 									</ul>
 								</li>
 								<li class="current"><a href="login.html">Logout</a></li>
@@ -71,19 +64,19 @@
 								<tbody>
 								<tr>
 									<th class="info_first">모임생성일</th>
-									<td class="info_detail_first">2017.11.19</td>
+									<td class="info_detail_first">${group.date }</td>
 								</tr>
 								<tr>
 									<th class="info">모임인원</th>
-									<td class="info_detail">8명</td>
+									<td class="info_detail">${memberNum }명</td>
 								</tr>
 								<tr>
 									<th class="info">총무</th>
-									<td class="info_detail">이호정</td>
+									<td class="info_detail">${manager.name }</td>
 								</tr>
 								<tr>
 									<th class="info">총무계좌</th>
-									<td class="info_detail">142-11-1112345</td>
+									<td class="info_detail">${manager.account }</td>
 								</tr>
 								</tbody>
 							</table>
@@ -100,24 +93,7 @@
 							<hr>
 							<div class="introduce_content">
 							<p>
-								This is <strong>Coffeelike</strong>, a two column CSS template by
-								<a href="http://templated.co" rel="nofollow">TEMPLATED</a> with photos from
-								<a href="http://www.pdphoto.org/">PDPhoto</a>. It's released (for free) under the
-								<a href="http://templated.co/license/">Creative Commons Attribution license</a>,
-								so feel free to use it for any personal or commercial work (just give us credit for it).
-								Hit up our <a href="http://templated.co">website</a> for more awesomely
-								cool free templates, and follow us on <a href="http://twitter.com/templatedco">Twitter</a>
-								(<a href="http://twitter.com/templatedco">@templatedco</a>) for updates, announcements, and other
-								mildly interesting ramblings.
-								This is <strong>Coffeelike</strong>, a two column CSS template by
-								<a href="http://templated.co" rel="nofollow">TEMPLATED</a> with photos from
-								<a href="http://www.pdphoto.org/">PDPhoto</a>. It's released (for free) under the
-								<a href="http://templated.co/license/">Creative Commons Attribution license</a>,
-								so feel free to use it for any personal or commercial work (just give us credit for it).
-								Hit up our <a href="http://templated.co">website</a> for more awesomely
-								cool free templates, and follow us on <a href="http://twitter.com/templatedco">Twitter</a>
-								(<a href="http://twitter.com/templatedco">@templatedco</a>) for updates, announcements, and other
-								mildly interesting ramblings.
+								${group.groupIntroduce }
 							</p>
 							</div>
 						</div>
@@ -128,36 +104,9 @@
 							<hr>
 							<div class="scroll">
 							<ul>
-								<li>
-									백민지
-								</li>
-								<li>
-									이호정
-								</li>
-								<li>
-									양희수
-								</li>
-								<li>
-									성우형 
-								</li>
-								<li>
-									백민지
-								</li>
-								<li>
-									이호정
-								</li>
-								<li>
-									양희수
-								</li>
-								<li>
-									이호정
-								</li>
-								<li>
-									양희수
-								</li>
-								<li>
-									성우형
-								</li>
+							<c:forEach items="${members }" var="member">
+								<li><a href="${pageContext.request.contextPath}/memberGroup/memberDetail.do?groupId=${member.memberId }">${member.name }</a></li>
+							</c:forEach>
 							</ul>
 							</div>
 							<div class="btn_hor">
@@ -189,12 +138,12 @@
 
 		<!-- Scripts -->
 
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
+			<script src="../resources/assets/js/jquery.min.js"></script>
+			<script src="../resources/assets/js/jquery.dropotron.min.js"></script>
+			<script src="../resources/assets/js/skel.min.js"></script>
+			<script src="../resources/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
+			<script src="../resources/assets/js/main.js"></script>
 
 	</body>
 </html>

@@ -1,11 +1,13 @@
-<!DOCTYPE HTML>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>Group</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="../../resources/assets/css/main2.css" />
+		<link rel="stylesheet" href="../resources/assets/css/main2.css" />
 	</head>
 	<body class="left-sidebar">
 		<div id="page-wrapper">
@@ -17,7 +19,7 @@
 					<!-- Logo -->
 					<div id="logo">
 						<h1><a href="main.html">알뜰총雜</a></h1>
-						<span>Kosta 162기</span>
+						<span>${group.groupName }</span>
 					</div>
 					
 					<!-- Nav -->
@@ -25,22 +27,17 @@
 						  <ul>
 							<li><a href="main.html">Home</a></li>
 							<li>
-								<a href="main.html">Message</a>
+								<a href="#">Message</a>
 								<ul class="ul_accept">
+								<c:forEach items="${messages }" var="message" >
 									<p class="group_invite_list">
-										제목
+										${message.title }
 										<div class="accept_reject">
 											<a href="">보기</a>
 											<a href="">삭제</a>
 										</div>
 									</p>
-									<p class="group_invite_list">
-										제목
-										<div class="accept_reject">
-											<a href="">보기</a>
-											<a href="">삭제</a>
-										</div>
-									</p>
+								</c:forEach>
 								</ul>
 							</li>
 							<li class="current"><a href="login.html">Logout</a></li>
@@ -58,10 +55,10 @@
 							<!-- Sidebar -->
 							<div id="sidebar">
 								<section>
-									<h2>게시판</h2>
+									<h2>이벤트</h2>
 									<ul class="style2">
 										<li><a href="group.html"><h3>전체 보기</h3></a></li>
-										<li><a href="event.html"><h3>신입생 환영회<a href="eventDetail.html"><img class="event_info" src="assets/css/images/info.png"/></a></h3></a></li>
+										<li><a href="event.html"><h3>신입생 환영회<a href="eventDetail.html"><img class="event_info" src="../resources/assets/css/images/info.png"/></a></h3></a></li>
 										<li><a href="event.html"><h3>신입생 엠티</h3></a></li>
 										<li><a href="event.html"><h3>체육대회</h3></a></li>
 									</ul>
@@ -74,7 +71,7 @@
 						<div class="8u 12u$(medium) important(medium)">
 							<div id="content">
 
-								<div> <h3>전체 보기</h3></div>
+								<div> <h3>${group.groupName }<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${group.groupId }"><img style="width:20px;" src="../resources/assets/css/images/info.png"/></a></h3></div>
 									<table>
 										<tr class="aa">
 											<th class="table_head"><span>번호</span></th>
@@ -164,12 +161,12 @@
 			
 		<!-- Scripts -->
 
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
+			<script src="../resources/assets/js/jquery.min.js"></script>
+			<script src="../resources/assets/js/jquery.dropotron.min.js"></script>
+			<script src="../resources/assets/js/skel.min.js"></script>
+			<script src="../resources/assets/js/util.js"></script>
+			<!--[if lte IE 8]><script src="../../resources/assets/js/ie/respond.min.js"></script><![endif]-->
+			<script src="../resources/assets/js/main.js"></script>
 
 	</body>
 </html>
