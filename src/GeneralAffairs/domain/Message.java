@@ -12,8 +12,6 @@ public class Message {
 	private double collectionPerMember;
 	private Date date;
 	
-	
-	
 	public int getMessageId() {
 		return messageId;
 	}
