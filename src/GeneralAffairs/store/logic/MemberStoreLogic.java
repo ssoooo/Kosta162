@@ -1,5 +1,6 @@
 package GeneralAffairs.store.logic;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -112,12 +113,12 @@ public class MemberStoreLogic implements MemberStore{
 	}
 
 	@Override
-	public int updateGrade(String memberId, int groupId) {
+	public int updateGrade(String memberId, int groupId, String grade) {
 		int check = 0;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 			MemberMapper mapper =session.getMapper(MemberMapper.class);
-			check=mapper.updateGrade(memberId, groupId);
+			check=mapper.updateGrade(memberId, groupId, grade);
 			if(check>0) {
 				session.commit();
 			}
@@ -159,13 +160,13 @@ public class MemberStoreLogic implements MemberStore{
 	}
 
 	@Override
-	public int checkMemberHasGroup(String memberId) {
-		int check=0;
+	public ArrayList<Integer> checkMemberHasGroup(String memberId) {
+		ArrayList<Integer> list = new ArrayList<Integer>();
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			check=mapper.checkMemberHasGroup(memberId);
-			if(check>0) {
+			list=mapper.checkMemberHasGroup(memberId);
+			if(list.size()>0) {
 				session.commit();
 			}
 		}finally {
@@ -174,7 +175,7 @@ public class MemberStoreLogic implements MemberStore{
 
 		
 		
-		return check;
+		return list;
 	}
 
 	@Override

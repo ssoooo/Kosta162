@@ -2,6 +2,7 @@ package storeTest;
 
 import static org.junit.Assert.*;
 
+<<<<<<< HEAD
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -114,6 +115,12 @@ public class RecordStoreLogicTest {
 		
 	}
 	
+=======
+import org.junit.Test;
+
+public class RecordStoreLogicTest {
+
+>>>>>>> master
 	@Test
 	public void testRegistRecord() {
 		fail("Not yet implemented");
@@ -131,6 +138,7 @@ public class RecordStoreLogicTest {
 
 	@Test
 	public void testRetrieveRecordById() {
+<<<<<<< HEAD
 //		List<String> foodIds = foodStore.retrieveSixteenFoodsDesc();
 //		assertEquals(2, foodIds.size());
 //		assertEquals("1", list.get(0).getFoodId());
@@ -143,6 +151,9 @@ public class RecordStoreLogicTest {
 		assertEquals(1, record.getEventId());
 		assertEquals("³³ºÎ", record.getAccounting());
 		assertEquals("Á¤»ó", record.getCaution());
+=======
+		fail("Not yet implemented");
+>>>>>>> master
 	}
 
 	@Test
@@ -156,6 +167,7 @@ public class RecordStoreLogicTest {
 	}
 
 	@Test
+<<<<<<< HEAD
 	public void testRetrieveRecordsByDay() {
 		fail("Not yet implemented");
 	}
@@ -216,16 +228,27 @@ public class RecordStoreLogicTest {
 
 	@Test
 	public void testRetrieveGroupAccountingResultDay() {
+=======
+	public void testRetrieveRecordsByPeriod() {
+>>>>>>> master
 		fail("Not yet implemented");
 	}
 
 	@Test
+<<<<<<< HEAD
 	public void testRetrieveGroupAccountingResultWeek() {
+=======
+	public void testRetrieveRecordsByCategory() {
+>>>>>>> master
 		fail("Not yet implemented");
 	}
 
 	@Test
+<<<<<<< HEAD
 	public void testRetrieveGroupAccountingResultMonth() {
+=======
+	public void testRetrieveGroupAccountingResult() {
+>>>>>>> master
 		fail("Not yet implemented");
 	}
 

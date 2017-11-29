@@ -1,5 +1,6 @@
 package GeneralAffairs.store;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import GeneralAffairs.domain.Member;
@@ -12,10 +13,10 @@ public interface MemberStore {
 	Member retrieveMemberById(String memberId);
 	List<Member> retrieveAllMembersByGroup(int groupId);
 	List<Member> retrieveMembersByEvent(int eventId);
-	int updateGrade(String memberId,int groupId);
+	int updateGrade(String memberId,int groupId,String grade);
 	List<Member> retrieveAllSignInGroupReq(int groupId);
 	void registReqSignInMember(String memberId,int groupId);
 	void deleteSignInGroupReq(String memberId,int groupId);
-	int checkMemberHasGroup(String memberId);
+	ArrayList<Integer> checkMemberHasGroup(String memberId);
 
 }
