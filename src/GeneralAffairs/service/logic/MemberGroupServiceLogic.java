@@ -2,10 +2,13 @@ package GeneralAffairs.service.logic;
 
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Member;
 import GeneralAffairs.service.MemberGroupService;
 
+@Service
 public class MemberGroupServiceLogic implements MemberGroupService{
 
 	@Override

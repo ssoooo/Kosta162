@@ -26,6 +26,8 @@ public class EventStoreLogicTest {
 		event.setGroupId(2);
 		event.setMemberId("민지짱1");
 		event.setEventName("신입생환영회1");
+		event.setBudget(10000);
+		event.setGroupSupport(10000);
 		assertNotNull(event);
 		assertEquals("민지짱1", event.getMemberId());
 		eventStore.registEvent(event);

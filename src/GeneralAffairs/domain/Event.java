@@ -9,6 +9,8 @@ public class Event {
 	private String memberId;
 	private double balance;
 	private String eventName;
+	private double budget;
+	private double groupSupport;
 	private double collection;
 	private double collectionPerMember;
 	private Date date;
@@ -61,6 +63,18 @@ public class Event {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	public double getBudget() {
+		return budget;
+	}
+	public void setBudget(double budget) {
+		this.budget = budget;
+	}
+	public double getGroupSupport() {
+		return groupSupport;
+	}
+	public void setGroupSupport(double groupSupport) {
+		this.groupSupport = groupSupport;
 	}
 
 }

@@ -11,8 +11,8 @@
 
 	<insert id="registEvent" parameterType="Event">
 		INSERT INTO
-		event_table(eventId,groupId,memberId,eventName,regDate)
-		VALUES(event_seq.nextval,#{groupId},#{memberId},#{eventName},SYSDATE)
+		event_table(eventId,groupId,memberId,eventName,regDate,budget,groupSupport)
+		VALUES(event_seq.nextval,#{groupId,jdbcType=VARCHAR},#{memberId,jdbcType=VARCHAR},#{eventName,jdbcType=VARCHAR},SYSDATE,#{budget,jdbcType=VARCHAR},#{groupSupport,jdbcType=VARCHAR})
 	</insert>
 
 	<update id="updateEvent" parameterType="Event">
@@ -38,7 +38,7 @@
 		eventId,groupId,memberId,balance,eventName,collection,regDate
 		FROM
 		event_table
-		WHERE groupId=#{groupId}
+		WHERE groupId=#{groupId,jdbcType=VARCHAR}
 	</select>
 
 	<delete id="deleteMemberFromEvent" parameterType="map">

@@ -30,10 +30,9 @@ public class EventServiceLogic implements EventService{
 
 	@Override
 	public boolean modifyEvent(Event event) {
-//		Event eventho = eventStore.retrieveEventById(event.getEventId());
-//		eventho.setEventName(event.getEventName());
-//		return eventStore.updateEvent(eventho) > 0;
-		return eventStore.updateEvent(event) > 0;
+		int check = 0;
+		check = eventStore.updateEvent(event);
+		return check > 0;
 	}
 
 	@Override
@@ -63,21 +62,21 @@ public class EventServiceLogic implements EventService{
 
 	@Override
 	public boolean addEventBalanceToGroupBalance(int eventId, int groupId) {
+		int check = 0;
 		Event event = eventStore.retrieveEventById(eventId);
 		Group group = groupStore.retrieveGroupById(groupId);
 		
-		double eventB = event.getBalance();
-		double groupB = group.getBalance();
+//		double eventB = event.getBalance();
+//		double groupB = group.getBalance();
+//		
+//		eventB += groupB;
+//		group.setBalance(groupB);
 		
-		eventB += groupB;
-		group.setBalance(groupB);
+		double sum = event.getBalance() + group.getBalance();
+		group.setBalance(sum);
 		
-		
-//		double sum = event.getBalance() + group.getBalance();
-//		group.setBalance(sum);
-		groupStore.updateGroupBalance(group);
-		
-		return false;
+		check = groupStore.updateGroupBalance(group);
+		return check > 0;
 	}
 
 	@Override

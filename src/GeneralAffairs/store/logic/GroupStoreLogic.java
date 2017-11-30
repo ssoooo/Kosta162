@@ -2,8 +2,6 @@ package GeneralAffairs.store.logic;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
@@ -218,8 +216,8 @@ public class GroupStoreLogic implements GroupStore{
 	}
 
 	@Override
-	public void updateGroupBalance(Group group) {
-		
+	public int updateGroupBalance(Group group) {
+		int check =0;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 			GroupMapper mapper = session.getMapper(GroupMapper.class);
@@ -228,7 +226,7 @@ public class GroupStoreLogic implements GroupStore{
 		}finally {
 			session.close();
 		}
-		
+		return check;
 	}
 
 	
