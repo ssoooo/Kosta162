@@ -63,8 +63,8 @@ public interface RecordMapper {
 	
 	
 	
-	int retrieveGroupStatsRecordByEventMonth(String accounting,Date sDate,Date fDate,int groupId,int eventId);//기간에 따른 이벤트별 수입 혹은 지출 합계 가져오기(월)
-	int retrieveGroupStatsRecordByEventYear(String accounting,Date sDate,Date fDate,int groupId,int eventId);//기간에 따른 이벤트별 수입 혹은 지출 합계 가져오기(년)
+	List<Record> retrieveGroupStatsRecordByEvent(String accounting,Date sDate,Date fDate,int groupId,int eventId);//기간에 따른 이벤트별 수입 혹은 지출 합계 가져오기
+	
 	
 	int retrieveGroupStatsRecordByCategoryMonth(String category,Date sDate,Date fDate,String accounting,int groupId);//수입,지출에 따른 카테고리별 모임의 달금액합계 가져오기
 	int retrieveGroupStatsRecordByCategoryYear(String category,Date sDate,Date fDate,String accounting,int groupId);//수입,지출에 따른 카테고리별 모임의 달금액합계 가져오기

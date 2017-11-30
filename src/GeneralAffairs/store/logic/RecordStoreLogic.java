@@ -205,31 +205,20 @@ public class RecordStoreLogic implements RecordStore{
 	}
 
 	@Override
-	public int retrieveGroupStatsRecordByEventMonth(String accounting,Date sDate,Date fDate, int groupId,int eventId) {
-		int sum=0;
+	public List<Record> retrieveGroupStatsRecordByEvent(String accounting,Date sDate,Date fDate, int groupId,int eventId) {
+		List<Record> records = null;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		sum=mapper.retrieveGroupStatsRecordByEventMonth(accounting,sDate,fDate, groupId,eventId);
+		records=mapper.retrieveGroupStatsRecordByEvent(accounting,sDate,fDate, groupId,eventId);
 		}finally {
 			session.close();
 		}
-		return sum;
+		return records;
 	}
 	
 	
-	@Override
-	public int retrieveGroupStatsRecordByEventYear(String accounting,Date sDate,Date fDate, int groupId,int eventId) {
-		int sum=0;
-		SqlSession session = SessionFactory.getInstance().getSession();
-		try {
-		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		sum=mapper.retrieveGroupStatsRecordByEventYear(accounting,sDate,fDate, groupId,eventId);
-		}finally {
-			session.close();
-		}
-		return sum;
-	}
+	
 
 	@Override
 	public int retrieveGroupStatsRecordByCategoryMonth(String category,Date sDate,Date fDate, String accounting, int groupId) {
