@@ -9,12 +9,17 @@
 		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 	
-	
 
-	<mvc:resources location="/resource/" mapping="/resource/**"/>
+	<mvc:annotation-driven/>
+
+	<mvc:resources location="/resources/" mapping="/resources/**"/>
+	
 	<context:component-scan base-package="GeneralAffairs"/>
-	<!--<context:component-scan base-package="GeneralAffairs.service.logic"/>
-	<context:component-scan base-package="GeneralAffairs.store.logic"/>  -->
+
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/views/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+
 
 </beans>
-<!-- 원래 여기서 Bean 등록을 해야함(안하는 대신 component-scan으로 해당 패키지에서 찾도록 함)  -->
