@@ -115,3 +115,7 @@ CREATE SEQUENCE record_seq START WITH 1 INCREMENT BY 1;
 CREATE SEQUENCE event_seq START WITH 1 INCREMENT BY 1;
 
 commit;
+
+ALTER TABLE group_table ADD groupImage varchar(300);
+
+commit;

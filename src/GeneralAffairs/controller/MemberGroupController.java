@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Member;
@@ -148,11 +149,14 @@ public class MemberGroupController {
 	///
 	
 	@RequestMapping("/registGroup.do")
-	public String registGroup(Group group, HttpSession session) {
+	public String registGroup(Group group, HttpSession session, HttpServletRequest req) {
 		
+		group.setMemberId((String) session.getAttribute("loginedMemberId"));
+		System.out.println("groupName:" + group.getGroupName());
+		System.out.println("groupAccount:" + group.getAccount());
+		System.out.println("groupIntroduce:" + group.getGroupIntroduce());
 		
-		
-		return "";
+		return "redirect:/memberGroup/main.do";
 	}
 	
 	@RequestMapping("/registGroupAndJoinMember.do")
@@ -214,13 +218,13 @@ public class MemberGroupController {
 		
 		return "";
 	}
-	
+/*	
 	@RequestMapping("/myInvitations.do")
 	public String showMyInvitations(String memberId,Model model) {
 		
 		return "";
 	}
-	
+*/
 	@RequestMapping("/searchMember.do")
 	public String searchMember(String memberId,Model model) {
 		
@@ -234,23 +238,37 @@ public class MemberGroupController {
 	}
 	
 	@RequestMapping("/searchAllGroups.do")
-	public String SearchAllGroups(String groupName,Model model) {
+	public String SearchAllGroups(HttpSession session, @RequestParam("groupNameInput") String groupName, Model model) {
+		/*
+		HttpServletRequest req 를 parameter로 받아올 경우 다음과 같이 가능
+		List<Group> groups = mgService.findAllGroupsByGroupName(req.getParameter("groupNameInput"));
+		 */		
+		String memberId = (String) session.getAttribute("loginedMemberId");
+		List<Group> groups = mgService.findAllGroupsByGroupName(groupName);
+		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(memberId);
 		
-		return "";
+		model.addAttribute("groups", groups);
+		model.addAttribute("groupsInvited", groupsInvited);
+		model.addAttribute("groupName", groupName);
+
+		return "group/searchGroup";
 	}
 	
 	@RequestMapping("/main.do")
 	public String showMain(HttpSession session, Model model) {
 				
-		List<Group> groups = mgService.findAllGroupsByMemberId((String) session.getAttribute("loginedMemberId"));
+		String memberId = (String) session.getAttribute("loginedMemberId");
+		List<Group> groups = mgService.findAllGroupsByMemberId(memberId);
+		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(memberId);
 		
+		model.addAttribute("groupsInvited", groupsInvited);
 		model.addAttribute("groups", groups);
 		
 		return "member/main";
 	}
 	
 	@RequestMapping("/group.do")
-	public String showGroup(int groupId,Model model) {
+	public String showGroup(int groupId, Model model) {
 		Group group = mgService.findGroupById(groupId);
 		List<Message> messages = messageService.findAllMyMessages("kang");
 		

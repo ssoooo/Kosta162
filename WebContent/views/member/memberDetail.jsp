@@ -15,6 +15,8 @@
 		<div id="page-wrapper">
 
  <%@ include file="../../header/header.jspf"%>
+
+
 			<!-- Header -->
 				<div id="header-wrapper">
 					<header id="header" class="container">
