@@ -3,20 +3,16 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc"
-	xmlns:util="http://www.springframework.org/schema/util"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
-		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
-		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
-		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
-
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
 	<mvc:annotation-driven/>
-	
+
 	<mvc:resources location="/resources/" mapping="/resources/**"/>
-	
-	<context:component-scan base-package="GeneralAffairs"/>
-	<context:component-scan base-package="GeneralAffairs.controller"/>
-	<context:component-scan base-package="GeneralAffairs.service.logic"/>
-	<context:component-scan base-package="GeneralAffairs.store.logic"/>  
+
+	<context:component-scan base-package="controller"/>
+	<context:component-scan base-package="service.logic"/>
+	<context:component-scan base-package="store.logic"/>
 
 </beans>
-<!-- 원래 여기서 Bean 등록을 해야함(안하는 대신 component-scan으로 해당 패키지에서 찾도록 함)  -->
