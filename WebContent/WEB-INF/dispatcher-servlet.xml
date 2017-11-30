@@ -10,7 +10,7 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
 	
 	<mvc:annotation-driven/>
-	
+
 	<mvc:resources location="/resources/" mapping="/resources/**"/>
 	
 	<context:component-scan base-package="GeneralAffairs"/>

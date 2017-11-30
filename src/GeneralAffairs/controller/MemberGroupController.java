@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Member;
@@ -27,22 +28,36 @@ public class MemberGroupController {
 	@Autowired
 	private MessageService messageService;
 	
-	@RequestMapping()
+	@RequestMapping(value="login.do", method=RequestMethod.GET)
 	public String showLoginForm() {
 		
-		return "";
+		return "redirect:/views/member/login.jsp";
 	}
 	
-	@RequestMapping("/login.do")
-	public String login(Member member,HttpServletRequest req,Model model) {
+	@RequestMapping(value="views/member/login.do", method=RequestMethod.POST)
+	public String login(String memberId,String userPassword,HttpServletRequest req,Model model) {
 		
-		return "";
+		Member member = new Member();
+		member = mgService.findMemberById(memberId);
+		if(member!=null && userPassword.equals(member.getPassword())){
+		
+		HttpSession session =req.getSession();
+		session.setAttribute("loginedMemberId", member.getMemberId());	
+		
+		}else{
+			HttpSession session = req.getSession();
+			session.invalidate();
+			return "redirect:/views/member/login.jsp";
+		}
+		
+		return "redirect:/main.jsp";
 	}
 	
 	@RequestMapping("/logout.do")
 	public String logout(HttpServletRequest req) {
-		
-		return "";
+		HttpSession session = req.getSession();
+		session.invalidate();
+		return "redirect:/main.jsp";
 	}
 	
 	@RequestMapping("/modifyMember.do")
@@ -75,9 +90,21 @@ public class MemberGroupController {
 		return "";
 	}
 	
+	@RequestMapping(value="/myDetail.do", method=RequestMethod.GET)
+	public String showMyDetail(HttpSession session,Model model) {
+		Member member = new Member();
+		
+		String myId = (String)session.getAttribute("loginedMemberId");
+		member = mgService.findMemberById(myId);
+		
+		model.addAttribute("member", member);
+		return "views/member/memberDetail.jsp";
+	}	
+	
 	@RequestMapping("/memberDetail.do")
 	public String showMemberDetail(String memberId,Model model) {
-		
+		Member member = new Member();
+		mgService.findMemberById(memberId);
 		return "";
 	}
 	
