@@ -32,11 +32,10 @@
 		WHERE memberId=#{memberId} AND messageId=#{messageId}
 	</delete>
 
-	<select id="retrieveAllMyMessages" parameterType="String"
-		resultType="Message">
-		SELECT memberId,messageId
-		FROM messageMember_table
-		WHERE memberId=#{memberId}
+	<select id="retrieveAllMyMessages" parameterType="String" resultType="Message">
+		SELECT a.messageId, a.eventId, a.sendmemberId, a.title, a.content, a.regdate
+		FROM message_table a, messageMember_table b
+		WHERE a.messageId = b.messageId and b.memberId=#{memberId}
 	</select>
 
 </mapper>

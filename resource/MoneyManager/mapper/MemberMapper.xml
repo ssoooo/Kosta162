@@ -8,7 +8,6 @@
 		INSERT INTO
 		member_table(memberId,password,nickname,name,email,account,phoneNumber)
 		VALUES(#{memberId},#{password},#{nickname},#{name},#{email},#{account},#{phoneNumber})
-
 	</insert>
 
 	<update id="updateMember" parameterType="Member">
@@ -34,11 +33,10 @@
 		WHERE memberId=#{memberId}
 	</select>
 
-	<select id="retrieveAllMembersByGroup" parameterType="int"
-		resultType="Member">
-		SELECT groupId,memberId,grade
-		FROM groupMember_table
-		WHERE groupId=#{groupId}
+	<select id="retrieveAllMembersByGroup" parameterType="int" resultType="Member">
+		SELECT m.memberId, m.password, m.nickname, m.name, m.email, m.account, m.phoneNumber
+		FROM member_table m, groupMember_table g
+		WHERE m.memberId= g.memberId and groupId=#{groupId}
 	</select>
 
 	<select id="retrieveMembersByEvent" parameterType="int"

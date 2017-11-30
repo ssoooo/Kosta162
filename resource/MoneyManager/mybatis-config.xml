@@ -3,14 +3,13 @@
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-config.dtd">
-  
-  
+ 
   <configuration>
   <properties resource="MoneyManager/dataresource.properties"/>
   
-   <typeAliases>
-  <typeAlias type="GeneralAffairs.domain.Event" alias="Event"/>
-   <typeAlias type="GeneralAffairs.domain.Message" alias="Message"/>
+  <typeAliases>
+  	<typeAlias type="GeneralAffairs.domain.Event" alias="Event"/>
+   	<typeAlias type="GeneralAffairs.domain.Message" alias="Message"/>
     <typeAlias type="GeneralAffairs.domain.Comment" alias="Comment"/>
     <typeAlias type="GeneralAffairs.domain.Record" alias="Record"/>
     <typeAlias type="GeneralAffairs.domain.Group" alias="Group"/>
@@ -18,31 +17,24 @@
   </typeAliases>
   
   <environments default="development">
-  <environment id="development">
-  <transactionManager type="JDBC"/>
-  <dataSource type="POOLED">
-  <property name="driver" value="${driver}"/>
-  <property name="url" value="${url}"/>
-  <property name="username" value="${username}"/>
-  <property name="password" value="${password}"/>
-  
-  </dataSource>
-  
-  </environment>
-  
-  
-  
+	<environment id="development">
+		<transactionManager type="JDBC"/>
+		<dataSource type="POOLED">
+			<property name="driver" value="${driver}"/>
+			<property name="url" value="${url}"/>
+			<property name="username" value="${username}"/>
+			<property name="password" value="${password}"/>
+		</dataSource>
+	</environment>
   </environments>
   
- 
-  
   <mappers>
-   <mapper resource="MoneyManager/mapper/EventMapper.xml"/>
-   <mapper resource="MoneyManager/mapper/CommentMapper.xml"/>
-   <mapper resource="MoneyManager/mapper/GroupMapper.xml"/>
-   <mapper resource="MoneyManager/mapper/MessageMapper.xml"/>
-   <mapper resource="MoneyManager/mapper/MemberMapper.xml"/>
-   <mapper resource="MoneyManager/mapper/RecordMapper.xml"/>
+  	<mapper resource="MoneyManager/mapper/EventMapper.xml"/>
+   	<mapper resource="MoneyManager/mapper/CommentMapper.xml"/>
+   	<mapper resource="MoneyManager/mapper/GroupMapper.xml"/>
+   	<mapper resource="MoneyManager/mapper/MessageMapper.xml"/>
+   	<mapper resource="MoneyManager/mapper/MemberMapper.xml"/>
+   	<mapper resource="MoneyManager/mapper/RecordMapper.xml"/>
   </mappers>
   
   </configuration>
