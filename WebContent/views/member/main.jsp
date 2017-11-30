@@ -1,16 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE HTML>
-
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>My Page</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="resources/assets/css/main2.css" />
+		<link rel="stylesheet" href="../resources/assets/css/main2.css" />
 	</head>
 	<body class="homepage">
-	<%@ include file="header/header.jspf"%>
+<%@ include file="../../header/header.jspf"%>
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -67,8 +66,10 @@
 							</div>
 							<div class="5u 12u(medium)">
 								<ul>
-									<li><a href="registGroup.html" class="button big icon fa-arrow-circle-right">모임 생성</a></li>
-									<li><a href="myDetail.do" class="button alt big icon fa-question-circle">내 정보</a></li>
+
+									<li><a href="${pageContext.request.contextPath}/memberGroup/showRegistGroup.do" class="button big icon fa-arrow-circle-right">모임 생성</a></li>
+									<li><a href="${pageContext.request.contextPath}/memberGroup/myDetail.do" class="button alt big icon fa-question-circle">내 정보</a></li>
+
 								</ul>
 							</div>
 						</div>
@@ -83,7 +84,7 @@
 
 								<!-- Box -->
 									<section class="box feature">
-										<a href="group.html" class="image featured"><img src="resources/images/pic01.jpg" alt="" /></a>
+										<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=1" class="image featured"><img src="../resources/images/pic01.jpg" alt="" /></a>
 										<div class="inner">
 											<header>
 												<h2>Group1</h2></header>
@@ -95,7 +96,7 @@
 
 								<!-- Box -->
 									<section class="box feature">
-										<a href="group.html" class="image featured"><img src="resources/images/pic02.jpg" alt="" /></a>
+										<a href="group.html" class="image featured"><img src="../resources/images/pic02.jpg" alt="" /></a>
 										<div class="inner">
 											<header>
 												<h2>Group2</h2></header>
@@ -107,7 +108,7 @@
 
 								<!-- Box -->
 									<section class="box feature">
-										<a href="group.html" class="image featured"><img src="resources/images/pic03.jpg" alt="" /></a>
+										<a href="group.html" class="image featured"><img src="../resources/images/pic03.jpg" alt="" /></a>
 										<div class="inner">
 												<header>
 													<h2>Group3</h2>
@@ -139,12 +140,12 @@
 
 		<!-- Scripts -->
 
-			<script src="resources/assets/js/jquery.min.js"></script>
-			<script src="resources/assets/js/jquery.dropotron.min.js"></script>
-			<script src="resources/assets/js/skel.min.js"></script>
-			<script src="resources/assets/js/util.js"></script>
+			<script src="../resources/assets/js/jquery.min.js"></script>
+			<script src="../resources/assets/js/jquery.dropotron.min.js"></script>
+			<script src="../resources/assets/js/skel.min.js"></script>
+			<script src="../resources/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="resources/assets/js/main.js"></script>
+			<script src="../resources/assets/js/main.js"></script>
 
 	</body>
 </html>

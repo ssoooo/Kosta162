@@ -26,7 +26,7 @@
   <div class="card"></div>
   <div class="card">
     <h1 class="title">Login</h1>
-    <form action="login.do" method="post">
+    <form action="${pageContext.request.contextPath}/memberGroup/login.do" method="post">
       <div class="input-container">
         <input type="text" id="memberId" name="memberId" required="required"/>
         <label for="memberId">Username</label>
