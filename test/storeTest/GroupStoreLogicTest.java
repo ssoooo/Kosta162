@@ -85,13 +85,15 @@ public class GroupStoreLogicTest {
 //	}
 //
 //	//testOk
-//	@Test
-//	public void testRetrieveAllGroupsByName() {
-//		List<Group> list = new ArrayList<Group>();
-//		list = store.retrieveAllGroupsByName("우형이그룹");
-//		assertEquals(3, list.size());
-//		
-//	}
+	
+	@Test
+	public void testRetrieveAllGroupsByName() {
+		List<Group> list = new ArrayList<Group>();
+		list = store.retrieveAllGroupsByName("kosta");
+		assertEquals(2, list.size());
+		
+	}
+	
 //
 //	//test Ok
 //	@Test

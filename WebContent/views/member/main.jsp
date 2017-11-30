@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -9,7 +10,7 @@
 		<link rel="stylesheet" href="../resources/assets/css/main2.css" />
 	</head>
 	<body class="homepage">
-<%@ include file="../../header/header.jspf"%>
+	<%@ include file="../../header/header.jspf"%>
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -18,7 +19,7 @@
 
 						<!-- Logo -->
 							<div id="logo">
-								<h1><a href="main.html">알뜰총雜</a></h1>
+								<h1><a href="main.jsp">알뜰총雜</a></h1>
 								<span>알뜰한 총무의 잡다한 가계부</span>
 							</div>
 
@@ -26,28 +27,23 @@
 							<nav id="nav">
 								<ul>
 									<li>
-										<a href="main.html">Invitation</a>
+										<a href="main.jsp">Invitation</a>
 										<ul class="ul_accept">
+										<c:forEach items="${groupsInvited }" var="group" >
 											<p class="group_invite_list">
-												모임명
+												${group.groupName }
 												<div class="accept_reject">
 													<a href="">수락</a>
 													<a href="">거절</a>
 												</div>
 											</p>
-											<p class="group_invite_list">
-												보노보노
-												<div class="accept_reject">
-													<a href="">수락</a>
-													<a href="">거절</a>
-												</div>
-											</p>
+										</c:forEach>
 										</ul>
 									</li>
 									<li><a href="main.html" >logout</a></li>
-									<form class="form_search">
+									<form action="${pageContext.request.contextPath}/memberGroup/searchAllGroups.do" method="post" class="form_search">
 										<li class="search_div">
-											<input type="text" style="width:160px; height:40px; margin-right:10px; float:left; margin-top:10px;">
+											<input type="text" name="groupNameInput" value="" style="width:160px; height:40px; margin-right:10px; float:left; margin-top:10px;">
 											<input class="current" type="submit" style="background-color:#444; height:40px; float:left; margin-top:10px; font-size:9pt;" value="검색">
 										</li>
 									</form>
@@ -78,43 +74,20 @@
 				<div id="features-wrapper">
 					<div class="container">
 						<div class="row">
+							
+							<c:forEach items="${groups }" var="group" >
 							<div class="4u 12u(medium)">
-
+							
 								<!-- Box -->
 									<section class="box feature">
-										<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=1" class="image featured"><img src="../resources/images/pic01.jpg" alt="" /></a>
+										<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${group.groupId }" class="image featured"><img src="../resources/images/pic01.jpg" alt="" /></a>
 										<div class="inner">
-											<header>
-												<h2>Group1</h2></header>
-											</div>
+											<header><h2>${group.groupName }</h2></header>
+										</div>
 									</section>
 
 							</div>
-							<div class="4u 12u(medium)">
-
-								<!-- Box -->
-									<section class="box feature">
-										<a href="group.html" class="image featured"><img src="../resources/images/pic02.jpg" alt="" /></a>
-										<div class="inner">
-											<header>
-												<h2>Group2</h2></header>
-											</div>
-									</section>
-
-							</div>
-							<div class="4u 12u(medium)">
-
-								<!-- Box -->
-									<section class="box feature">
-										<a href="group.html" class="image featured"><img src="../resources/images/pic03.jpg" alt="" /></a>
-										<div class="inner">
-												<header>
-													<h2>Group3</h2>
-												</header>
-											</div>
-									</section>
-
-							</div>
+							</c:forEach>
 						</div>
 					</div>
 				</div>

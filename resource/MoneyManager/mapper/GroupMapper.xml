@@ -10,8 +10,8 @@
    	
 	<insert id="registGroup" parameterType="Group">
 		INSERT INTO
-		group_table(groupId,memberId,groupName,account,groupIntroduce,regDate)
-		VALUES(group_seq.nextval,#{memberId},#{groupName},#{account},#{groupIntroduce},sysDate)
+		group_table(groupId,memberId,groupName,account,groupIntroduce,regDate,groupImage)
+		VALUES(group_seq.nextval,#{memberId},#{groupName},#{account},#{groupIntroduce},sysDate,#{groupImage})
 	</insert>
 
 	<insert id="registMemberToGroup" parameterType="map">
@@ -40,21 +40,19 @@
 	</select>
 -->
 	<select id="retrieveGroupById" parameterType="int" resultMap="groupMap">
-		SELECT groupId, memberId, groupName, account, groupIntroduce, regDate, balance
+		SELECT groupId, memberId, groupName, account, groupIntroduce, balance, regDate, groupImage
 		FROM group_table
-		WHERE groupId=#{groupId}
+		WHERE groupId=#{groupId }
 	</select>
 
-	<select id="retrieveAllGroupsByMemberId" parameterType="String"
-		resultType="Group">
-		SELECT groupId,memberId,grade
-		FROM groupMember_table
-		WHERE memberId=#{memberId}
+	<select id="retrieveAllGroupsByMemberId" parameterType="String" resultType="Group">
+		SELECT f.groupId, f.memberId, f.groupName, f.account, f.groupIntroduce, f.balance, f.regDate, f.groupImage
+		FROM group_table f, groupMember_table g
+		WHERE g.groupId = f.groupId and g.memberId=#{memberId }
 	</select>
 
-	<select id="retrieveAllGroupsByName" parameterType="String"
-		resultType="Group">
-		SELECT groupId,memberId,groupName,account,groupIntroduce,balance,regDate
+	<select id="retrieveAllGroupsByName" parameterType="String" resultType="Group">
+		SELECT groupId, memberId, groupName, account, groupIntroduce, balance, regDate, groupImage
 		FROM group_table
 		WHERE groupName LIKE '%'||#{groupName}||'%'
 	</select>
@@ -66,8 +64,7 @@
 		WHERE invite_table.receiveMemberId = #{memberId}
 	</select>
 
-	<select id="retrieveAllRecordsByGroupId" parameterType="int"
-		resultType="Record">
+	<select id="retrieveAllRecordsByGroupId" parameterType="int" resultType="Record">
 		SELECT
 		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,caution,price,category
 		FROM record_table
@@ -91,8 +88,8 @@
 	</delete>
 	
 	<update id="updateGroupBalance" parameterType="Group">
-	UPDATE group_table SET
-	balance=#{balance}
-	WHERE groupId=#{groupId}
+		UPDATE group_table SET
+		balance=#{balance}
+		WHERE groupId=#{groupId}
 	</update>
 </mapper>

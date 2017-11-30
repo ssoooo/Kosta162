@@ -12,7 +12,6 @@
 	</head>
 	<body class="no-sidebar">
 		<div id="page-wrapper">
-
  
 			<!-- Header -->
 				<div id="header-wrapper">

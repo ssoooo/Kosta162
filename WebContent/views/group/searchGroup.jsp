@@ -1,13 +1,16 @@
-<!DOCTYPE HTML>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>My Page</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="../../resources/assets/css/main2.css" />
+		<link rel="stylesheet" href="../resources/assets/css/main2.css" />
 	</head>
 	<body class="homepage">
+	<%@ include file="../../header/header.jspf"%>
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -26,26 +29,21 @@
 									<li>
 										<a href="main.html">Invitation</a>
 										<ul class="ul_accept">
+										<c:forEach items="${groupsInvited }" var="group" >
 											<p class="group_invite_list">
-												모임명
+												${group.groupName }
 												<div class="accept_reject">
 													<a href="">수락</a>
 													<a href="">거절</a>
 												</div>
 											</p>
-											<p class="group_invite_list">
-												보노보노
-												<div class="accept_reject">
-													<a href="">수락</a>
-													<a href="">거절</a>
-												</div>
-											</p>
+										</c:forEach>
 										</ul>
 									</li>
 									<li><a href="main.html" >logout</a></li>
-									<form class="form_search">
+									<form action="${pageContext.request.contextPath}/memberGroup/searchAllGroups.do" method="post" class="form_search">
 										<li class="search_div">
-											<input type="text" style="width:160px; height:40px; margin-right:10px; float:left; margin-top:10px;">
+											<input type="text" name="groupNameInput" value="${groupName }" style="width:160px; height:40px; margin-right:10px; float:left; margin-top:10px;">
 											<input class="current" type="submit" style="background-color:#444; height:40px; float:left; margin-top:10px; font-size:9pt;" value="검색">
 										</li>
 									</form>
@@ -60,7 +58,7 @@
 					<div id="banner" class="box container">
 						<div class="row">
 							<div class="7u 12u(medium)">
-								<h2>'...'검색 결과</h2>
+								<h2>'${groupName }'검색 결과</h2>
 							</div>
 							<div class="5u 12u(medium)"></div>
 						</div>
@@ -71,40 +69,18 @@
 				<div id="features-wrapper">
 					<div class="container">
 						<div class="row">
-						
+						<c:forEach items="${groups }" var="group" >
 							<div class="4u 12u(medium)">
 								<!-- Box -->
 									<section class="box feature">
-										<a href="groupDetail.html" class="image featured"><img src="images/pic01.jpg" alt="" /></a>
+										<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${group.groupId }" class="image featured"><img src="../resources/images/pic01.jpg" alt="" /></a>
 										<div class="inner">
 											<header>
-												<h2>Group1<button class="sign">가입신청</button></h2></header>
+												<h2>${group.groupName }<button class="sign">가입신청</button></h2></header>
 											</div>
 									</section>
 							</div>
-							
-							<div class="4u 12u(medium)">
-								<!-- Box -->
-									<section class="box feature">
-										<a href="groupDetail.html" class="image featured"><img src="images/pic02.jpg" alt="" /></a>
-										<div class="inner">
-											<header>
-												<h2>Group2<button class="sign">가입신청</button></h2></header>
-											</div>
-									</section>
-							</div>
-							
-							<div class="4u 12u(medium)">
-								<!-- Box -->
-									<section class="box feature">
-										<a href="groupDetail.html" class="image featured"><img src="images/pic03.jpg" alt="" /></a>
-										<div class="inner">
-											<header>
-												<h2>Group3<button class="sign">가입신청</button></h2></header>
-											</div>
-									</section>
-							</div>
-							
+							</c:forEach>
 						</div>
 					</div>
 				</div>
@@ -128,12 +104,12 @@
 
 		<!-- Scripts -->
 
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
+			<script src="../resources/assets/js/jquery.min.js"></script>
+			<script src="../resources/assets/js/jquery.dropotron.min.js"></script>
+			<script src="../resources/assets/js/skel.min.js"></script>
+			<script src="../resources/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="assets/js/main.js"></script>
+			<script src="../resources/assets/js/main.js"></script>
 
 	</body>
 </html>

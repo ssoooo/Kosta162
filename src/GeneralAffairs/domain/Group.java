@@ -11,7 +11,7 @@ public class Group {
 	private String groupIntroduce;
 	private Date date;
 	private double balance;
-	
+	private String groupImage;
 	
 	public int getGroupId() {
 		return groupId;
@@ -55,7 +55,11 @@ public class Group {
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
-
-	
+	public String getGroupImage() {
+		return groupImage;
+	}
+	public void setGroupImage(String groupImage) {
+		this.groupImage = groupImage;
+	}
 	
 }
