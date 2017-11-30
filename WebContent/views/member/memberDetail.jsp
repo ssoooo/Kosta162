@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -13,7 +14,7 @@
 	<body class="no-sidebar">
 		<div id="page-wrapper">
 
- 
+ <%@ include file="../../header/header.jspf"%>
 			<!-- Header -->
 				<div id="header-wrapper">
 					<header id="header" class="container">
@@ -78,33 +79,33 @@
 								</tr>
 								<tr>
 									<th class="info">별명</th>
-									<td class="info_detail">밍</td>
+									<td class="info_detail">${member.nickname }</td>
 								</tr>
 								
 								<tr>
 									<th class="info">이름</th>
-									<td class="info_detail">백민지</td>
+									<td class="info_detail">${member.name }</td>
 								</tr>
 								<tr>
 									<th class="info">이메일</th>
-									<td class="info_detail">jee@kosta.com</td>
+									<td class="info_detail">${member.email }</td>
 								</tr>
 								<tr>
 									<th class="info">계좌번호</th>
-									<td class="info_detail">123-13-142511</td>
+									<td class="info_detail">${member.account }</td>
 								</tr>
 								<tr>
 									<th class="info">휴대폰번호</th>
-									<td class="info_detail">010-2543-1321</td>
+									<td class="info_detail">${member.phoneNumber }</td>
 								</tr>
 								<tr>
 									<th class="info">가입한 모임</th>
-									<td class="info_detail"><a href="main.html">5</a>개</td>
+									<td class="info_detail"><a href="main.html">${fn:length(list) }</a>개</td>
 								</tr>
 								</tbody>
 							</table>
 							<div class="btn_hor">
-								<a href="modifyMember.html"><button class="btn_modify">수정</button></a>
+								<a href="showModifyMember.do?memberId=${member.memberId }"><button class="btn_modify">수정</button></a>
 								<a href="#"><button class="btn_delete">탈퇴</button></a>
 							</div>
 						</div>

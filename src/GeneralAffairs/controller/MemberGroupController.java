@@ -1,5 +1,6 @@
 package GeneralAffairs.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,7 +58,7 @@ public class MemberGroupController {
 	public String logout(HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		session.invalidate();
-		return "redirect:/main.jsp";
+		return "redirect:/views/member/main.jsp";
 	}
 	
 	@RequestMapping("/modifyMember.do")
@@ -68,8 +69,11 @@ public class MemberGroupController {
 	
 	@RequestMapping("/showModifyMember.do")
 	public String showModifyMember(String memberId,Model model) {
+		Member member = new Member();
+		member = mgService.findMemberById(memberId);
+		model.addAttribute("member", member);
 		
-		return "";
+		return "member.modifyMember";
 	}
 	
 	@RequestMapping("/deleteMember.do")
@@ -93,10 +97,12 @@ public class MemberGroupController {
 	@RequestMapping(value="/myDetail.do", method=RequestMethod.GET)
 	public String showMyDetail(HttpSession session,Model model) {
 		Member member = new Member();
-		
+		List<Group> list = new ArrayList<Group>();
 		String myId = (String)session.getAttribute("loginedMemberId");
-		member = mgService.findMemberById(myId);
+		list = mgService.findAllGroupsByMemberId(myId);
 		
+		member = mgService.findMemberById(myId);
+		model.addAttribute("list", list);
 		model.addAttribute("member", member);
 		return "member/memberDetail";
 	}	
