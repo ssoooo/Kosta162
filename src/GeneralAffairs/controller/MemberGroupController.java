@@ -34,8 +34,8 @@ public class MemberGroupController {
 		return "redirect:/views/member/login.jsp";
 	}
 	
-	@RequestMapping(value="views/member/login.do", method=RequestMethod.POST)
-	public String login(String memberId,String userPassword,HttpServletRequest req,Model model) {
+	@RequestMapping(value="/login.do", method=RequestMethod.POST)
+	public String login(String memberId, String userPassword, HttpServletRequest req, Model model) {
 		
 		Member member = new Member();
 		member = mgService.findMemberById(memberId);
@@ -50,7 +50,7 @@ public class MemberGroupController {
 			return "redirect:/views/member/login.jsp";
 		}
 		
-		return "redirect:/main.jsp";
+		return "redirect:/memberGroup/main.do";
 	}
 	
 	@RequestMapping("/logout.do")
@@ -98,7 +98,7 @@ public class MemberGroupController {
 		member = mgService.findMemberById(myId);
 		
 		model.addAttribute("member", member);
-		return "views/member/memberDetail.jsp";
+		return "member/memberDetail";
 	}	
 	
 	@RequestMapping("/memberDetail.do")
@@ -233,9 +233,13 @@ public class MemberGroupController {
 	}
 	
 	@RequestMapping("/main.do")
-	public String showMain(HttpSession session,Model model) {
+	public String showMain(HttpSession session, Model model) {
+				
+		List<Group> groups = mgService.findAllGroupsByMemberId((String) session.getAttribute("loginedMemberId"));
 		
-		return "";
+		model.addAttribute("groups", groups);
+		
+		return "member/main";
 	}
 	
 	@RequestMapping("/group.do")
