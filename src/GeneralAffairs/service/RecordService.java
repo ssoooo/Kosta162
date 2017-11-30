@@ -15,15 +15,15 @@ public interface RecordService {
 	Record findRecordById(int recordId);
 	List<Record> findAllRecordsByEventId(int eventId);
 	List<Record> findAllRecordsByGroupId(int groupId);
-	List<Record> findRecordsByPeriod(Date date,String accounting);
-	List<Record> findRecordsByCategory(String category,String accounting,Date date);
-	int findGroupAccountingResult(String accounting,int groupId,Date date);
-	int findEventAccountingResult(String accounting,int eventId,Date date);
-	List<Record> findGroupStatsRecordByEvent(String accounting,Date date,int groupId);
-	List<Record> findGroupStatsRecordByCategory(String category,Date date,String accounting,int groupId);
-	List<Record> findGroupStatsRecordByPeriod(Date date,String accounting,int groupId);
+	List<Record> findRecordsByPeriod(Date sDate,Date fDate,String accounting);
+	List<Record> findRecordsByCategory(String category,String accounting,Date sDate,Date fDate);
+	int findGroupAccountingResult(String accounting,int groupId,Date sDate,Date fDate);
+	int findEventAccountingResult(String accounting,int eventId,Date sDate,Date fDate);
+	List<Record> findGroupStatsRecordByEvent(String accounting,Date sDate,Date fDate,int groupId);
+	List<Record> findGroupStatsRecordByCategory(String category,Date sDate,Date fDate,String accounting,int groupId);
+	List<Record> findGroupStatsRecordByPeriod(Date sDate,Date fDate,String accounting,int groupId);
 	List<Record> findGroupStatsRecordByAccounting(int groupId,String accounting);
-	List<Record> findEventStatsRecordByPeriod(String accounting,Date date,int eventId);
-	List<Record> findEventStatsRecordByCategory(String category,String accounting,Date date,int eventId);
+	List<Record> findEventStatsRecordByPeriod(String accounting,Date sDate,Date fDate,int eventId);
+	List<Record> findEventStatsRecordByCategory(String category,String accounting,Date sDate,Date fDate,int eventId);
 	List<Record> findEventStatsRecordByAccounting(String accounting,int eventId);
 }

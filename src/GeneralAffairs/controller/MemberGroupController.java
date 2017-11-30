@@ -19,7 +19,7 @@ import GeneralAffairs.service.MemberGroupService;
 import GeneralAffairs.service.MessageService;
 
 @Controller
-//@RequestMapping("memberGroup")
+@RequestMapping("memberGroup")
 public class MemberGroupController {
 	
 	@Autowired

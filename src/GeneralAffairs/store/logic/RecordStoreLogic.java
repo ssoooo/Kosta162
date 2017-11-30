@@ -98,14 +98,31 @@ public class RecordStoreLogic implements RecordStore{
 		return records;
 	}
 
+	
+	
 	@Override
-	public List<Record> retrieveRecordsByPeriod(Date date, String accounting) {
+	public List<Record> retrieveRecordsByMonth(Date sDate,Date fDate, String accounting,int groupId) {
 		List<Record> records=null;
 		
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		records=mapper.retrieveRecordsByPeriod(date, accounting);
+		records=mapper.retrieveRecordsByMonth(sDate,fDate, accounting,groupId);
+		}finally {
+			session.close();
+		}
+		
+		return records;
+	}
+	
+	@Override
+	public List<Record> retrieveRecordsByYear(Date sDate,Date fDate, String accounting,int groupId) {
+		List<Record> records=null;
+		
+		SqlSession session = SessionFactory.getInstance().getSession();
+		try {
+		RecordMapper mapper =session.getMapper(RecordMapper.class);	
+		records=mapper.retrieveRecordsByYear(sDate,fDate, accounting,groupId);
 		}finally {
 			session.close();
 		}
@@ -113,146 +130,234 @@ public class RecordStoreLogic implements RecordStore{
 		return records;
 	}
 
-	@Override
-	public List<Record> retrieveRecordsByCategory(String category, String accounting, Date date) {
-		List<Record> records=null;
-		SqlSession session = SessionFactory.getInstance().getSession();
-		try {
-		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		records=mapper.retrieveRecordsByCategory(category, accounting, date);
-		}finally {
-			session.close();
-		}
-		
-		return records;
-	}
+//	@Override
+//	public List<Record> retrieveRecordsByCategoryDay(String category, String accounting,Date sDate,Date fDate) {
+//		List<Record> records=null;
+//		SqlSession session = SessionFactory.getInstance().getSession();
+//		try {
+//		RecordMapper mapper =session.getMapper(RecordMapper.class);	
+//		records=mapper.retrieveRecordsByCategoryDay(category, accounting,sDate,fDate);
+//		}finally {
+//			session.close();
+//		}
+//		
+//		return records;
+//	}
+//	
+//	@Override
+//	public List<Record> retrieveRecordsByCategoryWeek(String category, String accounting,Date sDate,Date fDate) {
+//		List<Record> records=null;
+//		SqlSession session = SessionFactory.getInstance().getSession();
+//		try {
+//		RecordMapper mapper =session.getMapper(RecordMapper.class);	
+//		records=mapper.retrieveRecordsByCategoryWeek(category, accounting,sDate,fDate);
+//		}finally {
+//			session.close();
+//		}
+//		
+//		return records;
+//	}
+//	
+//	@Override
+//	public List<Record> retrieveRecordsByCategoryMonth(String category, String accounting,Date sDate,Date fDate) {
+//		List<Record> records=null;
+//		SqlSession session = SessionFactory.getInstance().getSession();
+//		try {
+//		RecordMapper mapper =session.getMapper(RecordMapper.class);	
+//		records=mapper.retrieveRecordsByCategoryMonth(category, accounting,sDate,fDate);
+//		}finally {
+//			session.close();
+//		}
+//		
+//		return records;
+//	}
+	
+	
 
+	
 	@Override
-	public int retrieveGroupAccountingResult(String accounting, int groupId, Date date) {
+	public int retrieveGroupAccountingResult(String accounting, int groupId,Date sDate,Date fDate) {
 		int groupAccounting=0;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		groupAccounting=mapper.retrieveGroupAccountingResult(accounting, groupId, date);
+		groupAccounting=mapper.retrieveGroupAccountingResult(accounting, groupId,sDate,fDate);
 		}finally {
 			session.close();
 		}
 		return groupAccounting;
 	}
+	
+
 
 	@Override
-	public int retrieveEventAccountingResult(String accounting, int eventId, Date date) {
-		int eventAccounting=0;
+	public int retrieveEventAccountingResult(String accounting, int eventId,Date sDate,Date fDate) {
+		int sum=0;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		eventAccounting=mapper.retrieveEventAccountingResult(accounting, eventId, date);
+		sum=mapper.retrieveEventAccountingResult(accounting, eventId,sDate,fDate);
 		}finally {
 			session.close();
 		}
 		
-		return eventAccounting;
+		return sum;
 	}
 
 	@Override
-	public List<Record> retrieveGroupStatsRecordByEvent(String accounting, Date date, int groupId) {
-		List<Record> records=null;
+	public List<Record> retrieveGroupStatsRecordByEvent(String accounting,Date sDate,Date fDate, int groupId,int eventId) {
+		List<Record> records = null;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		records=mapper.retrieveGroupStatsRecordByEvent(accounting, date, groupId);
+		records=mapper.retrieveGroupStatsRecordByEvent(accounting,sDate,fDate, groupId,eventId);
 		}finally {
 			session.close();
 		}
 		return records;
 	}
+	
+	
+	
 
 	@Override
-	public List<Record> retrieveGroupStatsRecordByCategory(String category, Date date, String accounting, int groupId) {
-		List<Record> records=null;
+	public int retrieveGroupStatsRecordByCategoryMonth(String category,Date sDate,Date fDate, String accounting, int groupId) {
+		int sum=0;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		records=mapper.retrieveGroupStatsRecordByCategory(category, date, accounting, groupId);
+		sum=mapper.retrieveGroupStatsRecordByCategoryMonth(category,sDate,fDate, accounting, groupId);
 		}finally {
 			session.close();
 		}
 		
 		
-		return records;
+		return sum;
+	}
+	
+	
+	@Override
+	public int retrieveGroupStatsRecordByCategoryYear(String category,Date sDate,Date fDate, String accounting, int groupId) {
+		int sum=0;
+		SqlSession session = SessionFactory.getInstance().getSession();
+		try {
+		RecordMapper mapper =session.getMapper(RecordMapper.class);	
+		sum=mapper.retrieveGroupStatsRecordByCategoryYear(category,sDate,fDate, accounting, groupId);
+		}finally {
+			session.close();
+		}
+		
+		
+		return sum;
+	}
+	
+
+	@Override
+	public int retrieveGroupStatsRecordByMonth(Date sDate,Date fDate, String accounting, int groupId) {
+		int sum=0;
+		SqlSession session = SessionFactory.getInstance().getSession();
+		try {
+		RecordMapper mapper =session.getMapper(RecordMapper.class);	
+		sum=mapper.retrieveGroupStatsRecordByMonth(sDate,fDate, accounting, groupId);
+		}finally {
+			session.close();
+		}
+		
+		return sum;
+	}
+	
+	
+	@Override
+	public int retrieveGroupStatsRecordByYear(Date sDate,Date fDate, String accounting, int groupId) {
+		int sum=0;
+		SqlSession session = SessionFactory.getInstance().getSession();
+		try {
+		RecordMapper mapper =session.getMapper(RecordMapper.class);	
+		sum=mapper.retrieveGroupStatsRecordByYear(sDate,fDate, accounting, groupId);
+		}finally {
+			session.close();
+		}
+		
+		return sum;
+	}
+	
+	
+
+	@Override
+	public int retrieveGroupStatsRecordByAccounting(int groupId, String accounting) {
+
+		int sum = 0;
+		SqlSession session = SessionFactory.getInstance().getSession();
+		try {
+		RecordMapper mapper =session.getMapper(RecordMapper.class);	
+		sum=mapper.retrieveGroupStatsRecordByAccounting(groupId, accounting);
+		}finally {
+			session.close();
+		}
+		
+		return sum;
 	}
 
 	@Override
-	public List<Record> retrieveGroupStatsRecordByPeriod(Date date, String accounting, int groupId) {
-		List<Record> records=null;
+	public int retrieveEventStatsRecordByMonth(String accounting,Date sDate,Date fDate, int eventId) {
+		
+		int sum=0;
+		
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		records=mapper.retrieveGroupStatsRecordByPeriod(date, accounting, groupId);
+		sum=mapper.retrieveEventStatsRecordByMonth(accounting,sDate,fDate, eventId);
+		}finally {
+			session.close();
+		}
+		return sum;
+	}
+	
+	
+	@Override
+	public int retrieveEventStatsRecordByYear(String accounting,Date sDate,Date fDate, int eventId) {
+		
+		int sum=0;
+		
+		SqlSession session = SessionFactory.getInstance().getSession();
+		try {
+		RecordMapper mapper =session.getMapper(RecordMapper.class);	
+		sum=mapper.retrieveEventStatsRecordByYear(accounting,sDate,fDate, eventId);
+		}finally {
+			session.close();
+		}
+		return sum;
+	}
+	
+	
+
+	@Override
+	public int retrieveEventStatsRecordByCategory(String category, String accounting,Date sDate,Date fDate, int eventId) {
+		int sum = 0;
+		SqlSession session = SessionFactory.getInstance().getSession();
+		try {
+		RecordMapper mapper =session.getMapper(RecordMapper.class);	
+		sum=mapper.retrieveEventStatsRecordByCategory(category, accounting,sDate,fDate, eventId);
 		}finally {
 			session.close();
 		}
 		
-		return records;
+		return sum;
 	}
 
 	@Override
-	public List<Record> retrieveGroupStatsRecordByAccounting(int groupId, String accounting) {
-
-		List<Record> records=null;
+	public int retrieveEventStatsRecordByAccounting(String accounting, int eventId) {
+		
+		int sum = 0;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		records=mapper.retrieveGroupStatsRecordByAccounting(groupId, accounting);
+		sum=mapper.retrieveEventStatsRecordByAccounting(accounting, eventId);
 		}finally {
 			session.close();
 		}
 		
-		return records;
-	}
-
-	@Override
-	public List<Record> retrieveEventStatsRecordByPeriod(String accounting, Date date, int eventId) {
-		
-		List<Record> records=null;
-		
-		SqlSession session = SessionFactory.getInstance().getSession();
-		try {
-		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		records=mapper.retrieveEventStatsRecordByPeriod(accounting, date, eventId);
-		}finally {
-			session.close();
-		}
-		return records;
-	}
-
-	@Override
-	public List<Record> retrieveEventStatsRecordByCategory(String category, String accounting, Date date, int eventId) {
-		List<Record> records=null;
-		SqlSession session = SessionFactory.getInstance().getSession();
-		try {
-		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		records=mapper.retrieveEventStatsRecordByCategory(category, accounting, date, eventId);
-		}finally {
-			session.close();
-		}
-		
-		return records;
-	}
-
-	@Override
-	public List<Record> retrieveEventStatsRecordByAccounting(String accounting, int eventId) {
-		
-		List<Record> records=null;
-		SqlSession session = SessionFactory.getInstance().getSession();
-		try {
-		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		records=mapper.retrieveEventStatsRecordByAccounting(accounting, eventId);
-		}finally {
-			session.close();
-		}
-		
-		return records;
+		return sum;
 	}
 
 	@Override
