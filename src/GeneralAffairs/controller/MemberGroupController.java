@@ -130,7 +130,7 @@ public class MemberGroupController {
 	@RequestMapping("/showRegistGroup.do")
 	public String showRegistGroup(String memberId,Model model) {
 		
-		return "";
+		return "redirect:/views/group/registGroup.jsp";
 	}
 	
 	@RequestMapping("/modifyGroup.do")
