@@ -12,7 +12,6 @@ import GeneralAffairs.store.MessageStore;
 import GeneralAffairs.store.factory.SessionFactory;
 import GeneralAffairs.store.mapper.MessageMapper;
 
-
 @Repository
 public class MessageStoreLogic implements MessageStore{
 

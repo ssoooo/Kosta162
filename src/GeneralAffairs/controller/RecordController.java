@@ -17,6 +17,7 @@ import GeneralAffairs.service.MemberGroupService;
 import GeneralAffairs.service.RecordService;
 
 @Controller
+@RequestMapping("record")
 public class RecordController {
 	
 	@Autowired
@@ -71,37 +72,37 @@ public class RecordController {
 		return "";
 	}
 	
-	@RequestMapping("/registGroupRecord.do")
+	@RequestMapping("/showRegistGroupRecord.do")
 	public String showRegistGroupRecord(int groupId,Model model) {
 		
 		return "";
 	}
 	
-	@RequestMapping("/registEventRecord.do")
+	@RequestMapping("/showRegistEventRecord.do")
 	public String showRegistEventRecord(int eventId,Model model) {
 		
 		return "";
 	}
 	
-	@RequestMapping("/registRecordByMessage.do")
+	@RequestMapping("/showRegistRecordByMessage.do")
 	public String showRegistRecordByMessage(Message message,Model model) {
 		
 		return "";
 	}
 	
-	@RequestMapping("/recordDetail.do")
+	@RequestMapping("/showRecordDetail.do")
 	public String showRecordDetail(int recordId,Model model) {
 		
 		return"";
 	}
 	
-	@RequestMapping("/modifyEventRecord.do")
+	@RequestMapping("/showModifyEventRecord.do")
 	public String showModifyEventRecord(int recordId,int eventId,Model model) {
 		
 		return "";
 	}
 	
-	@RequestMapping("/modifyGroupRecord.do")
+	@RequestMapping("/showModifyGroupRecord.do")
 	public String showModifyGroupRecord(int recordId,int groupId,Model model) {
 		
 		return "";

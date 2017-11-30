@@ -14,5 +14,4 @@ public interface MessageStore {
 	void registMessageWithMember(String memberId,int messageId);
 	void deleteMessageWithMember(String memberId,int messageId);
 	List<Message> retrieveAllMyMessages(String memberId);
-
 }

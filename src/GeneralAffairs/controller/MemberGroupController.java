@@ -1,42 +1,63 @@
 package GeneralAffairs.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Member;
-
+import GeneralAffairs.domain.Message;
 import GeneralAffairs.service.MemberGroupService;
-
+import GeneralAffairs.service.MessageService;
 
 @Controller
+@RequestMapping("memberGroup")
 public class MemberGroupController {
 	
 	@Autowired
-	private MemberGroupService msService; 
+	private MemberGroupService mgService; 
 	
+	@Autowired
+	private MessageService messageService;
 	
-	@RequestMapping()
+	@RequestMapping(value="login.do", method=RequestMethod.GET)
 	public String showLoginForm() {
 		
-		return "";
+		return "redirect:/views/member/login.jsp";
 	}
 	
-	@RequestMapping("/login.do")
-	public String login(Member member,HttpServletRequest req,Model model) {
+	@RequestMapping(value="/login.do", method=RequestMethod.POST)
+	public String login(String memberId, String userPassword, HttpServletRequest req, Model model) {
 		
-		return "";
+		Member member = new Member();
+		member = mgService.findMemberById(memberId);
+		if(member!=null && userPassword.equals(member.getPassword())){
+		
+		HttpSession session =req.getSession();
+		session.setAttribute("loginedMemberId", member.getMemberId());	
+		
+		}else{
+			HttpSession session = req.getSession();
+			session.invalidate();
+			return "redirect:/views/member/login.jsp";
+		}
+		
+		return "redirect:/memberGroup/main.do";
 	}
 	
 	@RequestMapping("/logout.do")
 	public String logout(HttpServletRequest req) {
-		
-		return "";
+		HttpSession session = req.getSession();
+		session.invalidate();
+		return "redirect:/main.jsp";
 	}
 	
 	@RequestMapping("/modifyMember.do")
@@ -45,7 +66,7 @@ public class MemberGroupController {
 		return "";
 	}
 	
-	@RequestMapping("/modifyMember.do")
+	@RequestMapping("/showModifyMember.do")
 	public String showModifyMember(String memberId,Model model) {
 		
 		return "";
@@ -63,15 +84,27 @@ public class MemberGroupController {
 		return "";
 	}
 	
-	@RequestMapping("/tradeGrade.do")
+	@RequestMapping("/showTradeGrade.do")
 	public String showTradeGrade(int groupId,Model model) {
 		
 		return "";
 	}
 	
+	@RequestMapping(value="/myDetail.do", method=RequestMethod.GET)
+	public String showMyDetail(HttpSession session,Model model) {
+		Member member = new Member();
+		
+		String myId = (String)session.getAttribute("loginedMemberId");
+		member = mgService.findMemberById(myId);
+		
+		model.addAttribute("member", member);
+		return "member/memberDetail";
+	}	
+	
 	@RequestMapping("/memberDetail.do")
 	public String showMemberDetail(String memberId,Model model) {
-		
+		Member member = new Member();
+		mgService.findMemberById(memberId);
 		return "";
 	}
 	
@@ -107,9 +140,10 @@ public class MemberGroupController {
 	
 	///
 	
-	
 	@RequestMapping("/registGroup.do")
-	public String registGroup(Group group,HttpSession session) {
+	public String registGroup(Group group, HttpSession session) {
+		
+		
 		
 		return "";
 	}
@@ -120,10 +154,10 @@ public class MemberGroupController {
 		return "";
 	}
 	
-	@RequestMapping("/registGroup.do")
+	@RequestMapping("/showRegistGroup.do")
 	public String showRegistGroup(String memberId,Model model) {
 		
-		return "";
+		return "redirect:/views/group/registGroup.jsp";
 	}
 	
 	@RequestMapping("/modifyGroup.do")
@@ -132,7 +166,7 @@ public class MemberGroupController {
 		return "";
 	}
 	
-	@RequestMapping("/modifyGroup.do")
+	@RequestMapping("/showModifyGroup.do")
 	public String showModifyGroup(int groupId,Model model) {
 		
 		return "";
@@ -186,7 +220,7 @@ public class MemberGroupController {
 		return "";
 	}
 	
-	@RequestMapping("/searchMember.do")
+	@RequestMapping("/showSearchMember.do")
 	public String showSearchMember() {
 		
 		return "";
@@ -199,22 +233,40 @@ public class MemberGroupController {
 	}
 	
 	@RequestMapping("/main.do")
-	public String showMain(HttpSession session,Model model) {
+	public String showMain(HttpSession session, Model model) {
+				
+		List<Group> groups = mgService.findAllGroupsByMemberId((String) session.getAttribute("loginedMemberId"));
 		
-		return "";
+		model.addAttribute("groups", groups);
+		
+		return "member/main";
 	}
 	
 	@RequestMapping("/group.do")
 	public String showGroup(int groupId,Model model) {
+		Group group = mgService.findGroupById(groupId);
+		List<Message> messages = messageService.findAllMyMessages("kang");
 		
-		return "";
+		model.addAttribute("group", group);
+		model.addAttribute("messages", messages);
+		
+		return "group/group";
 	}
 	
 	@RequestMapping("/groupDetail.do")
-	public String showGroupDetail(int groupId,Model model) {
+	public String showGroupDetail(int groupId, Model model) {
+		Group group = mgService.findGroupById(groupId);
+		List<Message> messages = messageService.findAllMyMessages("kang");
+		List<Member> members = mgService.findAllMembersByGroup(groupId);
+		Member manager = mgService.findMemberById(group.getMemberId());
 		
-		return "";
+		model.addAttribute("group", group);
+		model.addAttribute("messages", messages);
+		model.addAttribute("memberNum", members.size());
+		model.addAttribute("members", members);
+		model.addAttribute("manager", manager);
+		
+		return "group/groupDetail";
 	}
-	
 
 }

@@ -66,8 +66,12 @@
 							</div>
 							<div class="5u 12u(medium)">
 								<ul>
+
+
 									<li><a href="${pageContext.request.contextPath}/memberGroup/showRegistGroup.do" class="button big icon fa-arrow-circle-right">모임 생성</a></li>
 									<li><a href="${pageContext.request.contextPath}/memberGroup/myDetail.do" class="button alt big icon fa-question-circle">내 정보</a></li>
+
+
 								</ul>
 							</div>
 						</div>
