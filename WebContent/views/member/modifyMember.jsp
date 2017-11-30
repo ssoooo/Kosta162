@@ -30,15 +30,15 @@
           <h1>멤버 수정</h1>
         </div>
         <div class="col-md-6 col-md-offset-3">
-          <form role="form">
+          <form role="form" action="${pageContext.request.contextPath }/memberGroup/modifyMember.do" method="post" >
             <div class="form-group">
-              <label for="InputEmail">아이디</label>
-              <input type="email" class="form-control" id="InputId" placeholder="아이디">
-				<p class="help-block">사용 가능한 아이디입니다.</p>
+              <label for="InputEmail">닉네임</label>
+              <input type="email" class="form-control" id="InputId" name="nickname" placeholder="${member.nickname }입니다. 새 닉네임을 입력하세요">
+				<p class="help-block">사용 가능한 별명입니다.</p>
 			</div>
             <div class="form-group">
               <label for="InputPassword1">비밀번호</label>
-              <input type="password" class="form-control" id="InputPassword1" placeholder="비밀번호">
+              <input type="password" class="form-control" id="InputPassword1" name="password" placeholder="비밀번호">
 			</div>
             <div class="form-group">
               <label for="InputPassword2">비밀번호 확인</label>
@@ -47,11 +47,11 @@
 			</div>
             <div class="form-group">
               <label for="username">이름</label>
-              <input type="text" class="form-control" id="username" placeholder="이름을 입력해 주세요">
+              <input type="text" class="form-control" id="username" name="name" placeholder="${member.name }입니다. 새 이름을 입력하세요">
             </div>
             <div class="form-group">
               <label for="InputEmail">이메일 주소</label>
-              <input type="email" class="form-control" id="InputEmail" placeholder="이메일 주소">
+              <input type="email" class="form-control" id="InputEmail" name = "email" placeholder="${member.email }입니다. 새 이메일 주소를 입력하세요">
             </div>
             <div class="form-group">
               <label for="username">계좌번호</label><br />

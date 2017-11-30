@@ -69,11 +69,12 @@ public class MemberGroupController {
 	
 	@RequestMapping("/showModifyMember.do")
 	public String showModifyMember(String memberId,Model model) {
+		System.out.println(memberId);
 		Member member = new Member();
 		member = mgService.findMemberById(memberId);
 		model.addAttribute("member", member);
 		
-		return "member.modifyMember";
+		return "member/modifyMember";
 	}
 	
 	@RequestMapping("/deleteMember.do")
