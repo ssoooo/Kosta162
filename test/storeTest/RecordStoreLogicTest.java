@@ -2,11 +2,12 @@ package storeTest;
 
 import static org.junit.Assert.*;
 
-<<<<<<< HEAD
+import org.junit.Test;
 import java.sql.Date;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.Before;
@@ -17,95 +18,6 @@ import GeneralAffairs.store.RecordStore;
 import GeneralAffairs.store.logic.RecordStoreLogic;
 
 public class RecordStoreLogicTest {
-
-//	private FoodStore foodStore;
-//	private CustomerStore customerStore;
-//	private CommentStore commentStore;
-//	
-//	@Before
-//	public void setUp() {
-//		foodStore = new FoodStoreLogic();
-//		customerStore = new CustomerStoreLogic();
-//		commentStore = new CommentStoreLogic();
-//	}
-//	
-//	@Test
-//	public void testRegistFood() {
-//		Food food = new Food();
-//		food.setCustomerId("yang");
-//		food.setFoodContent("chicken");	
-//		food.setBound("n");
-//		food.setImage("1.jpg");
-//		foodStore.registFood(food);
-//	}
-
-//	@Test
-//	public void testUpdateFood() {
-//		Food food = new Food();
-//		food.setFoodId("15");
-//		food.setBound("y");
-//		foodStore.updateFood(food);
-//	}
-	
-//	@Test
-//	public void testDeleteFood() {
-//		Food food = new Food();
-//		food.setFoodId("3");
-//		foodStore.deleteFood(food.getFoodId());
-//	}
-
-//	@Test
-//	public void testRetrieveFoodsByCustomerId() {
-//		List<Food> list = foodStore.retrieveFoodsByCustomerId("jimin");
-//
-//		assertEquals("∏¿≥™¥Ÿ", list.get(0).getFoodContent());
-//		assertEquals(2, list.size());
-//	}
-
-//	@Test
-//	public void testRetrieveFoodByFoodId() {
-//		Food food = foodStore.retrieveFoodByFoodId("2");
-//		assertEquals("¬•¿Â∏È", food.getFoodContent());
-//	}
-
-//	@Test
-//	public void testRetrieveAllFoods() {
-//		List<Food> list = foodStore.retrieveAllFoods();
-//		assertEquals(2, list.size());
-//	}
-
-//	@Test
-//	public void testRetrieveLastElvFoods() {
-//		List<Food> list = foodStore.retrieveLastElvFoods();
-//		assertEquals(2, list.size());
-//	
-//	}
-
-//	@Test
-//	public void testRetrieveBattleFood() {
-//		List<Food> list = foodStore.retrieveBattleFood();
-//		assertNotNull(list);
-//		assertEquals(4, list.size());
-//	}
-
-//	@Test
-//	public void testRetrieveSixteenFoodsDesc() {
-//		List<String> foodIds = foodStore.retrieveSixteenFoodsDesc();
-//		assertEquals(2, foodIds.size());
-//		assertEquals("1", list.get(0).getFoodId());
-//		assertEquals("3", list.get(1).getFoodId());
-//		assertEquals("2", list.get(2).getFoodId());
-//	}
-
-//	@Test
-//	public void testRetrieveElvFoodsDesc() {
-//		List<Food> list = foodStore.retrieveSixteenFoodsDesc();
-//		assertEquals(2, list.size());
-//	}
-
-//	@Test
-//	public void testRetrieveAllElvFoods() {
-//	}
 	
 	private RecordStore recordStore;
 	
@@ -115,99 +27,90 @@ public class RecordStoreLogicTest {
 		
 	}
 	
-=======
-import org.junit.Test;
-
-public class RecordStoreLogicTest {
-
->>>>>>> master
 	@Test
 	public void testRegistRecord() {
-		fail("Not yet implemented");
+
+//		
+//		Record record = new Record();
+//		record.setEventId(1);
+//		record.setGroupId(2);
+//		record.setMemberId("Ïö∞ÌòïÎãò");
+//		record.setImage("woo.jpg");
+//		record.setTitle("11Ïõî Ï≤¥Ïú°ÎåÄÌöå");
+//		record.setContent("Îπ®ÎûëÎÇ©Î∂ÄÏ¢Ä");
+//		record.setAccounting("ÏßÄÏ∂ú");
+//		record.setPrice(50000);
+//		record.setCategory("ÏãùÎπÑ");
+//		recordStore.registRecord(record);
+		
 	}
 
 	@Test
 	public void testUpdateRecord() {
-		fail("Not yet implemented");
+//		
+//		Record record = new Record();
+//		record.setRecordId(21);
+//		record.setImage("bro.jpg");
+//		record.setTitle("Ïö∞ÌòïÏù¥ÎèôÏÇ∞");
+//		record.setContent("Ïö∞ÌòïÏù¥Ïß±");
+//		record.setPrice(99999);
+//		record.setCategory("Ïú†Ìù•ÎπÑ");
+//		recordStore.updateRecord(record);
+//		
+//		
 	}
 
 	@Test
 	public void testDeleteRecord() {
-		fail("Not yet implemented");
+		
+//		recordStore.deleteRecord(42);
 	}
 
 	@Test
 	public void testRetrieveRecordById() {
-<<<<<<< HEAD
-//		List<String> foodIds = foodStore.retrieveSixteenFoodsDesc();
-//		assertEquals(2, foodIds.size());
-//		assertEquals("1", list.get(0).getFoodId());
-//		assertEquals("3", list.get(1).getFoodId());
-//		assertEquals("2", list.get(2).getFoodId());
-		int recordId=1;
-		
-		Record record = recordStore.retrieveRecordById(recordId);
-		
-		assertEquals(1, record.getEventId());
-		assertEquals("≥≥∫Œ", record.getAccounting());
-		assertEquals("¡§ªÛ", record.getCaution());
-=======
-		fail("Not yet implemented");
->>>>>>> master
+
+//		Record record = new Record();
+//		record = recordStore.retrieveRecordById(21);
+//		assertNotNull(record);
+//		assertEquals("Ïö∞ÌòïÎãò", record.getMemberId());
+//		assertEquals("bro.jpg", record.getImage());
+//	
 	}
 
 	@Test
 	public void testRetrieveAllRecordsByEventId() {
-		fail("Not yet implemented");
+//		List<Record> records = new ArrayList<>();
+//		records= recordStore.retrieveAllRecordsByEventId(2);
+//		assertEquals(2, records.size());
+		
 	}
 
 	@Test
 	public void testRetrieveAllRecordsByGroupId() {
-		fail("Not yet implemented");
+//		List<Record> records = new ArrayList<>();
+//		records= recordStore.retrieveAllRecordsByGroupId(2);
+//		assertEquals("ÏßÄÏ∂ú", records.get(1).getAccounting());
 	}
 
-	@Test
-<<<<<<< HEAD
-	public void testRetrieveRecordsByDay() {
-		fail("Not yet implemented");
-	}
 
-	@Test
-	public void testRetrieveRecordsByWeek() {
-		fail("Not yet implemented");
-	}
 
 	@Test
 	public void testRetrieveRecordsByMonth() {
-//		List<String> foodIds = foodStore.retrieveSixteenFoodsDesc();
-//		assertEquals(2, foodIds.size());
-//		assertEquals("1", list.get(0).getFoodId());
-//		assertEquals("3", list.get(1).getFoodId());
-//		assertEquals("2", list.get(2).getFoodId());
+
 		Date sDate = Date.valueOf("2017-05-01");
 		Date fDate= Date.valueOf("2017-09-30");
-//		try {
-//		    String sDate="2017/05/01";
-//		    String fDate="2017/09/01";
-//		    DateFormat formatter ; 
-//		 
-//		    formatter = new SimpleDateFormat("yyyy/MM/dd");
-//		    ssDate = (Date)formatter.parse(sDate);
-//		    ffDate=(Date)formatter.parse(fDate);
-//		} catch (ParseException e) {}
-//		 
-//		java.sql.Date sssDate = new java.sql.Date(ssDate.getTime());
-//		java.sql.Date fffDate = new java.sql.Date(ffDate.getTime());
-		String accounting = "≥≥∫Œ";
-		List<Record> records= recordStore.retrieveRecordsByMonth(sDate,fDate,accounting);
 
-		assertEquals(5, records.size());
-		assertEquals(1,records.get(0).getRecordId());
+		String accounting = "ÏßÄÏ∂ú";
+		int groupId=1;
+		List<Record> records= recordStore.retrieveRecordsByMonth(sDate,fDate,accounting,groupId);
+
+		assertEquals(4, records.size());
+		assertEquals(2,records.get(0).getRecordId());
 		assertEquals(2, records.get(1).getEventId());
-		assertEquals(2, records.get(2).getGroupId());
+		assertEquals(3, records.get(2).getGroupId());
 		
-		System.out.println(sDate);
-		System.out.println(fDate);
+		System.out.println(sDate.toString());
+		System.out.println(fDate.toString());
 		
 	}
 
@@ -228,27 +131,29 @@ public class RecordStoreLogicTest {
 
 	@Test
 	public void testRetrieveGroupAccountingResultDay() {
-=======
-	public void testRetrieveRecordsByPeriod() {
->>>>>>> master
+
 		fail("Not yet implemented");
 	}
 
 	@Test
-<<<<<<< HEAD
 	public void testRetrieveGroupAccountingResultWeek() {
-=======
+		fail("Not yet implemented");
+		}
+	
+
 	public void testRetrieveRecordsByCategory() {
->>>>>>> master
+
 		fail("Not yet implemented");
 	}
 
 	@Test
-<<<<<<< HEAD
 	public void testRetrieveGroupAccountingResultMonth() {
-=======
+		fail("Not yet implemented");
+		}
+	
+
 	public void testRetrieveGroupAccountingResult() {
->>>>>>> master
+
 		fail("Not yet implemented");
 	}
 

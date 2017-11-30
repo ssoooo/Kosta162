@@ -20,7 +20,7 @@
 	<update id="updateRecord" parameterType="Record">
 		UPDATE record_table SET
 		image=#{image},title=#{title},regDate=SYSDATE,content=#{content},price=#{price},category=#{category}
-		WHERE=recordId=#{recordId}
+		WHERE recordId=#{recordId}
 	</update>
 
 	<delete id="deleteRecord" parameterType="int">
@@ -51,18 +51,15 @@
 		WHERE groupId=#{groupId}
 	</select>
 
-	<select id="retrieveRecordsByMonth" parameterType="map"
-		resultType="Record">
-		SELECT
-		recordId,eventId,groupId,memberId,image,title,TO_CHAR(regDate,'MM'),content,accounting,price,category
+	
+	
+	<select id="retrieveRecordsByMonth" parameterType="map" resultType="Record">
+		SELECT recordId,eventId,groupId,memberId,image,title,TO_CHAR(regDate,'YYYYMMDD'),content,accounting,price,category
 		FROM record_table
-		WHERE TO_CHAR(regDate,'YYYYMM') AND
-		accounting=#{accounting}
-		BETWEEN '#{sDate}' AND '#{fDate}'
-		GROUP BY
-		TO_CHAR(regDate,'MM')
+		WHERE regDate <![CDATA[>=]]> #{sDate} AND regDate <![CDATA[<]]> #{fDate}+1 AND accounting=#{accounting} AND groupId=#{groupId}
 		ORDER BY TO_CHAR(regDate,'MM') ASC
 	</select>
+
 
 	<select id="retrieveRecordsByYear" parameterType="map"
 		resultType="Record">
