@@ -10,7 +10,7 @@
 	</head>
 	<body class="homepage">
 		<div id="page-wrapper">
-
+<%@ include file = "header/header.jspf" %>
 			<!-- Header -->
 				<div id="header-wrapper">
 					<header id="header" class="container">
@@ -66,7 +66,7 @@
 							<div class="5u 12u(medium)">
 								<ul>
 									<li><a href="${pageContext.request.contextPath}/memberGroup/registGroup.do" class="button big icon fa-arrow-circle-right">모임 생성</a></li>
-									<li><a href="memberDetail.html" class="button alt big icon fa-question-circle">내 정보</a></li>
+									<li><a href="myDetail.do" class="button alt big icon fa-question-circle">내 정보</a></li>
 								</ul>
 							</div>
 						</div>

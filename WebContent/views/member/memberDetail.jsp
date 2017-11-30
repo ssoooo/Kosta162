@@ -12,29 +12,17 @@
 	</head>
 	<body class="no-sidebar">
 		<div id="page-wrapper">
-<<<<<<< HEAD
  
 			<!-- Header -->
 				<div id="header-wrapper">
 					<header id="header" class="container">
  
-=======
-
-			<!-- Header -->
-				<div id="header-wrapper">
-					<header id="header" class="container">
-
->>>>>>> master
 						<!-- Logo -->
 							<div id="logo">
 								<h1><a href="main.html">Verti</a></h1>
 								<span>알뜰한 총무의 잡다한 가계부</span>
 							</div>
-<<<<<<< HEAD
  
-=======
-
->>>>>>> master
 						<!-- Nav -->
 							<nav id="nav">
 								<ul>
@@ -68,11 +56,7 @@
 							</nav>
 					</header>
 				</div>
-<<<<<<< HEAD
  
-=======
-
->>>>>>> master
 			<!-- Main -->
 				<div id="main-wrapper">
 					<div class="container">
@@ -88,7 +72,7 @@
 								<tbody>
 								<tr>
 									<th class="info_first">아이디</th>
-									<td class="info_detail_first">Minji</td>
+									<td class="info_detail_first">${member.memberId }</td>
 								</tr>
 								<tr>
 									<th class="info">별명</th>
@@ -122,20 +106,12 @@
 								<a href="#"><button class="btn_delete">탈퇴</button></a>
 							</div>
 						</div>
-<<<<<<< HEAD
  
-=======
-
->>>>>>> master
 						<br class="clear" />
 						</div>
 					</div>
 				</div>
-<<<<<<< HEAD
  
-=======
-
->>>>>>> master
 			<!-- Footer -->
 				<div id="footer-wrapper">
 					<footer id="footer" class="container">
@@ -150,29 +126,17 @@
 						</div>
 					</footer>
 				</div>
-<<<<<<< HEAD
  
 			</div>
  
 		<!-- Scripts -->
  
-=======
-
-			</div>
-
-		<!-- Scripts -->
-
->>>>>>> master
 			<script src="../../resources/assets/js/jquery.min.js"></script>
 			<script src="../../resources/assets/js/jquery.dropotron.min.js"></script>
 			<script src="../../resources/assets/js/skel.min.js"></script>
 			<script src="../../resources/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="../../resources/assets/js/main.js"></script>
-<<<<<<< HEAD
  
-=======
-
->>>>>>> master
 	</body>
 </html>
