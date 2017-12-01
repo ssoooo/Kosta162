@@ -1,9 +1,14 @@
 package GeneralAffairs.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
 import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +17,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Member;
@@ -142,13 +149,52 @@ public class MemberGroupController {
 	///
 	
 	@RequestMapping("/registGroup.do")
-	public String registGroup(Group group, HttpSession session, HttpServletRequest req) {
+	public String registGroup(Group group, HttpSession session, HttpServletRequest request, @RequestParam("imgFile") MultipartFile imgFile, Model model) {
 		
-		group.setMemberId((String) session.getAttribute("loginedMemberId"));
-		System.out.println("groupName:" + group.getGroupName());
-		System.out.println("groupAccount:" + group.getAccount());
-		System.out.println("groupIntroduce:" + group.getGroupIntroduce());
+//		String currentPath = request.getSession().getServletContext().getRealPath("/");
+//		String savePath = currentPath + "WebContent" + File.separator + "upload";
+		String myId = (String)session.getAttribute("loginedMemberId");
 		
+		String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
+	    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
+	    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
+	    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
+		
+		if(!imgFile.isEmpty()) {
+			try {
+				byte [] bytes = imgFile.getBytes();
+				File dir = new File("c:\\" + File.separator + "tempFiles");
+				
+				if(!dir.exists()) {
+					dir.mkdirs();
+				}
+				
+				File saveFile = new File(dir.getAbsolutePath() + File.separator + rename);
+				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(saveFile));
+				out.write(bytes);
+				out.close();
+				
+			    group.setGroupImage(dir.getAbsolutePath() + File.separator + rename);
+				group.setMemberId(myId);
+				group.setBalance(0);
+				
+				mgService.createGroup(group);
+//				mgService.createMemberToGroup(myId, group.getGroupId());
+				mgService.createManagerToGroup(myId, group.getGroupId());
+				
+//				model.addAttribute("resultMsg", "파일을 업로드 성공!");
+				model.addAttribute("img", "/images/" + rename);
+				
+				return "redirect:/memberGroup/main.do";
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+//				model.addAttribute("resultMsg", "파일을 업로드하는 데에 실패했습니다.");
+			}
+		} else {
+//	        model.addAttribute("resultMsg", "업로드할 파일을 선택해주시기 바랍니다.");
+		}
+
 		return "redirect:/memberGroup/main.do";
 	}
 	

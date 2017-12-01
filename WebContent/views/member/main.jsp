@@ -80,7 +80,7 @@
 							
 								<!-- Box -->
 									<section class="box feature">
-										<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${group.groupId }" class="image featured"><img src="../resources/images/pic01.jpg" alt="" /></a>
+										<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${group.groupId }" class="image featured"><img src="${group.groupImage }" alt="" /></a>
 										<div class="inner">
 											<header><h2>${group.groupName }</h2></header>
 										</div>

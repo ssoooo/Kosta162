@@ -82,14 +82,20 @@ public class MemberGroupServiceLogic implements MemberGroupService{
 	@Override
 	public void createGroup(Group group) {
 		gStore.registGroup(group);
-		
 	}
 
 	@Override
 	public boolean createMemberToGroup(String memberId, int groupId) {
 		int check = 0;
 		check = gStore.registMemberToGroup(memberId, groupId);
-		return check>0;
+		return check > 0;
+	}
+	
+	@Override
+	public boolean createManagerToGroup(String memberId, int groupId) {
+		int check = 0;
+		check = gStore.registManagerToGroup(memberId, groupId);
+		return check > 0;
 	}
 
 	@Override

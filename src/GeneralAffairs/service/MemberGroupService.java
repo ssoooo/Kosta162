@@ -20,6 +20,7 @@ public interface MemberGroupService {
 	
 	void createGroup(Group group);
 	boolean createMemberToGroup(String memberId,int groupId);
+	boolean createManagerToGroup(String memberId,int groupId);
 	boolean modifyGroup(Group group);
 	void removeGroup(int groupId);
 //	List<Group> findAllMyGroups(String memberId);

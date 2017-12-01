@@ -231,5 +231,23 @@ public class GroupStoreLogic implements GroupStore{
 		
 	}
 
+	@Override
+	public int registManagerToGroup(String memberId,int groupId) {
+
+		int check =0;
+		SqlSession session = SessionFactory.getInstance().getSession();
+		
+		try {
+		GroupMapper mapper = session.getMapper(GroupMapper.class);
+		check = mapper.registManagerToGroup(memberId, groupId);
+		if(check>0) {
+		session.commit();
+		}
+		}finally {
+			session.close();
+		}
+		
+		return check;
+	}
 	
 }

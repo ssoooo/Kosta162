@@ -11,6 +11,7 @@ public interface GroupStore {
 	
 	void registGroup(Group group);
 	int registMemberToGroup(String memberId,int groupId);
+	int registManagerToGroup(String memberId,int groupId);
 	int updateGroup(Group group);
 	void deleteGroup(int groupId);
 //	List<Group> retrieveAllmyGroups(String memberId);
