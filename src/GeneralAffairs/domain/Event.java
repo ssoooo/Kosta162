@@ -1,6 +1,7 @@
 package GeneralAffairs.domain;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Event {
 	
@@ -11,9 +12,19 @@ public class Event {
 	private String eventName;
 	private double collection;
 	private double collectionPerMember;
+	private double budget;
+	private double groupSupport;
 	private Date date;
 	
+	private List<Member> eventMembers;
 	
+	
+	public List<Member> getEventMembers() {
+		return eventMembers;
+	}
+	public void setEventMembers(List<Member> eventMembers) {
+		this.eventMembers = eventMembers;
+	}
 	public int getEventId() {
 		return eventId;
 	}
@@ -61,6 +72,18 @@ public class Event {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+	public double getBudget() {
+		return budget;
+	}
+	public void setBudget(double budget) {
+		this.budget = budget;
+	}
+	public double getGroupSupport() {
+		return groupSupport;
+	}
+	public void setGroupSupport(double groupSupport) {
+		this.groupSupport = groupSupport;
 	}
 
 }

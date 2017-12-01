@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,9 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import GeneralAffairs.domain.Event;
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Member;
 import GeneralAffairs.domain.Message;
+import GeneralAffairs.service.EventService;
 import GeneralAffairs.service.MemberGroupService;
 import GeneralAffairs.service.MessageService;
 
@@ -28,6 +29,34 @@ public class MemberGroupController {
 	@Autowired
 	private MessageService messageService;
 	
+	@Autowired
+	private EventService eventService;
+	
+	@RequestMapping(value= "/memberList.do", method=RequestMethod.GET)
+	public String showMemberListByGroup(int groupId, Model model) {
+		System.out.println("//" + groupId);
+		List<Member> members = mgService.findAllMembersByGroup(groupId);
+		model.addAttribute("members", members);
+		
+		Group group = mgService.findGroupById(groupId);
+		model.addAttribute("group", group);
+
+		System.out.println("//" + members.size());
+
+		return "event/eventMember";
+	}
+	
+	@RequestMapping(value= "/memberList.do", method=RequestMethod.POST)
+	public String findMemberListByGroup(int groupId, String memberId, Model model) {
+		Group group = mgService.findGroupById(groupId);
+		model.addAttribute("group", group);
+		
+		List<Member> members = mgService.findAllMembersByGroup(groupId);
+		model.addAttribute("members", members);
+
+		return "redirect:/event/registEvent.do?memberId=" + memberId;
+	}
+	
 	@RequestMapping(value="login.do", method=RequestMethod.GET)
 	public String showLoginForm() {
 		
@@ -36,20 +65,20 @@ public class MemberGroupController {
 	
 	@RequestMapping(value="/login.do", method=RequestMethod.POST)
 	public String login(String memberId, String userPassword, HttpServletRequest req, Model model) {
-		
+
 		Member member = new Member();
+
 		member = mgService.findMemberById(memberId);
 		if(member!=null && userPassword.equals(member.getPassword())){
 		
 		HttpSession session =req.getSession();
 		session.setAttribute("loginedMemberId", member.getMemberId());	
-		
 		}else{
 			HttpSession session = req.getSession();
 			session.invalidate();
+			System.out.println("실패");
 			return "redirect:/views/member/login.jsp";
 		}
-		
 		return "redirect:/memberGroup/main.do";
 	}
 	
@@ -129,7 +158,7 @@ public class MemberGroupController {
 	@RequestMapping("/join.do")
 	public String showJoinFrom() {
 		
-		return "";
+		return "member/join.jsp";
 	}
 	
 	@RequestMapping("/allSignInGroupReq.do")
@@ -235,20 +264,27 @@ public class MemberGroupController {
 	@RequestMapping("/main.do")
 	public String showMain(HttpSession session, Model model) {
 				
-		List<Group> groups = mgService.findAllGroupsByMemberId((String) session.getAttribute("loginedMemberId"));
+		String memberId = (String) session.getAttribute("loginedMemberId");
+		List<Group> groups = mgService.findAllGroupsByMemberId(memberId);
+		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(memberId);
 		
+		model.addAttribute("groupsInvited", groupsInvited);
 		model.addAttribute("groups", groups);
 		
 		return "member/main";
 	}
 	
 	@RequestMapping("/group.do")
-	public String showGroup(int groupId,Model model) {
+	public String showGroup(int groupId, Model model) {
 		Group group = mgService.findGroupById(groupId);
 		List<Message> messages = messageService.findAllMyMessages("kang");
+		List<Event> events = eventService.findAllEventsByGroupId(groupId);
 		
+		
+		model.addAttribute("events", events);
 		model.addAttribute("group", group);
 		model.addAttribute("messages", messages);
+		model.addAttribute("groupId", groupId);
 		
 		return "group/group";
 	}

@@ -12,7 +12,7 @@ public class Group {
 	private Date date;
 	private double balance;
 	
-	
+
 	public int getGroupId() {
 		return groupId;
 	}
