@@ -19,7 +19,7 @@
 
 						<!-- Logo -->
 							<div id="logo">
-								<h1><a href="main.jsp">알뜰총雜</a></h1>
+								<h1><a href="main.do">알뜰총雜</a></h1>
 								<span>알뜰한 총무의 잡다한 가계부</span>
 							</div>
 

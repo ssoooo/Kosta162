@@ -30,7 +30,7 @@ public class MemberGroupController {
 	@Autowired
 	private MessageService messageService;
 	
-	@RequestMapping(value="login.do", method=RequestMethod.GET)
+	@RequestMapping(value="/login.do", method=RequestMethod.GET)
 	public String showLoginForm() {
 		
 		return "redirect:/views/member/login.jsp";
@@ -64,8 +64,9 @@ public class MemberGroupController {
 	
 	@RequestMapping("/modifyMember.do")
 	public String modifyMember(Member member) {
-		
-		return "";
+		mgService.modifyMember(member);
+		System.out.println("계좌번호"+member.getAccount());
+		return "redirect:/memberGroup/myDetail.do";
 	}
 	
 	@RequestMapping("/showModifyMember.do")
@@ -80,20 +81,41 @@ public class MemberGroupController {
 	
 	@RequestMapping("/deleteMember.do")
 	public String deleteMember(String memberId) {
-		
-		return "";
+		mgService.removeMember(memberId);
+		return "redirect:/views/member/login.jsp";
 	}
 	
 	@RequestMapping("/tradeGrade.do")
-	public String tradeGrade(String memberId,String managerId,int groupId) {
-		
-		return "";
+	public String tradeGrade(String managerId,String memberId,String grade1,String grade2,int groupId) {
+		System.out.println("memberId:"+memberId);
+		System.out.println("grade:"+grade1);
+		System.out.println(groupId);
+		System.out.println("grade2:"+grade2);
+		System.out.println("managerId:"+managerId);
+		mgService.tradeGrade(memberId, groupId, grade1);
+		mgService.tradeGrade(managerId, groupId, grade2);
+		return "redirect:/views/member/login.jsp";
 	}
 	
 	@RequestMapping("/showTradeGrade.do")
-	public String showTradeGrade(int groupId,Model model) {
-		
-		return "";
+	public String showTradeGrade(int groupId,String managerId, Model model) {
+		List<Member> list = new ArrayList<Member>();
+		List<Member> newList = new ArrayList<Member>();
+		Group group = new Group();
+		group = mgService.findGroupById(groupId);
+		list = mgService.findAllMembersByGroup(groupId);
+		for(int i=0; i<list.size(); i++){
+			Member member = new Member();
+			member = list.get(i);
+			if(!member.getMemberId().equals(group.getMemberId())){
+				newList.add(member);
+			} 
+		}
+		model.addAttribute("managerId", managerId);
+		model.addAttribute("groupId", groupId);
+		model.addAttribute("memberList", newList);
+		System.out.println(newList.size());
+		return "group/tradeGrade";
 	}
 	
 	@RequestMapping(value="/myDetail.do", method=RequestMethod.GET)
@@ -240,7 +262,7 @@ public class MemberGroupController {
 	@RequestMapping("/searchAllGroups.do")
 	public String SearchAllGroups(HttpSession session, @RequestParam("groupNameInput") String groupName, Model model) {
 		/*
-		HttpServletRequest req 를 parameter로 받아올 경우 다음과 같이 가능
+		HttpServletRequest req 瑜� parameter濡� 諛쏆븘�삱 寃쎌슦 �떎�쓬怨� 媛숈씠 媛��뒫
 		List<Group> groups = mgService.findAllGroupsByGroupName(req.getParameter("groupNameInput"));
 		 */		
 		String memberId = (String) session.getAttribute("loginedMemberId");

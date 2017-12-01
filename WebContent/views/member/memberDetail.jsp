@@ -108,8 +108,20 @@
 							</table>
 							<div class="btn_hor">
 								<a href="showModifyMember.do?memberId=${member.memberId }"><button class="btn_modify">수정</button></a>
-								<a href="#"><button class="btn_delete">탈퇴</button></a>
+								<!-- <a href="deleteMember.do?memberId=${member.memberId }"><button class="btn_delete" onclick="comfirmDelete()">탈퇴</button></a> -->
+								<button class="btn_delete" onclick="comfirmDelete()">탈퇴</button>
 							</div>
+							<script type="text/javascript">
+								function comfirmDelete() {
+									var confirmflag = confirm("정말 회원삭제하실건가요");
+									if(confirmflag){
+										location.href="deleteMember.do?memberId=${member.memberId }";
+
+									}else{
+										history.go( 0 );
+									}							
+								}
+							</script>
 						</div>
 
 						<br class="clear" />

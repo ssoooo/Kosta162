@@ -21,6 +21,10 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <script>
+    	var bank;
+    	var phone;
+    </script>
   </head>
   <body>
 
@@ -32,56 +36,87 @@
         <div class="col-md-6 col-md-offset-3">
           <form role="form" action="${pageContext.request.contextPath }/memberGroup/modifyMember.do" method="post" >
             <div class="form-group">
-              <label for="InputEmail">닉네임</label>
-              <input type="email" class="form-control" id="InputId" name="nickname" placeholder="${member.nickname }입니다. 새 닉네임을 입력하세요">
+             
+              
+              <b>아이디 : </b>
+              <b>${member.memberId }</b>
+				
+			</div>
+			
+            <div class="form-group">
+              <label for="InputNickName">닉네임</label>
+              <input type="text" class="form-control" id="InputNickName" name="nickname" placeholder="새 닉네임을 입력하세요" value="${member.nickname }">
 				<p class="help-block">사용 가능한 별명입니다.</p>
+				<input type="hidden" id="memberId" name="memberId" value="${member.memberId }"/> 
 			</div>
             <div class="form-group">
               <label for="InputPassword1">비밀번호</label>
-              <input type="password" class="form-control" id="InputPassword1" name="password" placeholder="비밀번호">
+              <input type="password" class="form-control" id="InputPassword1" name="password" placeholder="새 비밀번호" required="required">
 			</div>
             <div class="form-group">
               <label for="InputPassword2">비밀번호 확인</label>
-              <input type="password" class="form-control" id="InputPassword2" placeholder="비밀번호 확인">
+              <input type="password" class="form-control" id="InputPassword2" placeholder="비밀번호 확인" required="required">
 				<p class="help-block">비밀번호가 일치합니다.</p>
 			</div>
             <div class="form-group">
               <label for="username">이름</label>
-              <input type="text" class="form-control" id="username" name="name" placeholder="${member.name }입니다. 새 이름을 입력하세요">
+              <input type="text" class="form-control" id="username" name="name" placeholder="새 이름을 입력하세요" value="${member.name }">
             </div>
             <div class="form-group">
               <label for="InputEmail">이메일 주소</label>
-              <input type="email" class="form-control" id="InputEmail" name = "email" placeholder="${member.email }입니다. 새 이메일 주소를 입력하세요">
+              <input type="email" class="form-control" id="InputEmail" name = "email" placeholder="새 이메일 주소를 입력하세요" value="${member.email }">
             </div>
             <div class="form-group">
-              <label for="username">계좌번호</label><br />
-              <select>
-                  <option selected> 은행 선택 </option>
+              <label for="InputAccount">계좌번호</label><br />
+              <select id="selectBank" name="selectBank">
+                  <option selected id="selectedBank" > 은행 선택 </option>
                   <option>국민</option>
                   <option>우리</option>
                   <option>신한</option>
                   <option>농협</option>
                   <option>카카오</option>
               </select>
-              <input type="text" class="form-control" id="accounting" placeholder="계좌를 입력해 주세요">
+            <script>
+			function inputBankVals() {
+				bank = $("#selectBank option:selected").text();
+			}
+			$("#selectBank").change(inputBankVals);
+			inputBankVals();
+			</script>
+              <input type="text" class="form-control" id="InputAccount" name = "InputAccount" placeholder="계좌를 입력해 주세요" value="${member.account }">
+       			 <input type="hidden" id="account" name="account" />
             </div>
+            
             <div class="form-group">
-              <label for="username">휴대폰 번호</label><br />
-              <select>
-                  <option selected> 통신사 선택 </option>
+              <label for="phoneNumber">휴대폰 번호</label><br />
+              <!-- <select id="selectPhone" name="selectPhone">
+                  <option selected id="selectedPhone" name="selectedPhone"> 통신사 선택 </option>
                   <option>SKT</option>
                   <option>KT</option>
                   <option>LG</option>
               </select>
-              <input type="text" class="form-control" id="accounting" placeholder="- 없이 입력해 주세요">
+               -->
+              <input type="hidden" id="InputPhoneNumber" name="InputPhoneNumber" /> 
+              <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="- 없이 입력해 주세요" value="${member.phoneNumber }">
             </div>
-					
+				 	
             <br />
-			
+
             <div class="form-group text-center">
-              <button type="submit" class="btn btn-info">수정완료<i class="fa fa-check spaceLeft"></i></button>
-              <button type="button" class="btn btn-warning" onclick="location.href='login.html' ">취소<i class="fa fa-times spaceLeft"></i></button>
+              <button type="submit" id="submit" class="btn btn-info">수정완료<i class="fa fa-check spaceLeft"></i></button>
+              <button type="button" class="btn btn-warning" onclick="location.href='myDetail.do' ">취소<i class="fa fa-times spaceLeft"></i></button>
             </div>
+            <script>
+			function accountVals() {
+				var accountNum = $('#InputAccount').val();
+				$('#account').val(bank + "1 " + accountNum);
+			}
+														
+			$("#submit").click(accountVals); 
+														
+			accountVals();
+			</script>
+			
             <br />
           </form>
         </div>

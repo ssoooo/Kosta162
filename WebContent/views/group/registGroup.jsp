@@ -84,7 +84,7 @@
 														
 														<h3>총무 계좌</h3>
 														<select id="selectBank" name="selectBank">
-															<option selected> 은행 선택 </option>
+															<option selected id="selectedBank" > 은행 선택 </option>
 															<option value="1">국민</option>
 															<option value="2">우리</option>
 															<option value="3">신한</option>
@@ -111,10 +111,10 @@
 															<input type="button" class="btn_invite" value="멤버초대" />
 														<script>
 														function inputBankVals() {
-															bank = $('option:selected', $(this)).text();
+															bank = $("#selectBank option:selected").text();
 														}
 														
-														$("select").change(inputBankVals); 
+														$("#selectBank").change(inputBankVals); 
 														
 														inputBankVals();
 														</script>
