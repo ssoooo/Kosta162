@@ -92,6 +92,10 @@ public class MemberGroupController {
 		System.out.println(groupId);
 		System.out.println("grade2:"+grade2);
 		System.out.println("managerId:"+managerId);
+		Group group = new Group();
+		group = mgService.findGroupById(groupId);
+		group.setMemberId(memberId);
+		mgService.modifyGroup(group);
 		mgService.tradeGrade(memberId, groupId, grade1);
 		mgService.tradeGrade(managerId, groupId, grade2);
 		return "redirect:/views/member/login.jsp";

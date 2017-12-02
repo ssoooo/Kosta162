@@ -22,7 +22,7 @@
 
 	<update id="updateGroup" parameterType="Group">
 		UPDATE group_table SET
-		account=#{account}, groupIntroduce=#{groupIntroduce}
+		account=#{account}, groupIntroduce=#{groupIntroduce}, memberId=#{memberId}
 		WHERE groupId=#{groupId}
 	</update>
 
