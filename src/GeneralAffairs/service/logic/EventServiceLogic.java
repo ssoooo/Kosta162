@@ -1,86 +1,96 @@
 package GeneralAffairs.service.logic;
-
+ 
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import GeneralAffairs.domain.Event;
+import GeneralAffairs.domain.Group;
 import GeneralAffairs.service.EventService;
 import GeneralAffairs.store.EventStore;
-
-@Service
-public class EventServiceLogic implements EventService{
-	
+import GeneralAffairs.store.GroupStore;
+ 
+ @Service
+ public class EventServiceLogic implements EventService{
+ 	
+ 	@Autowired
+	private EventStore eventStore;
 	@Autowired
-	private EventStore store;
+	private GroupStore groupStore;
+ 
+ 	@Override
+ 	public void createEvent(Event event) {
+		Date today = new Date(Calendar.getInstance().getTimeInMillis());
+		event.setDate(today);
+		eventStore.registEvent(event);
+ 	}
+ 
+ 	@Override
+ 	public void modifyEvent(Event event) {
+		eventStore.updateEvent(event);
 
-	@Override
-	public void createEvent(Event event) {
-		// TODO Auto-generated method stub
+ 	}
+ 
+ 	@Override
+ 	public void removeEvent(int eventId) {
+		eventStore.deleteEvent(eventId);
+ 	}
+ 
+ 	@Override
+ 	public Event findEventById(int eventId) {
+		return eventStore.retrieveEventById(eventId);
+ 	}
+ 
+ 	@Override
+ 	public List<Event> findAllEventsByGroupId(int groupId) {
+		return eventStore.retrieveAllEventsByGroupId(groupId);
+ 	}
+ 
+ 	@Override
+	public void exceptMemberFromEvent(String memberId, int eventId) {
+		eventStore.deleteMemberFromEvent(memberId, eventId);
+ 	}
+ 
+ 	@Override
+ 	public void addMemberToEvent(String memberId, int eventId) {
+		eventStore.registMemberToEvent(memberId, eventId);
+ 	}
+ 
+ 	@Override
+	public boolean addEventBalanceToGroupBalance(int eventId, int groupId) {
+		int check = 0;
+		Event event = eventStore.retrieveEventById(eventId);
+		Group group = groupStore.retrieveGroupById(groupId);
 		
-	}
-
-	@Override
-	public boolean modifyEvent(Event event) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void removeEvent(int eventId) {
-		// TODO Auto-generated method stub
+//		double eventB = event.getBalance();
+//		double groupB = group.getBalance();
+//		
+//		eventB += groupB;
+//		group.setBalance(groupB);
+ 		
+		double sum = event.getBalance() + group.getBalance();
+		group.setBalance(sum);
 		
-	}
-
-	@Override
-	public Event findEventById(int eventId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public List<Event> findAllEventsByGroupId(int groupId) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public boolean exceptMemberFromEvent(String memberId, int eventId) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void addMemberToEvent(String memberId, int eventId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void addEventBalanceToGroupBalance(int eventId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void changePayment(String memberId, int eventId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void removeFromEvent(String memberId) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public boolean modifyEventBalance(Event event, int price) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
+		check = groupStore.updateGroupBalance(group);
+		return check > 0;
+ 	}
+ 
+ 	@Override
+	public void changePayment(String memberId, int eventId, String payment) {
+		eventStore.updatePayment(eventId, memberId, payment);
+ 	}
+ 
+ 	@Override
+	public void removeFromEvent(String memberId, int eventId) {
+		eventStore.deleteMemberFromEvent(memberId, eventId);
+ 	}
+ 
+ 	@Override
+	public void modifyEventBalance(Event event, int price) {
+		eventStore.updateEventBalance(event);
+ 	}
 	
-	
-}
+ }

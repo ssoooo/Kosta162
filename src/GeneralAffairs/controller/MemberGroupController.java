@@ -5,7 +5,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,9 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import GeneralAffairs.domain.Event;
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Member;
 import GeneralAffairs.domain.Message;
+import GeneralAffairs.service.EventService;
 import GeneralAffairs.service.MemberGroupService;
 import GeneralAffairs.service.MessageService;
 
@@ -30,7 +31,36 @@ public class MemberGroupController {
 	@Autowired
 	private MessageService messageService;
 	
-	@RequestMapping(value="/login.do", method=RequestMethod.GET)
+
+	@Autowired
+	private EventService eventService;
+	
+	@RequestMapping(value= "/memberList.do", method=RequestMethod.GET)
+	public String showMemberListByGroup(int groupId, Model model) {
+		System.out.println("//" + groupId);
+		List<Member> members = mgService.findAllMembersByGroup(groupId);
+		model.addAttribute("members", members);
+		
+		Group group = mgService.findGroupById(groupId);
+		model.addAttribute("group", group);
+
+		System.out.println("//" + members.size());
+
+		return "event/eventMember";
+	}
+	
+	@RequestMapping(value= "/memberList.do", method=RequestMethod.POST)
+	public String findMemberListByGroup(int groupId, String memberId, Model model) {
+		Group group = mgService.findGroupById(groupId);
+		model.addAttribute("group", group);
+		
+		List<Member> members = mgService.findAllMembersByGroup(groupId);
+		model.addAttribute("members", members);
+
+		return "redirect:/event/registEvent.do?memberId=" + memberId;
+	}
+	
+	@RequestMapping(value="login.do", method=RequestMethod.GET)
 	public String showLoginForm() {
 		
 		return "redirect:/views/member/login.jsp";
@@ -38,20 +68,20 @@ public class MemberGroupController {
 	
 	@RequestMapping(value="/login.do", method=RequestMethod.POST)
 	public String login(String memberId, String userPassword, HttpServletRequest req, Model model) {
-		
+
 		Member member = new Member();
+
 		member = mgService.findMemberById(memberId);
 		if(member!=null && userPassword.equals(member.getPassword())){
 		
 		HttpSession session =req.getSession();
 		session.setAttribute("loginedMemberId", member.getMemberId());	
-		
 		}else{
 			HttpSession session = req.getSession();
 			session.invalidate();
+			System.out.println("�떎�뙣");
 			return "redirect:/views/member/login.jsp";
 		}
-		
 		return "redirect:/memberGroup/main.do";
 	}
 	
@@ -65,7 +95,7 @@ public class MemberGroupController {
 	@RequestMapping("/modifyMember.do")
 	public String modifyMember(Member member) {
 		mgService.modifyMember(member);
-		System.out.println("계좌번호"+member.getAccount());
+		System.out.println("怨꾩쥖踰덊샇"+member.getAccount());
 		return "redirect:/memberGroup/myDetail.do";
 	}
 	
@@ -163,7 +193,7 @@ public class MemberGroupController {
 	@RequestMapping("/join.do")
 	public String showJoinFrom() {
 		
-		return "";
+		return "member/join.jsp";
 	}
 	
 	@RequestMapping("/allSignInGroupReq.do")
@@ -266,7 +296,7 @@ public class MemberGroupController {
 	@RequestMapping("/searchAllGroups.do")
 	public String SearchAllGroups(HttpSession session, @RequestParam("groupNameInput") String groupName, Model model) {
 		/*
-		HttpServletRequest req 瑜� parameter濡� 諛쏆븘�삱 寃쎌슦 �떎�쓬怨� 媛숈씠 媛��뒫
+		HttpServletRequest req �몴占� parameter嚥∽옙 獄쏆룇釉섓옙�궞 野껋럩�뒭 占쎈뼄占쎌벉�⑨옙 揶쏆늿�뵠 揶쏉옙占쎈뮟
 		List<Group> groups = mgService.findAllGroupsByGroupName(req.getParameter("groupNameInput"));
 		 */		
 		String memberId = (String) session.getAttribute("loginedMemberId");
@@ -297,9 +327,13 @@ public class MemberGroupController {
 	public String showGroup(int groupId, Model model) {
 		Group group = mgService.findGroupById(groupId);
 		List<Message> messages = messageService.findAllMyMessages("kang");
+		List<Event> events = eventService.findAllEventsByGroupId(groupId);
 		
+		
+		model.addAttribute("events", events);
 		model.addAttribute("group", group);
 		model.addAttribute("messages", messages);
+		model.addAttribute("groupId", groupId);
 		
 		return "group/group";
 	}

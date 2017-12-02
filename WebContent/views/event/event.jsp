@@ -1,3 +1,7 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE HTML>
 
 <html>
@@ -5,7 +9,7 @@
 		<title>Event</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="../../resources/assets/css/main2.css" />
+		<link rel="stylesheet" href="../resources/assets/css/main2.css" />
 	</head>
 	<body class="left-sidebar">
 		<div id="page-wrapper">
@@ -16,16 +20,16 @@
 
 					<!-- Logo -->
 					<div id="logo">
-						<h1><a href="main.html">알뜰총雜</a></h1>
+						<h1><a href="main.do">알뜰총雜</a></h1>
 						<span>Kosta 162기 > 가을 MT</span>
 					</div>
 
 						<!-- Nav -->
 						<nav id="nav">
 						  <ul>
-							<li><a href="main.html">Home</a></li>
+							<li><a href="main.do">Home</a></li>
 							<li>
-								<a href="main.html">Message</a>
+								<a href="main.do">Message</a>
 									<ul class="ul_accept">
 										<p class="group_invite_list">
 											제목
@@ -43,7 +47,7 @@
 										</p>
 									</ul>
 							</li>
-							<li class="current"><a href="login.html">Logout</a></li>
+							<li class="current"><a href="login.do">Logout</a></li>
 						  </ul>
 						</nav>
 				</header>
@@ -60,13 +64,27 @@
 								<section>
 									<h2>게시판</h2>
 									<ul class="style2">
-										<li><a href="group.html"><h3>전체 보기</h3></a></li>
-										<li><a href="event.html"><h3>신입생 환영회<a href="eventDetail.html"><img class="event_info" src="assets/css/images/info.png"/></a></h3></a></li>
-										<li><a href="event.html"><h3>신입생 환영회<a href="eventDetail.html"><img class="event_info" src="assets/css/images/info.png"/></a></h3></a></li>
-										<li><a href="event.html"><h3>체육대회</h3></a></li>
-									</ul>
-										<a href="registEvent.html" class="button icon fa-info-circle">이벤트 추가</a>
-								</section>
+										<li><a href="group.do"><h3>전체 보기</h3></a></li>
+										<c:choose>
+										<c:when test="${empty events}">
+											<a class="list-group-item hidden-xs">개설된 이벤트가 없습니다.</a>
+										</c:when>
+										<c:otherwise>
+											<c:forEach var="event" items="${events }">
+												<li><a href="${pageContext.request.contextPath}/event/event.do?eventId=${event.eventId }&groupId=${event.groupId}">
+													<h3>${event.eventName }
+													<a href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }"><img class="event_info"
+																src="assets/css/images/info.png"/></a>
+														</h3></a></li>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
+								</ul>
+								<a href="${pageContext.request.contextPath}/event/registEvent.do?groupId=1" class="button icon fa-info-circle">이벤트
+
+
+
+									추가</a></section>
 							</div>
 							
 						</div>
@@ -74,7 +92,7 @@
 						<div class="8u 12u$(medium) important(medium)">
 							<div id="content">
 
-								<div> <h3>신입생 엠티</h3></div>
+								<div> <h3>${event.eventName }</h3></div>
 									<table>
 										<tr class="aa">
 											<th class="table_head"><span>번호</span></th>

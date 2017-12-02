@@ -11,6 +11,7 @@ public class Group {
 	private String groupIntroduce;
 	private Date date;
 	private double balance;
+
 	private String groupImage;
 	
 	public int getGroupId() {
