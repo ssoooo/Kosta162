@@ -79,7 +79,6 @@ public class MemberGroupController {
 		}else{
 			HttpSession session = req.getSession();
 			session.invalidate();
-			System.out.println("�떎�뙣");
 			return "redirect:/views/member/login.jsp";
 		}
 		return "redirect:/memberGroup/main.do";
@@ -95,13 +94,11 @@ public class MemberGroupController {
 	@RequestMapping("/modifyMember.do")
 	public String modifyMember(Member member) {
 		mgService.modifyMember(member);
-		System.out.println("怨꾩쥖踰덊샇"+member.getAccount());
 		return "redirect:/memberGroup/myDetail.do";
 	}
 	
 	@RequestMapping("/showModifyMember.do")
 	public String showModifyMember(String memberId,Model model) {
-		System.out.println(memberId);
 		Member member = new Member();
 		member = mgService.findMemberById(memberId);
 		model.addAttribute("member", member);
@@ -217,7 +214,8 @@ public class MemberGroupController {
 	
 	@RequestMapping("/registGroupAndJoinMember.do")
 	public String registGroupAndJoinMember(Member member,Group group) {
-		
+		System.out.println("멤버어카운트:"+member.getAccount());
+		System.out.println("그룹어카운트:"+group.getAccount());
 		return "";
 	}
 	

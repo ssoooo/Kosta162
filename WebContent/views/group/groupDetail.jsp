@@ -12,6 +12,7 @@
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 </head>
 <body class="no-sidebar">
+	<%@ include file="../../header/header.jspf"%>
 	<div id="page-wrapper">
 
 		<!-- Header -->
@@ -117,9 +118,10 @@
 						</script>
 
 						<div class="btn_hor">
+						<c:if test="${loginedMemberId eq manager.memberId }">
 							<button class="btn_trade"
-							name = "groupDetailWindow"
 							onclick="javascript:windowOpen();">총무위임</button>
+						</c:if>	
 							<!-- 	onclick="window.open('showTradeGrade.do?groupId=${group.groupId}','win','width=600,height=620,toolbar=0,scrollbars=0,resizable=0')">총무위임</button> -->
 							<button class="btn_invite"
 								onclick="window.open('inviteMember.html','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">멤버초대</button>

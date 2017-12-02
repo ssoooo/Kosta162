@@ -23,6 +23,7 @@
 		document.getElementById("toRight").onclick = leftToRight;
 	}
 	var rightToLeft = function() {
+		
 		var rightItems = document.getElementById("rightItem");
 		var rightItem = rightItems.options[rightItems.selectedIndex];
 		var leftItems = document.getElementById("leftItem");
