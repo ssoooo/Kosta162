@@ -30,9 +30,10 @@ public class EventController {
 	public String registEvent(Event event, HttpSession session, Model model) {
 		event.setMemberId((String) session.getAttribute("loginedMemberId"));
 		eventService.createEvent(event);
+//		eventService.addMemberToEvent(event.getMemberId(), event.getEventId());
 		
 		model.addAttribute("event", event);
-		return "redirect:/event/event.do?eventId=" + event.getEventId();
+		return "redirect:/group/group.do?groupId=" + event.getGroupId();
 	}
 
 	@RequestMapping(value = "/registEvent.do", method = RequestMethod.GET)

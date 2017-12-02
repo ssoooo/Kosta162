@@ -5,12 +5,23 @@
 
 <mapper namespace="GeneralAffairs.store.mapper.EventMapper">
 
+	<resultMap type="Event" id="eventMap">
+		<id property="eventId" column="eventId" />
+		<association property="payment" column="payment"
+			select="GeneralAffairs.store.mapper.MemberMapper.retrieveMemberById"
+			javaType="Member" jdbcType="VARCHAR" />
+
+	</resultMap>
+
 	<insert id="registEvent" parameterType="Event">
 		INSERT INTO
 		event_table(eventId,groupId,memberId,eventName,regDate,budget,groupSupport)
 		VALUES(event_seq.nextval,#{groupId},#{memberId},#{eventName},SYSDATE,#{budget},#{groupSupport})
- 	</insert>
- 	
+		<selectKey resultType="int" keyProperty="eventId" order="AFTER">
+			SELECT event_seq.currval FROM dual
+		</selectKey>
+	</insert>
+
 	<update id="updateEvent" parameterType="Event">
 		UPDATE event_table SET
 		eventName=#{eventName}, budget=#{budget}, groupSupport=#{groupSupport}
@@ -23,37 +34,44 @@
 	</delete>
 
 	<select id="retrieveEventById" parameterType="int" resultType="Event">
-		SELECT eventId, groupId, memberId, balance, eventName, budget-groupSupport AS collection, regDate, groupSupport, budget
-		FROM event_table
+		SELECT eventId, groupId, memberId, balance, eventName,
+		budget-groupSupport AS collection, regDate, groupSupport, budget
+		FROM
+		event_table
 		WHERE eventId=#{eventId}
 	</select>
 
 	<select id="retrieveAllEventsByGroupId" parameterType="int"
 		resultType="Event">
-		SELECT eventId,groupId,memberId,balance,eventName,collection,regDate,budget,groupSupport
+		SELECT
+		eventId,groupId,memberId,balance,eventName,collection,regDate,budget,groupSupport
 		FROM event_table
 		WHERE groupId=#{groupId}
 	</select>
 
 	<delete id="deleteMemberFromEvent" parameterType="map">
-		DELETE FROM eventMember_table
+		DELETE FROM
+		eventMember_table
 		WHERE memberId=#{memberId} AND eventId=#{eventId}
 	</delete>
 
 	<insert id="registMemberToEvent" parameterType="map">
 		INSERT INTO
-		eventMember_table(memberId,eventId,payment)
-		VALUES(#{memberId},#{eventId},#{payment})
+		eventMember_table(memberId,eventId)
+		VALUES(#{memberId},#{eventId})
 	</insert>
 
 	<update id="updatePayment" parameterType="map">
-		UPDATE eventMember_table SET
+		UPDATE
+		eventMember_table SET
 		payment=#{payment}
-		WHERE memberId=#{memberId} AND eventId=#{eventId}
+		WHERE memberId=#{memberId} AND
+		eventId=#{eventId}
 	</update>
 
 	<update id="updateEventBalance" parameterType="Event">
-		UPDATE event_table SET
+		UPDATE event_table
+		SET
 		balance=#{balance}
 		WHERE eventId=#{eventId}
 	</update>
