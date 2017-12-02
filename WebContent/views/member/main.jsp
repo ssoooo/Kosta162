@@ -8,6 +8,19 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="../resources/assets/css/main2.css" />
+		<script src="http://code.jquery.com/jquery-1.5.js"></script>
+		<script>
+		function onclickFunction(groupId){
+		    $.ajax({
+		        type: "POST",
+		        url: "acceptInvite.do",
+		        data: {
+		        	groupId : groupId
+		        }
+		    });
+		}
+		</script>
+	
 	</head>
 	<body class="homepage">
 	<%@ include file="../../header/header.jspf"%>
@@ -30,13 +43,12 @@
 										<a href="main.jsp">Invitation</a>
 										<ul class="ul_accept">
 										<c:forEach items="${groupsInvited }" var="group" >
-											<p class="group_invite_list">
-												${group.groupName }
+											<p class="group_invite_list">${group.groupName }
 												<div class="accept_reject">
-													<a href="">수락</a>
-													<a href="">거절</a>
+													<input id="accept" onclick="onclickFunction('${group.groupId }')" class="button3" type="button" value="수락" /><input class="button3" type="button" value="거절" />
 												</div>
 											</p>
+											<div class="clears"></div>
 										</c:forEach>
 										</ul>
 									</li>
@@ -84,7 +96,7 @@
 							
 								<!-- Box -->
 									<section class="box feature">
-										<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${group.groupId }" class="image featured"><img src="../resources/images/pic01.jpg" alt="" /></a>
+										<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${group.groupId }" class="image featured"><img src="${group.groupImage }" alt="" /></a>
 										<div class="inner">
 											<header><h2>${group.groupName }</h2></header>
 										</div>

@@ -12,6 +12,7 @@ public class Member {
 	private String payment;
 	
 	
+
 	public String getPayment() {
 		return payment;
 	}
