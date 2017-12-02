@@ -110,6 +110,13 @@ public class MemberGroupServiceLogic implements MemberGroupService{
 	public void removeGroup(int groupId) {
 		gStore.deleteGroup(groupId);
 		
+		List<Member> members = mStore.retrieveAllMembersByGroup(groupId);
+		
+		System.out.println("/" + members.size());
+
+		for(Member member: members) {
+			gStore.deleteMemberFromGroup(member.getMemberId(), groupId);
+		}
 	}
 
 //	@Override
@@ -146,17 +153,21 @@ public class MemberGroupServiceLogic implements MemberGroupService{
 	}
 
 	@Override
-	public void acceptInvite(String memberId, int groupId) {
+	public void createInvite(String memberId, int groupId) {
 		gStore.registInvite(memberId, groupId);
-		
 	}
 
 	@Override
-	public void denyInvite(String memberId, int groupId) {
+	public void deleteInvite(String memberId, int groupId) {
 		gStore.deleteInvite(memberId, groupId);
-		
 	}
 
+	@Override
+	public void acceptInvite(String memberId, int groupId) {
+		gStore.registMemberToGroup(memberId, groupId);
+		gStore.deleteInvite(memberId, groupId);
+	}
+	
 	@Override
 	public void modifyGroupBalance(Group group) {
 		gStore.updateGroupBalance(group);

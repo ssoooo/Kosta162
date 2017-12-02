@@ -1,14 +1,19 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>모임 생성 페이지</title>
+		<title>모임 수정 페이지</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="../../resources/assets/css/main2.css" />
+		<link rel="stylesheet" href="../resources/assets/css/main2.css" />
 		<script src="http://code.jquery.com/jquery-1.5.js"></script>
 		<script type="text/javascript">
+		$(document).ready(function(){
+		    $("select option[value='${bank }']").attr("selected", true);
+		});
+		
 		var bank;
 			
 		function readURL(input) {
@@ -35,39 +40,29 @@
 						<!-- Logo -->
 						<div id="logo">
 							<h1><a href="index.html">알뜰총雜</a></h1>
-							<span>알뜰한 총무의 잡다한 가계부</span>
+							<span>${group.groupName }</span>
 						</div>
 
 						<!-- Nav -->
 							<nav id="nav">
-								<ul>
-									<li>
-										<a href="main.html">Invitation</a>
-										<ul class="ul_accept">
-											<p class="group_invite_list">
-												모임명
-												<div class="accept_reject">
-													<a href="">수락</a>
-													<a href="">거절</a>
-												</div>
-											</p>
-											<p class="group_invite_list">
-												보노보노
-												<div class="accept_reject">
-													<a href="">수락</a>
-													<a href="">거절</a>
-												</div>
-											</p>
-										</ul>
-									</li>
-									<li><a href="main.html" >logout</a></li>
-									<form class="form_search">
-										<li class="search_div">
-											<input type="text" style="width:160px; height:40px; margin-right:10px; float:left; margin-top:10px;">
-											<input class="current" type="submit" style="background-color:#444; height:40px; float:left; margin-top:10px; font-size:9pt;" value="검색">
-										</li>
-									</form>
-								</ul>
+							  <ul>
+								<li><a href="main.html">Home</a></li>
+								<li>
+									<a href="main.html">Message</a>
+									<ul class="ul_accept">
+									<c:forEach items="${messages }" var="message" >
+										<p class="group_invite_list">
+											${message.title }
+											<div class="accept_reject">
+												<a href="">보기</a>
+												<a href="">삭제</a>
+											</div>
+										</p>
+									</c:forEach>
+									</ul>
+								</li>
+								<li class="current"><a href="login.html">Logout</a></li>
+							  </ul>
 							</nav>
 
 					</header>
@@ -82,30 +77,30 @@
 									<h2>모임 생성</h2>
 									<div class="table-responsive">
 										<div class="well">
-											<form action="${pageContext.request.contextPath}/memberGroup/registGroup.do"
+											<form action="${pageContext.request.contextPath}/memberGroup/modifyGroup.do"
 													id="frm" class="bs-example form-horizontal" method="POST" enctype="multipart/form-data">
 												<fieldset>
 													<div class="form-group">
 														<h3>모임 명</h3>
 														<div class="col-lg-10">
-															<input type="text" name="groupName" class="form-control">
+															<input type="text" value="${group.groupName }" readonly name="groupName" class="form-control">
 														</div>
 													</div>
 													<br/>
 													<div class="form-group">
 														
 														<h3>총무 계좌</h3>
-														<select id="selectBank" name="selectBank">
-															<option selected> 은행 선택 </option>
-															<option value="1">국민</option>
-															<option value="2">우리</option>
-															<option value="3">신한</option>
-															<option value="4">농협</option>
-															<option value="5">카카오</option>
-														</select>
+															<select id="selectBank" name="selectBank">
+																<option selected> 은행 선택 </option>
+																<option value="국민">국민</option>
+																<option value="우리">우리</option>
+																<option value="신한">신한</option>
+																<option value="농협">농협</option>
+																<option value="카카오">카카오</option>
+															</select>
 														<br/>
 														<div class="col-lg-10">
-															<input type="text" id="accountNum" name="accountNum" placeholder="계좌를 입력해주세요" class="form-control">
+															<input type="text" id="accountNum" name="accountNum" value="${accountNum }" class="form-control">
 														</div>
 														<input type="hidden" id="account" name="account" /> 
 													</div>
@@ -122,7 +117,7 @@
 													<div class="form-group">
 														<h3>모임 소개</h3>
 														<div class="col-lg-10">
-															<textarea class="form-control" name="groupIntroduce" rows="2" id="textArea"></textarea>
+															<textarea class="form-control" name="groupIntroduce" rows="2" id="textArea">${group.groupIntroduce }</textarea>
 														</div>
 													</div>
 													<br/>
@@ -134,7 +129,7 @@
 																<input type="file" name="imgFile" onchange="readURL(this);"/>
 																
 															<div class="col-lg-10">
-																  <img id="imgHere" src="#" style="max-width:400px;"/>
+																  <img id="imgHere" src="${group.groupImage }" style="max-width:400px;"/>
 															</div>
 														</div>
 													</div>
@@ -155,6 +150,7 @@
 														
 														accountVals();
 														</script>
+														<input type="hidden" name="groupId" value="${group.groupId }" /> 
 													</div>
 											  </fieldset>
 										  </form>
@@ -185,11 +181,11 @@
 
 		<!-- Scripts -->
 
-			<script src="../../resources/assets/js/jquery.min.js"></script>
-			<script src="../../resources/assets/js/jquery.dropotron.min.js"></script>
-			<script src="../../resources/assets/js/skel.min.js"></script>
-			<script src="../../resources/assets/js/util.js"></script>
-			<script src="../../resources/assets/js/main.js"></script>
+			<script src="../resources/assets/js/jquery.min.js"></script>
+			<script src="../resources/assets/js/jquery.dropotron.min.js"></script>
+			<script src="../resources/assets/js/skel.min.js"></script>
+			<script src="../resources/assets/js/util.js"></script>
+			<script src="../resources/assets/js/main.js"></script>
 
 	</body>
 </html>

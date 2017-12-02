@@ -72,18 +72,18 @@
 								</tr>
 								<tr>
 									<th class="info">총무</th>
-									<td class="info_detail">${manager.name }</td>
+									<td class="info_detail">${member.nickname }</td>
 								</tr>
 								<tr>
 									<th class="info">총무계좌</th>
-									<td class="info_detail">${manager.account }</td>
+									<td class="info_detail">${group.account }</td>
 								</tr>
 								</tbody>
 							</table>
 							<div class="btn_hor">
 								<a href="groupStats.html"><button class="btn_graph">통계</button></a>
-								<a href="modifyGroup.html"><button class="btn_modify">수정</button></a>
-								<a href="#"><button class="btn_delete">삭제</button></a>
+								<a href="${pageContext.request.contextPath}/memberGroup/showModifyGroup.do?groupId=${group.groupId }"><button class="btn_modify">수정</button></a>
+								<a href="${pageContext.request.contextPath}/memberGroup/deleteGroup.do?groupId=${group.groupId }"><button class="btn_delete">삭제</button></a>
 							</div>
 						</div>
 						<div id="box2">
@@ -105,7 +105,7 @@
 							<div class="scroll">
 							<ul>
 							<c:forEach items="${members }" var="member">
-								<li><a href="${pageContext.request.contextPath}/memberGroup/memberDetail.do?groupId=${member.memberId }">${member.name }</a></li>
+								<li><a href="${pageContext.request.contextPath}/memberGroup/memberDetail.do?memberId=${member.memberId }">${member.name }</a></li>
 							</c:forEach>
 							</ul>
 							</div>
