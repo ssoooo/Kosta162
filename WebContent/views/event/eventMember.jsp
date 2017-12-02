@@ -92,8 +92,8 @@
 							<div class="item_event">
 								이벤트 <br /> <select id="rightItem" name="rightItem"
 									class="item_width" size="8">
-									<c:forEach items="${eventMembers }" var="member">
-										<option>${member.name }</option>
+									<c:forEach items="${memberss }" var="member">
+										<option>${member.memberId }</option>
 									</c:forEach>
 								</select>
 							</div>

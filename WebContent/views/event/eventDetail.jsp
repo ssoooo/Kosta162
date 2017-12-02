@@ -29,7 +29,7 @@
 					<h1>
 						<a href="main.do">알뜰총雜</a>
 					</h1>
-					<span>Kosta 162기 > 가을 MT</span>
+					<span>${group.groupName} > ${event.eventName }</span>
 				</div>
 
 				<!-- Nav -->
@@ -112,22 +112,21 @@
 					<div id="box3">
 						<h2>이벤트 멤버</h2>
 						<hr>
-						<div class="scroll">
+						<div class="scroll" id="get">
 							<ul>
 								<c:forEach items="${members }" var="member">
-									<li class="first">${member.memberId }</li>
+									<li>${member.memberId }</li>
 								</c:forEach>
 							</ul>
 						</div>
 						<div class="btn_hor">
 							<button class="btn_modify"
-								onclick="window.open('collectionDetail.html','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">모금액</button>
+								onclick="window.open('${pageContext.request.contextPath}/event/collectionDetail.do?eventId=${event.eventId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">모금액</button>
 							<button class="btn_invite"
 								onclick="window.open('${pageContext.request.contextPath}/event/addMemberToEvent.do?eventId=${event.eventId }&groupId=${event.groupId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">멤버추가/제외</button>
 						</div>
 					</div>
 					<br class="clear" />
-
 				</div>
 			</div>
 		</div>

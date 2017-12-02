@@ -18,7 +18,8 @@
 		email=#{email},
 		account=#{account},
 		phoneNumber=#{phoneNumber}
-		WHERE memberId=#{memberId}
+		WHERE
+		memberId=#{memberId}
 	</update>
 
 	<delete id="deleteMember" parameterType="String">
@@ -28,26 +29,35 @@
 
 	<select id="retrieveMemberById" parameterType="String"
 		resultType="Member">
-		SELECT memberId,password,nickname,name,email,account,phoneNumber
-		FROM member_table
+		SELECT
+		memberId,password,nickname,name,email,account,phoneNumber
+		FROM
+		member_table
 		WHERE memberId=#{memberId}
 	</select>
 
-	<select id="retrieveAllMembersByGroup" parameterType="int" resultType="Member">
-		SELECT m.memberId, m.password, m.nickname, m.name, m.email, m.account, m.phoneNumber
-		FROM member_table m, groupMember_table g
-		WHERE m.memberId= g.memberId and groupId=#{groupId}
+	<select id="retrieveAllMembersByGroup" parameterType="int"
+		resultType="Member">
+		SELECT m.memberId, m.password, m.nickname, m.name,
+		m.email,m.account,m.phoneNumber
+		FROM member_table m, groupMember_table
+		g
+		WHERE m.memberId=g.memberId and groupId=#{groupId}
 	</select>
 
 	<select id="retrieveMembersByEvent" parameterType="int"
 		resultType="Member">
-		SELECT eventId,memberId,payment
-		FROM eventMember_table
-		WHERE eventId=#{eventId}
+<!-- 	select memberId
+		from eventMember_table
+		where eventId=#{eventId}-->
+        SELECT m.memberId, m.password, m.nickname, m.name, m.email, m.account,m.phoneNumber
+		FROM member_table m, eventMember_table e
+		WHERE m.memberId=e.memberId and e.eventId=#{eventId}
 	</select>
 
 	<update id="updateGrade" parameterType="map">
-		UPDATE groupMember_table SET
+		UPDATE groupMember_table
+		SET
 		grade=#{grade}
 		WHERE memberId=#{memberId} AND groupId=#{groupId}
 	</update>
@@ -56,7 +66,8 @@
 		resultType="Member">
 		SELECT groupId,memberId,regDate
 		FROM request_table
-		WHERE groupId=#{groupId}
+		WHERE
+		groupId=#{groupId}
 	</select>
 
 	<insert id="registReqSignInMember" parameterType="map">
@@ -66,7 +77,8 @@
 	</insert>
 
 	<delete id="deleteSignInGroupReq" parameterType="map">
-		DELETE FROM request_table
+		DELETE FROM
+		request_table
 		WHERE memberId=#{memberId} AND groupId=#{groupId}
 	</delete>
 
@@ -74,7 +86,8 @@
 		resultType="int">
 		SELECT groupId
 		FROM groupMember_table
-		WHERE memberId=#{memberId}
+		WHERE
+		memberId=#{memberId}
 	</select>
 
 </mapper>

@@ -22,7 +22,7 @@
 					<h1>
 						<a href="main.html">알뜰총雜</a>
 					</h1>
-					<span>Kosta 162기</span>
+					<span>${group.groupName}</span>
 				</div>
 
 				<!-- Nav -->
@@ -59,23 +59,27 @@
 							<section>
 								<h2>게시판</h2>
 								<ul class="style2">
-									<li><a href="group.do"><h3>전체 보기</h3></a></li>
+									<li><a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${event.groupId}"><h3>전체 보기</h3></a></li>
 									<c:choose>
 										<c:when test="${empty events}">
 											<a class="list-group-item hidden-xs">개설된 이벤트가 없습니다.</a>
 										</c:when>
 										<c:otherwise>
 											<c:forEach var="event" items="${events }">
-												<li><a href="${pageContext.request.contextPath}/event/event.do?eventId=${event.eventId }&groupId=${event.groupId}">
-													<h3>${event.eventName }
-													<a href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }"><img class="event_info"
-																src="assets/css/images/info.png"/></a>
-														</h3></a></li>
+												<li><a
+													href="${pageContext.request.contextPath}/event/event.do?eventId=${event.eventId }&groupId=${event.groupId}">
+														<h3>${event.eventName }
+															<a href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }">
+															<img class="event_info" src="../resources/assets/css/images/info.png" /></a>
+														</h3>
+												</a></li>
 											</c:forEach>
 										</c:otherwise>
 									</c:choose>
 								</ul>
-								<a href="${pageContext.request.contextPath}/event/registEvent.do?groupId=1" class="button icon fa-info-circle">이벤트									추가</a>
+								<a
+									href="${pageContext.request.contextPath}/event/registEvent.do?groupId=1"
+									class="button icon fa-info-circle">이벤트 추가</a>
 							</section>
 
 						</div>
@@ -120,17 +124,16 @@
 													</div>
 												</div>
 												<div class="form-group">
-															<label class="col-lg-2 control-label">
-																<h3>멤버</h3>
-															</label>
-																<input type="button" class="btn_invite" value="멤버추가" onclick="window.open('${pageContext.request.contextPath}/memberGroup/memberList.do?groupId=1','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')"/>
-															<div class="col-lg-10">
-																<textarea class="form-control" name="members" rows="2" id="get"></textarea>
-															</div>
-														</div>
-														<br />
-												
-
+													<label class="col-lg-2 control-label">
+														<h3>멤버</h3>
+													</label> <input type="button" class="btn_invite" value="멤버추가"
+														onclick="window.open('${pageContext.request.contextPath}/memberGroup/memberList.do?groupId=1','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')" />
+													<div class="col-lg-10">
+														<textarea class="form-control" name="get" rows="2"
+															id="get"></textarea>
+													</div>
+												</div>
+												<br />
 												<div class="form-group">
 													<div class="align_btn">
 														<button type="submit" class="record_submit">확인</button>

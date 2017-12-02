@@ -34,15 +34,12 @@ public class MemberGroupController {
 	
 	@RequestMapping(value= "/memberList.do", method=RequestMethod.GET)
 	public String showMemberListByGroup(int groupId, Model model) {
-		System.out.println("//" + groupId);
 		List<Member> members = mgService.findAllMembersByGroup(groupId);
 		model.addAttribute("members", members);
 		
 		Group group = mgService.findGroupById(groupId);
 		model.addAttribute("group", group);
-
-		System.out.println("//" + members.size());
-
+		System.out.println("///////" + members.size());
 		return "event/eventMember";
 	}
 	

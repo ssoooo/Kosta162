@@ -57,7 +57,7 @@
 								<section>
 									<h2>이벤트</h2>
 									<ul class="style2">
-										<li><a href="group.html"><h3>전체 보기</h3></a></li>
+										<li><a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=1"><h3>전체 보기</h3></a></li>
 										<c:choose>
 										<c:when test="${empty events}">
 											<a class="list-group-item hidden-xs">개설된 이벤트가 없습니다.</a>
@@ -67,7 +67,7 @@
 												<li><a href="${pageContext.request.contextPath}/event/event.do?eventId=${event.eventId }&groupId=${event.groupId}">
 													<h3>${event.eventName }
 													<a href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }"><img class="event_info"
-																src="assets/css/images/info.png"/></a>
+																src="../resources/assets/css/images/info.png"/></a>
 														</h3></a></li>
 											</c:forEach>
 										</c:otherwise>

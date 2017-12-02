@@ -21,7 +21,7 @@
 						<!-- Logo -->
 							<div id="logo">
 							  <h1><a href="main.do">알뜰총雜</a></h1>
-							  <span>Kosta 162기 > 가을 MT</span>
+							  <span>${group.groupName} > ${event.eventName }</span>
 							</div>
 
 						<!-- Nav -->
