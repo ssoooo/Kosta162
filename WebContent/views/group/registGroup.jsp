@@ -8,9 +8,21 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="../../resources/assets/css/main2.css" />
 		<script src="http://code.jquery.com/jquery-1.5.js"></script>
-		<script>
-			var bank;
+		<script type="text/javascript">
+		var bank;
+			
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				
+				reader.onload = function (e) {
+					$('#imgHere').attr('src', e.target.result); 
+				} 
+				reader.readAsDataURL(input.files[0]); 
+			} 
+		} 
 		</script>
+		
 	</head>
 	<body class="no-sidebar">
 		<%@ include file="../../header/header.jspf"%>
@@ -71,7 +83,7 @@
 									<div class="table-responsive">
 										<div class="well">
 											<form action="${pageContext.request.contextPath}/memberGroup/registGroup.do"
-													id="frm" class="bs-example form-horizontal" method="POST">
+													id="frm" class="bs-example form-horizontal" method="POST" enctype="multipart/form-data">
 												<fieldset>
 													<div class="form-group">
 														<h3>모임 명</h3>
@@ -98,18 +110,7 @@
 														<input type="hidden" id="account" name="account" /> 
 													</div>
 													<br/>
-													<div class="form-group">
-														<h3>모임 소개</h3>
-														<div class="col-lg-10">
-															<textarea class="form-control" name="groupIntroduce" rows="2" id="textArea"></textarea>
-														</div>
-													</div>
-													<br />
-													<div class="form-group">
-														
-															<h3>멤버</h3>
-															<input type="button" class="btn_invite" value="멤버초대" />
-														<script>
+													<script>
 														function inputBankVals() {
 															bank = $("#selectBank option:selected").text();
 														}
@@ -117,9 +118,11 @@
 														$("#selectBank").change(inputBankVals); 
 														
 														inputBankVals();
-														</script>
+													</script>
+													<div class="form-group">
+														<h3>모임 소개</h3>
 														<div class="col-lg-10">
-															<textarea class="form-control" name="membersInvited" rows="2" id="textArea"></textarea>
+															<textarea class="form-control" name="groupIntroduce" rows="2" id="textArea"></textarea>
 														</div>
 													</div>
 													<br/>
@@ -128,11 +131,10 @@
 															
 															<h3>대표 사진</h3>
 
-															<form action="uploadFile.do" method="post"enctype="multipart/form-data">
-																<input type="file" name="file" />
-															</form>
+																<input type="file" name="imgFile" onchange="readURL(this);"/>
+																
 															<div class="col-lg-10">
-																  <img src="../resources/assets/css/images/bonobono.jpg" style="max-width:800px;"/>
+																  <img id="imgHere" src="#" style="max-width:400px;"/>
 															</div>
 														</div>
 													</div>
@@ -146,7 +148,7 @@
 														<script>
 														function accountVals() {
 															var accountNum = $('#accountNum').val();
-															$('#account').val(bank + " " + accountNum);
+															$('#account').val(bank + "/" + accountNum);
 														}
 														
 														$("#submit").click(accountVals); 

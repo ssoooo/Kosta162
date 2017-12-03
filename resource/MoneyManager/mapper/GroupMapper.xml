@@ -12,6 +12,9 @@
 		INSERT INTO
 		group_table(groupId,memberId,groupName,account,groupIntroduce,regDate,groupImage)
 		VALUES(group_seq.nextval,#{memberId},#{groupName},#{account},#{groupIntroduce},sysDate,#{groupImage})
+		<selectKey resultType="int" keyProperty="groupId" order="AFTER">
+			SELECT group_seq.currval FROM dual
+		</selectKey> 
 	</insert>
 
 	<insert id="registMemberToGroup" parameterType="map">
@@ -19,10 +22,16 @@
 		groupMember_table(groupId,memberId)
 		VALUES(#{groupId},#{memberId})
 	</insert>
-
+	
+	<insert id="registManagerToGroup" parameterType="map">
+		INSERT INTO
+		groupMember_table(groupId,memberId,grade)
+		VALUES(#{groupId},#{memberId},'총무')
+	</insert>
+	
 	<update id="updateGroup" parameterType="Group">
 		UPDATE group_table SET
-		account=#{account}, groupIntroduce=#{groupIntroduce}, memberId=#{memberId}
+		memberId=#{memberId}, account=#{account}, groupIntroduce=#{groupIntroduce}, groupImage=#{groupImage}
 		WHERE groupId=#{groupId}
 	</update>
 

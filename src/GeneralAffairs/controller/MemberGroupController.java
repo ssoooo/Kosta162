@@ -5,11 +5,15 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
+import javax.servlet.http.Part;
+import javax.swing.plaf.synth.SynthSeparatorUI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
+import org.springframework.web.servlet.ModelAndView;
 import GeneralAffairs.domain.Event;
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Member;
@@ -207,13 +211,53 @@ public class MemberGroupController {
 	///
 	
 	@RequestMapping("/registGroup.do")
-	public String registGroup(Group group, HttpSession session, HttpServletRequest req) {
+	public String registGroup(Group group, HttpSession session, @RequestParam("imgFile") MultipartFile imgFile, Model model) {
 		
-		group.setMemberId((String) session.getAttribute("loginedMemberId"));
-		System.out.println("groupName:" + group.getGroupName());
-		System.out.println("groupAccount:" + group.getAccount());
-		System.out.println("groupIntroduce:" + group.getGroupIntroduce());
+//		String currentPath = request.getSession().getServletContext().getRealPath("/");
+//		String savePath = currentPath + "WebContent" + File.separator + "upload";
+		String myId = (String)session.getAttribute("loginedMemberId");
 		
+		String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
+	    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
+	    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
+	    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
+		
+		if(!imgFile.isEmpty()) {
+			try {
+				byte [] bytes = imgFile.getBytes();
+				File dir = new File("c:\\" + File.separator + "tempFiles");
+				
+				if(!dir.exists()) {
+					dir.mkdirs();
+				}
+				
+				File saveFile = new File(dir.getAbsolutePath() + File.separator + rename);
+				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(saveFile));
+				out.write(bytes);
+				out.close();
+				
+//			    group.setGroupImage(dir.getAbsolutePath() + File.separator + rename);
+				group.setGroupImage("/images/" + rename);
+				group.setMemberId(myId);
+				group.setBalance(0);
+				
+				mgService.createGroup(group);
+//				mgService.createMemberToGroup(myId, group.getGroupId());
+				mgService.createManagerToGroup(myId, group.getGroupId());
+				
+//				model.addAttribute("resultMsg", "파일을 업로드 성공!");
+				model.addAttribute("img", "/images/" + rename);
+				
+				return "redirect:/memberGroup/main.do";
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+//				model.addAttribute("resultMsg", "파일을 업로드하는 데에 실패했습니다.");
+			}
+		} else {
+//	        model.addAttribute("resultMsg", "업로드할 파일을 선택해주시기 바랍니다.");
+		}
+
 		return "redirect:/memberGroup/main.do";
 	}
 	
@@ -266,31 +310,60 @@ public class MemberGroupController {
 	}
 	
 	@RequestMapping("/modifyGroup.do")
-	public String modifyGroup(Group group) {
+	public String modifyGroup(Group group, HttpSession session, @RequestParam("imgFile") MultipartFile imgFile) {
 		
-		return "";
+		
+		String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
+	    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
+	    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
+	    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
+	    
+		group.setGroupImage("/images/" + rename);
+		group.setMemberId((String)session.getAttribute("loginedMemberId"));
+		
+		mgService.modifyGroup(group);
+		
+		return "redirect:/memberGroup/groupDetail.do?groupId=" + group.getGroupId();
 	}
 	
 	@RequestMapping("/showModifyGroup.do")
 	public String showModifyGroup(int groupId,Model model) {
 		
-		return "";
+		Group group = mgService.findGroupById(groupId);
+		
+		String account = group.getAccount();
+		
+		int sep = account.indexOf("/");
+		
+        String bank = account.substring(0, sep);
+        String accountNum = account.substring(sep+1);
+        
+	    model.addAttribute("group", group);
+	    model.addAttribute("bank", bank);
+	    model.addAttribute("accountNum", accountNum);
+		
+		return "group/modifyGroup";
 	}
 	
 	@RequestMapping("/deleteGroup.do")
 	public String deleteGroup(int groupId) {
+		System.out.println("수락");
 		
-		return "";
+		mgService.removeGroup(groupId);	// removeFromGroup까지
+		
+		return "redirect:/memberGroup/main.do";
 	}
 	
 	@RequestMapping("/leaveGroup.do")
 	public String leaveGroup(int groupId,HttpSession session) {
+		// jsp
 		
 		return "";
 	}
 	
 	@RequestMapping("/kickMember.do")
 	public String kickMemberFromGroup(String memberId,int groupId) {
+		// jsp
 		
 		return "";
 	}
@@ -302,15 +375,26 @@ public class MemberGroupController {
 	}
 	
 	@RequestMapping("/acceptInvite.do")
-	public String acceptInvite(String memberId,int groupId,Model model) {
+	public void acceptInvite(HttpSession session, int groupId, Model model) {
 		
-		return "";
+		System.out.println("//" + groupId);
+		String memberId = (String)session.getAttribute("loginedMemberId");
+		
+		mgService.acceptInvite(memberId, groupId);
+		
+		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(memberId);
+		
+		model.addAttribute("groupsInvited", groupsInvited);
+		
+//		return "";
 	}
 	
 	@RequestMapping("/denyInvite.do")
-	public String denyInvite(String memberId,int groupId,Model model) {
+	public void denyInvite(String memberId,int groupId,Model model) {
 		
-		return "";
+		mgService.deleteInvite(memberId, groupId);
+		
+//		return "";
 	}
 /*	
 	@RequestMapping("/myInvitations.do")
@@ -387,7 +471,7 @@ public class MemberGroupController {
 		model.addAttribute("messages", messages);
 		model.addAttribute("memberNum", members.size());
 		model.addAttribute("members", members);
-		model.addAttribute("manager", manager);
+		model.addAttribute("member", manager);
 		
 		return "group/groupDetail";
 	}
