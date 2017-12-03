@@ -1,5 +1,9 @@
 package GeneralAffairs.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import GeneralAffairs.domain.Event;
 import GeneralAffairs.domain.Group;
@@ -213,10 +218,45 @@ public class MemberGroupController {
 	}
 	
 	@RequestMapping("/registGroupAndJoinMember.do")
-	public String registGroupAndJoinMember(Member member,Group group) {
-		System.out.println("멤버어카운트:"+member.getAccount());
-		System.out.println("그룹어카운트:"+group.getAccount());
-		return "";
+	public String registGroupAndJoinMember(Member member,Group group, @RequestParam("imgFile")MultipartFile imgFile) {
+		System.out.println(member.getAccount());
+		String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
+	    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
+	    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
+	    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
+	    System.out.println(originalFilename);
+		
+		if(!imgFile.isEmpty()) {
+			try {
+				byte [] bytes = imgFile.getBytes();
+				File dir = new File("c:\\" + File.separator + "tempFiles");
+				
+				if(!dir.exists()) {
+					dir.mkdirs();
+				}
+				
+				File saveFile = new File(dir.getAbsolutePath() + File.separator + rename);
+				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(saveFile));
+				out.write(bytes);
+				out.close();
+				group.setGroupImage("/images/" + rename);
+				
+		mgService.createMember(member);
+		mgService.createGroup(group);
+		mgService.createMemberToGroup(member.getMemberId(), group.getGroupId());
+//		model.addAttribute("img", "/images/" + rename);
+		
+		return "redirect:/memberGroup/main.do";
+			} catch (IOException e) {
+				e.printStackTrace();
+//				model.addAttribute("resultMsg", "파일을 업로드하는 데에 실패했습니다.");
+			}
+		} else {
+//	        model.addAttribute("resultMsg", "업로드할 파일을 선택해주시기 바랍니다.");
+		}
+
+
+		return "redirect:/memberGroup/main.do";
 	}
 	
 	@RequestMapping("/showRegistGroup.do")

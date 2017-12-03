@@ -31,6 +31,17 @@
 <script type="text/javascript">
 	var bank;
 	var phone;
+
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+
+			reader.onload = function(e) {
+				$('#imgHere').attr('src', e.target.result);
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
 </script>
 </head>
 <body>
@@ -41,10 +52,12 @@
 		<h1>회원 가입</h1>
 	</div>
 	<div class="col-md-6 col-md-offset-3">
-		<form role="form" action="${pageContext.request.contextPath }/memberGroup/registGroupAndJoinMember.do">
+		<form role="form"
+			action="${pageContext.request.contextPath }/memberGroup/registGroupAndJoinMember.do" method="post" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="InputId">아이디</label> <input type="text"
-					class="form-control" id="InputId" name=memberId placeholder="아이디" required="required">
+					class="form-control" id="InputId" name=memberId placeholder="아이디"
+					required="required">
 				<p class="help-block">사용 가능한 아이디입니다.</p>
 			</div>
 			<div class="form-group">
@@ -54,7 +67,8 @@
 			</div>
 			<div class="form-group">
 				<label for="InputPassword2">비밀번호 확인</label> <input type="password"
-					class="form-control" id="InputPassword2" placeholder="비밀번호 확인" required="required">
+					class="form-control" id="InputPassword2" placeholder="비밀번호 확인"
+					required="required">
 				<p class="help-block">비밀번호가 일치합니다.</p>
 			</div>
 			<div class="form-group">
@@ -73,8 +87,8 @@
 					placeholder="이메일 주소">
 			</div>
 			<div class="form-group">
-				<label for="InputAccount">계좌번호</label><br /> <select id="selectBank"
-					name="selectBank">
+				<label for="InputAccount">계좌번호</label><br /> <select
+					id="selectBank" name="selectBank">
 					<option selected>은행 선택</option>
 					<option>국민</option>
 					<option>우리</option>
@@ -89,26 +103,28 @@
 					$("#selectBank").change(inputBankVals);
 					inputBankVals();
 				</script>
-				<input type="text" class="form-control" id="InputAccount" name="InputAccount"
-					placeholder="계좌를 입력해 주세요">
-				<input type="hidden" id="account" name="account">
+				<input type="text" class="form-control" id="InputAccount"
+					name="InputAccount" placeholder="계좌를 입력해 주세요"> <input
+					type="hidden" id="account" name="account">
 			</div>
 			<div class="form-group">
-				<label for="InputPhoneNumber">휴대폰 번호</label><br /> <select id="selectPhone" name="selectPhone">
+				<label for="InputPhoneNumber">휴대폰 번호</label><br /> <select
+					id="selectPhone" name="selectPhone">
 					<option selected>통신사 선택</option>
 					<option>SKT</option>
 					<option>KT</option>
 					<option>LG</option>
-				</select> 
+				</select>
 				<script type="text/javascript">
 					function inputPhoneVals() {
 						phone = $("#selectPhone option:selected").text();
 					}
 					$("#selectPhone").change(inputPhoneVals);
 					inputPhoneVals();
-				</script><input type="text" class="form-control" id="InputPhoneNumber" name="InputPhoneNumber"
-					placeholder="- 없이 입력해 주세요"><input type="hidden"
-					id="phoneNumber" name="phoneNumber" />
+				</script>
+				<input type="text" class="form-control" id="InputPhoneNumber"
+					name="InputPhoneNumber" placeholder="- 없이 입력해 주세요"><input
+					type="hidden" id="phoneNumber" name="phoneNumber" />
 			</div>
 
 
@@ -117,21 +133,23 @@
 			<br />
 			<div class="form-group">
 				<label for="groupName">모임명</label> <input type="text"
-					class="form-control" id="groupName" name="groupName"placeholder="이름을 입력해 주세요">
+					class="form-control" id="groupName" name="groupName"
+					placeholder="이름을 입력해 주세요" required="required">
 			</div>
 
 			<div class="form-group">
-				<label for="groupIntroduce">모임 소개</label> <textarea 
-					class="form-control" id="groupIntroduce" name="groupIntroduce" rows="4"></textarea>
+				<label for="groupIntroduce">모임 소개</label>
+				<textarea class="form-control" id="groupIntroduce"
+					name="groupIntroduce" rows="4"></textarea>
 			</div>
 
 			<div class="form-group">
-				<b>대표 사진</b>
-				<!-- <form action="uploadFile.do" method="post"
-					enctype="multipart/form-data">
-					<input type="file" name="file" />
-				</form> -->
-				<br /> <img src="assets/css/images/bonobono.jpg" />
+				<b>대표 사진</b> <input type="file" name="imgFile"
+					onchange="readURL(this);" />
+
+				<div class="col-lg-10">
+					<img id="imgHere" src="#" style="max-width: 400px;" />
+				</div>
 			</div>
 			<br />
 
