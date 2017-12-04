@@ -7,8 +7,25 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="../../resources/assets/css/main2.css" />
+		<script src="http://code.jquery.com/jquery-1.5.js"></script>
+		<script type="text/javascript">
+		var bank;
+			
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				
+				reader.onload = function (e) {
+					$('#imgHere').attr('src', e.target.result); 
+				} 
+				reader.readAsDataURL(input.files[0]); 
+			} 
+		} 
+		</script>
+		
 	</head>
 	<body class="no-sidebar">
+		<%@ include file="../../header/header.jspf"%>
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -65,60 +82,59 @@
 									<h2>모임 생성</h2>
 									<div class="table-responsive">
 										<div class="well">
-											<form action="${pageContext.request.contextPath}/article/regist.do"
-													class="bs-example form-horizontal" method="POST">
+											<form action="${pageContext.request.contextPath}/memberGroup/registGroup.do"
+													id="frm" class="bs-example form-horizontal" method="POST" enctype="multipart/form-data">
 												<fieldset>
 													<div class="form-group">
 														<h3>모임 명</h3>
 														<div class="col-lg-10">
-															<input type="text" name="title" class="form-control">
+															<input type="text" name="groupName" class="form-control">
 														</div>
 													</div>
 													<br/>
 													<div class="form-group">
 														
-															<h3>총무 계좌</h3>
-															<select>
-																<option selected> 은행 선택 </option>
-																<option>국민</option>
-																<option>우리</option>
-																<option>신한</option>
-																<option>농협</option>
-																<option>카카오</option>
-															</select>
-																													<br/>
+														<h3>총무 계좌</h3>
+														<select id="selectBank" name="selectBank">
+															<option selected id="selectedBank" > 은행 선택 </option>
+															<option value="1">국민</option>
+															<option value="2">우리</option>
+															<option value="3">신한</option>
+															<option value="4">농협</option>
+															<option value="5">카카오</option>
+														</select>
+														<br/>
 														<div class="col-lg-10">
-																<input type="text" name="title" placeholder="계좌를 입력해주세요" class="form-control">
+															<input type="text" id="accountNum" name="accountNum" placeholder="계좌를 입력해주세요" class="form-control">
 														</div>
+														<input type="hidden" id="account" name="account" /> 
 													</div>
 													<br/>
+													<script>
+														function inputBankVals() {
+															bank = $("#selectBank option:selected").text();
+														}
+														
+														$("#selectBank").change(inputBankVals); 
+														
+														inputBankVals();
+													</script>
 													<div class="form-group">
 														<h3>모임 소개</h3>
 														<div class="col-lg-10">
-															<textarea class="form-control" name="contents" rows="2" id="textArea"></textarea>
-														</div>
-													</div>
-													<br />
-													<div class="form-group">
-														
-															<h3>멤버</h3>
-															<input type="button" class="btn_invite" value="멤버초대" onclick="window.open('inviteMember.html','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')"/>
-														
-														<div class="col-lg-10">
-															<textarea class="form-control" name="contents" rows="2" id="textArea"></textarea>
+															<textarea class="form-control" name="groupIntroduce" rows="2" id="textArea"></textarea>
 														</div>
 													</div>
 													<br/>
 													<div class="form-group">
 														<div class="col-lg-10 col-lg-offset-2">
 															
-																<h3>대표 사진</h3>
+															<h3>대표 사진</h3>
 
-															<form action="uploadFile.do" method="post"enctype="multipart/form-data">
-																<input type="file" name="file" />
-															</form>
+																<input type="file" name="imgFile" onchange="readURL(this);"/>
+																
 															<div class="col-lg-10">
-																  <img src="assets/css/images/bonobono.jpg" style="max-width:800px;"/>
+																  <img id="imgHere" src="#" style="max-width:400px;"/>
 															</div>
 														</div>
 													</div>
@@ -126,9 +142,19 @@
 													<br/>
 													<div class="form-group">
 														<div class="align_btn">
-															<button type="submit" class="record_submit">확인</button>
+															<button id="submit" type="submit" class="record_submit">확인</button>
 															<button type="reset" class="record_cancel">취소</button>
 														</div>
+														<script>
+														function accountVals() {
+															var accountNum = $('#accountNum').val();
+															$('#account').val(bank + "/" + accountNum);
+														}
+														
+														$("#submit").click(accountVals); 
+														
+														accountVals();
+														</script>
 													</div>
 											  </fieldset>
 										  </form>
@@ -147,7 +173,7 @@
 							<div class="12u">
 								<div id="copyright">
 									<ul class="menu">
-										<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+										<li>&copy; Untitled. All rights reserved</li><li>Design: HO&MIN</li>
 									</ul>
 								</div>
 							</div>
@@ -159,11 +185,11 @@
 
 		<!-- Scripts -->
 
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<script src="../../resources/assets/js/jquery.min.js"></script>
+			<script src="../../resources/assets/js/jquery.dropotron.min.js"></script>
+			<script src="../../resources/assets/js/skel.min.js"></script>
+			<script src="../../resources/assets/js/util.js"></script>
+			<script src="../../resources/assets/js/main.js"></script>
 
 	</body>
 </html>

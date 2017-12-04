@@ -58,12 +58,26 @@
 									<h2>이벤트</h2>
 									<ul class="style2">
 										<li><a href="group.html"><h3>전체 보기</h3></a></li>
-										<li><a href="event.html"><h3>신입생 환영회<a href="eventDetail.html"><img class="event_info" src="../resources/assets/css/images/info.png"/></a></h3></a></li>
-										<li><a href="event.html"><h3>신입생 엠티</h3></a></li>
-										<li><a href="event.html"><h3>체육대회</h3></a></li>
-									</ul>
-										<a href="registEvent.html" class="button icon fa-info-circle">이벤트 추가</a>
-								</section>
+										<c:choose>
+										<c:when test="${empty events}">
+											<a class="list-group-item hidden-xs">개설된 이벤트가 없습니다.</a>
+										</c:when>
+										<c:otherwise>
+											<c:forEach var="event" items="${events }">
+												<li><a href="${pageContext.request.contextPath}/event/event.do?eventId=${event.eventId }&groupId=${event.groupId}">
+													<h3>${event.eventName }
+													<a href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }"><img class="event_info"
+																src="assets/css/images/info.png"/></a>
+														</h3></a></li>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
+								</ul>
+								<a href="${pageContext.request.contextPath}/event/registEvent.do?groupId=1" class="button icon fa-info-circle">이벤트
+
+
+
+									추가</a></section>
 							</div>
 							
 						</div>
@@ -71,7 +85,7 @@
 						<div class="8u 12u$(medium) important(medium)">
 							<div id="content">
 
-								<div> <h3>${group.groupName }<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${group.groupId }"><img style="width:20px;" src="../resources/assets/css/images/info.png"/></a></h3></div>
+								<div> <h3>${group.groupName }<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=1"><img style="width:20px;" src="../resources/assets/css/images/info.png"/></a></h3></div>
 									<table>
 										<tr class="aa">
 											<th class="table_head"><span>번호</span></th>
