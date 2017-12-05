@@ -1688,6 +1688,7 @@ option{
 		cursor: pointer;
 		font-size: 0.8em;
 		padding: 0.3em 0.8em;
+		
 	}
 		.button2 {
 		-moz-transition: background-color .25s ease-in-out;

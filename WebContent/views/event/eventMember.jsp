@@ -42,6 +42,12 @@
 
 		parent.document.getElementById('get').value = answer;
 		
+		var answer2 = document.getElementById('leftItem').value;
+
+		parent.document.getElementById('get2').value = answer2;
+		
+		window.close();
+		window.close();
 		window.close();
 
 	}
@@ -60,7 +66,7 @@
 					<h1>
 						<a href="index.html">알뜰총雜</a>
 					</h1>
-					<span>Kosta 162기 > 가을 MT</span>
+					<span>${group.groupName } > ${event.eventName }</span>
 				</div>
 
 			</header>

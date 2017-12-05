@@ -1,11 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE HTML>
-<!--
-	Verti by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
 <html>
 <head>
 <title>모금액 현황</title>
@@ -46,9 +43,9 @@
 				<!-- Logo -->
 				<div id="logo">
 					<h1>
-						<a href="main.do">알뜰총雜</a>
+						<a href="index.html">모금액</a>
 					</h1>
-					<span>Kosta 162기 > 가을 MT</span>
+					<span>${group.groupName } > {event.eventName }</span>
 				</div>
 
 			</header>
@@ -94,8 +91,10 @@
 								<div class="scroll_notYet">
 									<ul>
 										<li><c:forEach items="${memberss }" var="member">
-										${member.memberId }
-										<button class="button2">미납</button>
+												<input name="subCheck" type="checkbox" value=0>
+											${member.memberId }
+										<button value="submit" class="button2">미납</button>
+												<br>
 											</c:forEach></li>
 
 									</ul>

@@ -156,7 +156,16 @@ public class MemberGroupServiceLogic implements MemberGroupService{
 		gStore.updateGroupBalance(group);
 		
 	}
-	
+
+	@Override
+	public List<Member> findAllMembersExceptEventMembers(int groupId, int eventId) {
+		return mStore.retrieveAllMembersExceptEventMembers(groupId, eventId);
+	}
+
+	@Override
+	public List<Member> findAllMembersExceptManager(int groupId) {
+		return mStore.retrieveAllMembersExceptManager(groupId);
+	}
 	
 
 }

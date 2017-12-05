@@ -45,14 +45,53 @@
 		WHERE m.memberId=g.memberId and groupId=#{groupId}
 	</select>
 
+	<select id="retrieveAllMembersExceptManager" parameterType="int"
+		resultType="Member">
+		select memberId
+		from groupMember_table
+		where
+		groupId=#{groupId}
+		MINUS
+		select memberId
+		from event_table
+		where
+		groupId=#{groupId}
+	</select>
+
+	<select id="retrieveAllMembersExceptEventMembers" parameterType="int"
+		resultType="Member">
+		select memberId
+		from groupMember_table
+		where
+		groupId=#{groupId}
+		MINUS
+		select memberId
+		from eventMember_table
+		where
+		eventId = #{eventId}
+	</select>
+
 	<select id="retrieveMembersByEvent" parameterType="int"
 		resultType="Member">
-<!-- 	select memberId
-		from eventMember_table
-		where eventId=#{eventId}-->
-        SELECT m.memberId, m.password, m.nickname, m.name, m.email, m.account,m.phoneNumber
+		<!-- select memberId from eventMember_table where eventId=#{eventId} -->
+		SELECT m.memberId, m.password, m.nickname, m.name, m.email,
+		m.account,m.phoneNumber
 		FROM member_table m, eventMember_table e
-		WHERE m.memberId=e.memberId and e.eventId=#{eventId}
+		WHERE
+		m.memberId=e.memberId and e.eventId=#{eventId}
+	</select>
+
+	<select id="retrieveMembersNoEvent" parameterType="int"
+		resultType="Member">
+		select memberId
+		from groupMember_table
+		where
+		groupId=#{groupId}
+		MINUS
+		select memberId
+		from eventMember_table
+		where
+		eventId=#{eventId}
 	</select>
 
 	<update id="updateGrade" parameterType="map">

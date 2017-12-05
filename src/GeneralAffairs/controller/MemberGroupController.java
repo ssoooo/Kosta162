@@ -34,7 +34,7 @@ public class MemberGroupController {
 	
 	@RequestMapping(value= "/memberList.do", method=RequestMethod.GET)
 	public String showMemberListByGroup(int groupId, Model model) {
-		List<Member> members = mgService.findAllMembersByGroup(groupId);
+		List<Member> members = mgService.findAllMembersExceptManager(groupId);
 		model.addAttribute("members", members);
 		
 		Group group = mgService.findGroupById(groupId);

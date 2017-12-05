@@ -69,8 +69,8 @@
 							<tbody>
 								<tr>
 									<th class="info_first">이벤트 명</th>
-									<td class="info_detail_first"><a
-										href="${pageContext.request.contextPath}/event/event.do?eventId=${event.eventId }&groupId=${event.groupId}">${event.eventName }</td>
+									<td class="info_detail_first">
+									<a href="${pageContext.request.contextPath}/event/event.do?eventId=${event.eventId }&groupId=${event.groupId}">${event.eventName }</a></td>
 								</tr>
 								<tr>
 									<th class="info">이벤트 예산액</th>
@@ -121,9 +121,7 @@
 						</div>
 						<div class="btn_hor">
 							<button class="btn_modify"
-								onclick="window.open('${pageContext.request.contextPath}/event/collectionDetail.do?eventId=${event.eventId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">모금액</button>
-							<button class="btn_invite"
-								onclick="window.open('${pageContext.request.contextPath}/event/addMemberToEvent.do?eventId=${event.eventId }&groupId=${event.groupId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">멤버추가/제외</button>
+								onclick="window.open('${pageContext.request.contextPath}/event/collectionDetail.do?eventId=${event.eventId }','win','width=600,height=750,toolbar=0,scrollbars=0,resizable=0')">모금액</button>
 						</div>
 					</div>
 					<br class="clear" />
