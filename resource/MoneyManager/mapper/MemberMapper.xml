@@ -26,8 +26,7 @@
 		WHERE memberId=#{memberId}
 	</delete>
 
-	<select id="retrieveMemberById" parameterType="String"
-		resultType="Member">
+	<select id="retrieveMemberById" parameterType="String" resultType="Member">
 		SELECT memberId,password,nickname,name,email,account,phoneNumber
 		FROM member_table
 		WHERE memberId=#{memberId}

@@ -20,14 +20,14 @@
 
 						<!-- Logo -->
 							<div id="logo">
-								<h1><a href="main.html">Verti</a></h1>
+								<h1><a href="main.jsp">Verti</a></h1>
 								<span>${group.groupName }</span>
 							</div>
 
 						<!-- Nav -->
 							<nav id="nav">
 							  <ul>
-								<li><a href="main.html">Home</a></li>
+								<li><a href="main.jsp">Home</a></li>
 								<li>
 									<a href="main.html">Message</a>
 									<ul class="ul_accept">
@@ -72,7 +72,7 @@
 								</tr>
 								<tr>
 									<th class="info">총무</th>
-									<td class="info_detail">${member.nickname }</td>
+									<td class="info_detail">${manager.memberId }</td>
 								</tr>
 								<tr>
 									<th class="info">총무계좌</th>
@@ -83,6 +83,7 @@
 							<div class="btn_hor">
 								<a href="groupStats.html"><button class="btn_graph">통계</button></a>
 								<a href="${pageContext.request.contextPath}/memberGroup/showModifyGroup.do?groupId=${group.groupId }"><button class="btn_modify">수정</button></a>
+								<a href="${pageContext.request.contextPath}/memberGroup/leaveGroup.do?groupId=${group.groupId }"><button class="btn_modify">탈퇴</button></a>
 								<a href="${pageContext.request.contextPath}/memberGroup/deleteGroup.do?groupId=${group.groupId }"><button class="btn_delete">삭제</button></a>
 							</div>
 						</div>
@@ -111,7 +112,8 @@
 							</div>
 							<div class="btn_hor">
 								<button class="btn_trade" onclick="window.open('tradeGrade.html','win','width=600,height=620,toolbar=0,scrollbars=0,resizable=0')">총무위임</button>
-								<button class="btn_invite" onclick="window.open('inviteMember.html','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">멤버초대</button>
+								<button class="btn_trade" onclick="window.open('${pageContext.request.contextPath}/memberGroup/showKickMember.do?groupId=${group.groupId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">멤버추방</button>
+								<button class="btn_invite" onclick="window.open('${pageContext.request.contextPath}/memberGroup/showSearchMember.do?groupId=${group.groupId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">멤버초대</button>
 							</div>
 						</div>
 						<br class="clear" />

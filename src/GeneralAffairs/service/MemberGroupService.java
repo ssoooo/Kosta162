@@ -23,6 +23,8 @@ public interface MemberGroupService {
 	boolean createManagerToGroup(String memberId,int groupId);
 	boolean modifyGroup(Group group);
 	void removeGroup(int groupId);
+	boolean leaveGroup(String memberId, int groupId);
+	void kickMember(String memberId, int groupId);
 //	List<Group> findAllMyGroups(String memberId);
 	Group findGroupById(int groupId);
 	List<Group> findAllGroupsByMemberId(String memberId);
