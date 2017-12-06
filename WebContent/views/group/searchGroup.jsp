@@ -70,17 +70,37 @@
 					<div class="container">
 						<div class="row">
 						<c:forEach items="${groups }" var="group" >
-							<div class="4u 12u(medium)">
-								<!-- Box -->
-									<section class="box feature">
-										<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${group.groupId }" class="image featured"><img src="../resources/images/pic01.jpg" alt="" /></a>
-										<div class="inner">
-											<header>
-												<h2>${group.groupName }<button class="sign">가입신청</button></h2></header>
-											</div>
-									</section>
-							</div>
+							<c:forEach items="${myGroups }" var="myGroup" >
+								<c:choose>
+									<c:when test="${group.groupId eq myGroup.groupId }">
+										<div class="4u 12u(medium)">
+											<!-- Box -->
+												<section class="box feature">
+													<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${group.groupId }" class="image featured"><img src="../resources/images/pic01.jpg" alt="" /></a>
+													<div class="inner">
+														<header>
+															<h2>${group.groupName }</h2>
+														</header>
+														</div>
+												</section>
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div class="4u 12u(medium)">
+											<!-- Box -->
+												<section class="box feature">
+													<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${group.groupId }" class="image featured"><img src="../resources/images/pic01.jpg" alt="" /></a>
+													<div class="inner">
+														<header>
+															<h2>${group.groupName }<button class="sign">가입신청</button></h2></header>
+														</div>
+												</section>
+										</div>	
+									</c:otherwise>
+								</c:choose>
+							
 							</c:forEach>
+						</c:forEach>
 						</div>
 					</div>
 				</div>

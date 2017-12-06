@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -249,7 +250,6 @@ public class MemberGroupController {
 	
 	@RequestMapping("/deleteGroup.do")
 	public String deleteGroup(int groupId) {
-//		System.out.println("거절");
 		
 		mgService.removeGroup(groupId);	// removeFromGroup까지 됨
 		
@@ -306,7 +306,6 @@ public class MemberGroupController {
 	@RequestMapping("/acceptInvite.do")
 	public String acceptInvite(HttpSession session, int groupId, Model model) {
 		
-//		System.out.println("//" + groupId);
 		String myId = (String)session.getAttribute("loginedMemberId");
 		
 		mgService.acceptInvite(myId, groupId);
@@ -360,11 +359,27 @@ public class MemberGroupController {
 		HttpServletRequest req 를 parameter로 받아올 경우 다음과 같이 가능
 		List<Group> groups = mgService.findAllGroupsByGroupName(req.getParameter("groupNameInput"));
 		 */		
+		
+//		이미 가입된 모임 제외시키거나 가입신청 불가능하게
+		
 		String myId = (String) session.getAttribute("loginedMemberId");
 		List<Group> groups = mgService.findAllGroupsByGroupName(groupName);
+		List<Group> myGroups = mgService.findAllGroupsByMemberId(myId);
 		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(myId);
 		
+        List<Group> groupA = new ArrayList<Group>();
+        List<Group> groupB = new ArrayList<Group>();
+        
+        for (int i = 0; i < groups.size(); i++) {
+            if (!groups.contains(myGroups.get(i))) {
+            	groupA.add(myGroups.get(i));	//myGroup 제외한 것만
+            }
+        }
+
+        model.addAttribute("groupA", groupA);
+        
 		model.addAttribute("groups", groups);
+		model.addAttribute("myGroups", myGroups);
 		model.addAttribute("groupsInvited", groupsInvited);
 		model.addAttribute("groupName", groupName);
 
@@ -385,9 +400,12 @@ public class MemberGroupController {
 	}
 	
 	@RequestMapping("/group.do")
-	public String showGroup(int groupId, Model model) {
+	public String showGroup(HttpSession session, int groupId, Model model) {
+		
+		String myId = (String) session.getAttribute("loginedMemberId");
+		
 		Group group = mgService.findGroupById(groupId);
-		List<Message> messages = messageService.findAllMyMessages("kang");
+		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
 		
 		model.addAttribute("group", group);
 		model.addAttribute("messages", messages);
@@ -396,9 +414,12 @@ public class MemberGroupController {
 	}
 	
 	@RequestMapping("/groupDetail.do")
-	public String showGroupDetail(int groupId, Model model) {
+	public String showGroupDetail(HttpSession session, int groupId, Model model) {
+		
+		String myId = (String) session.getAttribute("loginedMemberId");
+		
 		Group group = mgService.findGroupById(groupId);
-		List<Message> messages = messageService.findAllMyMessages("kang");
+		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
 		List<Member> members = mgService.findAllMembersByGroup(groupId);
 		Member manager = mgService.findMemberById(group.getMemberId());
 		

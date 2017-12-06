@@ -9,9 +9,16 @@ public class Message {
 	private String memberId;
 	private String title;
 	private String content;
+	private int groupId;
 	private double collectionPerMember;
 	private Date date;
 	
+	public int getGroupId() {
+		return groupId;
+	}
+	public void setGroupId(int groupId) {
+		this.groupId = groupId;
+	}
 	public int getMessageId() {
 		return messageId;
 	}

@@ -35,14 +35,12 @@ public class EventServiceLogic implements EventService{
 
 	@Override
 	public Event findEventById(int eventId) {
-		// TODO Auto-generated method stub
-		return null;
+		return store.retrieveEventById(eventId);
 	}
 
 	@Override
 	public List<Event> findAllEventsByGroupId(int groupId) {
-		// TODO Auto-generated method stub
-		return null;
+		return store.retrieveAllEventsByGroupId(groupId);
 	}
 
 	@Override

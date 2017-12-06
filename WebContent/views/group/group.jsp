@@ -8,6 +8,12 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="../resources/assets/css/main2.css" />
+		<script>
+		function winClose(memberId){
+    		alert(memberId + "님이 보낸 메시지를 삭제했습니다.");
+    		opener.location.reload();
+		}
+		</script>
 	</head>
 	<body class="left-sidebar">
 		<div id="page-wrapper">
@@ -33,8 +39,8 @@
 									<p class="group_invite_list">
 										${message.title }
 										<div class="accept_reject">
-											<a href="">보기</a>
-											<a href="">삭제</a>
+											<a href="#" onclick="window.open('${pageContext.request.contextPath}/message/receivedMessage.do?messageId=${message.messageId }&groupId=${group.groupId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">보기</a>
+											<a href="${pageContext.request.contextPath}/message/deleteMyMessage.do?messageId=${message.messageId }" onclick="winClose('${message.memberId }')">삭제</a>
 										</div>
 									</p>
 								</c:forEach>

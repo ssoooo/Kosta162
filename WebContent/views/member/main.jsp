@@ -20,9 +20,9 @@
 		        dataType: "text",
 		        success: function(data) { //여기서 data 안에는 spring 에서 result 한 값이 포함되어 있으며 특정한 목록을 지정해서 보낼 수도있다.
 			        if(data == 'success'){
-				        alert("가입이 완료되었습니다.");
+				        alert("모임 가입이 완료되었습니다.");
 			        }else{
-				        alert("가입이 완료되었습니다.");
+				        alert("모임 가입이 완료되었습니다.");
 		        	}
 		        }
 		    });

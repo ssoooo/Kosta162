@@ -13,5 +13,5 @@ public interface MessageService {
 	Message findMessageById(int messageId);
 	void sendMessage(String memberId,int messageId);
 	void removeMyMessage(String memberId,int messageId);
-	List<Message> findAllMyMessages(String memberId);
+	List<Message> findAllMyMessages(String memberId, int groupId);
 }
