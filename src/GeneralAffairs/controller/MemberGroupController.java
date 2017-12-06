@@ -93,6 +93,7 @@ public class MemberGroupController {
 		HttpSession session = req.getSession();
 		session.invalidate();
 		return "redirect:/views/member/main.jsp";
+
 	}
 	
 	@RequestMapping("/modifyMember.do")
@@ -367,46 +368,71 @@ public class MemberGroupController {
 	
 	@RequestMapping("/deleteGroup.do")
 	public String deleteGroup(int groupId) {
-		System.out.println("수락");
 		
-		mgService.removeGroup(groupId);	// removeFromGroup까지
+		mgService.removeGroup(groupId);	// removeFromGroup까지 됨
 		
 		return "redirect:/memberGroup/main.do";
 	}
 	
 	@RequestMapping("/leaveGroup.do")
-	public String leaveGroup(int groupId,HttpSession session) {
-		// jsp
+	public String leaveGroup(HttpSession session, int groupId) {
 		
-		return "";
+		String myId = (String)session.getAttribute("loginedMemberId");
+		boolean checkMemberHasOtherGroup = mgService.leaveGroup(myId, groupId);
+		
+//		총무는 탈퇴 불가 창
+		
+		if(checkMemberHasOtherGroup) {
+			return "redirect:/memberGroup/main.do";
+		} else {
+			return "redirect:/views/member/login.jsp";
+		}
 	}
+	
+	
+	@RequestMapping("/showKickMember.do")
+	public String showGroupMembersForKick(HttpSession session, int groupId, Model model) {
+//		총무 제외하고 보여주기
+		List<Member> members = mgService.findAllMembersByGroup(groupId);
+		Group group = mgService.findGroupById(groupId);
+		
+		model.addAttribute("members", members);
+		model.addAttribute("group", group);
+		
+		return "group/kickMember";
+	}
+	
 	
 	@RequestMapping("/kickMember.do")
 	public String kickMemberFromGroup(String memberId,int groupId) {
-		// jsp
 		
-		return "";
+		mgService.kickMember(memberId, groupId);
+		
+		return "redirect:/memberGroup/showKickMember.do?groupId=" + groupId;
 	}
 	
 	@RequestMapping("/inviteMember.do")
-	public String inviteMember(int groupId,String memberId,Model model) {
+	public String inviteMember(int groupId, String memberId, Model model) {
 		
-		return "";
+//		이미 가입된 멤버 제외시키거나 초대 불가능하게(해당 id의 멤버가 해당 그룹에 이미 가입되어 있으면 초대 불가)
+		
+		mgService.createInvite(memberId, groupId);
+		
+		return "redirect:/memberGroup/showSearchMember.do?groupId=" + groupId;
 	}
 	
 	@RequestMapping("/acceptInvite.do")
-	public void acceptInvite(HttpSession session, int groupId, Model model) {
+	public String acceptInvite(HttpSession session, int groupId, Model model) {
 		
-		System.out.println("//" + groupId);
-		String memberId = (String)session.getAttribute("loginedMemberId");
+		String myId = (String)session.getAttribute("loginedMemberId");
 		
-		mgService.acceptInvite(memberId, groupId);
+		mgService.acceptInvite(myId, groupId);
 		
-		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(memberId);
+		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(myId);
 		
-		model.addAttribute("groupsInvited", groupsInvited);
+		model.addAttribute("result", "success");
 		
-//		return "";
+		return "member/main";
 	}
 	
 	@RequestMapping("/denyInvite.do")
@@ -414,7 +440,7 @@ public class MemberGroupController {
 		
 		mgService.deleteInvite(memberId, groupId);
 		
-//		return "";
+//		return "member/main"; // 처리한 화면으로... ajax필요!
 	}
 /*	
 	@RequestMapping("/myInvitations.do")
@@ -424,15 +450,25 @@ public class MemberGroupController {
 	}
 */
 	@RequestMapping("/searchMember.do")
-	public String searchMember(String memberId,Model model) {
+	public String searchMember(String memberId, int groupId, Model model) {
 		
-		return "";
+		Member member = mgService.findMemberById(memberId);
+		Group group = mgService.findGroupById(groupId);
+		
+		model.addAttribute("member", member);
+		model.addAttribute("group", group);
+		
+		return "group/inviteMember";
 	}
-	
+
 	@RequestMapping("/showSearchMember.do")
-	public String showSearchMember() {
+	public String showSearchMember(int groupId, Model model) {
 		
-		return "";
+		Group group = mgService.findGroupById(groupId);
+		
+		model.addAttribute("group", group);
+		
+		return "group/searchMember";
 	}
 	
 	@RequestMapping("/searchGroupsByGroupName.do")
@@ -452,11 +488,26 @@ public class MemberGroupController {
 		HttpServletRequest req �몴占� parameter嚥∽옙 獄쏆룇釉섓옙�궞 野껋럩�뒭 占쎈뼄占쎌벉�⑨옙 揶쏆늿�뵠 揶쏉옙占쎈뮟
 		List<Group> groups = mgService.findAllGroupsByGroupName(req.getParameter("groupNameInput"));
 		 */		
-		String memberId = (String) session.getAttribute("loginedMemberId");
-		List<Group> groups = mgService.findAllGroupsByGroupName(groupName);
-		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(memberId);
 		
+//		이미 가입된 모임 제외시키거나 가입신청 불가능하게
+		
+		String myId = (String) session.getAttribute("loginedMemberId");
+		List<Group> groups = mgService.findAllGroupsByGroupName(groupName);
+		List<Group> myGroups = mgService.findAllGroupsByMemberId(myId);
+		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(myId);
+		
+        List<Group> groupA = new ArrayList<Group>();
+        List<Group> groupB = new ArrayList<Group>();
+        
+        for (int i = 0; i < groups.size(); i++) {
+            if (!groups.contains(myGroups.get(i))) {
+            	groupA.add(myGroups.get(i));	//myGroup 제외한 것만
+            }
+        }
+
+        model.addAttribute("groupA", groupA);
 		model.addAttribute("groups", groups);
+		model.addAttribute("myGroups", myGroups);
 		model.addAttribute("groupsInvited", groupsInvited);
 		model.addAttribute("groupName", groupName);
 
@@ -466,9 +517,9 @@ public class MemberGroupController {
 	@RequestMapping("/main.do")
 	public String showMain(HttpSession session, Model model) {
 				
-		String memberId = (String) session.getAttribute("loginedMemberId");
-		List<Group> groups = mgService.findAllGroupsByMemberId(memberId);
-		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(memberId);
+		String myId = (String) session.getAttribute("loginedMemberId");
+		List<Group> groups = mgService.findAllGroupsByMemberId(myId);
+		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(myId);
 		
 		model.addAttribute("groupsInvited", groupsInvited);
 		model.addAttribute("groups", groups);
@@ -477,10 +528,14 @@ public class MemberGroupController {
 	}
 	
 	@RequestMapping("/group.do")
-	public String showGroup(int groupId, Model model) {
-		Group group = mgService.findGroupById(groupId);
-		List<Message> messages = messageService.findAllMyMessages("didgmltn");
+	public String showGroup(HttpSession session, int groupId, Model model) {
+		
+		String myId = (String) session.getAttribute("loginedMemberId");
+		
+		Group group = mgService.findGroupById(groupId);	
 		List<Event> events = eventService.findAllEventsByGroupId(groupId);
+		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
+
 		
 		model.addAttribute("events", events);
 		model.addAttribute("group", group);
@@ -491,9 +546,13 @@ public class MemberGroupController {
 	}
 	
 	@RequestMapping("/groupDetail.do")
-	public String showGroupDetail(int groupId, Model model) {
+	public String showGroupDetail(HttpSession session, int groupId, Model model) {
+		
+		String myId = (String) session.getAttribute("loginedMemberId");
+		
 		Group group = mgService.findGroupById(groupId);
 		List<Member> signIns = mgService.findAllSignInGroupReq(groupId);
+		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
 		List<Member> members = mgService.findAllMembersByGroup(groupId);
 		Member manager = mgService.findMemberById(group.getMemberId());
 		System.out.println(manager.getNickname());

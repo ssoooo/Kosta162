@@ -39,7 +39,6 @@ public class MemberGroupServiceLogic implements MemberGroupService{
 
 	@Override
 	public Member findMemberById(String memberId) {
-		
 		return mStore.retrieveMemberById(memberId);
 	}
 
@@ -112,13 +111,39 @@ public class MemberGroupServiceLogic implements MemberGroupService{
 		
 		List<Member> members = mStore.retrieveAllMembersByGroup(groupId);
 		
-		System.out.println("/" + members.size());
-
 		for(Member member: members) {
 			gStore.deleteMemberFromGroup(member.getMemberId(), groupId);
 		}
 	}
-
+	
+	@Override
+	public boolean leaveGroup(String memberId, int groupId) {
+		List<Integer> groupIds = mStore.checkMemberHasGroup(memberId);
+		
+		if(groupIds.size() > 1) {
+			gStore.deleteMemberFromGroup(memberId, groupId);
+			return true;
+			
+		} else {
+			gStore.deleteMemberFromGroup(memberId, groupId);
+			mStore.deleteMember(memberId);
+			return false;
+		}
+	}
+	
+	@Override
+	public void kickMember(String memberId, int groupId) {
+		List<Integer> groupIds = mStore.checkMemberHasGroup(memberId);
+		
+		if(groupIds.size() > 1) {
+			gStore.deleteMemberFromGroup(memberId, groupId);
+			
+		} else {
+			gStore.deleteMemberFromGroup(memberId, groupId);
+			mStore.deleteMember(memberId);
+		}
+	}
+	
 //	@Override
 //	public List<Group> findAllMyGroups(String memberId) {
 //		

@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -48,34 +47,6 @@
 									</tr>
 									<input type="hidden" name="groupId" value="${group.groupId }"/> 
 									</form>
-									<c:choose>
-									<c:when test="${member ne null }">
-									<tr class="under">
-										<td class="th1"></td>
-										<td class="td2">
-												<ul id="ul_member">
-												<li>
-													<a href="${pageContext.request.contextPath}/memberGroup/memberDetail.do?memberId=${member.memberId }" class="member_list">${member.memberId }</a><a href="${pageContext.request.contextPath}/memberGroup/inviteMember.do?memberId=${member.memberId }&groupId=${group.groupId }"><button>초대</button></a>
-												</li>
-											</ul>
-											</td>
-										<td class="td3"></td>
-									</tr>
-									</c:when>
-									<c:otherwise>
-									<tr class="under">
-										<td class="th1"></td>
-										<td class="td2">
-												<ul id="ul_member">
-												<li style="text-align:center;">
-													등록된 정보가 없습니다.
-												</li>
-											</ul>
-											</td>
-										<td class="td3"></td>
-									</tr>
-									</c:otherwise>
-									</c:choose>
 									</tbody>
 								</table>
 							</div>

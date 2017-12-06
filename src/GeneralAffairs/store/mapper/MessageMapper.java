@@ -12,9 +12,9 @@ public interface MessageMapper {
 	void registMessage(Message message);
 	void deleteMessage(int messageId);
 	Message retrieveMessageById(int messageId);
-	void registMessageWithMember(@Param("memberId") String memberId,@Param("messageId")int messageId);
-	void deleteMessageWithMember(@Param("memberId") String memberId,@Param("messageId")int messageId);
-	List<Message> retrieveAllMyMessages(String memberId);
+	void registMessageWithMember(@Param("memberId") String memberId, @Param("messageId")int messageId);
+	void deleteMessageWithMember(@Param("memberId") String memberId, @Param("messageId")int messageId);
+	List<Message> retrieveAllMyMessages(@Param("memberId") String memberId, @Param("groupId") int groupId);
 
 
 }

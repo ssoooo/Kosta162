@@ -1,16 +1,14 @@
-<!DOCTYPE HTML>
-<!--
-	Verti by HTML5 UP
-	html5up.net | @ajlkn
-	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
--->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<!DOCTYPE html>
 <html>
 	<head>
 		<title>Verti by HTML5 UP</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-		<link rel="stylesheet" href="../../resources/assets/css/grade.css" />
+		<link rel="stylesheet" href="../resources/assets/css/grade.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 	</head>
 	<body class="no-sidebar">
@@ -23,9 +21,16 @@
 						<!-- Logo -->
 							<div id="logo">
 								<h1><a href="index.html">Verti</a></h1>
-								<span>Kosta 162기 > 가을 MT</span>
+								<c:choose>
+									<c:when test="${event eq null }">
+										<span>${group.groupName }</span>
+									</c:when>
+									<c:otherwise>
+										<span>${group.groupName } > ${event.eventName }</span>
+									</c:otherwise>
+								</c:choose>
 							</div>
-
+							
 					</header>
 				</div>
 
@@ -45,7 +50,7 @@
 									<tbody>
 									<tr>
 										<th>발신인</th>
-										<td>백민지</td>
+										<td>${message.memberId }</td>
 									</tr>
 									<tr>
 										<th>수신인</th>
@@ -53,13 +58,13 @@
 									</tr>
 									<tr>
 										<th>제목</th>
-										<td>회비내라</td>
+										<td>${message.title }</td>
 									</tr>
 									<tr>
 										<div id="input_content">
 										<th>내용</th>
 											<td>
-												<textarea readonly rows="4" style="resize: none">회비 30000원</textarea>
+												<textarea readonly rows="4" style="resize: none">${message.content }</textarea>
 											</td>
 										</div>
 			
