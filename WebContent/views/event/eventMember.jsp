@@ -43,6 +43,10 @@
 
 		parent.document.getElementById('get').value = answer;
 		
+		var answer2 = document.getElementById('leftItem').value;
+
+		parent.document.getElementById('get2').value = answer2;
+		
 		window.close();
 
 	}
@@ -93,9 +97,9 @@
 							<div class="item_event">
 								이벤트 <br /> <select id="rightItem" name="rightItem"
 									class="item_width" size="8">
-									<c:forEach items="${eventMembers }" var="member">
-										<option>${member.name }</option>
-									</c:forEach>
+									<c:forEach items="${memberss }" var="member">
+										<option>${member.memberId }</option>
+									</c:forEach>  
 								</select>
 							</div>
 						</div>

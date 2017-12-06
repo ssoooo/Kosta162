@@ -21,7 +21,7 @@
 					<!-- Logo -->
 					<div id="logo">
 						<h1><a href="main.do">알뜰총雜</a></h1>
-						<span>Kosta 162기 > 가을 MT</span>
+						<span>${group.groupName} > ${event.eventName }</span>
 					</div>
 
 						<!-- Nav -->
@@ -64,7 +64,7 @@
 								<section>
 									<h2>게시판</h2>
 									<ul class="style2">
-										<li><a href="group.do"><h3>전체 보기</h3></a></li>
+										<li><a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${event.groupId}"><h3>전체 보기</h3></a></li>
 										<c:choose>
 										<c:when test="${empty events}">
 											<a class="list-group-item hidden-xs">개설된 이벤트가 없습니다.</a>
@@ -74,7 +74,7 @@
 												<li><a href="${pageContext.request.contextPath}/event/event.do?eventId=${event.eventId }&groupId=${event.groupId}">
 													<h3>${event.eventName }
 													<a href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }"><img class="event_info"
-																src="assets/css/images/info.png"/></a>
+																src="../resources/assets/css/images/info.png"/></a>
 														</h3></a></li>
 											</c:forEach>
 										</c:otherwise>

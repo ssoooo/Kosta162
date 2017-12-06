@@ -2,6 +2,7 @@ package GeneralAffairs.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,35 +25,63 @@ public class EventController {
 	private EventService eventService;
 
 	@Autowired
+<<<<<<< HEAD
 	private MemberGroupService msService;
 	
 	
+=======
+	private MemberGroupService mgService;
+>>>>>>> 614d9af0201fea48f369c212aed5616a3757eb4e
 
 	@RequestMapping(value = "/registEvent.do", method = RequestMethod.POST)
-	public String registEvent(Event event, HttpSession session, Model model) {
+	public String registEvent(Event event, HttpSession session, HttpServletRequest req, Model model) {
 		event.setMemberId((String) session.getAttribute("loginedMemberId"));
 		eventService.createEvent(event);
-//		eventService.addMemberToEvent(event.getMemberId(), event.getEventId());
-		
+		Group group = mgService.findGroupById(event.getGroupId());
+
+		String[] members = req.getParameterValues("get");
+		for (int i = 0; i < members.length; i++) {
+			group.setMemberId(members[i]);
+		}
+
 		model.addAttribute("event", event);
-		return "redirect:/group/group.do?groupId=" + event.getGroupId();
+		eventService.addMemberToEvent(event.getMemberId(), event.getEventId());
+		eventService.addMemberToEvent(group.getMemberId(), event.getEventId());
+
+		return "redirect:/event/event.do?eventId=" + event.getEventId() + "&groupId=" + event.getGroupId();
 	}
 
 	@RequestMapping(value = "/registEvent.do", method = RequestMethod.GET)
 	public String showRegistEvent(HttpSession session, int groupId, Model model) {
 		List<Event> events = eventService.findAllEventsByGroupId(groupId);
+		Group group = mgService.findGroupById(groupId);
+
 		model.addAttribute("events", events);
-		model.addAttribute("groupId", groupId);
+		model.addAttribute("group", group);
 
 		return "event/registEvent";
 	}
 
 	@RequestMapping(value = "/modifyEvent.do", method = RequestMethod.POST)
-	public String modifyEvent(Event event, Model model) {
+	public String modifyEvent(Event event, HttpServletRequest req, Model model) {
 		eventService.modifyEvent(event);
 		model.addAttribute("event", event);
 		model.addAttribute("groupId", event.getGroupId());
-		
+
+		Group group = mgService.findGroupById(event.getGroupId());
+
+		String[] memberss = req.getParameterValues("get");
+		for (int i = 0; i < memberss.length; i++) {
+			group.setMemberId(memberss[i]);
+		}
+		eventService.addMemberToEvent(group.getMemberId(), event.getEventId());
+
+		String[] members = req.getParameterValues("get2");
+		for (int i = 0; i < members.length; i++) {
+			event.setMemberId(members[i]);
+		}
+		eventService.removeFromEvent(event.getMemberId(), event.getEventId());
+
 		return "redirect:/event/eventDetail.do?eventId=" + event.getEventId();
 	}
 
@@ -60,71 +89,126 @@ public class EventController {
 	public String showModifyEvent(int eventId, Model model) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
-		
+
+		List<Event> events = eventService.findAllEventsByGroupId(event.getGroupId());
+		model.addAttribute("events", events);
+
+		Group group = mgService.findGroupById(event.getGroupId());
+		model.addAttribute("group", group);
+
+		List<Member> memberss = mgService.findAllMembersByEvent(eventId);
+		model.addAttribute("memberss", memberss);
+
 		return "event/modifyEvent";
 	}
 
 	@RequestMapping("/remove.do")
 	public String deleteEvent(int eventId, int groupId) {
 		eventService.removeEvent(eventId);
-		
+
 		return "redirect:/memberGroup/group.do?groupId=" + groupId;
 	}
 
 	@RequestMapping(value = "/addMemberToEvent.do", method = RequestMethod.GET)
-	public String showAddMemberToEvent(int eventId, Model model)  {
+	public String showAddMemberToEvent(int eventId, int groupId, Model model) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
-		
-		return "event/eventMember";
-	}
-	
-	@RequestMapping(value = "/addMemberToEvent.do", method = RequestMethod.POST)
-	public String showAddMemberToEvent(int groupId, int eventId, Model model) {
-		Group group = msService.findGroupById(groupId);
-		model.addAttribute("group", group);
-		
-		List<Event> events = eventService.findAllEventsByGroupId(groupId);
-		model.addAttribute("events",events);
-		
-		List<Member> groupMembers = msService.findAllMembersByGroup(groupId);
-		model.addAttribute("groupMembers", groupMembers);
-		
-		Event event = eventService.findEventById(eventId);
-		model.addAttribute("event", event);
-		
-		List<Member> eventMembers = msService.findAllMembersByEvent(eventId);
-		model.addAttribute("eventMembers", eventMembers);
-		
+
+		Group group = mgService.findGroupById(groupId);
+
+		List<Member> members = mgService.findAllMembersExceptEventMembers(group.getGroupId(), eventId);
+		model.addAttribute("members", members);
+
+		List<Member> memberss = mgService.findAllMembersByEvent(eventId);
+		model.addAttribute("memberss", memberss);
+
 		return "event/eventMember";
 	}
 
-	@RequestMapping("/exceptFromMember.do")
-	public String exceptMemberFromEvent(String memberId) {
+	// @RequestMapping(value = "/addMemberToEvent.do", method = RequestMethod.POST)
+	// public String AddMemberToEvent(String memberId, int eventId,
+	// HttpServletRequest req, Model model) {
+	// Event event = eventService.findEventById(eventId);
+	// Group group = mgService.findGroupById(event.getGroupId());
+	//
+	// model.addAttribute("memberId", memberId);
+	// model.addAttribute("eventId", eventId);
+	//
+	// String[] members = req.getParameterValues("get");
+	// for (int i = 0; i < members.length; i++) {
+	// group.setMemberId(members[i]);
+	// System.out.println(members[i]);
+	// }
+	// eventService.addMemberToEvent(group.getMemberId(), event.getEventId());
+	//
+	// return "redirect:/event/eventDetail.do?eventId=" + eventId + "&memberId=" +
+	// memberId;
+	// }
 
-		return "";
-	}
+	// @RequestMapping("/exceptFromMember.do")
+	// public String exceptMemberFromEvent(String memberId, int eventId,
+	// HttpServletRequest req) {
+	// Event event = eventService.findEventById(eventId);
+	// Group group = mgService.findGroupById(event.getGroupId());
+	//
+	// String[] members = req.getParameterValues("get2");
+	// for (int i = 0; i < members.length; i++) {
+	// group.setMemberId(members[i]);
+	// System.out.println(members[i]);
+	// }
+	// eventService.exceptMemberFromEvent(memberId, eventId);
+	//
+	// return "redirect:/event/modifyEvent.do?eventId=" + eventId + "&memberId=" +
+	// memberId;
+	// }
 
 	@RequestMapping("/addEventBalance.do")
 	public String addEventBalanceToGroupBalance(int eventId) {
+		Event event = eventService.findEventById(eventId);
+		eventService.addEventBalanceToGroupBalance(eventId, event.getGroupId());
 
-		return "";
+		return "memberGroup/group";
 	}
 
-	@RequestMapping("/changePayment.do")
-	public String changePayment(int eventId, String memberId) {
+	@RequestMapping(value = "/collectionDetail.do", method = RequestMethod.GET)
+	public String showChangePayment(int eventId, Model model) {
+		Event event = eventService.findEventById(eventId);
+		model.addAttribute("event", event);
+		
+		Group group = mgService.findGroupById(event.getGroupId());
+		model.addAttribute("group", group);
 
-		return "";
+		List<Member> members = mgService.findAllUnPaidMembers(event.getMemberId(), eventId);
+		List<Member> memberss = mgService.findAllPaidMembers(event.getMemberId(), eventId);
+		
+		model.addAttribute("members", members);
+		model.addAttribute("memberss", memberss);
+
+		return "event/collectionDetail";
+	}
+
+	@RequestMapping(value = "/collectionDetail.do", method = RequestMethod.POST)
+	public String ChangePayment(int eventId, Model model) { 
+		Event event = eventService.findEventById(eventId);
+		model.addAttribute("event", event);
+		
+		eventService.changePayment(event.getMemberId(), eventId);
+		System.out.println("///" + event.getMemberId());
+		System.out.println("////" + eventId);
+		return "redirect:/event/collectionDetail.do?eventId=" + eventId + "&memberId=" + event.getMemberId();
 	}
 
 	@RequestMapping("/eventDetail.do")
 	public String showEventDetail(int eventId, Model model) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
-		
-		List<Member> members = msService.findAllMembersByEvent(eventId);
-		model.addAttribute("members",members);
-		
+
+		Group group = mgService.findGroupById(event.getGroupId());
+		model.addAttribute("group", group);
+
+		List<Member> members = mgService.findAllMembersByEvent(eventId);
+		model.addAttribute("members", members);
+
 		return "event/eventDetail";
 	}
 
@@ -132,6 +216,9 @@ public class EventController {
 	public String showEvent(int eventId, int groupId, Model model) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
+
+		Group group = mgService.findGroupById(groupId);
+		model.addAttribute("group", group);
 
 		List<Event> events = eventService.findAllEventsByGroupId(groupId);
 		model.addAttribute("events", events);

@@ -9,16 +9,9 @@ public class Member {
 	private String email;
 	private String account;
 	private String phoneNumber;
-	private String payment;
 	
 	
 
-	public String getPayment() {
-		return payment;
-	}
-	public void setPayment(String payment) {
-		this.payment = payment;
-	}
 	public String getMemberId() {
 		return memberId;
 	}
