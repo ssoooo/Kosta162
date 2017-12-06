@@ -40,7 +40,7 @@
       <div class="button-container">
         <button type="submit"><span>GO</span></button>
       </div>
-      <div class="footer"><a href="joinAdministrator.jsp">처음 방문하셨나요?</a></div>
+      <div class="footer"><a href="join.jsp">처음 방문하셨나요?</a></div>
     </form>
   </div>
   <div class="card alt">

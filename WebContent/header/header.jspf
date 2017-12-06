@@ -3,7 +3,7 @@
  <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:choose>
 	<c:when test="${loginedMemberId eq null }">
-		<a href="${pageContext.request.contextPath }/memberGroup/login.do">로그인</a>|<a href=customerRegist.do">회원가입</a>|<a href="${pageContext.request.contextPath }/memberGroup/main.do">홈으로</a>
+		<a href="${pageContext.request.contextPath }/memberGroup/login.do">로그인</a>|<a href="customerRegist.do">회원가입</a>
 	</c:when>
 	<c:otherwise>
 		<b>${loginedMemberId }</b>님 환영합니다.[<a href="${pageContext.request.contextPath }/memberGroup/logout.do">로그아웃</a>]|<a href="${pageContext.request.contextPath }/memberGroup/main.do">홈으로</a>

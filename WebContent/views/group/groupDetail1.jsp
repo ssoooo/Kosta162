@@ -35,18 +35,18 @@
 						<li><a href="main.html">Home</a></li>
 						
 						<li><a href="main.html">가입신청</a>
-							
 							<ul id="refresh" class="ul_accept">
-							<c:forEach items="${signIns }" var="signIn" varStatus="sts">
+							
+								<c:forEach items="${signIns }" var="signIn" varStatus="sts">
 								<input type="hidden" id="signInMemberId${sts.count }" value="${signIn.memberId }">
-									<p class="group_invite_list">${signIn.memberId }</p>
-								<br>
+									<p class="group_invite_list">${signIn.memberId }
+								
 									<div class="accept_reject">
-										<input type="button" value = "수락" onclick="onclickFunction('${group.groupId}','${signIn.memberId }')"> 
-										<input type="button" value = "거절" onclick="onclickFunction1('${group.groupId}','${signIn.memberId }')">
+										<input type="button" value = "수락" onclick="onclickFunction('${group.groupId}','${signIn.memberId }')"> <a href="">삭제</a>
 									</div>
-									
+									</p>
 								</c:forEach>
+								
 							</ul></li>
 						<li class="current"><a href="login.html">Logout</a></li>
 					</ul>
@@ -174,7 +174,7 @@
 		function onclickFunction(groupId,memberId){
 		    $.ajax({
 		        type: "POST",
-		        url: "acceptSignIn.do",
+		        url: "reqSignInAlreadyJoined.do",
 		        data: {
 		        	groupId : groupId,
 		        	memberId : memberId
@@ -186,28 +186,7 @@
 		        },
 		        success: function(response) { //여기서 data 안에는 spring 에서 result 한 값이 포함되어 있으며 특정한 목록을 지정해서 보낼 수도있다.
 			        	alert("가입이 성공했습니다.")
-			        	location.reload();
 			        	$("#refresh").load("groupDetail.do?groupId=2 #refresh");
-		        }
-		    });
-		}
-		function onclickFunction1(groupId,memberId){
-		    $.ajax({
-		        type: "POST",
-		        url: "denySignIn.do",
-		        data: {
-		        	groupId : groupId,
-		        	memberId : memberId
-		        	
-		        },
-		        dataType: "text",
-		        error : function() {
-		        	alert("거절실패했다임마")
-		        },
-		        success: function(response) { //여기서 data 안에는 spring 에서 result 한 값이 포함되어 있으며 특정한 목록을 지정해서 보낼 수도있다.
-			        	alert("가입신청을 거절하셨습니다.")
-			        	location.reload();
-			        	
 		        }
 		    });
 		}

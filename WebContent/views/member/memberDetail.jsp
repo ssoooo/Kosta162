@@ -106,11 +106,13 @@
 								</tr>
 								</tbody>
 							</table>
+							<c:if test="${member.memberId eq loginedMemberId}">
 							<div class="btn_hor">
 								<a href="showModifyMember.do?memberId=${member.memberId }"><button class="btn_modify">수정</button></a>
 								<!-- <a href="deleteMember.do?memberId=${member.memberId }"><button class="btn_delete" onclick="comfirmDelete()">탈퇴</button></a> -->
 								<button class="btn_delete" onclick="comfirmDelete()">탈퇴</button>
 							</div>
+							</c:if>
 							<script type="text/javascript">
 								function comfirmDelete() {
 									var confirmflag = confirm("정말 회원삭제하실건가요");

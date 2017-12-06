@@ -32,22 +32,13 @@
 				<nav id="nav">
 				
 					<ul >
-						<li><a href="main.html">Home</a></li>
-						
-						<li><a href="main.html">가입신청</a>
+						<li><a href="main.html">Home2222</a></li>
+						<!--<li><a type="button" id="refresh" href="${pageContext.request.contextPath}/memberGroup/allSignInGroupReq.do?groupId=${group.groupId}">가입신청</a>-->
+						 <li><a type="button" onclick="onclickFunction('${group.groupId}')">가입신청</a> 
+							<div id="refresh">
 							
-							<ul id="refresh" class="ul_accept">
-							<c:forEach items="${signIns }" var="signIn" varStatus="sts">
-								<input type="hidden" id="signInMemberId${sts.count }" value="${signIn.memberId }">
-									<p class="group_invite_list">${signIn.memberId }</p>
-								<br>
-									<div class="accept_reject">
-										<input type="button" value = "수락" onclick="onclickFunction('${group.groupId}','${signIn.memberId }')"> 
-										<input type="button" value = "거절" onclick="onclickFunction1('${group.groupId}','${signIn.memberId }')">
-									</div>
-									
-								</c:forEach>
-							</ul></li>
+							</div>
+							</li>
 						<li class="current"><a href="login.html">Logout</a></li>
 					</ul>
 					
@@ -159,10 +150,29 @@
 			</footer>
 		</div>
 
-	</div>
+
 
 	<!-- Scripts -->
-		
+	<script>
+		function onclickFunction(groupId){
+		    $.ajax({
+		        type: "POST",
+		        url: "allSignInGroupReq.do",
+		        data: {
+		        	groupId : groupId
+		        	
+		        },
+		        dataType: "text",
+		        error : function() {
+		        	alert("가입실패했다임마")
+		        },
+		        success: function(data) { //여기서 data 안에는 spring 에서 result 한 값이 포함되어 있으며 특정한 목록을 지정해서 보낼 수도있다.
+			        	alert("가입이 성공했습니다.")
+			        	$("#refresh").load("");
+		        }
+		    });
+		}
+		</script>	
 	<script src="../resources/assets/js/jquery.min.js"></script>
 	<script src="../resources/assets/js/jquery.dropotron.min.js"></script>
 	<script src="../resources/assets/js/skel.min.js"></script>
@@ -170,47 +180,6 @@
 	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 	
 	<script src="../resources/assets/js/main.js"></script>
-<script>
-		function onclickFunction(groupId,memberId){
-		    $.ajax({
-		        type: "POST",
-		        url: "acceptSignIn.do",
-		        data: {
-		        	groupId : groupId,
-		        	memberId : memberId
-		        	
-		        },
-		        dataType: "text",
-		        error : function() {
-		        	alert("가입실패했다임마")
-		        },
-		        success: function(response) { //여기서 data 안에는 spring 에서 result 한 값이 포함되어 있으며 특정한 목록을 지정해서 보낼 수도있다.
-			        	alert("가입이 성공했습니다.")
-			        	location.reload();
-			        	$("#refresh").load("groupDetail.do?groupId=2 #refresh");
-		        }
-		    });
-		}
-		function onclickFunction1(groupId,memberId){
-		    $.ajax({
-		        type: "POST",
-		        url: "denySignIn.do",
-		        data: {
-		        	groupId : groupId,
-		        	memberId : memberId
-		        	
-		        },
-		        dataType: "text",
-		        error : function() {
-		        	alert("거절실패했다임마")
-		        },
-		        success: function(response) { //여기서 data 안에는 spring 에서 result 한 값이 포함되어 있으며 특정한 목록을 지정해서 보낼 수도있다.
-			        	alert("가입신청을 거절하셨습니다.")
-			        	location.reload();
-			        	
-		        }
-		    });
-		}
-		</script>
+
 </body>
 </html>

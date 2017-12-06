@@ -17,10 +17,10 @@
 <!-- font awesome -->
 <link rel="stylesheet"
 	href="../resources/assets/css/font-awesome1.min.css" media="screen"
-	title="no title" charset="utf-8">
+	title="no title">
 <!-- Custom style -->
 <link rel="stylesheet" href="../resources/assets/css/style1.css"
-	media="screen" title="no title" charset="utf-8">
+	media="screen" title="no title">
 <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
 <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 <!--[if lt IE 9]>

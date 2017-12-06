@@ -45,14 +45,17 @@
 							<ul>
 								<c:forEach items="${memberList }" var="member">
 									<li>${member.name }
-										<button onclick="javascript:closeWindowAndTradeGrade();">위임</button>
-										<!-- ${member.name }<button onclick="location.href='tradeGrade.do?memberId=${member.memberId}&groupId=${groupId }&grade=총무'">위임</button> -->
+									<a type="button" onclick="closeWindowAndTradeGrade()" href="tradeGrade.do?memberId=${member.memberId}&groupId=${groupId }&managerId=${managerId }&grade1=총무&grade2=멤버">위임</a>
+										<!-- <button onclick="javascript:closeWindowAndTradeGrade();">위임</button> -->
+										
 									</li>
 									<input type="hidden" id="grade" name="grade" value="총무" />
 									<script type="text/javascript">
 										function closeWindowAndTradeGrade() {
-											window.location.href = "tradeGrade.do?memberId=${member.memberId }&groupId=${groupId }&grade1=총무&grade2=멤버&managerId=${managerId}";
-											//self.close();
+											//window.location.href = "tradeGrade.do?memberId=${member.memberId }&groupId=${groupId }&grade1=총무&grade2=멤버&managerId=${managerId }";
+											alert("${member.memberId}님이 총무가 되셨습니다.");
+											window.close();
+											opener.location.reload();
 											//document.grade.value=grade;
 											//window.close();
 										}

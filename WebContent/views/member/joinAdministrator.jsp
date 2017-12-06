@@ -56,7 +56,7 @@
 			action="${pageContext.request.contextPath }/memberGroup/registGroupAndJoinMember.do" method="post" enctype="multipart/form-data">
 			<div class="form-group">
 				<label for="InputId">아이디</label> <input type="text"
-					class="form-control" id="InputId" name=memberId placeholder="아이디"
+					class="form-control" id="InputId" name="memberId" placeholder="아이디"
 					required="required">
 				<p class="help-block">사용 가능한 아이디입니다.</p>
 			</div>
