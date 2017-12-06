@@ -1,8 +1,12 @@
-<!DOCTYPE HTML>
+<%@ page language="java" contentType="text/html; charset=EUC-KR"
+    pageEncoding="EUC-KR"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 
 <html>
 	<head>
-		<title>í†µê³„ í˜ì´ì§€</title>
+		<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+		<title>Åë°è ÆäÀÌÁö</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="../../resources/assets/css/main.css" />
@@ -20,8 +24,8 @@
 
 						<!-- Logo -->
 						<div id="logo">
-							<h1><a href="main.html">ì•Œëœ°ì´é›œ</a></h1>
-							<span>Kosta 162ê¸°</span>
+							<h1><a href="main.html">¾Ë¶ãÃÑíÚ</a></h1>
+							<span>Kosta 162±â</span>
 						</div>
 
 						<!-- Nav -->
@@ -32,17 +36,17 @@
 								<a href="main.html">Message</a>
 									<ul class="ul_accept">
 										<p class="group_invite_list">
-											ì œëª©
+											Á¦¸ñ
 											<div class="accept_reject">
-												<a href="">ë³´ê¸°</a>
-												<a href="">ì‚­ì œ</a>
+												<a href="">º¸±â</a>
+												<a href="">»èÁ¦</a>
 											</div>
 										</p>
 										<p class="group_invite_list">
-											ì œëª©
+											Á¦¸ñ
 											<div class="accept_reject">
-												<a href="">ë³´ê¸°</a>
-												<a href="">ì‚­ì œ</a>
+												<a href="">º¸±â</a>
+												<a href="">»èÁ¦</a>
 											</div>
 										</p>
 									</ul>
@@ -64,14 +68,20 @@
 				<div class="tabs_holder">
 					 <ul>
 					  <li class="tab_selected">
-							<li><a href="#your-tab-id-1">ì •ì‚° ê²°ê³¼</a></li>
-					  <li><a href="#your-tab-id-2">ê¸°ê°„</a></li>
-						 <li><a href="#your-tab-id-3">ì¹´í…Œê³ ë¦¬</a></li>
-						  <li><a href="#your-tab-id-4">ì´ë²¤íŠ¸</a></li>
+					<li><a href="#your-tab-id-1">Á¤»ê °á°ú</a></li>
+					  <li><a href="#your-tab-id-2">±â°£</a></li>
+						 <li><a href="#your-tab-id-3">Ä«Å×°í¸®</a></li>
+						 <!--  -->
+						  <li> <a href="#your-tab-id-4">ÀÌº¥Æ®</a></li>
+						  
+						  
+						  
+						  
+						  
 					 </ul>
 
 
-		 <!-- íƒ­1ë²ˆ-->
+		 <!-- ÅÇ1¹ø-->
 				 <div class="content_holder">
 				  <div id="your-tab-id-1">
 					
@@ -79,9 +89,9 @@
 							<br />
 						</div>
 						<div class="form-group">
-								<label class="col-lg-2 control-label"><h2>ìˆ˜ì… : 30,000ì›</h2></label>
-								<label class="col-lg-2 control-label"><h2>ì§€ì¶œ : 30,000ì›</h2></label>
-								<label class="col-lg-2 control-label"><h2>í•©ê³„ : 60,000ì›</h2></label>
+								<label class="col-lg-2 control-label"><h2>¼öÀÔ : ${income}¿ø</h2></label>
+								<label class="col-lg-2 control-label"><h2>ÁöÃâ : ${outlay}¿ø</h2></label>
+								<label class="col-lg-2 control-label"><h2>ÇÕ°è : ${groupBalance}¿ø</h2></label>
 						</div>
 
 						<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -98,16 +108,16 @@
 
 					 function drawChart() {
 						 var data = new google.visualization.DataTable();
-						 data.addColumn('string', 'ì¹´í…Œê³ ë¦¬');
-						 data.addColumn('number', 'ê¸ˆì•¡');
+						 data.addColumn('string', 'Ä«Å×°í¸®');
+						 data.addColumn('number', '±İ¾×');
 						 data.addRows([
-							 ['ìˆ˜ì…', 6000],['ì§€ì¶œ', 2000]
+							 ['¼öÀÔ', ${income}],['ÁöÃâ',${outlay}]
 						 ]);
 
 						 var options = {
-							 title: 'ìˆ˜ì… ì§€ì¶œ ì •ì‚°',
+							 title: '¼öÀÔ ÁöÃâ Á¤»ê',
 							 fontSize: '14',
-							 fontName: 'ë‹ì›€ì²´',
+							 fontName: 'µ¸¿òÃ¼',
 							 'is3D':true
 						 };
 
@@ -118,7 +128,7 @@
 				 </div>
 
 
-		<!-- íƒ­2ë²ˆ-->
+		<!-- ÅÇ2¹ø-->
 					 <div id="your-tab-id-2">
 						 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
  							<script>
@@ -132,7 +142,7 @@
  							 google.charts.setOnLoadCallback(drawChart);
 
  							 var chart_options = {
- 								 title : 'ë…„ë³„ ìˆ˜ì… ì§€ì¶œ í†µê³„',
+ 								 title : '³âº° ¼öÀÔ ÁöÃâ Åë°è',
  								 width : 500,
  								 height : 400,
  								 bar : {
@@ -143,27 +153,27 @@
 
  							 function drawChart(){
  								 var data3 = new google.visualization.arrayToDataTable([
-									 ['ë…„ëŒ€', 'ìˆ˜ì…', 'ì§€ì¶œ'], // ì œëª© ê·¸ë¦¬ê³  í•­ëª©ë“¤
- 									['${year4}', ${year4Income}, ${year4Outlay}], // ì œëª©ê³¼ í•­ëª©ìˆ˜ë¥¼ ë§ì¶°ì£¼ì–´ì•¼ í•©ë‹ˆë‹¤.
- 									['${year3}', ${year3Income}, ${year3Outlay}],
- 									['${year2}', ${year2Income}, ${year2Outlay}],
- 									['${year1}', ${year1Income}, ${year1Outlay}]
- 									]);
+ 									 ['³â´ë', '¼öÀÔ', 'ÁöÃâ'], // Á¦¸ñ ±×¸®°í Ç×¸ñµé
+  									['${year4}', ${year4Income}, ${year4Outlay}], // Á¦¸ñ°ú Ç×¸ñ¼ö¸¦ ¸ÂÃçÁÖ¾î¾ß ÇÕ´Ï´Ù.
+  									['${year3}', ${year3Income}, ${year3Outlay}],
+  									['${year2}', ${year2Income}, ${year2Outlay}],
+  									['${year1}', ${year1Income}, ${year1Outlay}]
+  									]);
 
 									var data4 = new google.visualization.arrayToDataTable([
-										['ë‹¬', 'ìˆ˜ì…', 'ì§€ì¶œ', 'í•©ê³„'],
-										['1ì›”', 10, 30, 40],
-										['2ì›”', 30, 30, 60],
-										['3ì›”', 25, 30, 50],
-										['4ì›”', 35, 20, 50],
-										['5ì›”', 60, 20, 50],
-										['6ì›”', 30, 20, 50],
-										['7ì›”', 30, 20, 50],
-										['8ì›”', 20, 20, 50],
-										['9ì›”', 32, 20, 50],
-										['10ì›”', 55, 20, 50],
-										['11ì›”', 34, 20, 50],
-										['12ì›”', 54, 20, 50]
+										['±âÁØ', '¼öÀÔ', 'ÁöÃâ', 'ÇÕ°è'],
+										['1´ŞÀü', 10, 30, 40],
+										['2´ŞÀü', 30, 30, 60],
+										['3´ŞÀü', 25, 30, 50],
+										['4´ŞÀü', 35, 20, 50],
+										['5´ŞÀü', 60, 20, 50],
+										['6´ŞÀü', 30, 20, 50],
+										['7´ŞÀü', 30, 20, 50],
+										['8´ŞÀü', 20, 20, 50],
+										['9´ŞÀü', 32, 20, 50],
+										['10´ŞÀü', 55, 20, 50],
+										['11´ŞÀü', 34, 20, 50],
+										['12´ŞÀü', 54, 20, 50]
 									]);
 
  								 var chart3 = new google.visualization.ColumnChart(document.getElementById('chart_div3'));
@@ -176,7 +186,7 @@
 					</div>
 
 
-			<!-- íƒ­3ë²ˆ-->
+			<!-- ÅÇ3¹ø-->
 					 <div id="your-tab-id-3">
 
 						 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -191,7 +201,7 @@
 						 		 google.charts.setOnLoadCallback(drawChart);
 
 						 		 var chart_options = {
-						 			 title : 'ìˆ˜ì… ì§€ì¶œ í†µê³„',
+						 			 title : '¼öÀÔ ÁöÃâ Åë°è',
 						 			 width : 500,
 						 			 height : 400,
 						 			 bar : {
@@ -202,11 +212,11 @@
 
 						 		 function drawChart(){
 						 			 var data7 = new google.visualization.arrayToDataTable([
-						 				 ['ì¹´í…Œê³ ë¦¬', 'ìˆ˜ì…', 'ì§€ì¶œ', 'í•©ê³„'],
-						 				 ['ì‹ë¹„', 10, 20, 30],
-						 				 ['êµí†µë¹„', 15, 30, 35],
-						 				 ['ìƒí•„í’ˆ', 20, 25, 40],
-						 				 ['ê¸°íƒ€', 10, 30, 20]
+						 				 ['Ä«Å×°í¸®', '¼öÀÔ', 'ÁöÃâ'],
+						 				 ['½Äºñ', ${foodIncome},${foodOutlay}],
+						 				 ['±³Åëºñ',${trafficIncome},${trafficOutlay}],
+						 				 ['»ıÇÊÇ°',${needsIncome},${needsOutlay}],
+						 				 ['±âÅ¸',${etcIncome},${etcOutlay}]
 						 			 ]);
 
 						 			 var chart7 = new google.visualization.ColumnChart(document.getElementById('chart_div7'));
@@ -230,16 +240,16 @@
 
 						function drawChart() {
 							var data6 = new google.visualization.DataTable();
-							data6.addColumn('string', 'ì‹œê°„');
-							data6.addColumn('number', 'ê¸ˆì•¡');
+							data6.addColumn('string', '½Ã°£');
+							data6.addColumn('number', '±İ¾×');
 							data6.addRows([
-								['ì‹ë¹„', 11270],['êµí†µë¹„', 17200],['ìƒí•„í’ˆ', 14500],['ê¸°íƒ€', 12400]
+								['½Äºñ', ${foodOutlay}],['±³Åëºñ',${trafficOutlay}],['»ıÇÊÇ°',${needsOutlay}],['±âÅ¸',${etcOutlay}]
 							]);
 
 							var options = {
-								title: 'ì¹´í…Œê³ ë¦¬ë³„',
+								title: 'Ä«Å×°í¸®º°',
 								fontSize: '14',
-								fontName: 'êµ´ë¦¼ì²´',
+								fontName: '±¼¸²Ã¼',
 								'is3D':true
 							};
 
@@ -250,44 +260,67 @@
 				</div>
 
 
-	<!-- íƒ­4ë²ˆ-->
+	<!-- ÅÇ4¹ø-->
 					 <div id="your-tab-id-4">
+					 
 
-					 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-						 <script>
-							google.charts.load('current', {packages:['corechart']});
-						 </script>
+					<c:forEach var="price" varStatus="status" items="${prices}">
+						
+						<div class="form-group">
+								<label class="col-lg-2 control-label"><h2>¼öÀÔ : ${price.key}¿ø</h2></label>
+								<label class="col-lg-2 control-label"><h2>ÁöÃâ : ${price.value}¿ø</h2></label>
+								<script type="text/javascript">
+								var i = ${price.key};
+								var o = ${price.value};
+								var b = i-o;
+								document.write("<label class='col-lg-2 control-label'><h2>ÇÕ°è : ");
+								document.write(b);
+								document.write("¿ø</h2></label>");
+								
+								</script>
+								
+								
+						</div>
 
-						 <div id="chart_div5"></div>
+						<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+					 <script>
+						 google.charts.load('current', {packages:['corechart']});
+					 </script>
 
-						 <script type="text/javascript">
+					 <div style="display:inline-block;" id="chart_div"></div>
 
-							google.charts.setOnLoadCallback(drawChart);
+					 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+					 <script type="text/javascript">
+					 google.load("visualization", "1", {'packages':["corechart"]});
+					 google.setOnLoadCallback(drawChart);	// pie
 
-							var chart_options = {
-								title : 'ìˆ˜ì… ì§€ì¶œ í†µê³„',
-								width : 500,
-								height : 400,
-								bar : {
-									groupWidth : '50%'
-								},
-								isStacked : true
-							};
+					 function drawChart() {
+						 var data = new google.visualization.DataTable();
+						 data.addColumn('string', 'Ä«Å×°í¸®');
+						 data.addColumn('number', '±İ¾×');
+						 data.addRows([
+							 ['¼öÀÔ', ${price.key}],['ÁöÃâ',${price.value}]
+						 ]);
 
-							function drawChart(){
-								var data5 = new google.visualization.arrayToDataTable([
-									['ë…„ëŒ€', 'ìˆ˜ì…', 'ì§€ì¶œ', 'í•©ê³„'],
-									['ì‹ë¹„', 10, 20, 30],
-									['êµí†µë¹„', 15, 30, 35],
-									['ìƒí•„í’ˆ', 20, 25, 40],
-									['ê¸°íƒ€', 10, 30, 20]
-								]);
+						 var options = {
+							 title: '¼öÀÔ ÁöÃâ Á¤»ê',
+							 fontSize: '14',
+							 fontName: 'µ¸¿òÃ¼',
+							 'is3D':true
+						 };
 
-								var chart5 = new google.visualization.ColumnChart(document.getElementById('chart_div5'));
-								chart5.draw(data5, chart_options);
-							}
-							 </script>
+						 var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
+						 chart.draw(data, options);
+					 }
+				 </script>
+				 </c:forEach>
+				 
 					 </div>
+					 
+					
+					 
+					 
+					 
 
 				  </div>
 				</div><!-- /.content_holder -->
@@ -311,23 +344,23 @@
 					</footer>
 				</div>
 
-			</div>
+			
 		<!-- Scripts -->
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="http://onlinehtmltools.com/tab-generator/skinable_tabs.min.js"></script>
-		<script type="text/javascript">
+		 <script type="text/javascript">
 			$('.tabs_holder').skinableTabs({
 				effect: 'basic_display',
 				skin: 'skin6',
 				position: 'top'
 			});
-		</script>
+		</script> 
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<script src="assets/js/main.js"></script> 
 
 			</body>
 </html>

@@ -1,5 +1,6 @@
-<!DOCTYPE HTML>
-
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
 		<title>Verti by HTML5 UP</title>
@@ -77,11 +78,13 @@
 									<div><h3>내역 등록</h3></div>
 									<div class="table-responsive">
 										<div class="well">
-											<form action="${pageContext.request.contextPath}/article/regist.do"
-												  class="bs-example form-horizontal" method="POST">
+											<form action="${pageContext.request.contextPath}/record/modifyRecord.do"
+												  class="bs-example form-horizontal" method="POST" enctype="multipart/form-data">
 												<fieldset>
 													<div class="form-group">
 														<label class="col-lg-2 control-label">
+														<input type="hidden" id="pastPrice" name="pastPrice" value="${pastPrice}">
+														<input type="hidden" id="pastAccounting" name="pastAccounting" value="${pastAccounting}">
 															<h3>제목</h3>
 														</label>
 														<div class="col-lg-10">
@@ -91,24 +94,38 @@
 													<br/>
 													<div class="form-group">
 														<label class="col-lg-2 control-label">
-														  <h3>수입 및 지출</h3>
-														  <select>
+														  <h3>수입 및 지출(단위/원)</h3>
+														  <select id="selectAccounting" name="accounting">
 																<option selected>수입/지출 선택 </option>
-																<option>수입</option>
-																<option>지출</option>
+																<option value="수입">수입</option>
+																<option value="지출">지출</option>
 														  </select>
 														</label>
 														<div class="col-lg-10">
-															<input type="text" name="title" placeholder="(ex. 30,000원)" class="form-control">
+															<input type="text" name="title" placeholder="(ex. 30,000)" class="form-control">
 														</div>
 													</div>
+													<div class="form-group">
+															<label class="col-lg-2 control-label">
+															  <h3>카테고리</h3>
+															  <select id="selectCategory" name="category">
+																	<option selected>카테고리 선택 </option>
+																	<option value="교통비">교통비</option>
+																	<option value="식비">식비</option>
+																	<option value="생필품">생필품</option>
+																	<option value="기타">기타</option>
+															  </select>
+															</label>
+															
+														</div>
+													
 													<br/>
 													<div class="form-group">
 														<label class="col-lg-2 control-label">
 															<h3>내용</h3>
 														</label>
 														<div class="col-lg-10">
-															<textarea class="form-control" name="contents" rows="2" id="textArea"></textarea>
+															<textarea class="form-control" name="content" rows="2" id="textArea"></textarea>
 														</div>
 													</div>
 													<br />
@@ -117,12 +134,10 @@
 														 <label class="col-lg-2 control-label">
 															<h3>사진</h3>
 														</label>
-														<form action="uploadFile.do" method="post"enctype="multipart/form-data">
-															<input type="file" name="file" />
-														</form>
-														<div class="col-lg-10">
-															  <img src="assets/css/images/bonobono.jpg" style="max-width:800px;"/>
-														</div>
+														
+															<input type="file" name="imgFile" onchange="readURL(this);"/>
+														
+														
 														</div>
 													</div>
 													<br />

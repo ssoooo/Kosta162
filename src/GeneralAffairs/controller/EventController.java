@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import GeneralAffairs.domain.Event;
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Member;
+import GeneralAffairs.domain.Record;
 import GeneralAffairs.service.EventService;
 import GeneralAffairs.service.MemberGroupService;
+import GeneralAffairs.service.RecordService;
 
 @Controller
 @RequestMapping("event")
@@ -26,6 +28,9 @@ public class EventController {
 
 	@Autowired
 	private MemberGroupService mgService;
+	
+	@Autowired
+	private RecordService recordService;
 
 
 	@RequestMapping(value = "/registEvent.do", method = RequestMethod.POST)
@@ -197,12 +202,15 @@ public class EventController {
 	public String showEventDetail(int eventId, Model model) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
-
+		
 		Group group = mgService.findGroupById(event.getGroupId());
 		model.addAttribute("group", group);
 
 		List<Member> members = mgService.findAllMembersByEvent(eventId);
 		model.addAttribute("members", members);
+
+		List<Record> records = recordService.findAllRecordsByEventId(eventId);
+		model.addAttribute("records",records);
 
 		return "event/eventDetail";
 	}
@@ -211,15 +219,33 @@ public class EventController {
 	public String showEvent(int eventId, int groupId, Model model) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
-
 		Group group = mgService.findGroupById(groupId);
 		model.addAttribute("group", group);
 
 		List<Event> events = eventService.findAllEventsByGroupId(groupId);
+		List<Record> records=recordService.findAllRecordsByEventId(eventId);
+		
+		
+	
 		model.addAttribute("events", events);
 		model.addAttribute("groupId", groupId);
+		model.addAttribute("records",records);
 
 		return "event/event";
 	}
+	
+	@RequestMapping(value="/addEventBalanceToGroup.do",method=RequestMethod.GET)
+	public String addEventBalanceToGroup(int eventId) {
+		Event event= eventService.findEventById(eventId);
+		Group group =mgService.findGroupById(event.getGroupId());
+		System.out.println("이벤트이름"+event.getEventName());
+		System.out.println("이벤트발란스:"+event.getBalance());
+		double balance=group.getBalance()+event.getBalance();
+		group.setBalance(balance);
+		mgService.modifyGroupBalance(group);
+		
+		return "redirect:/memberGroup/group.do?groupId="+event.getGroupId();
+	}
+	
 
 }
