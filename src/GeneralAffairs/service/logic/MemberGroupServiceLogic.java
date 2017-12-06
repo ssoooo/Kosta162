@@ -166,6 +166,16 @@ public class MemberGroupServiceLogic implements MemberGroupService{
 	public List<Member> findAllMembersExceptManager(int groupId) {
 		return mStore.retrieveAllMembersExceptManager(groupId);
 	}
+
+	@Override
+	public List<Member> findAllUnPaidMembers(String memberId, int eventId) {
+		return mStore.retrieveAllUnPaidMembers(memberId, eventId);
+	}
+
+	@Override
+	public List<Member> findAllPaidMembers(String memberId, int eventId) {
+		return mStore.retrieveAllPaidMembers(memberId, eventId);
+	}
 	
 
 }

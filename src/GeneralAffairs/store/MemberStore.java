@@ -30,7 +30,11 @@ public interface MemberStore {
 	ArrayList<Integer> checkMemberHasGroup(String memberId);
 
 	List<Member> retrieveAllMembersExceptEventMembers(int groupId, int eventId);
-	
+
 	List<Member> retrieveAllMembersExceptManager(int groupId);
+
+	List<Member> retrieveAllUnPaidMembers(String memberId, int eventId);
+
+	List<Member> retrieveAllPaidMembers(String memberId, int eventId);
 
 }

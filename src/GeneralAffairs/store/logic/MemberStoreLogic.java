@@ -221,5 +221,33 @@ public class MemberStoreLogic implements MemberStore{
 		return members;
 	}
 
+	@Override
+	public List<Member> retrieveAllUnPaidMembers(String memberId, int eventId) {
+		SqlSession session = SessionFactory.getInstance().getSession();
+		List<Member> members=null;
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			members=mapper.retrieveAllUnPaidMembers(memberId, eventId);
+		}finally {
+			session.close();
+		}
+
+		return members;
+	}
+
+	@Override
+	public List<Member> retrieveAllPaidMembers(String memberId, int eventId) {
+		SqlSession session = SessionFactory.getInstance().getSession();
+		List<Member> members=null;
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			members=mapper.retrieveAllPaidMembers(memberId, eventId);
+		}finally {
+			session.close();
+		}
+
+		return members;
+	}
+
 
 }

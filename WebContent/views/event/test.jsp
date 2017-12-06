@@ -41,11 +41,11 @@
 		var answer = document.getElementById('rightItem').value;
 
 		parent.document.getElementById('get').value = answer;
-		
+
 		var answer2 = document.getElementById('leftItem').value;
 
 		parent.document.getElementById('get2').value = answer2;
-		
+
 		window.close();
 
 	}
@@ -81,24 +81,29 @@
 						<h2>멤버</h2>
 						<hr>
 						<div id="move">
-							<div class="item_group">
-								모임 <br /> <select id="leftItem" class="item_width" size="8">
-									<c:forEach items="${members }" var="member">
-										<option>${member.memberId }</option>
-									</c:forEach>
-								</select>
+							<div class="complete_member">
+								<h3>전체 완납 멤버</h3>
+								<div class="scroll_complete" id="rightItem">
+									<ul >
+										<li><c:forEach items="${members }" var="member">
+											${member.memberId }
+											<button>완납</button>
+												<br>
+											</c:forEach></li>
+									</ul>
+								</div>
 							</div>
 							<div class="btnBox">
-								<button id="toLeft">&lt; &lt;</button>
+								<button id="toLeft">미납</button>
 								<br />
-								<button id="toRight">&gt; &gt;</button>
+								<button id="toRight">완납</button>
 							</div>
 							<div class="item_event">
 								이벤트 <br /> <select id="rightItem" name="rightItem"
 									class="item_width" size="8">
 									<c:forEach items="${memberss }" var="member">
 										<option>${member.memberId }</option>
-									</c:forEach>  
+									</c:forEach>
 								</select>
 							</div>
 						</div>

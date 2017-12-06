@@ -5,14 +5,6 @@
 
 <mapper namespace="GeneralAffairs.store.mapper.EventMapper">
 
-	<resultMap type="Event" id="eventMap">
-		<id property="eventId" column="eventId" />
-		<association property="payment" column="payment"
-			select="GeneralAffairs.store.mapper.MemberMapper.retrieveMemberById"
-			javaType="Member" jdbcType="VARCHAR" />
-
-	</resultMap>
-
 	<insert id="registEvent" parameterType="Event">
 		INSERT INTO
 		event_table(eventId,groupId,memberId,eventName,regDate,budget,groupSupport)
@@ -64,7 +56,7 @@
 	<update id="updatePayment" parameterType="map">
 		UPDATE
 		eventMember_table SET
-		payment=#{payment}
+		payment='완납'
 		WHERE memberId=#{memberId} AND
 		eventId=#{eventId}
 	</update>

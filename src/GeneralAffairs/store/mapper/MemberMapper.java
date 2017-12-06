@@ -30,8 +30,12 @@ public interface MemberMapper {
 
 	ArrayList<Integer> checkMemberHasGroup(String memberId);
 
-	List<Member> retrieveAllMembersExceptEventMembers(@Param("groupId")int groupId, @Param("eventId")int eventId);
+	List<Member> retrieveAllMembersExceptEventMembers(@Param("groupId") int groupId, @Param("eventId") int eventId);
 
 	List<Member> retrieveAllMembersExceptManager(int groupId);
+
+	List<Member> retrieveAllUnPaidMembers(@Param("memberId") String memberId, @Param("eventId") int eventId);
+
+	List<Member> retrieveAllPaidMembers(@Param("memberId") String memberId, @Param("eventId") int eventId);
 
 }

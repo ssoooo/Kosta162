@@ -28,8 +28,12 @@ public interface MemberGroupService {
 	void reqSignInGroup(String memberId, int groupId);
 
 	void denySignInGroupReq(String memberId, int groupId);
-	
+
 	List<Member> findAllMembersExceptManager(int groupId);
+
+	List<Member> findAllUnPaidMembers(String memberId, int eventId);
+
+	List<Member> findAllPaidMembers(String memberId, int eventId);
 
 	void createGroup(Group group);
 

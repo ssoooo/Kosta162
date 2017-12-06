@@ -12,7 +12,7 @@ public interface EventService {
 	void exceptMemberFromEvent(String memberId,int eventId);
  	void addMemberToEvent(String memberId,int eventId);
 	boolean addEventBalanceToGroupBalance(int eventId, int groupId);
-	void changePayment(String memberId,int eventId, String payment);
+	void changePayment(String memberId,int eventId);
 	void removeFromEvent(String memberId, int eventId);
 	void modifyEventBalance(Event event,int price);
 	void modifyEvent(Event event);

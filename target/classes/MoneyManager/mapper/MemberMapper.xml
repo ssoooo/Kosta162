@@ -11,7 +11,8 @@
 	</insert>
 
 	<update id="updateMember" parameterType="Member">
-		UPDATE member_table SET
+		UPDATE
+		member_table SET
 		password=#{password},
 		nickname=#{nickname},
 		name=#{name},
@@ -92,6 +93,21 @@
 		from eventMember_table
 		where
 		eventId=#{eventId}
+	</select>
+
+	<select id="retrieveAllUnPaidMembers" parameterType="map"
+		resultType="Member">
+		<![CDATA[select eventId, memberId, payment
+		from eventMember_table
+		where eventId= #{eventId} AND payment <> '미납'
+		]]>
+	</select>
+
+	<select id="retrieveAllPaidMembers" parameterType="map"
+		resultType="Member">
+		select eventId, memberId, payment
+		from eventMember_table
+		where eventId= #{eventId} AND payment='미납'
 	</select>
 
 	<update id="updateGrade" parameterType="map">

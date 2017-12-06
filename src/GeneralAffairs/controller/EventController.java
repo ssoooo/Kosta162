@@ -110,8 +110,6 @@ public class EventController {
 
 		Group group = mgService.findGroupById(groupId);
 
-		System.out.println("...." + groupId);
-
 		List<Member> members = mgService.findAllMembersExceptEventMembers(group.getGroupId(), eventId);
 		model.addAttribute("members", members);
 
@@ -174,20 +172,24 @@ public class EventController {
 		Group group = mgService.findGroupById(event.getGroupId());
 		model.addAttribute("group", group);
 
-		List<Member> memberss = mgService.findAllMembersByEvent(eventId);
+		List<Member> members = mgService.findAllUnPaidMembers(event.getMemberId(), eventId);
+		List<Member> memberss = mgService.findAllPaidMembers(event.getMemberId(), eventId);
+		
+		model.addAttribute("members", members);
 		model.addAttribute("memberss", memberss);
 
 		return "event/collectionDetail";
 	}
 
 	@RequestMapping(value = "/collectionDetail.do", method = RequestMethod.POST)
-	public String ChangePayment(int eventId, Model model) {
+	public String ChangePayment(int eventId, Model model) { 
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
 		
-		String payment = "완납";
-		eventService.changePayment(event.getMemberId(), eventId, payment);
-		return "event/collectionDetail";
+		eventService.changePayment(event.getMemberId(), eventId);
+		System.out.println("///" + event.getMemberId());
+		System.out.println("////" + eventId);
+		return "redirect:/event/collectionDetail.do?eventId=" + eventId + "&memberId=" + event.getMemberId();
 	}
 
 	@RequestMapping("/eventDetail.do")

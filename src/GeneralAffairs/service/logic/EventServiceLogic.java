@@ -79,8 +79,8 @@ import GeneralAffairs.store.GroupStore;
  	}
  
  	@Override
-	public void changePayment(String memberId, int eventId, String payment) {
-		eventStore.updatePayment(eventId, memberId, payment);
+	public void changePayment(String memberId, int eventId) {
+		eventStore.updatePayment(eventId, memberId);
  	}
  
  	@Override
