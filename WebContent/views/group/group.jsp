@@ -7,7 +7,6 @@
 		<title>Group</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-<<<<<<< HEAD
 		<link rel="stylesheet" href="../resources/assets/css/main2.css" />
 		<script>
 		function winClose(memberId){
@@ -15,9 +14,6 @@
     		opener.location.reload();
 		}
 		</script>
-=======
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/main2.css" />
->>>>>>> woooo
 	</head>
 	<body class="left-sidebar">
 		<%@ include file="../../header/header.jspf"%>

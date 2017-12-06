@@ -29,5 +29,4 @@ public interface RecordService {
 	int findEventStatsRecordByYear(String accounting,String year,int eventId);
 	Integer findEventStatsRecordByCategory(String category,String accounting,int eventId);
 	Integer findEventStatsRecordByAccounting(String accounting,int eventId);
-	void addBalanceToGroup(Group group);
 }

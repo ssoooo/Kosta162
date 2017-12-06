@@ -119,12 +119,6 @@ public class RecordServiceLogic implements RecordService{
 	}
 
 	@Override
-	public void addBalanceToGroup(Group group) {
-		// TODO Auto-generated method stub
-		store.plusBalanceToGroup(group);
-	}
-
-	@Override
 	public void modifyCaution(Record record) {
 		store.updateCaution(record);
 		

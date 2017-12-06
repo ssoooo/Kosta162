@@ -381,19 +381,6 @@ public class RecordStoreLogic implements RecordStore{
 		
 	}
 
-	@Override
-	public void plusBalanceToGroup(Group group) {
-		SqlSession session = SessionFactory.getInstance().getSession();
-		
-		try {
-			RecordMapper mapper=session.getMapper(RecordMapper.class);
-			mapper.plusBalanceToGroup(group);
-			session.commit();
-		}finally {
-			session.close();
-		}
-		
-	}
 
 	@Override
 	public void updateCaution(Record record) {

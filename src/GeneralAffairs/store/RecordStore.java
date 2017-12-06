@@ -34,6 +34,5 @@ public interface RecordStore {
 	int retrieveEventStatsRecordByYear(String accounting,String year,int eventId);//년별 이벤트 수입 혹은 지출 합계가져오기
 	Integer retrieveEventStatsRecordByCategory(String category,String accounting,int eventId);//카테고리와 기간에 따른 수입 혹은 지출 합계가져오기
 	Integer retrieveEventStatsRecordByAccounting(String accounting,int eventId); //이벤트의 수입 혹은 지출 합계 가져오기
-	void plusBalanceToGroup(Group group);
 	
 }
