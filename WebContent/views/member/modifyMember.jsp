@@ -1,128 +1,163 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"
+	pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>bootstrap template</title>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<title>bootstrap template</title>
 
-    <!-- Bootstrap -->
-    <link href="../resources/assets/css/bootstrap1.min.css" rel="stylesheet">
-    <!-- font awesome -->
-    <link rel="stylesheet" href="../resources/assets/css/font-awesome1.min.css" media="screen" title="no title" charset="utf-8">
-    <!-- Custom style -->
-    <link rel="stylesheet" href="../resources/assets/css/style1.css" media="screen" title="no title" charset="utf-8">
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+<!-- Bootstrap -->
+<link href="../resources/assets/css/bootstrap1.min.css" rel="stylesheet">
+<!-- font awesome -->
+<link rel="stylesheet"
+	href="../resources/assets/css/font-awesome1.min.css" media="screen"
+	title="no title">
+<!-- Custom style -->
+<link rel="stylesheet" href="../resources/assets/css/style1.css"
+	media="screen" title="no title">
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
-    <script>
-    	var bank;
-    	var phone;
-    </script>
-  </head>
-  <body>
+<script>
+	var bank;
+	var phone;
+</script>
+</head>
+<body>
 
 
-      <article class="container">
-        <div class="page-header">
-          <h1>¸â¹ö ¼öÁ¤</h1>
-        </div>
-        <div class="col-md-6 col-md-offset-3">
-          <form role="form" action="${pageContext.request.contextPath }/memberGroup/modifyMember.do" method="post" >
-            <div class="form-group">
-             
-              
-              <b>¾ÆÀÌµğ : </b>
-              <b>${member.memberId }</b>
-				
+
+	<div class="page-header">
+		<h1>ë©¤ë²„ ìˆ˜ì •</h1>
+	</div>
+	<div class="col-md-6 col-md-offset-3">
+		<form role="form"
+			action="${pageContext.request.contextPath }/memberGroup/modifyMember.do"
+			method="post">
+			<div class="form-group">
+
+
+				<b>ì•„ì´ë”” : </b> <b>${member.memberId }</b>
+
 			</div>
-			
-            <div class="form-group">
-              <label for="InputNickName">´Ğ³×ÀÓ</label>
-              <input type="text" class="form-control" id="InputNickName" name="nickname" placeholder="»õ ´Ğ³×ÀÓÀ» ÀÔ·ÂÇÏ¼¼¿ä" value="${member.nickname }">
-				<p class="help-block">»ç¿ë °¡´ÉÇÑ º°¸íÀÔ´Ï´Ù.</p>
-				<input type="hidden" id="memberId" name="memberId" value="${member.memberId }"/> 
+
+			<div class="form-group">
+				<label for="InputNickName">ë‹‰ë„¤ì„</label> <input type="text"
+					class="form-control" id="InputNickName" name="nickname"
+					placeholder="ìƒˆ ë‹‰ë„¤ì„ì„ ì…ë ¥í•˜ì„¸ìš”" value="${member.nickname }">
+				<p class="help-block">ì‚¬ìš© ê°€ëŠ¥í•œ ë³„ëª…ì…ë‹ˆë‹¤.</p>
+				<input type="hidden" id="memberId" name="memberId"
+					value="${member.memberId }" />
 			</div>
-            <div class="form-group">
-              <label for="InputPassword1">ºñ¹Ğ¹øÈ£</label>
-              <input type="password" class="form-control" id="InputPassword1" name="password" placeholder="»õ ºñ¹Ğ¹øÈ£" required="required">
+			<div class="form-group">
+				<label for="InputPassword1">ë¹„ë°€ë²ˆí˜¸</label> <input type="password"
+					class="form-control" id="InputPassword1" name="password"
+					placeholder="ìƒˆ ë¹„ë°€ë²ˆí˜¸" required="required">
 			</div>
-            <div class="form-group">
-              <label for="InputPassword2">ºñ¹Ğ¹øÈ£ È®ÀÎ</label>
-              <input type="password" class="form-control" id="InputPassword2" placeholder="ºñ¹Ğ¹øÈ£ È®ÀÎ" required="required">
-				<p class="help-block">ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÕ´Ï´Ù.</p>
+			<div class="form-group">
+				<label for="InputPassword2">ë¹„ë°€ë²ˆí˜¸ í™•ì¸</label> <input type="password"
+					class="form-control" id="InputPassword2" placeholder="ë¹„ë°€ë²ˆí˜¸ í™•ì¸"
+					required="required">
+				<p class="help-block">ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•©ë‹ˆë‹¤.</p>
 			</div>
-            <div class="form-group">
-              <label for="username">ÀÌ¸§</label>
-              <input type="text" class="form-control" id="username" name="name" placeholder="»õ ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä" value="${member.name }">
-            </div>
-            <div class="form-group">
-              <label for="InputEmail">ÀÌ¸ŞÀÏ ÁÖ¼Ò</label>
-              <input type="email" class="form-control" id="InputEmail" name = "email" placeholder="»õ ÀÌ¸ŞÀÏ ÁÖ¼Ò¸¦ ÀÔ·ÂÇÏ¼¼¿ä" value="${member.email }">
-            </div>
-            <div class="form-group">
-              <label for="InputAccount">°èÁÂ¹øÈ£</label><br />
-              <select id="selectBank" name="selectBank">
-                  <option selected id="selectedBank" > ÀºÇà ¼±ÅÃ </option>
-                  <option>±¹¹Î</option>
-                  <option>¿ì¸®</option>
-                  <option>½ÅÇÑ</option>
-                  <option>³óÇù</option>
-                  <option>Ä«Ä«¿À</option>
-              </select>
-            <script>
-			function inputBankVals() {
-				bank = $("#selectBank option:selected").text();
-			}
-			$("#selectBank").change(inputBankVals);
-			inputBankVals();
+			<div class="form-group">
+				<label for="username">ì´ë¦„</label> <input type="text"
+					class="form-control" id="username" name="name"
+					placeholder="ìƒˆ ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”" value="${member.name }">
+			</div>
+			<div class="form-group">
+				<label for="InputEmail">ì´ë©”ì¼ ì£¼ì†Œ</label> <input type="email"
+					class="form-control" id="InputEmail" name="email"
+					placeholder="ìƒˆ ì´ë©”ì¼ ì£¼ì†Œë¥¼ ì…ë ¥í•˜ì„¸ìš”" value="${member.email }">
+			</div>
+			<div class="form-group">
+				<label for="InputAccount">ê³„ì¢Œë²ˆí˜¸</label><br /> <select
+					id="selectBank" name="selectBank">
+					<option selected>ì€í–‰ ì„ íƒ</option>
+					<option>êµ­ë¯¼</option>
+					<option>ìš°ë¦¬</option>
+					<option>ì‹ í•œ</option>
+					<option>ë†í˜‘</option>
+					<option>ì¹´ì¹´ì˜¤</option>
+				</select>
+				<script type="text/javascript">
+					function inputBankVals() {
+						bank = $("#selectBank option:selected").text();
+					}
+					$("#selectBank").change(inputBankVals);
+					inputBankVals();
+				</script>
+				<input type="text" class="form-control" id="InputAccount"
+					name="InputAccount" placeholder="ê³„ì¢Œë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”"
+					value="${member.account }"> <input type="hidden"
+					id="account" name="account" />
+			</div>
+
+			<div class="form-group">
+				<label for="phoneNumber">íœ´ëŒ€í° ë²ˆí˜¸</label><br /> <select
+					id="selectPhone" name="selectPhone">
+					<option selected>í†µì‹ ì‚¬ ì„ íƒ</option>
+					<option>SKT</option>
+					<option>KT</option>
+					<option>LG</option>
+				</select>
+				<script type="text/javascript">
+					function inputPhoneVals() {
+						phone = $("#selectPhone option:selected").text();
+					}
+					$("#selectPhone").change(inputPhoneVals);
+					inputPhoneVals();
+				</script>
+				<input type="text" class="form-control" id="InputPhoneNumber"
+					name="InputPhoneNumber" placeholder="- ì—†ì´ ì…ë ¥í•´ ì£¼ì„¸ìš”"
+					value="${member.phoneNumber }"> <input type="hidden"
+					id="phoneNumber" name="phoneNumber" />
+			</div>
+
+			<br />
+
+			<div class="form-group text-center">
+				<button type="submit" id="submit" class="btn btn-info">
+					ìˆ˜ì •ì™„ë£Œ<i class="fa fa-check spaceLeft"></i>
+				</button>
+				<button type="button" class="btn btn-warning"
+					onclick="location.href='myDetail.do' ">
+					ì·¨ì†Œ<i class="fa fa-times spaceLeft"></i>
+				</button>
+			</div>
+			<script>
+				function accountVals() {
+					var accountNum = $('#InputAccount').val();
+					$('#account').val(bank + "/" + accountNum);
+				}
+
+				$("#submit").click(accountVals);
+
+				accountVals();
+				function phoneVals() {
+					var phoneNum = $('#InputPhoneNumber').val();
+					$('#phoneNumber').val(phone + "/" + phoneNum);
+				}
+
+				$("#submit").click(phoneVals);
+
+				phoneVals();
 			</script>
-              <input type="text" class="form-control" id="InputAccount" name = "InputAccount" placeholder="°èÁÂ¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä" value="${member.account }">
-       			 <input type="hidden" id="account" name="account" />
-            </div>
-            
-            <div class="form-group">
-              <label for="phoneNumber">ÈŞ´ëÆù ¹øÈ£</label><br />
-              <!-- <select id="selectPhone" name="selectPhone">
-                  <option selected id="selectedPhone" name="selectedPhone"> Åë½Å»ç ¼±ÅÃ </option>
-                  <option>SKT</option>
-                  <option>KT</option>
-                  <option>LG</option>
-              </select>
-               -->
-              <input type="hidden" id="InputPhoneNumber" name="InputPhoneNumber" /> 
-              <input type="text" class="form-control" id="phoneNumber" name="phoneNumber" placeholder="- ¾øÀÌ ÀÔ·ÂÇØ ÁÖ¼¼¿ä" value="${member.phoneNumber }">
-            </div>
-				 	
-            <br />
 
-            <div class="form-group text-center">
-              <button type="submit" id="submit" class="btn btn-info">¼öÁ¤¿Ï·á<i class="fa fa-check spaceLeft"></i></button>
-              <button type="button" class="btn btn-warning" onclick="location.href='myDetail.do' ">Ãë¼Ò<i class="fa fa-times spaceLeft"></i></button>
-            </div>
-            <script>
-			function accountVals() {
-				var accountNum = $('#InputAccount').val();
-				$('#account').val(bank + "1 " + accountNum);
-			}
-														
-			$("#submit").click(accountVals); 
-														
-			accountVals();
-			</script>
-			
-            <br />
-          </form>
-        </div>
-    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="js/bootstrap.min.js"></script>
-  </body>
+			<br />
+		</form>
+	</div>
+
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="../resources/assets/js/bootstrap.min.js"></script>
+</body>
 </html>

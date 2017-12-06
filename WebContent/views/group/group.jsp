@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="../resources/assets/css/main2.css" />
 	</head>
 	<body class="left-sidebar">
+		<%@ include file="../../header/header.jspf"%>
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -85,7 +86,7 @@
 						<div class="8u 12u$(medium) important(medium)">
 							<div id="content">
 
-								<div> <h3>${group.groupName }<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=1"><img style="width:20px;" src="../resources/assets/css/images/info.png"/></a></h3></div>
+								<div> <h3>${group.groupName }<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${group.groupId }"><img style="width:20px;" src="../resources/assets/css/images/info.png"/></a></h3></div>
 									<table>
 										<tr class="aa">
 											<th class="table_head"><span>번호</span></th>

@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
+<%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <!DOCTYPE html>
 <html >
@@ -40,7 +40,7 @@
       <div class="button-container">
         <button type="submit"><span>GO</span></button>
       </div>
-      <div class="footer"><a href="joinForm.do">처음 방문하셨나요?</a></div>
+      <div class="footer"><a href="join.jsp">처음 방문하셨나요?</a></div>
     </form>
   </div>
   <div class="card alt">

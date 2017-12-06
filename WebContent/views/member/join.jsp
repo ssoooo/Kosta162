@@ -5,7 +5,9 @@
 <head>
   <meta charset="UTF-8">
   <title>멤버가입 선택</title>
+		
 		<link rel="stylesheet" href="../../resources/assets/css/style3.css" />
+ <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
 </head>
 
 <body>
@@ -21,7 +23,7 @@
 
     <!-- Cook { -->
     <li class="check cook_check">
-      <input type="checkbox" id="cookcheck" value="" onclick="location.href='joinMember.html' ">
+      <input type="checkbox" id="cookcheck" value="" onclick="location.href='joinMember.jsp' ">
       <label for="cookcheck">OK</label>
       <div class="head_wrap">
         <div class="hat">
@@ -58,7 +60,7 @@
 
     <!-- Mr.T { -->
     <li class="check ba_check">
-      <input type="checkbox" id="bacheck" value="" onclick="location.href='joinAdministrator.html' ">
+      <input type="checkbox" id="bacheck" value="" onclick="location.href='joinAdministrator.jsp' ">
       <label for="bacheck">OK</label>
       <div class="head_wrap">
         <div class="hair"></div>
@@ -92,9 +94,9 @@
     </div>
   </ul>
 </div>
-  <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+ 
 
-    <script src="js/index.js"></script>
+    <script src="../../resources/assets/js/index.js"></script>
 
 </body>
 </html>

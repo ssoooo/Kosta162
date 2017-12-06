@@ -25,6 +25,8 @@ public class EventController {
 
 	@Autowired
 	private MemberGroupService msService;
+	
+	
 
 	@RequestMapping(value = "/registEvent.do", method = RequestMethod.POST)
 	public String registEvent(Event event, HttpSession session, Model model) {
