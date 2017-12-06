@@ -74,20 +74,7 @@
 						 <!--  -->
 						  <li> <a href="#your-tab-id-4">이벤트</a></li>
 						  
-						  <li>
-						  <c:forEach var="event" items="event" varStatus="status">
-						  <ul><li><a href="#${eventId}">이벤트</a></li>
-						  </ul>
-						  </c:forEach>
-						  </li>
 						  
-						  
-						 <!-- <ul>
-						  <c:forEach var="event" items="${events}"> 
-						  <li><a href="record/eventStats.do?=1">${event.eventName}</a> </li>
-						  </c:forEach>
-						  
-						  </ul>-->
 						  
 						  
 						  
@@ -166,27 +153,27 @@
 
  							 function drawChart(){
  								 var data3 = new google.visualization.arrayToDataTable([
-									 ['년대', '수입', '지출', '합계'], // 제목 그리고 항목들
- 									['2015', 10, 20, 40], // 제목과 항목수를 맞춰주어야 합니다.
- 									['2016', 15, 30, 20],
- 									['2017', 20, 25, 30],
- 									['2018', 10, 30, 50]
- 									]);
+ 									 ['년대', '수입', '지출'], // 제목 그리고 항목들
+  									['${year4}', ${year4Income}, ${year4Outlay}], // 제목과 항목수를 맞춰주어야 합니다.
+  									['${year3}', ${year3Income}, ${year3Outlay}],
+  									['${year2}', ${year2Income}, ${year2Outlay}],
+  									['${year1}', ${year1Income}, ${year1Outlay}]
+  									]);
 
 									var data4 = new google.visualization.arrayToDataTable([
-										['달', '수입', '지출', '합계'],
-										['1월', 10, 30, 40],
-										['2월', 30, 30, 60],
-										['3월', 25, 30, 50],
-										['4월', 35, 20, 50],
-										['5월', 60, 20, 50],
-										['6월', 30, 20, 50],
-										['7월', 30, 20, 50],
-										['8월', 20, 20, 50],
-										['9월', 32, 20, 50],
-										['10월', 55, 20, 50],
-										['11월', 34, 20, 50],
-										['12월', 54, 20, 50]
+										['기준', '수입', '지출', '합계'],
+										['1달전', 10, 30, 40],
+										['2달전', 30, 30, 60],
+										['3달전', 25, 30, 50],
+										['4달전', 35, 20, 50],
+										['5달전', 60, 20, 50],
+										['6달전', 30, 20, 50],
+										['7달전', 30, 20, 50],
+										['8달전', 20, 20, 50],
+										['9달전', 32, 20, 50],
+										['10달전', 55, 20, 50],
+										['11달전', 34, 20, 50],
+										['12달전', 54, 20, 50]
 									]);
 
  								 var chart3 = new google.visualization.ColumnChart(document.getElementById('chart_div3'));
@@ -277,64 +264,22 @@
 					 <div id="your-tab-id-4">
 					 
 
-					 <div>
-							<br />
-						</div>
-						<div class="form-group">
-								<label class="col-lg-2 control-label"><h2>수입 : ${eventIncome}원</h2></label>
-								<label class="col-lg-2 control-label"><h2>지출 : ${eventOutlay}원</h2></label>
-								<label class="col-lg-2 control-label"><h2>합계 : ${eventBalance}원</h2></label>
-						</div>
-
-						<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-					 <script>
-						 google.charts.load('current', {packages:['corechart']});
-					 </script>
-
-					 <div style="display:inline-block;" id="chart_div"></div>
-
-					 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-					 <script type="text/javascript">
-					 google.load("visualization", "1", {'packages':["corechart"]});
-					 google.setOnLoadCallback(drawChart);	// pie
-
-					 function drawChart() {
-						 var data = new google.visualization.DataTable();
-						 data.addColumn('string', '카테고리');
-						 data.addColumn('number', '금액');
-						 data.addRows([
-							 ['수입', ${eventIncome}],['지출',${eventOutlay}]
-						 ]);
-
-						 var options = {
-							 title: '수입 지출 정산',
-							 fontSize: '14',
-							 fontName: '돋움체',
-							 'is3D':true
-						 };
-
-						 var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-						 chart.draw(data, options);
-					 }
-				 </script>
-					 </div>
-					 
-					 
-					 
-					 <c:forEach var="event" items="event" varStatus="status">
-						 
+					<c:forEach var="price" varStatus="status" items="${prices}">
 						
-					 
-					 <div id="${event.eventId}">
-					 
-
-					 <div>
-							<br />
-						</div>
 						<div class="form-group">
-								<label class="col-lg-2 control-label"><h2>수입 : ${eventIncome}원</h2></label>
-								<label class="col-lg-2 control-label"><h2>지출 : ${eventOutlay}원</h2></label>
-								<label class="col-lg-2 control-label"><h2>합계 : ${eventBalance}원</h2></label>
+								<label class="col-lg-2 control-label"><h2>수입 : ${price.key}원</h2></label>
+								<label class="col-lg-2 control-label"><h2>지출 : ${price.value}원</h2></label>
+								<script type="text/javascript">
+								var i = ${price.key};
+								var o = ${price.value};
+								var b = i-o;
+								document.write("<label class='col-lg-2 control-label'><h2>합계 : ");
+								document.write(b);
+								document.write("원</h2></label>");
+								
+								</script>
+								
+								
 						</div>
 
 						<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -354,7 +299,7 @@
 						 data.addColumn('string', '카테고리');
 						 data.addColumn('number', '금액');
 						 data.addRows([
-							 ['수입', ${eventIncome}],['지출',${eventOutlay}]
+							 ['수입', ${price.key}],['지출',${price.value}]
 						 ]);
 
 						 var options = {
@@ -368,10 +313,11 @@
 						 chart.draw(data, options);
 					 }
 				 </script>
+				 </c:forEach>
+				 
 					 </div>
 					 
-					   </c:forEach>
-					 
+					
 					 
 					 
 					 
@@ -398,23 +344,23 @@
 					</footer>
 				</div>
 
-			</div>
+			
 		<!-- Scripts -->
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
 		<script type="text/javascript" src="http://onlinehtmltools.com/tab-generator/skinable_tabs.min.js"></script>
-		<script type="text/javascript">
+		 <script type="text/javascript">
 			$('.tabs_holder').skinableTabs({
 				effect: 'basic_display',
 				skin: 'skin6',
 				position: 'top'
 			});
-		</script>
+		</script> 
 			<script src="assets/js/jquery.min.js"></script>
 			<script src="assets/js/jquery.dropotron.min.js"></script>
 			<script src="assets/js/skel.min.js"></script>
 			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+			<script src="assets/js/main.js"></script> 
 
 			</body>
 </html>

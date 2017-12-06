@@ -6,6 +6,8 @@ import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+
+import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Record;
 import GeneralAffairs.store.RecordStore;
 import GeneralAffairs.store.factory.SessionFactory;
@@ -177,8 +179,8 @@ public class RecordStoreLogic implements RecordStore{
 
 	
 	@Override
-	public int retrieveGroupAccountingResult(String accounting, int groupId,Date sDate,Date fDate) {
-		int groupAccounting=0;
+	public Integer retrieveGroupAccountingResult(String accounting, int groupId,Date sDate,Date fDate) {
+		Integer groupAccounting=null;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
@@ -186,7 +188,12 @@ public class RecordStoreLogic implements RecordStore{
 		}finally {
 			session.close();
 		}
-		return groupAccounting;
+		if(groupAccounting ==null) {
+		return 0;
+		}else {
+			return groupAccounting;
+		}
+		
 	}
 	
 
@@ -342,9 +349,9 @@ public class RecordStoreLogic implements RecordStore{
 	}
 
 	@Override
-	public int retrieveEventStatsRecordByAccounting(String accounting, int eventId) {
+	public Integer retrieveEventStatsRecordByAccounting(String accounting, int eventId) {
 		
-		int sum = 0;
+		Integer sum = 0;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
@@ -352,8 +359,11 @@ public class RecordStoreLogic implements RecordStore{
 		}finally {
 			session.close();
 		}
-		
-		return sum;
+		if(sum == null) {
+			return 0;
+		}else {
+			return sum;
+		}
 	}
 
 	@Override
@@ -364,6 +374,34 @@ public class RecordStoreLogic implements RecordStore{
 		try {
 			RecordMapper mapper=session.getMapper(RecordMapper.class);
 			mapper.registRecordFromMessage(record);
+			session.commit();
+		}finally {
+			session.close();
+		}
+		
+	}
+
+	@Override
+	public void plusBalanceToGroup(Group group) {
+		SqlSession session = SessionFactory.getInstance().getSession();
+		
+		try {
+			RecordMapper mapper=session.getMapper(RecordMapper.class);
+			mapper.plusBalanceToGroup(group);
+			session.commit();
+		}finally {
+			session.close();
+		}
+		
+	}
+
+	@Override
+	public void updateCaution(Record record) {
+		SqlSession session = SessionFactory.getInstance().getSession();
+		
+		try {
+			RecordMapper mapper=session.getMapper(RecordMapper.class);
+			mapper.updateCaution(record);
 			session.commit();
 		}finally {
 			session.close();

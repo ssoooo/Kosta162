@@ -7,7 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Record;
 import GeneralAffairs.service.RecordService;
 import GeneralAffairs.store.RecordStore;
@@ -67,7 +67,7 @@ public class RecordServiceLogic implements RecordService{
 	
 
 	@Override
-	public int findGroupAccountingResult(String accounting, int groupId,Date sDate,Date fDate) {
+	public Integer findGroupAccountingResult(String accounting, int groupId,Date sDate,Date fDate) {
 		return store.retrieveGroupAccountingResult(accounting, groupId, sDate, fDate);
 	}
 
@@ -108,7 +108,7 @@ public class RecordServiceLogic implements RecordService{
 	}
 
 	@Override
-	public int findEventStatsRecordByAccounting(String accounting, int eventId) {
+	public Integer findEventStatsRecordByAccounting(String accounting, int eventId) {
 		return store.retrieveEventStatsRecordByAccounting(accounting, eventId);
 	}
 
@@ -118,5 +118,18 @@ public class RecordServiceLogic implements RecordService{
 		return 0;
 	}
 
+	@Override
+	public void addBalanceToGroup(Group group) {
+		// TODO Auto-generated method stub
+		store.plusBalanceToGroup(group);
+	}
+
+	@Override
+	public void modifyCaution(Record record) {
+		store.updateCaution(record);
+		
+	}
+
+	
 	
 }

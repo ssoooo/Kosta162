@@ -63,7 +63,7 @@ import GeneralAffairs.store.GroupStore;
 		int check = 0;
 		Event event = eventStore.retrieveEventById(eventId);
 		Group group = groupStore.retrieveGroupById(groupId);
->>>>>>> master
+
 		
 //		double eventB = event.getBalance();
 //		double groupB = group.getBalance();
@@ -89,7 +89,7 @@ import GeneralAffairs.store.GroupStore;
  	}
  
  	@Override
-	public void modifyEventBalance(Event event, int price) {
+	public void modifyEventBalance(Event event) {
 		eventStore.updateEventBalance(event);
  	}
 	

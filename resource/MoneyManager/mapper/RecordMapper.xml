@@ -22,6 +22,17 @@
 		image=#{image},title=#{title},regDate=SYSDATE,content=#{content},price=#{price},category=#{category}
 		WHERE recordId=#{recordId}
 	</update>
+	<!-- 미사용 -->
+	<update id="plusGroupBalance" parameterType="Group">
+		UPDATE group_table SET
+		balance =#{balance}
+		WHERE groupId=#{groupId}
+	</update>
+	
+	<update id="updateCaution" parameterType="Record">
+	UPDATE record_table SET caution=#{caution}
+	WHERE recordId=#{recordId}
+	</update>
 
 	<delete id="deleteRecord" parameterType="int">
 		DELETE FROM record_table
@@ -48,7 +59,7 @@
 		SELECT
 		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,price,category
 		FROM record_table
-		WHERE groupId=#{groupId}
+		WHERE groupId=#{groupId} AND eventId=0
 	</select>
 
 
@@ -80,10 +91,10 @@
 
 
 	<select id="retrieveGroupAccountingResult" parameterType="map"
-		resultType="int">
+		resultType="Integer">
 		SELECT sum(price)
 		FROM record_table
-		WHERE regDate <![CDATA[>=]]> #{sDate} AND regDate <![CDATA[<]]> #{fDate}+1 AND accounting=#{accounting} AND groupId=#{groupId}
+		WHERE regDate <![CDATA[>=]]>TO_CHAR(#{sDate},'yyyymmdd') AND regDate <![CDATA[<]]> TO_CHAR(#{fDate},'yyyymmdd') AND accounting=#{accounting} AND groupId=#{groupId}
 	</select>
 
 	<select id="retrieveEventAccountingResult" parameterType="map"
@@ -176,7 +187,7 @@
 	</select>
 
 	<select id="retrieveEventStatsRecordByAccounting" parameterType="map"
-		resultType="int">
+		resultType="Integer">
 
 		SELECT sum(price)
 		FROM record_table

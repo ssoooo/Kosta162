@@ -1,24 +1,37 @@
 package GeneralAffairs.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
+import GeneralAffairs.domain.Comment;
 import GeneralAffairs.domain.Event;
+import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Message;
 import GeneralAffairs.domain.Record;
+import GeneralAffairs.service.CommentService;
 import GeneralAffairs.service.EventService;
 
 import GeneralAffairs.service.MemberGroupService;
@@ -37,41 +50,244 @@ public class RecordController {
 	@Autowired
 	private MemberGroupService msService;
 	
+	@Autowired
+	private CommentService commentService;
+	
 	
 	@RequestMapping(value="/registGroupRecord.do",method=RequestMethod.POST)
-	public String registGroupRecord(Record record,HttpSession session) {
+	public String registGroupRecord(Record record,int groupId,HttpSession session, @RequestParam("imgFile") MultipartFile imgFile,Model model) {
 		
-		return "";
+		String myId = (String)session.getAttribute("loginedMemberId");
+		
+		String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
+	    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
+	    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
+	    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
+		System.out.println(groupId);
+		if(!imgFile.isEmpty()) {
+			try {
+				byte [] bytes = imgFile.getBytes();
+				File dir = new File("c:\\" + File.separator + "tempFiles");
+				
+				if(!dir.exists()) {
+					dir.mkdirs();
+				}
+				
+				File saveFile = new File(dir.getAbsolutePath() + File.separator + rename);
+				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(saveFile));
+				out.write(bytes);
+				out.close();
+				
+//			    group.setGroupImage(dir.getAbsolutePath() + File.separator + rename);
+				record.setImage("/images/" + rename);
+				record.setMemberId(myId);
+				
+				record.setEventId(0);
+				recordService.createRecord(record);
+				
+				
+				Group group = msService.findGroupById(groupId);
+				double groupBalance=group.getBalance();
+				int price =record.getPrice();
+				if(record.getAccounting().equals("지출")) {
+					groupBalance=groupBalance-price;
+					group.setBalance(groupBalance);
+					msService.modifyGroupBalance(group);
+				}else {
+					groupBalance=groupBalance+price;
+					group.setBalance(groupBalance);
+					msService.modifyGroupBalance(group);
+					
+				}
+				
+
+				
+				return "redirect:/memberGroup/group.do?groupId="+record.getGroupId();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+//				model.addAttribute("resultMsg", "파일을 업로드하는 데에 실패했습니다.");
+			}
+		} else {
+//	        model.addAttribute("resultMsg", "업로드할 파일을 선택해주시기 바랍니다.");
+		}
+		
+		
+		return "redirect:/memberGroup/group.do?groupId="+record.getGroupId();
 	}
 	
-	@RequestMapping("/registEventRecord.do")
-	public String registEventRecord(Record record,HttpSession session) {
+	@RequestMapping(value="/registEventRecord.do",method=RequestMethod.POST)
+	public String registEventRecord(Record record,int eventId,HttpSession session, @RequestParam("imgFile") MultipartFile imgFile,Model model) {
 		
-		return "";
+		String myId = (String)session.getAttribute("loginedMemberId");
+		
+		String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
+	    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
+	    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
+	    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
+		
+		if(!imgFile.isEmpty()) {
+			try {
+				byte [] bytes = imgFile.getBytes();
+				File dir = new File("c:\\" + File.separator + "tempFiles");
+				
+				if(!dir.exists()) {
+					dir.mkdirs();
+				}
+				
+				File saveFile = new File(dir.getAbsolutePath() + File.separator + rename);
+				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(saveFile));
+				out.write(bytes);
+				out.close();
+				
+//			    group.setGroupImage(dir.getAbsolutePath() + File.separator + rename);
+				record.setImage("/images/" + rename);
+				record.setEventId(eventId);
+				record.setMemberId(myId);
+				recordService.createRecord(record);
+				
+				
+				
+				Event event = eventService.findEventById(eventId);
+				double eventBalance=event.getBalance();
+				int price =record.getPrice();
+				if(record.getAccounting().equals("지출")) {
+					eventBalance=eventBalance-price;
+					event.setBalance(eventBalance);
+					eventService.modifyEventBalance(event);
+				}else {
+					eventBalance=eventBalance+price;
+					event.setBalance(eventBalance);
+					eventService.modifyEventBalance(event);
+				}
+				
+				
+
+				
+				return "redirect:/event/event.do?eventId="+record.getEventId()+"&groupId="+record.getGroupId();
+				
+			} catch (IOException e) {
+				e.printStackTrace();
+//				model.addAttribute("resultMsg", "파일을 업로드하는 데에 실패했습니다.");
+			}
+		} else {
+//	        model.addAttribute("resultMsg", "업로드할 파일을 선택해주시기 바랍니다.");
+		}
+		
+		
+		return  "redirect:/event/event.do?eventId="+record.getEventId()+"&groupId="+record.getGroupId();
+		
+		
+		
 	}
 	
-	@RequestMapping("/deleteGroupRecord.do")
-	public String deleteGroupRecord(int recordId,int groupId) {
+	@RequestMapping("/deleteRecord.do")
+	public String deleteGroupRecord(int recordId) {
+		Record record = recordService.findRecordById(recordId);
 		
-		return "";
+		int price = record.getPrice();
+		String recordAccounting = record.getAccounting();
+		Group group =msService.findGroupById(record.getGroupId());
+		double groupBalance= group.getBalance();
+		Event event =eventService.findEventById(record.getEventId());
+		if(record.getEventId()==0) {
+			if(record.getAccounting().equals("수입")) {
+				group.setBalance(group.getBalance()-record.getPrice());
+				msService.modifyGroupBalance(group);
+			}else {
+				group.setBalance(group.getBalance()+record.getPrice());
+				msService.modifyGroupBalance(group);
+			}
+		}else {
+			
+			if(record.getAccounting().equals("수입")) {
+				event.setBalance(event.getBalance()-record.getPrice());
+				eventService.modifyEventBalance(event);
+			}else {
+				event.setBalance(group.getBalance()+record.getPrice());
+				eventService.modifyEventBalance(event);
+			}
+			
+		}
+		
+		recordService.removeRecord(recordId);
+		return "redirect:/memberGroup/group.do?groupId="+record.getGroupId();
 	}
 	
 	@RequestMapping("/deleteEventRecord.do")
 	public String deleteEventRecord(int recordId,int eventId) {
 		
-		return "";
+		
+		recordService.removeRecord(recordId);
+		
+		return "redirect:/event/event.do?eventId="+eventId;
 	}
 	
-	@RequestMapping("/modifyGroupRecord.do")
-	public String modifyGroupRecord(Record record) {
+	@RequestMapping(value="/modifyRecord.do",method=RequestMethod.POST)
+	public String modifyGroupRecord(Record record,String pastAccounting,int pastPrice,HttpSession session, @RequestParam("imgFile") MultipartFile imgFile) {
+		String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
+	    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
+	    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
+	    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
+		record.setImage("/images/" + rename);
+		record.setMemberId((String)session.getAttribute("loginedMemberId"));
 		
-		return "";
+		
+		
+		if(record.getEventId()==0) {
+		int price = record.getPrice();
+		Group group =msService.findGroupById(record.getGroupId());
+		double groupBalance= group.getBalance();
+		if(pastAccounting.equals("수입")) {
+		 double incomeBalance=groupBalance-pastPrice;
+		 group.setBalance(incomeBalance);
+		 msService.modifyGroupBalance(group);
+		}else {
+		double outlayBalance = groupBalance+pastPrice;
+		group.setBalance(outlayBalance);
+		msService.modifyGroupBalance(group);
+		}
+		
+
+		recordService.modifyRecord(record);
+		System.out.println(record.getRecordId());
+		
+		if(record.getAccounting().equals("지출")) {
+			groupBalance=groupBalance-price;
+			group.setBalance(groupBalance);
+			msService.modifyGroupBalance(group);
+		}else {
+			groupBalance=groupBalance+price;
+			group.setBalance(groupBalance);
+			msService.modifyGroupBalance(group);
+			
+			}
+		}
+		recordService.modifyRecord(record);
+		
+		
+		
+		return "redirect:/record/showRecordDetail.do?recordId="+record.getRecordId();
+	
+	
 	}
 	
-	@RequestMapping("/modifyEventRecord.do")
-	public String modifyEventRecord(Record record) {
-		
-		return "";
+	
+	
+	
+	
+	
+	@RequestMapping("/showModifyRecord.do")
+	public String modifyEventRecord(int recordId,Model model) {
+		Record record=recordService.findRecordById(recordId);
+		List<Event> events = eventService.findAllEventsByGroupId(record.getGroupId());
+		int pastPrice = record.getPrice();
+		String pastAccounting=record.getAccounting();
+		model.addAttribute("events",events);
+		model.addAttribute("record",record);
+		model.addAttribute("pastPrice",pastPrice);
+		model.addAttribute("pastAccounting",pastAccounting);
+		return "record/modifyRecord";
 	}
 	
 	@RequestMapping("/checkRecord.do")
@@ -81,15 +297,27 @@ public class RecordController {
 	}
 	
 	@RequestMapping("/showRegistGroupRecord.do")
-	public String showRegistGroupRecord(int groupId,Model model) {
+	public String showRegistGroupRecord(HttpSession session,int groupId,Model model) {
+		List<Event> events = eventService.findAllEventsByGroupId(groupId);
+		model.addAttribute("events",events);
+		Group group=msService.findGroupById(groupId);
+		model.addAttribute("memberId",session.getAttribute("memberId"));
+		model.addAttribute("group",group);
 		
-		return "";
+		
+		return "record/registRecord";
 	}
 	
 	@RequestMapping("/showRegistEventRecord.do")
-	public String showRegistEventRecord(int eventId,Model model) {
+	public String showRegistEventRecord(HttpSession session,int eventId,Model model) {
+		Event event = eventService.findEventById(eventId);
+		List<Event> events=eventService.findAllEventsByGroupId(event.getGroupId());
+		model.addAttribute("events",events);
+		model.addAttribute("event",event);
+		model.addAttribute("memberId",session.getAttribute("memberId"));
+		model.addAttribute("groupId",event.getGroupId());
 		
-		return "";
+		return "record/registEventRecord";
 	}
 	
 	@RequestMapping("/showRegistRecordByMessage.do")
@@ -101,20 +329,22 @@ public class RecordController {
 	@RequestMapping("/showRecordDetail.do")
 	public String showRecordDetail(int recordId,Model model) {
 		
-		return"";
+		Record record = recordService.findRecordById(recordId);
+		System.out.println(record.getDate());
+		List<Comment> comments = commentService.findAllCommentsByRecordId(recordId);
+		
+		
+		List<Event> events = eventService.findAllEventsByGroupId(record.getGroupId());
+		
+		model.addAttribute("record",record);
+		model.addAttribute("comments",comments);
+		model.addAttribute("events",events);
+		return "record/recordDetail";
 	}
 	
-	@RequestMapping("/showModifyEventRecord.do")
-	public String showModifyEventRecord(int recordId,int eventId,Model model) {
-		
-		return "";
-	}
 	
-	@RequestMapping("/showModifyGroupRecord.do")
-	public String showModifyGroupRecord(int recordId,int groupId,Model model) {
-		
-		return "";
-	}
+	
+	
 	
 	@RequestMapping("/eventStatsByPeriod.do")
 	public String showEventStatsByPeriod(Date date,String accounting,int eventId,Model model) {
@@ -146,7 +376,7 @@ public class RecordController {
 		return "";
 	}
 	
-	@RequestMapping("groupStatsByCategory.do")
+	@RequestMapping("/groupStatsByCategory.do")
 	public String showGroupStatsByCategory(String category,String accounting,int groupId,Date date) {
 		
 		return "";
@@ -169,6 +399,168 @@ public class RecordController {
 		model.addAttribute("groupBalance",groupBalance);
 		
 		//기간별
+		LocalDate today = LocalDate.now();
+		
+		model.addAttribute("year1",LocalDate.now().minusYears(1).getYear());
+		model.addAttribute("year2",LocalDate.now().minusYears(2).getYear());
+		model.addAttribute("year3",LocalDate.now().minusYears(3).getYear());
+		model.addAttribute("year4",LocalDate.now().minusYears(4).getYear());
+		System.out.println(LocalDate.now().minusYears(2).getYear());
+		System.out.println(LocalDate.now().minusYears(3).getYear());
+		System.out.println(LocalDate.now().minusYears(4).getYear());
+
+		
+		Date year_1_st =Date.valueOf(LocalDate.of(LocalDate.now().getYear()-1, 1, 1));
+		Date year_1_fin =Date.valueOf(LocalDate.of(LocalDate.now().getYear()-1,12,31));
+		Date year_2_st =Date.valueOf(LocalDate.of(LocalDate.now().getYear()-2, 1, 1));
+		Date year_2_fin =Date.valueOf(LocalDate.of(LocalDate.now().getYear()-2,12,31));
+		Date year_3_st =Date.valueOf(LocalDate.of(LocalDate.now().getYear()-3, 1, 1));
+		Date year_3_fin =Date.valueOf(LocalDate.of(LocalDate.now().getYear()-3,12,31));
+		Date year_4_st =Date.valueOf(LocalDate.of(LocalDate.now().getYear()-4, 1, 1));
+		Date year_4_fin =Date.valueOf(LocalDate.of(LocalDate.now().getYear()-4,12,31));
+		
+		Date month_1_st=Date.valueOf(LocalDate.now().minusMonths(1).with(TemporalAdjusters.firstDayOfMonth()));
+		Date month_1_fin=Date.valueOf(LocalDate.now().minusMonths(1).with(TemporalAdjusters.lastDayOfMonth()));
+		
+		Date month_2_st=Date.valueOf(LocalDate.now().minusMonths(2).with(TemporalAdjusters.firstDayOfMonth()));
+		Date month_2_fin=Date.valueOf(LocalDate.now().minusMonths(2).with(TemporalAdjusters.lastDayOfMonth()));
+		
+		Date month_3_st=Date.valueOf(LocalDate.now().minusMonths(3).with(TemporalAdjusters.firstDayOfMonth()));
+		Date month_3_fin=Date.valueOf(LocalDate.now().minusMonths(3).with(TemporalAdjusters.lastDayOfMonth()));
+		
+		Date month_4_st=Date.valueOf(LocalDate.now().minusMonths(4).with(TemporalAdjusters.firstDayOfMonth()));
+		Date month_4_fin=Date.valueOf(LocalDate.now().minusMonths(4).with(TemporalAdjusters.lastDayOfMonth()));
+		
+		Date month_5_st=Date.valueOf(LocalDate.now().minusMonths(5).with(TemporalAdjusters.firstDayOfMonth()));
+		Date month_5_fin=Date.valueOf(LocalDate.now().minusMonths(5).with(TemporalAdjusters.lastDayOfMonth()));
+		
+		Date month_6_st=Date.valueOf(LocalDate.now().minusMonths(6).with(TemporalAdjusters.firstDayOfMonth()));
+		Date month_6_fin=Date.valueOf(LocalDate.now().minusMonths(6).with(TemporalAdjusters.lastDayOfMonth()));
+		
+		Date month_7_st=Date.valueOf(LocalDate.now().minusMonths(7).with(TemporalAdjusters.firstDayOfMonth()));
+		Date month_7_fin=Date.valueOf(LocalDate.now().minusMonths(7).with(TemporalAdjusters.lastDayOfMonth()));
+		
+		Date month_8_st=Date.valueOf(LocalDate.now().minusMonths(8).with(TemporalAdjusters.firstDayOfMonth()));
+		Date month_8_fin=Date.valueOf(LocalDate.now().minusMonths(8).with(TemporalAdjusters.lastDayOfMonth()));
+		
+		Date month_9_st=Date.valueOf(LocalDate.now().minusMonths(9).with(TemporalAdjusters.firstDayOfMonth()));
+		Date month_9_fin=Date.valueOf(LocalDate.now().minusMonths(9).with(TemporalAdjusters.lastDayOfMonth()));
+		
+		Date month_10_st=Date.valueOf(LocalDate.now().minusMonths(10).with(TemporalAdjusters.firstDayOfMonth()));
+		Date month_10_fin=Date.valueOf(LocalDate.now().minusMonths(10).with(TemporalAdjusters.lastDayOfMonth()));
+		
+		Date month_11_st=Date.valueOf(LocalDate.now().minusMonths(11).with(TemporalAdjusters.firstDayOfMonth()));
+		Date month_11_fin=Date.valueOf(LocalDate.now().minusMonths(11).with(TemporalAdjusters.lastDayOfMonth()));
+		
+		Date month_12_st=Date.valueOf(LocalDate.now().minusMonths(12).with(TemporalAdjusters.firstDayOfMonth()));
+		Date month_12_fin=Date.valueOf(LocalDate.now().minusMonths(12).with(TemporalAdjusters.lastDayOfMonth()));
+		
+		int year_income_1 = recordService.findGroupAccountingResult("수입", groupId,year_1_st,year_1_fin);
+		int year_outlay_1 = recordService.findGroupAccountingResult("지출", groupId,year_1_st,year_1_fin);
+		
+		int year_income_2 = recordService.findGroupAccountingResult("수입", groupId,year_2_st,year_2_fin);
+		int year_outlay_2 = recordService.findGroupAccountingResult("지출", groupId,year_2_st,year_2_fin);
+
+		int year_income_3 = recordService.findGroupAccountingResult("수입", groupId,year_3_st,year_3_fin);
+		int year_outlay_3 = recordService.findGroupAccountingResult("지출", groupId,year_3_st,year_3_fin);
+		
+		int year_income_4 = recordService.findGroupAccountingResult("수입", groupId,year_4_st,year_4_fin);
+		int year_outlay_4 = recordService.findGroupAccountingResult("지출", groupId,year_4_st,year_4_fin);
+		
+		//
+		
+		int month_income_1= recordService.findGroupAccountingResult("수입", groupId,month_1_st, month_1_fin);
+		int month_outlay_1= recordService.findGroupAccountingResult("지출", groupId,month_1_st, month_1_fin);
+	
+		int month_income_2= recordService.findGroupAccountingResult("수입", groupId,month_2_st, month_2_fin);
+		int month_outlay_2= recordService.findGroupAccountingResult("지출", groupId,month_2_st, month_2_fin);
+		
+		int month_income_3= recordService.findGroupAccountingResult("수입", groupId,month_3_st, month_3_fin);
+		int month_outlay_3= recordService.findGroupAccountingResult("지출", groupId,month_3_st, month_3_fin);
+		
+		int month_income_4= recordService.findGroupAccountingResult("수입", groupId,month_4_st, month_4_fin);
+		int month_outlay_4= recordService.findGroupAccountingResult("지출", groupId,month_4_st, month_4_fin);
+		
+		int month_income_5= recordService.findGroupAccountingResult("수입", groupId,month_5_st, month_5_fin);
+		int month_outlay_5= recordService.findGroupAccountingResult("지출", groupId,month_5_st, month_5_fin);
+		
+		int month_income_6= recordService.findGroupAccountingResult("수입", groupId,month_6_st, month_6_fin);
+		int month_outlay_6= recordService.findGroupAccountingResult("지출", groupId,month_6_st, month_6_fin);
+		
+		int month_income_7= recordService.findGroupAccountingResult("수입", groupId,month_7_st, month_7_fin);
+		int month_outlay_7= recordService.findGroupAccountingResult("지출", groupId,month_7_st, month_7_fin);
+		
+		int month_income_8= recordService.findGroupAccountingResult("수입", groupId,month_8_st, month_8_fin);
+		int month_outlay_8= recordService.findGroupAccountingResult("지출", groupId,month_8_st, month_8_fin);
+		
+		int month_income_9= recordService.findGroupAccountingResult("수입", groupId,month_9_st, month_9_fin);
+		int month_outlay_9= recordService.findGroupAccountingResult("지출", groupId,month_9_st, month_9_fin);
+		
+		int month_income_10= recordService.findGroupAccountingResult("수입", groupId,month_10_st, month_10_fin);
+		int month_outlay_10= recordService.findGroupAccountingResult("지출", groupId,month_10_st, month_10_fin);
+		
+		int month_income_11= recordService.findGroupAccountingResult("수입", groupId,month_11_st, month_11_fin);
+		int month_outlay_11= recordService.findGroupAccountingResult("지출", groupId,month_11_st, month_11_fin);
+		
+		int month_income_12= recordService.findGroupAccountingResult("수입", groupId,month_12_st, month_12_fin);
+		int month_outlay_12= recordService.findGroupAccountingResult("지출", groupId,month_12_st, month_12_fin);
+		//
+		model.addAttribute("year1Income",year_income_1);
+		model.addAttribute("year1Outlay",year_outlay_1);
+		
+		model.addAttribute("year2Income",year_income_2);
+		model.addAttribute("year2Outlay",year_outlay_2);
+		
+		model.addAttribute("year3Income",year_income_3);
+		model.addAttribute("year3Outlay",year_outlay_3);
+		
+		model.addAttribute("year4Income",year_income_4);
+		model.addAttribute("year4Outlay",year_outlay_4);
+		//
+		model.addAttribute("month1Income",month_income_1);
+		model.addAttribute("month1Outlay",month_outlay_1);
+		
+		model.addAttribute("month2Income",month_income_2);
+		model.addAttribute("month2Outlay",month_outlay_2);
+		
+		model.addAttribute("month3Income",month_income_3);
+		model.addAttribute("month3Outlay",month_outlay_3);
+		
+		model.addAttribute("month4Income",month_income_4);
+		model.addAttribute("month4Outlay",month_outlay_4);
+		
+		model.addAttribute("month5Income",month_income_5);
+		model.addAttribute("month5Outlay",month_outlay_5);
+		
+		model.addAttribute("month6Income",month_income_6);
+		model.addAttribute("month6Outlay",month_outlay_6);
+		
+		model.addAttribute("month7Income",month_income_7);
+		model.addAttribute("month7Outlay",month_outlay_7);
+		
+		model.addAttribute("month8Income",month_income_8);
+		model.addAttribute("month8Outlay",month_outlay_8);
+		
+		model.addAttribute("month9Income",month_income_9);
+		model.addAttribute("month9Outlay",month_outlay_9);
+		
+		model.addAttribute("month10Income",month_income_10);
+		model.addAttribute("month10Outlay",month_outlay_10);
+		
+		model.addAttribute("month11Income",month_income_11);
+		model.addAttribute("month11Outlay",month_outlay_11);
+
+		model.addAttribute("month12Income",month_income_12);
+		model.addAttribute("month12Outlay",month_outlay_12);
+		
+		System.out.println(month_income_10);
+		
+		System.out.println(month_1_fin);
+		System.out.println(month_2_fin);
+		System.out.println(month_3_fin);
+		System.out.println(month_4_fin);
+		System.out.println(month_5_fin);
+		System.out.println("test");
 		
 		//
 		
@@ -196,20 +588,35 @@ public class RecordController {
 		model.addAttribute("etcOutlay",etcOutlay);
 		
 		//이벤트별
-		List<Event> event = eventService.findAllEventsByGroupId(groupId);
-		model.addAttribute("event",event);
-		int eventIncome =0;
-		int eventOutlay =0;
-		int eventBalance = 0;
-		for(int i=0;i<event.size();i++) {
-		eventIncome=recordService.findEventStatsRecordByAccounting("수입",event.get(i).getEventId());
-		eventOutlay = recordService.findEventStatsRecordByAccounting("지출",event.get(i).getEventId());
-		eventBalance = eventIncome-eventOutlay;
-		model.addAttribute("eventIncome",eventIncome);
-		model.addAttribute("eventOutlay",eventOutlay);
-		model.addAttribute("eventBalance",eventBalance);
+		List<Event> events = eventService.findAllEventsByGroupId(groupId);
+		
+		HashMap<Integer, Integer> prices= new HashMap<>();
+		
+		
+		for (Event event : events) {
+			
+			prices.put(recordService.findEventStatsRecordByAccounting("수입", event.getEventId()),recordService.findEventStatsRecordByAccounting("지출", event.getEventId()));
+
+		
 		}
 		
+		model.addAttribute("prices",prices);
+		
+		
+		model.addAttribute("event",events);
+		
+//		int eventIncome =0;
+//		int eventOutlay =0;
+//		int eventBalance = 0;
+//		for(int i=0;i<event.size();i++) {
+//		eventIncome=recordService.findEventStatsRecordByAccounting("수입",event.get(i).getEventId());
+//		eventOutlay = recordService.findEventStatsRecordByAccounting("지출",event.get(i).getEventId());
+//		eventBalance = eventIncome-eventOutlay;
+//		model.addAttribute("eventIncome",eventIncome);
+//		model.addAttribute("eventOutlay",eventOutlay);
+//		model.addAttribute("eventBalance",eventBalance);
+//		}
+//		
 		
 		
 		

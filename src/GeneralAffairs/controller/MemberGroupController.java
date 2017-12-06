@@ -22,9 +22,11 @@ import GeneralAffairs.domain.Event;
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Member;
 import GeneralAffairs.domain.Message;
+import GeneralAffairs.domain.Record;
 import GeneralAffairs.service.EventService;
 import GeneralAffairs.service.MemberGroupService;
 import GeneralAffairs.service.MessageService;
+import GeneralAffairs.service.RecordService;
 
 @Controller
 @RequestMapping("memberGroup")
@@ -39,6 +41,9 @@ public class MemberGroupController {
 
 	@Autowired
 	private EventService eventService;
+	
+	@Autowired
+	private RecordService recordService;
 	
 	@RequestMapping(value= "/memberList.do", method=RequestMethod.GET)
 	public String showMemberListByGroup(int groupId, Model model) {
@@ -413,12 +418,17 @@ public class MemberGroupController {
 		Group group = mgService.findGroupById(groupId);
 		List<Message> messages = messageService.findAllMyMessages("kang");
 		List<Event> events = eventService.findAllEventsByGroupId(groupId);
+		List<Record> records = recordService.findAllRecordsByGroupId(groupId);
 		
+		
+		System.out.println(records.get(0).getDate());
+		System.out.println(records.get(0).getAccounting());
 		
 		model.addAttribute("events", events);
 		model.addAttribute("group", group);
 		model.addAttribute("messages", messages);
 		model.addAttribute("groupId", groupId);
+		model.addAttribute("records",records);
 		
 		return "group/group";
 	}

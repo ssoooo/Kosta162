@@ -143,11 +143,11 @@
 
  							 function drawChart(){
  								 var data3 = new google.visualization.arrayToDataTable([
-									 ['년대', '수입', '지출', '합계'], // 제목 그리고 항목들
- 									['2015', 10, 20, 40], // 제목과 항목수를 맞춰주어야 합니다.
- 									['2016', 15, 30, 20],
- 									['2017', 20, 25, 30],
- 									['2018', 10, 30, 50]
+									 ['년대', '수입', '지출'], // 제목 그리고 항목들
+ 									['${year4}', ${year4Income}, ${year4Outlay}], // 제목과 항목수를 맞춰주어야 합니다.
+ 									['${year3}', ${year3Income}, ${year3Outlay}],
+ 									['${year2}', ${year2Income}, ${year2Outlay}],
+ 									['${year1}', ${year1Income}, ${year1Outlay}]
  									]);
 
 									var data4 = new google.visualization.arrayToDataTable([

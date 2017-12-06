@@ -17,17 +17,17 @@ public interface RecordMapper {
 	int updateRecord(Record record);
 	void deleteRecord(int recordId);
 	Record retrieveRecordById(int recordId);
-	
+	void plusBalanceToGroup(Group group);
 	List<Record> retrieveAllRecordsByEventId(int eventId);
 	List<Record> retrieveAllRecordsByGroupId(int groupId);
-
+	void updateCaution(Record record);
 	List<Record> retrieveRecordsByMonth(@Param("sDate")Date sDate,@Param("fDate")Date fDate,@Param("accounting")String accounting,@Param("groupId")int groupId);//지출,수입에 따른 달별 모임내역 가져오기
 	List<Record> retrieveRecordsByYear(@Param("sDate")Date sDate,@Param("fDate")Date fDate,@Param("accounting")String accounting,@Param("groupId")int groupId);//지출,수입에 따른연별 모임내역 가져오기
 
 //	List<Record> retrieveRecordsByCategoryMonth(String category,String accounting,Date sDate,Date fDate);
 //	List<Record> retrieveRecordsByCategoryYear(String category,String accounting,Date sDate,Date fDate);
 	
-	int retrieveGroupAccountingResult(@Param("accounting")String accounting,@Param("groupId")int groupId,@Param("sDate")Date sDate,@Param("fDate")Date fDate);//지출,수입 조건에 따른 모임의 일정기간 금액 가져오기
+	Integer retrieveGroupAccountingResult(@Param("accounting")String accounting,@Param("groupId")int groupId,@Param("sDate")Date sDate,@Param("fDate")Date fDate);//지출,수입 조건에 따른 모임의 일정기간 금액 가져오기
 	int retrieveEventAccountingResult(@Param("accounting")String accounting,@Param("eventId")int eventId,@Param("sDate")Date sDate,@Param("fDate")Date fDate);//지출,수입 조건에 따른 이벤트의 일정기간 금액 가져오기
 
 	
@@ -51,5 +51,5 @@ public interface RecordMapper {
 	int retrieveEventStatsRecordByYear(@Param("accounting")String accounting,@Param("year")String year,@Param("eventId")int eventId);//년별 이벤트 수입 혹은 지출 합계가져오기
 	
 	Integer retrieveEventStatsRecordByCategory(@Param("category")String category,@Param("accounting")String accounting,@Param("eventId")int eventId);//카테고리와 기간에 따른 수입 혹은 지출 합계가져오기
-	int retrieveEventStatsRecordByAccounting(@Param("accounting")String accounting,@Param("eventId")int eventId); //이벤트의 수입 혹은 지출 합계 가져오기
+	Integer retrieveEventStatsRecordByAccounting(@Param("accounting")String accounting,@Param("eventId")int eventId); //이벤트의 수입 혹은 지출 합계 가져오기
 }

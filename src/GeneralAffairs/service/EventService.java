@@ -14,7 +14,7 @@ public interface EventService {
 	boolean addEventBalanceToGroupBalance(int eventId, int groupId);
 	void changePayment(String memberId,int eventId, String payment);
 	void removeFromEvent(String memberId, int eventId);
-	void modifyEventBalance(Event event,int price);
+	void modifyEventBalance(Event event);
 	void modifyEvent(Event event);
 	void createEvent(Event event);
 

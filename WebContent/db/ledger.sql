@@ -117,5 +117,7 @@ CREATE SEQUENCE event_seq START WITH 1 INCREMENT BY 1;
 commit;
 
 ALTER TABLE group_table ADD groupImage varchar(300);
+ALTER TABLE event_table ADD budget NUMBER(10,1);
+ALTER TABLE event_table ADD groupSupport NUMBER(10,1);
 
 commit;
