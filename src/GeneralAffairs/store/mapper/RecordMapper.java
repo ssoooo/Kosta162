@@ -63,8 +63,7 @@ public interface RecordMapper {
 			@Param("accounting") String accounting, @Param("groupId") int groupId);
 	List<Record> retrieveGroupStatsRecordByPeriod(@Param("date") Date date, @Param("accounting") String accounting,
 			@Param("groupId") int groupId);
-	List<Record> retrieveGroupStatsRecordByAccounting(@Param("groupId") int groupId,
-			@Param("accounting") String accounting);
+
 
 	List<Record> retrieveEventStatsRecordByPeriod(@Param("accounting") String accounting, @Param("date") Date date,
 			@Param("eventId") int eventId);
@@ -72,8 +71,7 @@ public interface RecordMapper {
 	List<Record> retrieveEventStatsRecordByCategory(@Param("category") String category,
 			@Param("accounting") String accounting, Date date, @Param("eventId") int eventId);
 
-	List<Record> retrieveEventStatsRecordByAccounting(@Param("accounting") String accounting,
-			@Param("eventId") int eventId);
+
 
 	List<Record> retrieveRecordsByMonth(Date sDate,Date fDate,String accounting,int groupId);//지출,수입에 따른 달별 모임내역 가져오기
 	List<Record> retrieveRecordsByYear(Date sDate,Date fDate,String accounting,int groupId);//지출,수입에 따른연별 모임내역 가져오기

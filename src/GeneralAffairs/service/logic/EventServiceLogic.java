@@ -19,7 +19,6 @@ import GeneralAffairs.store.GroupStore;
  	@Autowired
 	private EventStore eventStore;
 	@Autowired
-<<<<<<< HEAD
 	private GroupStore groupStore;
  
  	@Override

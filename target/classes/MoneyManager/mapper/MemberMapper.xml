@@ -28,18 +28,10 @@
 		WHERE memberId=#{memberId}
 	</delete>
 
-<<<<<<< HEAD
+
 	<select id="retrieveMemberById" parameterType="String" resultType="Member">
 		SELECT memberId,password,nickname,name,email,account,phoneNumber
 		FROM member_table
-=======
-	<select id="retrieveMemberById" parameterType="String"
-		resultType="Member">
-		SELECT
-		memberId,password,nickname,name,email,account,phoneNumber
-		FROM
-		member_table
->>>>>>> 614d9af0201fea48f369c212aed5616a3757eb4e
 		WHERE memberId=#{memberId}
 	</select>
 

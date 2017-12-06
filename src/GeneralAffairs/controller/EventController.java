@@ -25,13 +25,8 @@ public class EventController {
 	private EventService eventService;
 
 	@Autowired
-<<<<<<< HEAD
-	private MemberGroupService msService;
-	
-	
-=======
 	private MemberGroupService mgService;
->>>>>>> 614d9af0201fea48f369c212aed5616a3757eb4e
+
 
 	@RequestMapping(value = "/registEvent.do", method = RequestMethod.POST)
 	public String registEvent(Event event, HttpSession session, HttpServletRequest req, Model model) {
