@@ -7,7 +7,7 @@
 		<title>My Page</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="../resources/assets/css/main2.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/main2.css" />
 	</head>
 	<body class="homepage">
 	<%@ include file="../../header/header.jspf"%>
@@ -161,12 +161,12 @@
 
 		<!-- Scripts -->
 
-			<script src="../resources/assets/js/jquery.min.js"></script>
-			<script src="../resources/assets/js/jquery.dropotron.min.js"></script>
-			<script src="../resources/assets/js/skel.min.js"></script>
-			<script src="../resources/assets/js/util.js"></script>
+			<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.min.js"></script>
+			<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.dropotron.min.js"></script>
+			<script src="${pageContext.request.contextPath}/resources/assets/js/skel.min.js"></script>
+			<script src="${pageContext.request.contextPath}/resources/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="../resources/assets/js/main.js"></script>
+			<script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
 
 	</body>
 </html>

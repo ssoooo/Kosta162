@@ -6,10 +6,8 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,12 +15,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-
+import GeneralAffairs.domain.Event;
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Member;
 import GeneralAffairs.domain.Message;
+import GeneralAffairs.domain.Record;
+import GeneralAffairs.service.EventService;
 import GeneralAffairs.service.MemberGroupService;
 import GeneralAffairs.service.MessageService;
+import GeneralAffairs.service.RecordService;
 
 @Controller
 @RequestMapping("memberGroup")
@@ -33,6 +34,34 @@ public class MemberGroupController {
 	
 	@Autowired
 	private MessageService messageService;
+
+	@Autowired
+	private EventService eventService;
+	
+	@Autowired
+	private RecordService recordService;
+	
+	@RequestMapping(value= "/memberList.do", method=RequestMethod.GET)
+	public String showMemberListByGroup(int groupId, Model model) {
+		List<Member> members = mgService.findAllMembersExceptManager(groupId);
+		model.addAttribute("members", members);
+		
+		Group group = mgService.findGroupById(groupId);
+		model.addAttribute("group", group);
+		System.out.println("///////" + members.size());
+		return "event/eventMember";
+	}
+	
+	@RequestMapping(value= "/memberList.do", method=RequestMethod.POST)
+	public String findMemberListByGroup(int groupId, String memberId, Model model) {
+		Group group = mgService.findGroupById(groupId);
+		model.addAttribute("group", group);
+		
+		List<Member> members = mgService.findAllMembersByGroup(groupId);
+		model.addAttribute("members", members);
+
+		return "redirect:/event/registEvent.do?memberId=" + memberId;
+	}
 	
 	@RequestMapping(value="login.do", method=RequestMethod.GET)
 	public String showLoginForm() {
@@ -42,20 +71,18 @@ public class MemberGroupController {
 	
 	@RequestMapping(value="/login.do", method=RequestMethod.POST)
 	public String login(String memberId, String userPassword, HttpServletRequest req, Model model) {
-		
 		Member member = new Member();
+
 		member = mgService.findMemberById(memberId);
 		if(member!=null && userPassword.equals(member.getPassword())){
 		
 		HttpSession session =req.getSession();
 		session.setAttribute("loginedMemberId", member.getMemberId());	
-		
 		}else{
 			HttpSession session = req.getSession();
 			session.invalidate();
 			return "redirect:/views/member/login.jsp";
 		}
-		
 		return "redirect:/memberGroup/main.do";
 	}
 	
@@ -64,45 +91,90 @@ public class MemberGroupController {
 		HttpSession session = req.getSession();
 		session.invalidate();
 		return "redirect:/views/member/login.jsp";
+
 	}
 	
 	@RequestMapping("/modifyMember.do")
 	public String modifyMember(Member member) {
-		
-		return "";
+		mgService.modifyMember(member);
+		return "redirect:/memberGroup/myDetail.do";
 	}
 	
 	@RequestMapping("/showModifyMember.do")
 	public String showModifyMember(String memberId,Model model) {
+		Member member = new Member();
+		member = mgService.findMemberById(memberId);
 		
-		return "";
+		String account = member.getAccount();
+		String phone = member.getPhoneNumber();
+		
+		int sep = account.indexOf("/");
+		int sepP = phone.indexOf("/");
+		
+        String bank = account.substring(0, sep);
+        String accountNum = account.substring(sep+1);
+        String mobileCarrier = phone.substring(0, sepP);
+        String phoneNum = phone.substring(sepP+1);
+        
+        model.addAttribute("member", member);
+        model.addAttribute("mobileCarrier", mobileCarrier);
+        model.addAttribute("phoneNum", phoneNum);
+	    model.addAttribute("bank", bank);
+	    model.addAttribute("accountNum", accountNum);
+		return "member/modifyMember";
 	}
 	
 	@RequestMapping("/deleteMember.do")
 	public String deleteMember(String memberId) {
-		
-		return "";
+		mgService.removeMember(memberId);
+		return "redirect:/views/member/login.jsp";
 	}
 	
 	@RequestMapping("/tradeGrade.do")
-	public String tradeGrade(String memberId,String managerId,int groupId) {
-		
-		return "";
+	public String tradeGrade(String managerId,String memberId,String grade1,String grade2,int groupId) {
+		Group group = new Group();
+		group = mgService.findGroupById(groupId);
+		group.setMemberId(memberId);
+		mgService.modifyGroup(group);
+		mgService.tradeGrade(memberId, groupId, grade1);
+		mgService.tradeGrade(managerId, groupId, grade2);
+		System.out.println("매니저아이디 :"+managerId);
+		return "redirect:/views/member/login.jsp";
 	}
 	
 	@RequestMapping("/showTradeGrade.do")
-	public String showTradeGrade(int groupId,Model model) {
+	public String showTradeGrade(int groupId,String managerId, Model model) {
+		List<Member> list = new ArrayList<Member>();
+		List<Member> newList = new ArrayList<Member>();
+		Group group = new Group();
+		group = mgService.findGroupById(groupId);
+		list = mgService.findAllMembersByGroup(groupId);
+		for(int i=0; i<list.size(); i++){
+			Member member = new Member();
+			member = list.get(i);
+			if(!member.getMemberId().equals(group.getMemberId())){
+				newList.add(member);
+			} 
+		}
+		model.addAttribute("group", group);
+		model.addAttribute("managerId", managerId);
 		
-		return "";
+		model.addAttribute("memberList", newList);
+		
+		return "group/tradeGrade";
 	}
 	
 	@RequestMapping(value="/myDetail.do", method=RequestMethod.GET)
 	public String showMyDetail(HttpSession session,Model model) {
 		Member member = new Member();
-		
+		List<Group> list = new ArrayList<Group>();
 		String myId = (String)session.getAttribute("loginedMemberId");
+		list = mgService.findAllGroupsByMemberId(myId);
+		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(myId);
 		member = mgService.findMemberById(myId);
 		
+		model.addAttribute("groupsInvited", groupsInvited);
+		model.addAttribute("list", list);
 		model.addAttribute("member", member);
 		return "member/memberDetail";
 	}	
@@ -110,38 +182,67 @@ public class MemberGroupController {
 	@RequestMapping("/memberDetail.do")
 	public String showMemberDetail(String memberId,Model model) {
 		Member member = new Member();
-		mgService.findMemberById(memberId);
-		return "";
+		List<Group> list = new ArrayList<Group>();
+		list = mgService.findAllGroupsByMemberId(memberId);
+		member = mgService.findMemberById(memberId);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("member", member);
+		
+		return "member/memberDetail";
 	}
 	
 	@RequestMapping("/joinMemberAndSignIn.do")
 	public String joinMemberAndReqSignInGroup(Member member,int groupId) {
 		
-		return "";
+		mgService.createMember(member);
+		mgService.reqSignInGroup(member.getMemberId(), groupId);
+		
+		return "redirect:/views/member/login.jsp";
 	}
 	
 	@RequestMapping("/reqSignInAlreadyJoined.do")
-	public String reqSignInGroupWhenAlreadyJoined(int groupId,HttpSession session) {
+	public String reqSignInGroupWhenAlreadyJoined(int groupId,HttpSession session, Model model) {
+		String myId = (String)session.getAttribute("loginedMemberId");
+		mgService.reqSignInGroup(myId, groupId);
 		
-		return "";
+		
+		return "redirect:/views/group/searchGroup.jsp";
 	}
 	
-	@RequestMapping("/denySignIn.do")
-	public String denySignInGroupReq(String memberId,int groupId) {
+	@RequestMapping("/acceptSignIn.do")
+	public String acceptSignInGroup(int groupId,String memberId, Model model) {
 		
-		return "";
+		mgService.createMemberToGroup(memberId, groupId);
+		mgService.denySignInGroupReq(memberId, groupId);
+		
+		model.addAttribute("groupId", groupId);
+		return "redirect:/views/group/groupDetail.jsp";
+	}
+	
+	
+	
+	@RequestMapping("/denySignIn.do")
+	public String denySignInGroupReq(int groupId,String memberId,Model model) {
+		mgService.denySignInGroupReq(memberId, groupId);
+		model.addAttribute("groupId", groupId);
+		
+		return "redirect:/views/group/groupDetail.jsp";
 	}
 	
 	@RequestMapping("/join.do")
 	public String showJoinFrom() {
 		
-		return "";
+		return "member/join.jsp";
 	}
 	
 	@RequestMapping("/allSignInGroupReq.do")
 	public String showAllSignInGroupReq(int groupId,Model model) {
-		
-		return "";
+		List<Member> list =mgService.findAllSignInGroupReq(groupId);
+		model.addAttribute("data", list);
+		System.out.println("돼고있나?"+list.size());
+		System.out.println("돼고있나?그룹아이디"+groupId);
+		return "member/reqSingInMemberByGroupId";
 	}
 	
 	///
@@ -201,9 +302,45 @@ public class MemberGroupController {
 	}
 	
 	@RequestMapping("/registGroupAndJoinMember.do")
-	public String registGroupAndJoinMember(Member member,Group group) {
+	public String registGroupAndJoinMember(Member member,Group group, @RequestParam("imgFile")MultipartFile imgFile) {
+		System.out.println(member.getAccount());
+		String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
+	    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
+	    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
+	    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
+	    System.out.println(originalFilename);
 		
-		return "";
+		if(!imgFile.isEmpty()) {
+			try {
+				byte [] bytes = imgFile.getBytes();
+				File dir = new File("c:\\" + File.separator + "tempFiles");
+				
+				if(!dir.exists()) {
+					dir.mkdirs();
+				}
+				
+				File saveFile = new File(dir.getAbsolutePath() + File.separator + rename);
+				BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(saveFile));
+				out.write(bytes);
+				out.close();
+				group.setGroupImage("/images/" + rename);
+				
+		mgService.createMember(member);
+		mgService.createGroup(group);
+		mgService.createManagerToGroup(member.getMemberId(), group.getGroupId());
+//		model.addAttribute("img", "/images/" + rename);
+		
+		return "redirect:/views/member/login.jsp";
+			} catch (IOException e) {
+				e.printStackTrace();
+//				model.addAttribute("resultMsg", "파일을 업로드하는 데에 실패했습니다.");
+			}
+		} else {
+//	        model.addAttribute("resultMsg", "업로드할 파일을 선택해주시기 바랍니다.");
+		}
+
+
+		return "redirect:/views/member/login.jsp";
 	}
 	
 	@RequestMapping("/showRegistGroup.do")
@@ -370,11 +507,22 @@ public class MemberGroupController {
 		
 		return "group/searchMember";
 	}
-
+	
+	@RequestMapping("/searchGroupsByGroupName.do")
+	public String SearchGroupsByGroupName(String groupName, Model model){
+		
+		List<Group> groupList = mgService.findAllGroupsByGroupName(groupName);
+		
+//		System.out.println(groupList.get(0).getGroupName());
+		
+		model.addAttribute("groupList", groupList);
+		return"member/selectGroup";
+	}
+	
 	@RequestMapping("/searchAllGroups.do")
 	public String SearchAllGroups(HttpSession session, @RequestParam("groupNameInput") String groupName, Model model) {
 		/*
-		HttpServletRequest req 를 parameter로 받아올 경우 다음과 같이 가능
+		HttpServletRequest req �몴占� parameter嚥∽옙 獄쏆룇釉섓옙�궞 野껋럩�뒭 占쎈뼄占쎌벉�⑨옙 揶쏆늿�뵠 揶쏉옙占쎈뮟
 		List<Group> groups = mgService.findAllGroupsByGroupName(req.getParameter("groupNameInput"));
 		*/
 		
@@ -466,11 +614,17 @@ public class MemberGroupController {
 		
 		String myId = (String) session.getAttribute("loginedMemberId");
 		
-		Group group = mgService.findGroupById(groupId);
-		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
+		Group group = mgService.findGroupById(groupId);	
+		List<Event> events = eventService.findAllEventsByGroupId(groupId);
+//		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
+		List<Record> records = recordService.findAllRecordsByGroupId(groupId);
+
 		
+		model.addAttribute("events", events);
 		model.addAttribute("group", group);
-		model.addAttribute("messages", messages);
+//		model.addAttribute("messages", messages);
+		model.addAttribute("groupId", groupId);
+		model.addAttribute("records",records);
 		
 		return "group/group";
 	}
@@ -481,12 +635,12 @@ public class MemberGroupController {
 		String myId = (String) session.getAttribute("loginedMemberId");
 		
 		Group group = mgService.findGroupById(groupId);
-		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
+		List<Member> signIns = mgService.findAllSignInGroupReq(groupId);
+//		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
 		List<Member> members = mgService.findAllMembersByGroup(groupId);
 		Member manager = mgService.findMemberById(group.getMemberId());
-		
 		model.addAttribute("group", group);
-		model.addAttribute("messages", messages);
+		model.addAttribute("signIns", signIns);
 		model.addAttribute("memberNum", members.size());
 		model.addAttribute("members", members);
 		model.addAttribute("manager", manager);

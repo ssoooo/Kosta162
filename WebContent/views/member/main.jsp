@@ -21,8 +21,9 @@
 		        success: function(data) { //여기서 data 안에는 spring 에서 result 한 값이 포함되어 있으며 특정한 목록을 지정해서 보낼 수도있다.
 			        if(data == 'success'){
 				        alert("모임 가입이 완료되었습니다.");
+				        
 			        }else{
-				        alert("모임 가입이 완료되었습니다.");
+				        alert("모임 가입에 실패하였습니다.");
 		        	}
 		        }
 		    });
@@ -40,7 +41,7 @@
 
 						<!-- Logo -->
 							<div id="logo">
-								<h1><a href="main.jsp">알뜰총雜</a></h1>
+								<h1><a href="main.do">알뜰총雜</a></h1>
 								<span>알뜰한 총무의 잡다한 가계부</span>
 							</div>
 
@@ -60,7 +61,6 @@
 										</c:forEach>
 										</ul>
 									</li>
-									<li><a href="${pageContext.request.contextPath}/memberGroup/logout.do" >logout</a></li>
 									<form action="${pageContext.request.contextPath}/memberGroup/searchAllGroups.do" method="post" class="form_search">
 										<li class="search_div">
 											<input type="text" name="groupNameInput" value="" style="width:160px; height:40px; margin-right:10px; float:left; margin-top:10px;">
@@ -82,8 +82,12 @@
 							</div>
 							<div class="5u 12u(medium)">
 								<ul>
+
+
 									<li><a href="${pageContext.request.contextPath}/memberGroup/showRegistGroup.do" class="button big icon fa-arrow-circle-right">모임 생성</a></li>
 									<li><a href="${pageContext.request.contextPath}/memberGroup/myDetail.do" class="button alt big icon fa-question-circle">내 정보</a></li>
+
+
 								</ul>
 							</div>
 						</div>

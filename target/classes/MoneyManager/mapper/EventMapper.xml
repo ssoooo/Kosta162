@@ -7,13 +7,16 @@
 
 	<insert id="registEvent" parameterType="Event">
 		INSERT INTO
-		event_table(eventId,groupId,memberId,eventName,regDate)
-		VALUES(event_seq.nextval,#{groupId},#{memberId},#{eventName},SYSDATE)
+		event_table(eventId,groupId,memberId,eventName,regDate,budget,groupSupport)
+		VALUES(event_seq.nextval,#{groupId},#{memberId},#{eventName},SYSDATE,#{budget},#{groupSupport})
+		<selectKey resultType="int" keyProperty="eventId" order="AFTER">
+			SELECT event_seq.currval FROM dual
+		</selectKey>
 	</insert>
 
 	<update id="updateEvent" parameterType="Event">
 		UPDATE event_table SET
-		eventName={eventName}
+		eventName=#{eventName}, budget=#{budget}, groupSupport=#{groupSupport}
 		WHERE eventId=#{eventId}
 	</update>
 
@@ -23,21 +26,25 @@
 	</delete>
 
 	<select id="retrieveEventById" parameterType="int" resultType="Event">
-		SELECT eventId,groupId,memberId,balance,eventName,collection,regDate
-		FROM event_table
+		SELECT eventId, groupId, memberId, balance, eventName,
+		budget-groupSupport AS collection, regDate, groupSupport, budget
+		FROM
+		event_table
 		WHERE eventId=#{eventId}
 	</select>
 
 	<select id="retrieveAllEventsByGroupId" parameterType="int"
 		resultType="Event">
-		SELECT eventId,groupId,memberId,balance,eventName,collection,regDate
+		SELECT
+		eventId,groupId,memberId,balance,eventName,collection,regDate,budget,groupSupport
 		FROM event_table
 		WHERE groupId=#{groupId}
 	</select>
 
 	<delete id="deleteMemberFromEvent" parameterType="map">
-		DELETE FROM eventMember_table
-		WHERE memberId=#{memberId} AND eventId={eventId}
+		DELETE FROM
+		eventMember_table
+		WHERE memberId=#{memberId} AND eventId=#{eventId}
 	</delete>
 
 	<insert id="registMemberToEvent" parameterType="map">
@@ -47,13 +54,16 @@
 	</insert>
 
 	<update id="updatePayment" parameterType="map">
-		UPDATE eventMember_table SET
-		payment=#{payment}
-		WHERE memberId=#{memberId} AND eventId=#{eventId}
+		UPDATE
+		eventMember_table SET
+		payment='완납'
+		WHERE memberId=#{memberId} AND
+		eventId=#{eventId}
 	</update>
 
 	<update id="updateEventBalance" parameterType="Event">
-		UPDATE event_table SET
+		UPDATE event_table
+		SET
 		balance=#{balance}
 		WHERE eventId=#{eventId}
 	</update>

@@ -193,5 +193,61 @@ public class MemberStoreLogic implements MemberStore{
 		return members;
 	}
 
+	@Override
+	public List<Member> retrieveAllMembersExceptEventMembers(int groupId, int eventId) {
+		SqlSession session = SessionFactory.getInstance().getSession();
+		List<Member> members=null;
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			members=mapper.retrieveAllMembersExceptEventMembers(groupId, eventId);
+		}finally {
+			session.close();
+		}
+
+		return members;
+	}
+
+	@Override
+	public List<Member> retrieveAllMembersExceptManager(int groupId) {
+		SqlSession session = SessionFactory.getInstance().getSession();
+		List<Member> members=null;
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			members=mapper.retrieveAllMembersExceptManager(groupId);
+		}finally {
+			session.close();
+		}
+
+		return members;
+	}
+
+	@Override
+	public List<Member> retrieveAllUnPaidMembers(String memberId, int eventId) {
+		SqlSession session = SessionFactory.getInstance().getSession();
+		List<Member> members=null;
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			members=mapper.retrieveAllUnPaidMembers(memberId, eventId);
+		}finally {
+			session.close();
+		}
+
+		return members;
+	}
+
+	@Override
+	public List<Member> retrieveAllPaidMembers(String memberId, int eventId) {
+		SqlSession session = SessionFactory.getInstance().getSession();
+		List<Member> members=null;
+		try {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			members=mapper.retrieveAllPaidMembers(memberId, eventId);
+		}finally {
+			session.close();
+		}
+
+		return members;
+	}
+
 
 }

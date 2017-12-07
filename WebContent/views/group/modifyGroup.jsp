@@ -74,7 +74,7 @@
 						<div id="content">
 
 							<!-- Content -->
-									<h2>모임 생성</h2>
+									<h2>모임 수정</h2>
 									<div class="table-responsive">
 										<div class="well">
 											<form action="${pageContext.request.contextPath}/memberGroup/modifyGroup.do"
@@ -125,7 +125,7 @@
 														<div class="col-lg-10 col-lg-offset-2">
 															
 															<h3>대표 사진</h3>
-
+																
 																<input type="file" name="imgFile" onchange="readURL(this);"/>
 																<input type="hidden" name="groupImage" value="${group.groupImage }"/>
 															<div class="col-lg-10">

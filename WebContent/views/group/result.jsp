@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-	<img src="${img }">
+	<img src="${img }" alt="이미지엇음">
 </body>
 </html>

@@ -16,6 +16,7 @@
 		</script>
 	</head>
 	<body class="left-sidebar">
+		<%@ include file="../../header/header.jspf"%>
 		<div id="page-wrapper">
 
 			<!-- Header -->
@@ -39,7 +40,7 @@
 									<p class="group_invite_list">
 										${message.title }
 										<div class="accept_reject">
-											<a href="#" onclick="window.open('${pageContext.request.contextPath}/message/receivedMessage.do?messageId=${message.messageId }&groupId=${group.groupId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">보기</a>
+											<a href="#" onclick="window.open('${pageContext.request.contextPath}/message/receivedMessage.do?messageId=${message.messageId }&groupId=${group.groupId }','win','width=700,height=600,toolbar=0,scrollbars=0,resizable=0')">보기</a>
 											<a href="${pageContext.request.contextPath}/message/deleteMyMessage.do?messageId=${message.messageId }" onclick="winClose('${message.memberId }')">삭제</a>
 										</div>
 									</p>
@@ -63,13 +64,27 @@
 								<section>
 									<h2>이벤트</h2>
 									<ul class="style2">
-										<li><a href="group.html"><h3>전체 보기</h3></a></li>
-										<li><a href="event.html"><h3>신입생 환영회<a href="eventDetail.html"><img class="event_info" src="../resources/assets/css/images/info.png"/></a></h3></a></li>
-										<li><a href="event.html"><h3>신입생 엠티</h3></a></li>
-										<li><a href="event.html"><h3>체육대회</h3></a></li>
-									</ul>
-										<a href="registEvent.html" class="button icon fa-info-circle">이벤트 추가</a>
-								</section>
+										<li><a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=1"><h3>전체 보기</h3></a></li>
+										<c:choose>
+										<c:when test="${empty events}">
+											<a class="list-group-item hidden-xs">개설된 이벤트가 없습니다.</a>
+										</c:when>
+										<c:otherwise>
+											<c:forEach var="event" items="${events }">
+												<li><a href="${pageContext.request.contextPath}/event/event.do?eventId=${event.eventId }&groupId=${event.groupId}">
+													<h3>${event.eventName }
+													<a href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }"><img class="event_info"
+																src="../resources/assets/css/images/info.png"/></a>
+														</h3></a></li>
+											</c:forEach>
+										</c:otherwise>
+									</c:choose>
+								</ul>
+								<a href="${pageContext.request.contextPath}/event/registEvent.do?groupId=${group.groupId}" class="button icon fa-info-circle">이벤트
+
+
+
+									추가</a></section>
 							</div>
 							
 						</div>
@@ -86,62 +101,52 @@
 											<th class="table_head"><span>금액</span></th>
 											<th class="table_head"><span>작성일</span></th>
 											<th class="table_head"><span>작성자</span></th>
-											<th class="table_head"><span>주의</span></th>
+											<th class="table_head"><span>상태</span></th>
 										</tr>
-										<tr>
-											<td>1</td>
-											<td><a href="recordDetail.html">그랜드 리뉴얼 오픈일</td>
-											<td>수입</td>
-											<td>3000원</td>
-											<td>2012/03/05</td>
-											<td>이호정</td>
-											<td><input type="checkbox" id="chk_list" name="chk_list" value="list1" /></td>
+										<c:forEach var="record" items="${records}" varStatus="status">
+										
+											<tr>
+											<td>${record.recordId}</td>
+											<td><a href="${pageContext.request.contextPath}/record/showRecordDetail.do?recordId=${record.recordId}">${record.title}</a></td>
+											<td>${record.accounting}</td>
+											<td>${record.price}원</td>
+											<td>${record.date}</td>
+											<td>${record.memberId}</td>
+											<!-- <script type="text/javascript">
+											var btnval=${record.caution};
+											if(btnval.equals("정상")){
+												btnval="주의";
+											}else{
+												btnval="정상";
+											}
+											
+											document.write(btnval+"</button>");
+											</script> -->
+											
+											<td>
+											
+											<button onclick="location.href='${pageContext.request.contextPath}/record/checkRecord.do?recordId=${record.recordId}'"  class="current">
+											${record.caution}
+											</button>
+											
+											</td>
 											</tr>
-										<tr>
-											<td>2</td>
-											<td><a href="recordDetail.html">그랜드 리뉴얼 오픈일</td>
-											<td>지출</td>
-											<td>100원</td>
-											<td>2012/03/05</td>
-											<td>민지쨩</td>
-											<td><input type="checkbox" id="chk_list" name="chk_list" value="list1" /></td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td><a href="recordDetail.html">그랜드 리뉴얼 오픈일</td>
-											<td>수입</td>
-											<td>100원</td>
-											<td>2012/03/05</td>
-											<td>망아지</td>
-											<td><input type="checkbox" id="chk_list" name="chk_list" value="list1" /></td>
-										</tr>
-										<tr>
-											<td>4</td>
-											<td><a href="recordDetail.html">그랜드 리뉴얼 오픈일</td>
-											<td>수입</td>
-											<td>3000원</td>
-											<td>2012/03/05</td>
-											<td>보노보노</td>
-											<td><input type="checkbox" id="chk_list" name="chk_list" value="list1" /></td>
-										</tr>
-										<tr>
-											<td>5</td>
-											<td><a href="recordDetail.html">그랜드 리뉴얼 오픈일</td>
-											<td>수입</td>
-											<td>3000원</td>
-											<td>2012/03/05</td>
-											<td>잡계부</td>
-											<td><input type="checkbox" id="chk_list" name="chk_list" value="list1" /></td>
-										</tr>
+										
+										
+										
+										</c:forEach>
+										
+										
 									</table>
 								<div class="text-right">
-									<a href="registRecord.html">
+								<input type="hidden" id="groupId" name="groupId" value="${group.groupId}">
+									<a href="${pageContext.request.contextPath}/record/showRegistGroupRecord.do?groupId=${group.groupId}">
 										<button class="btn_regist">등록</button>
 									</a>
 								</div>
 								<br />
 								<div class="total_account">
-									<h3>총액: 3000원</h3>
+									<h3>총액: ${group.balance}원</h3>
 								</div>
 							</div>
 						</div>

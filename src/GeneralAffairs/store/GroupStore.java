@@ -2,8 +2,6 @@ package GeneralAffairs.store;
 
 import java.util.List;
 
-import javax.servlet.http.HttpSession;
-
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Record;
 
@@ -23,6 +21,6 @@ public interface GroupStore {
 	void deleteMemberFromGroup(String memberId,int groupId);
 	void registInvite(String memberId,int groupId);
 	void deleteInvite(String memberId,int groupId);
-	void updateGroupBalance(Group group);//
+	int updateGroupBalance(Group group);//
 
 }

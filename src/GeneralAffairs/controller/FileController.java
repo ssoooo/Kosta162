@@ -3,7 +3,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,6 +31,8 @@ public class FileController {
 				out.write(bytes);
 				out.close();
 				
+				//ModelAndView modelAndView = new ModelAndView("result.jsp");
+				//modelAndView.addObject("img", "/images/" + name);
 				model.addAttribute("img", "/images/" + name);
 				
 				return "group/result";
@@ -44,7 +45,7 @@ public class FileController {
 		return null;
 		
 	}
-
+ 
 /*	
 	@RequestMapping(value="/uploadFile.do", method=RequestMethod.POST)
 	public @ResponseBody String uploadHandler(@RequestParam("name") String name,

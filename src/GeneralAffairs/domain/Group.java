@@ -13,6 +13,7 @@ public class Group {
 	private String groupIntroduce;
 	private Date date;
 	private double balance;
+
 	private String groupImage;
 	private MultipartFile imgFile;
 
