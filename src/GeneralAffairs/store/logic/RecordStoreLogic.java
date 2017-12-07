@@ -283,9 +283,9 @@ public class RecordStoreLogic implements RecordStore{
 	
 
 	@Override
-	public int retrieveGroupStatsRecordByAccounting(int groupId, String accounting) {
+	public Integer retrieveGroupStatsRecordByAccounting(int groupId, String accounting) {
 
-		int sum = 0;
+		Integer sum = 0;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
@@ -293,8 +293,11 @@ public class RecordStoreLogic implements RecordStore{
 		}finally {
 			session.close();
 		}
-		
+		if(sum==null) {
+			return 0;
+		}else {
 		return sum;
+		}
 	}
 
 //	@Override

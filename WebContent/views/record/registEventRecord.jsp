@@ -7,7 +7,7 @@
 		<title>Verti by HTML5 UP</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="../../resources/assets/css/main2.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/main2.css" />
 	</head>
 	<body class="left-sidebar">
 		<div id="page-wrapper">
@@ -91,21 +91,21 @@
 																<h3>제목</h3>
 															</label>
 															<div class="col-lg-10">
-																<input type="text" name="title" class="form-control">
+																<input type="text" name="title" class="form-control" required="required">
 															</div>
 														</div>
 														<br/>
 														<div class="form-group">
 															<label class="col-lg-2 control-label">
 															  <h3>수입 및 지출(단위/원)</h3>
-															  <select id="selectAccounting" name="accounting">
+															  <select id="selectAccounting" name="accounting" required="required">
 																	<option selected>수입/지출 선택 </option>
 																	<option value="수입">수입</option>
 																	<option value="지출">지출</option>
 															  </select>
 															</label>
 															<div class="col-lg-10">
-																<input type="text" name="price" placeholder="(ex. 30,000)" class="form-control">
+																<input type="text" name="price" placeholder="(ex. 30,000)" class="form-control" required="required">
 															</div>
 														</div>
 														
@@ -114,7 +114,7 @@
 														<div class="form-group">
 															<label class="col-lg-2 control-label">
 															  <h3>카테고리</h3>
-															  <select id="selectCategory" name="category">
+															  <select id="selectCategory" name="category" required="required">
 																	<option selected>카테고리 선택 </option>
 																	<option value="교통비">교통비</option>
 																	<option value="식비">식비</option>
@@ -133,7 +133,7 @@
 																<h3>내용</h3>
 															</label>
 															<div class="col-lg-10">
-																<textarea class="form-control" name="content" rows="2" id="textArea"></textarea>
+																<textarea class="form-control" name="content" rows="2" id="textArea" required="required"></textarea>
 															</div>
 														</div>
 														<br />
@@ -143,7 +143,7 @@
 																<h3>사진</h3>
 															</label>
 		
-																<input type="file" name="imgFile" onchange="readURL(this);"/>
+																<input type="file" name="imgFile" onchange="readURL(this);" required="required"/>
 															
 															
 															</div>

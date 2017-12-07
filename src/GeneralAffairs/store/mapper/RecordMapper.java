@@ -73,7 +73,7 @@ public interface RecordMapper {
 //	int retrieveGroupStatsRecordByMonth(@Param("sDate")Date sDate,@Param("fDate")Date fDate,@Param("accounting")String accounting,@Param("groupId")int groupId);//수입,지출에 따른  달별 모임의 금액합계 가져오기
 //	int retrieveGroupStatsRecordByYear(@Param("sDate")Date sDate,@Param("fDate")Date fDate,@Param("accounting")String accounting,@Param("groupId")int groupId);//수입,지출에 따른  년별 모임의 금액합계 가져오기
 	
-	int retrieveGroupStatsRecordByAccounting(@Param("groupId")int groupId,@Param("accounting")String accounting); //수입 혹은 지츨 합계 가져오기
+	Integer retrieveGroupStatsRecordByAccounting(@Param("groupId")int groupId,@Param("accounting")String accounting); //수입 혹은 지츨 합계 가져오기
 	
 //	int retrieveEventStatsRecordByMonth(@Param("accounting")String accounting,@Param("sDate")Date sDate,@Param("fDate")Date fDate,@Param("eventId")int eventId);//월별 이벤트 수입 혹은 지출 합계가져오기
 	int retrieveEventStatsRecordByYear(@Param("accounting")String accounting,@Param("year")String year,@Param("eventId")int eventId);//년별 이벤트 수입 혹은 지출 합계가져오기

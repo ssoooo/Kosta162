@@ -214,14 +214,7 @@ public class RecordController {
 		return "redirect:/memberGroup/group.do?groupId="+record.getGroupId();
 	}
 	
-	@RequestMapping("/deleteEventRecord.do")
-	public String deleteEventRecord(int recordId,int eventId) {
-		
-		
-		recordService.removeRecord(recordId);
-		
-		return "redirect:/event/event.do?eventId="+eventId;
-	}
+
 	
 	@RequestMapping(value="/modifyRecord.do",method=RequestMethod.POST)
 	public String modifyGroupRecord(Record record,String pastAccounting,int pastPrice,HttpSession session, @RequestParam("imgFile") MultipartFile imgFile) {
@@ -291,9 +284,23 @@ public class RecordController {
 	}
 	
 	@RequestMapping("/checkRecord.do")
-	public String checkRecord(Record record) {
-		
-		return "";
+	public String checkRecord(int recordId,Model model) {
+		Record record=recordService.findRecordById(recordId);
+		System.out.println(recordId);
+		System.out.println(record.getCaution());
+		if(record.getCaution().equals("정상")) {
+			record.setCaution("주의");
+			recordService.modifyCaution(record);
+		}else {
+			record.setCaution("정상");
+			recordService.modifyCaution(record);
+		}
+		model.addAttribute("record",record);
+		if(record.getEventId()==0) {
+			return "redirect:/memberGroup/group.do?groupId="+record.getGroupId();
+		}else {
+		return "redirect:/event/event.do?eventId="+record.getEventId()+"&groupId="+record.getGroupId();
+		}
 	}
 	
 	@RequestMapping("/showRegistGroupRecord.do")
@@ -307,6 +314,8 @@ public class RecordController {
 		
 		return "record/registRecord";
 	}
+	
+
 	
 	@RequestMapping("/showRegistEventRecord.do")
 	public String showRegistEventRecord(HttpSession session,int eventId,Model model) {

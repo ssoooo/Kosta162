@@ -29,7 +29,7 @@ public interface RecordStore {
 	Integer retrieveGroupStatsRecordByCategory(String category,String accounting,int groupId);//수입,지출에 따른 카테고리별 모임의 금액합계 가져오기
 //	int retrieveGroupStatsRecordByMonth(Date sDate,Date fDate,String accounting,int groupId);//수입,지출에 따른  달별 모임의 금액합계 가져오기
 //	int retrieveGroupStatsRecordByYear(Date sDate,Date fDate,String accounting,int groupId);//수입,지출에 따른  년별 모임의 금액합계 가져오기
-	int retrieveGroupStatsRecordByAccounting(int groupId,String accounting); //수입 혹은 지츨 합계 가져오기
+	Integer retrieveGroupStatsRecordByAccounting(int groupId,String accounting); //수입 혹은 지츨 합계 가져오기
 //	int retrieveEventStatsRecordByMonth(String accounting,Date sDate,Date fDate,int eventId);//월별 이벤트 수입 혹은 지출 합계가져오기
 	int retrieveEventStatsRecordByYear(String accounting,String year,int eventId);//년별 이벤트 수입 혹은 지출 합계가져오기
 	Integer retrieveEventStatsRecordByCategory(String category,String accounting,int eventId);//카테고리와 기간에 따른 수입 혹은 지출 합계가져오기

@@ -91,7 +91,7 @@
 																<h3>제목</h3>
 															</label>
 															<div class="col-lg-10">
-																<input type="text" name="title" class="form-control">
+																<input type="text" name="title" class="form-control" required="required">
 															</div>
 														</div>
 														<br/>
@@ -105,7 +105,7 @@
 															  </select>
 															</label>
 															<div class="col-lg-10">
-																<input type="text" name="price" placeholder="(ex. 30,000)" class="form-control">
+																<input type="text" name="price" placeholder="(ex. 30,000)" class="form-control" required="required">
 															</div>
 														</div>
 														
@@ -133,7 +133,7 @@
 																<h3>내용</h3>
 															</label>
 															<div class="col-lg-10">
-																<textarea class="form-control" name="content" rows="2" id="textArea"></textarea>
+																<textarea class="form-control" name="content" rows="2" id="textArea" required="required"></textarea>
 															</div>
 														</div>
 														<br />
@@ -143,7 +143,7 @@
 																<h3>사진</h3>
 															</label>
 		
-																<input type="file" name="imgFile" onchange="readURL(this);"/>
+																<input type="file" name="imgFile" onchange="readURL(this);" required="required"/>
 															
 															
 															</div>

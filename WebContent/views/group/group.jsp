@@ -101,18 +101,35 @@
 											<th class="table_head"><span>금액</span></th>
 											<th class="table_head"><span>작성일</span></th>
 											<th class="table_head"><span>작성자</span></th>
-											<th class="table_head"><span>주의</span></th>
+											<th class="table_head"><span>상태</span></th>
 										</tr>
 										<c:forEach var="record" items="${records}" varStatus="status">
 										
-										<tr>
+											<tr>
 											<td>${record.recordId}</td>
 											<td><a href="${pageContext.request.contextPath}/record/showRecordDetail.do?recordId=${record.recordId}">${record.title}</a></td>
 											<td>${record.accounting}</td>
 											<td>${record.price}원</td>
 											<td>${record.date}</td>
 											<td>${record.memberId}</td>
-											<td><input type="checkbox" id="chk_list" name="chk_list" value="list1" /></td>
+											<!-- <script type="text/javascript">
+											var btnval=${record.caution};
+											if(btnval.equals("정상")){
+												btnval="주의";
+											}else{
+												btnval="정상";
+											}
+											
+											document.write(btnval+"</button>");
+											</script> -->
+											
+											<td>
+											
+											<button onclick="location.href='${pageContext.request.contextPath}/record/checkRecord.do?recordId=${record.recordId}'"  class="current">
+											${record.caution}
+											</button>
+											
+											</td>
 											</tr>
 										
 										

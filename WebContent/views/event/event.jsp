@@ -103,7 +103,7 @@
 											<th class="table_head"><span>금액</span></th>
 											<th class="table_head"><span>작성일</span></th>
 											<th class="table_head"><span>작성자</span></th>
-											<th class="table_head"><span>주의</span></th>
+											<th class="table_head"><span>상태</span></th>
 										</tr>
 										
 										<c:forEach var="record" items="${records}" varStatus="status">
@@ -115,7 +115,7 @@
 											<td>${record.price} 원</td>
 											<td>${record.date}</td>
 											<td>${record.memberId}</td>
-											<td><input type="checkbox" id="chk_list" name="chk_list" value="list1" /></td>
+											<td><button onclick="location.href='${pageContext.request.contextPath}/record/checkRecord.do?recordId=${record.recordId}'"  class="current">${record.caution}</button></td>
 											</tr>
 										
 										

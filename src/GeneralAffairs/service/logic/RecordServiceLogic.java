@@ -93,7 +93,7 @@ public class RecordServiceLogic implements RecordService{
 //	}
 
 	@Override
-	public int findGroupStatsRecordByAccounting(int groupId, String accounting) {
+	public Integer findGroupStatsRecordByAccounting(int groupId, String accounting) {
 		return store.retrieveGroupStatsRecordByAccounting(groupId, accounting);
 	}
 

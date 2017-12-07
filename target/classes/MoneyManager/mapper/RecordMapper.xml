@@ -41,7 +41,7 @@
 
 	<select id="retrieveRecordById" parameterType="int" resultType="Record">
 		SELECT
-		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,price,category
+		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,caution,price,category
 		FROM record_table
 		WHERE recordId=#{recordId}
 	</select>
@@ -49,7 +49,7 @@
 	<select id="retrieveAllRecordsByEventId" parameterType="int"
 		resultType="Record">
 		SELECT
-		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,price,category
+		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,caution,price,category
 		FROM record_table
 		WHERE eventId=#{eventId}
 	</select>
@@ -57,7 +57,7 @@
 	<select id="retrieveAllRecordsByGroupId" parameterType="int"
 		resultType="Record">
 		SELECT
-		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,price,category
+		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,caution,price,category
 		FROM record_table
 		WHERE groupId=#{groupId} AND eventId=0
 	</select>
@@ -157,7 +157,7 @@
 	
 
 	<select id="retrieveGroupStatsRecordByAccounting" parameterType="map"
-		resultType="int">
+		resultType="Integer">
 		SELECT sum(price)
 		FROM record_table
 		WHERE accounting=#{accounting} AND groupId=#{groupId}

@@ -14,7 +14,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-<link rel="stylesheet" href="../resources/assets/css/main.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/main.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 </head>
 <body class="no-sidebar">
@@ -101,7 +101,7 @@
 						</table>
 						<div class="btn_hor">
 							<a
-								href="${pageContext.request.contextPath}/event/eventStats.do?eventId=${event.eventId }&groupId=${event.groupId }"><button
+								href="${pageContext.request.contextPath}/record/eventStats.do?eventId=${event.eventId }"><button
 									class="btn_graph">통계</button></a> <a
 								href="${pageContext.request.contextPath}/event/modifyEvent.do?eventId=${event.eventId }&groupId=${event.groupId }"><button
 									class="btn_modify">수정</button></a> <a
@@ -149,10 +149,10 @@
 
 	<!-- Scripts -->
 
-	<script src="../resources/assets/js/jquery.min.js"></script>
-	<script src="../resources/assets/js/jquery.dropotron.min.js"></script>
-	<script src="../resources/assets/js/skel.min.js"></script>
-	<script src="../resources/assets/js/util.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.dropotron.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/skel.min.js"></script>
+	<script src="${pageContext.request.contextPath}/resources/assets/js/util.js"></script>
 	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 	<script src="assets/js/main.js"></script>
 

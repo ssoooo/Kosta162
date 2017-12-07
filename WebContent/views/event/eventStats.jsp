@@ -7,7 +7,7 @@
 		<title>통계 페이지</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="../../resources/assets/css/main2.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/main2.css" />
 		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 		<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		<link type="text/css" rel="stylesheet" href="http://onlinehtmltools.com/tab-generator/skins/skin6/top.css"></script>
@@ -69,7 +69,7 @@
 							<li><a href="#your-tab-id-1">정산 결과</a></li>
 					  <li><a href="#your-tab-id-2">기간</a></li>
 						 <li><a href="#your-tab-id-3">카테고리</a></li>
-						
+						  
 					 </ul>
 
 
@@ -148,7 +148,7 @@
 									 ['년대', '수입', '지출'], // 제목 그리고 항목들
  									['2015', 10, 20], // 제목과 항목수를 맞춰주어야 합니다.
  									['2016', 15, 30],
- 									['${thisTime}',${thisTime},${thisTime}],
+ 									['2017',10,20],
  									['2018', 10, 30]
  									]);
 
@@ -236,7 +236,7 @@
 							data6.addColumn('number', '금액');
 							data6.addRows([
 								['식비', ${foodOutlay}],['교통비',${trafficOutlay}],['생필품',${needsOutlay}],['기타',${etcOutlay}]
-							]);
+							]); 
 
 							var options = {
 								title: '카테고리별',
@@ -277,7 +277,7 @@
 					</footer>
 				</div>
 
-			</div>
+			
 		<!-- Scripts -->
 		<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
 		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
@@ -297,4 +297,3 @@
 
 			</body>
 </html>
-l>

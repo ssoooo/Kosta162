@@ -25,7 +25,7 @@ public interface RecordService {
 	List<Record> findGroupStatsRecordByEvent(String accounting,int groupId);
 	Integer findGroupStatsRecordByCategory(String category,String accounting,int groupId);
 //	List<Record> findGroupStatsRecordByPeriod(Date sDate,Date fDate,String accounting,int groupId);
-	int findGroupStatsRecordByAccounting(int groupId,String accounting);
+	Integer findGroupStatsRecordByAccounting(int groupId,String accounting);
 	int findEventStatsRecordByYear(String accounting,String year,int eventId);
 	Integer findEventStatsRecordByCategory(String category,String accounting,int eventId);
 	Integer findEventStatsRecordByAccounting(String accounting,int eventId);
