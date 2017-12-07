@@ -77,9 +77,7 @@
 										</c:otherwise>
 									</c:choose>
 								</ul>
-								<a
-									href="${pageContext.request.contextPath}/event/registEvent.do?groupId=1"
-									class="button icon fa-info-circle">이벤트 추가</a>
+								
 							</section>
 
 						</div>
@@ -127,7 +125,7 @@
 													<label class="col-lg-2 control-label">
 														<h3>멤버</h3>
 													</label> <input type="button" class="btn_invite" value="멤버추가"
-														onclick="window.open('${pageContext.request.contextPath}/memberGroup/memberList.do?groupId=1','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')" />
+														onclick="window.open('${pageContext.request.contextPath}/memberGroup/memberList.do?groupId=${group.groupId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')" />
 													<div class="col-lg-10">
 														<textarea class="form-control" name="get" rows="2"
 															id="get"></textarea>

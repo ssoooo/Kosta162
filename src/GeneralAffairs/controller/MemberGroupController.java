@@ -89,7 +89,7 @@ public class MemberGroupController {
 	public String logout(HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		session.invalidate();
-		return "redirect:/views/member/main.jsp";
+		return "redirect:/views/member/login.jsp";
 
 	}
 	
@@ -103,8 +103,23 @@ public class MemberGroupController {
 	public String showModifyMember(String memberId,Model model) {
 		Member member = new Member();
 		member = mgService.findMemberById(memberId);
-		model.addAttribute("member", member);
 		
+		String account = member.getAccount();
+		String phone = member.getPhoneNumber();
+		
+		int sep = account.indexOf("/");
+		int sepP = phone.indexOf("/");
+		
+        String bank = account.substring(0, sep);
+        String accountNum = account.substring(sep+1);
+        String mobileCarrier = phone.substring(0, sepP);
+        String phoneNum = phone.substring(sepP+1);
+        
+        model.addAttribute("member", member);
+        model.addAttribute("mobileCarrier", mobileCarrier);
+        model.addAttribute("phoneNum", phoneNum);
+	    model.addAttribute("bank", bank);
+	    model.addAttribute("accountNum", accountNum);
 		return "member/modifyMember";
 	}
 	
@@ -140,8 +155,9 @@ public class MemberGroupController {
 				newList.add(member);
 			} 
 		}
+		model.addAttribute("group", group);
 		model.addAttribute("managerId", managerId);
-		model.addAttribute("groupId", groupId);
+		
 		model.addAttribute("memberList", newList);
 		
 		return "group/tradeGrade";
@@ -153,8 +169,10 @@ public class MemberGroupController {
 		List<Group> list = new ArrayList<Group>();
 		String myId = (String)session.getAttribute("loginedMemberId");
 		list = mgService.findAllGroupsByMemberId(myId);
-		
+		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(myId);
 		member = mgService.findMemberById(myId);
+		
+		model.addAttribute("groupsInvited", groupsInvited);
 		model.addAttribute("list", list);
 		model.addAttribute("member", member);
 		return "member/memberDetail";
@@ -552,9 +570,6 @@ public class MemberGroupController {
 		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
 		List<Member> members = mgService.findAllMembersByGroup(groupId);
 		Member manager = mgService.findMemberById(group.getMemberId());
-		System.out.println(manager.getNickname());
-		System.out.println("사인 사이즈 : "+signIns.size());
-//		System.out.println("사인멤버아이디 : "+signIns.get(0).getMemberId());
 		model.addAttribute("group", group);
 		model.addAttribute("signIns", signIns);
 		model.addAttribute("memberNum", members.size());

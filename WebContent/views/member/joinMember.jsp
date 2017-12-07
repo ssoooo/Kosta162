@@ -114,7 +114,7 @@
               <input type="hidden" id="groupId" name="groupId">
                 <input type="text" class="form-control" id="groupName" name="groupName" required="required">
                 <span class="input-group-btn">
-                  <button class="btn btn-success" onclick="window.open('selectGroup.jsp','win','width=600,height=620,toolbar=0,scrollbars=0,resizable=0')">모임 선택<i class="fa fa-mail-forward spaceLeft"></i></button>
+                  <input type="button" class="btn btn-success" onclick="window.open('selectGroup.jsp','win','width=600,height=620,toolbar=0,scrollbars=0,resizable=0')" value="모임선택"/><i class="fa fa-mail-forward spaceLeft"></i>
                 </span>
               </div>
             </div>

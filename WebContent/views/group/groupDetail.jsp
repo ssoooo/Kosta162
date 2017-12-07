@@ -34,7 +34,7 @@
 					<ul >
 						<li><a href="main.html">Home</a></li>
 						<li>
-									<a href="main.html">Message</a>
+									<a>Message</a>
 									<ul class="ul_accept">
 									<c:forEach items="${messages }" var="message" >
 										<p class="group_invite_list">
@@ -100,9 +100,11 @@
 							</table>
 							<div class="btn_hor">
 								<a href="groupStats.html"><button class="btn_graph">통계</button></a>
+								<c:if test="${loginedMemberId eq manager.memberId }"> 
 								<a href="${pageContext.request.contextPath}/memberGroup/showModifyGroup.do?groupId=${group.groupId }"><button class="btn_modify">수정</button></a>
-								<a href="${pageContext.request.contextPath}/memberGroup/leaveGroup.do?groupId=${group.groupId }"><button class="btn_modify">탈퇴</button></a>
 								<a href="${pageContext.request.contextPath}/memberGroup/deleteGroup.do?groupId=${group.groupId }"><button class="btn_delete">삭제</button></a>
+								</c:if>
+								<a href="${pageContext.request.contextPath}/memberGroup/leaveGroup.do?groupId=${group.groupId }"><button class="btn_modify">탈퇴</button></a>
 							</div>
 						</div>
 					</div>
@@ -147,8 +149,9 @@
 					 	<c:if test="${loginedMemberId eq manager.memberId }"> 
 							<button class="btn_trade"
 							onclick="javascript:windowOpen();">총무위임</button>
+							<button class="btn_trade" onclick="window.open('${pageContext.request.contextPath}/memberGroup/showKickMember.do?groupId=${group.groupId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">멤버추방</button>
 					 	</c:if>
-					 	<button class="btn_trade" onclick="window.open('${pageContext.request.contextPath}/memberGroup/showKickMember.do?groupId=${group.groupId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">멤버추방</button>
+					 	
 								<button class="btn_invite" onclick="window.open('${pageContext.request.contextPath}/memberGroup/showSearchMember.do?groupId=${group.groupId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">멤버초대</button>
 							<!-- 	onclick="window.open('showTradeGrade.do?groupId=${group.groupId}','win','width=600,height=620,toolbar=0,scrollbars=0,resizable=0')">총무위임</button> -->
 							
@@ -200,7 +203,7 @@
 		        error : function() {
 		        	alert("가입실패했다임마")
 		        },
-		        success: function(response) { //여기서 data 안에는 spring 에서 result 한 값이 포함되어 있으며 특정한 목록을 지정해서 보낼 수도있다.
+		        success: function(response) { 
 			        	alert("가입이 성공했습니다.")
 			        	location.reload();
 			        	$("#refresh").load("groupDetail.do?groupId=2 #refresh");
