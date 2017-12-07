@@ -9,8 +9,6 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
-import javax.swing.plaf.synth.SynthSeparatorUI;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Member;
@@ -177,26 +174,29 @@ public class MemberGroupController {
 				
 //			    group.setGroupImage(dir.getAbsolutePath() + File.separator + rename);
 				group.setGroupImage("/images/" + rename);
-				group.setMemberId(myId);
-				group.setBalance(0);
-				
-				mgService.createGroup(group);
-//				mgService.createMemberToGroup(myId, group.getGroupId());
-				mgService.createManagerToGroup(myId, group.getGroupId());
-				
-//				model.addAttribute("resultMsg", "파일을 업로드 성공!");
-				model.addAttribute("img", "/images/" + rename);
-				
-				return "redirect:/memberGroup/main.do";
+
 				
 			} catch (IOException e) {
 				e.printStackTrace();
 //				model.addAttribute("resultMsg", "파일을 업로드하는 데에 실패했습니다.");
 			}
 		} else {
+			
+//			랜덤한 이미지 세팅
+			group.setGroupImage("/images/" + rename);
+			
 //	        model.addAttribute("resultMsg", "업로드할 파일을 선택해주시기 바랍니다.");
 		}
-
+		
+		group.setMemberId(myId);
+		group.setBalance(0);
+		
+		mgService.createGroup(group);
+		mgService.createManagerToGroup(myId, group.getGroupId());
+		
+//		model.addAttribute("resultMsg", "파일을 업로드 성공!");
+		model.addAttribute("img", "/images/" + rename);
+		
 		return "redirect:/memberGroup/main.do";
 	}
 	
@@ -215,13 +215,16 @@ public class MemberGroupController {
 	@RequestMapping("/modifyGroup.do")
 	public String modifyGroup(Group group, HttpSession session, @RequestParam("imgFile") MultipartFile imgFile) {
 		
-		
-		String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
-	    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
-	    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
-	    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
-	    
-		group.setGroupImage("/images/" + rename);
+		if(!imgFile.isEmpty()) {
+
+			String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
+		    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
+		    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
+		    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
+		    
+			group.setGroupImage("/images/" + rename);
+		}
+
 		group.setMemberId((String)session.getAttribute("loginedMemberId"));
 		
 		mgService.modifyGroup(group);
@@ -262,8 +265,6 @@ public class MemberGroupController {
 		String myId = (String)session.getAttribute("loginedMemberId");
 		boolean checkMemberHasOtherGroup = mgService.leaveGroup(myId, groupId);
 		
-//		총무는 탈퇴 불가 창
-		
 		if(checkMemberHasOtherGroup) {
 			return "redirect:/memberGroup/main.do";
 		} else {
@@ -271,19 +272,25 @@ public class MemberGroupController {
 		}
 	}
 	
-	
 	@RequestMapping("/showKickMember.do")
 	public String showGroupMembersForKick(HttpSession session, int groupId, Model model) {
-//		총무 제외하고 보여주기
+		
 		List<Member> members = mgService.findAllMembersByGroup(groupId);
+		
 		Group group = mgService.findGroupById(groupId);
+
+		for(int i=0; i < members.size(); i++) {
+			
+			if(members.get(i).getMemberId().equals(group.getMemberId())) {
+				members.remove(i);
+			}
+		}
 		
 		model.addAttribute("members", members);
 		model.addAttribute("group", group);
 		
 		return "group/kickMember";
 	}
-	
 	
 	@RequestMapping("/kickMember.do")
 	public String kickMemberFromGroup(String memberId,int groupId) {
@@ -296,7 +303,7 @@ public class MemberGroupController {
 	@RequestMapping("/inviteMember.do")
 	public String inviteMember(int groupId, String memberId, Model model) {
 		
-//		이미 가입된 멤버 제외시키거나 초대 불가능하게(해당 id의 멤버가 해당 그룹에 이미 가입되어 있으면 초대 불가)
+//		이미 초대한 경우 다시 초대하지 못하도록
 		
 		mgService.createInvite(memberId, groupId);
 		
@@ -336,9 +343,20 @@ public class MemberGroupController {
 		
 		Member member = mgService.findMemberById(memberId);
 		Group group = mgService.findGroupById(groupId);
+		List<Member> groupMembers = mgService.findAllMembersByGroup(groupId);
 		
+		boolean isGroupMember = false;
+		
+		for(Member groupMember: groupMembers) {
+			if(groupMember.getMemberId().equals(memberId)) {
+				isGroupMember = true;
+			}
+		}
+		
+		model.addAttribute("isGroupMember", isGroupMember);
 		model.addAttribute("member", member);
 		model.addAttribute("group", group);
+		model.addAttribute("groupMembers", groupMembers);
 		
 		return "group/inviteMember";
 	}
@@ -358,28 +376,72 @@ public class MemberGroupController {
 		/*
 		HttpServletRequest req 를 parameter로 받아올 경우 다음과 같이 가능
 		List<Group> groups = mgService.findAllGroupsByGroupName(req.getParameter("groupNameInput"));
-		 */		
-		
-//		이미 가입된 모임 제외시키거나 가입신청 불가능하게
+		*/
 		
 		String myId = (String) session.getAttribute("loginedMemberId");
-		List<Group> groups = mgService.findAllGroupsByGroupName(groupName);
-		List<Group> myGroups = mgService.findAllGroupsByMemberId(myId);
-		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(myId);
-		
-        List<Group> groupA = new ArrayList<Group>();
-        List<Group> groupB = new ArrayList<Group>();
-        
-        for (int i = 0; i < groups.size(); i++) {
-            if (!groups.contains(myGroups.get(i))) {
-            	groupA.add(myGroups.get(i));	//myGroup 제외한 것만
-            }
-        }
 
-        model.addAttribute("groupA", groupA);
+		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(myId);
         
-		model.addAttribute("groups", groups);
-		model.addAttribute("myGroups", myGroups);
+		List<Group> myGroups = mgService.findAllGroupsByMemberId(myId);
+		List<Group> allGroups = mgService.findAllGroupsByGroupName(groupName);
+		
+//	    copy1은 for 교집합, copy2는 for 차집합
+		
+		List<Integer> myGroupsCopy1 = new ArrayList<Integer>();
+		 
+		for(Group group: myGroups) {
+			myGroupsCopy1.add(group.getGroupId());
+		}
+		 
+	    List<Integer> myGroupsCopy2 = new ArrayList<Integer>();
+	    myGroupsCopy2.addAll(myGroupsCopy1);
+	         
+//	    copy1은 for 교집합, copy2는 for 차집합
+	    
+	    List<Integer> searchGroupsCopy1 = new ArrayList<Integer>();
+	        
+		for(Group group: allGroups) {
+			searchGroupsCopy1.add(group.getGroupId());
+		}
+			 
+		List<Integer> searchGroupsCopy2 = new ArrayList<Integer>();
+		searchGroupsCopy2.addAll(searchGroupsCopy1);
+
+
+		searchGroupsCopy1.retainAll(myGroupsCopy1);	// intersect
+	    searchGroupsCopy2.removeAll(myGroupsCopy2);	// difference
+	    
+	    List<Group> onlyMyGroups = new ArrayList<>();
+	    List<Group> otherGroups = new ArrayList<>();
+	    
+// 		intersect 결과
+	    for (Integer groupIdsByIntersect : searchGroupsCopy1) {
+	    	onlyMyGroups.add(mgService.findGroupById(groupIdsByIntersect));
+	    }
+	    
+//	    difference 결과
+	    for (Integer groupNamesByDifference : searchGroupsCopy2) {
+	    	otherGroups.add(mgService.findGroupById(groupNamesByDifference));
+	    }
+	    
+        if(otherGroups.size() > 0) {
+            if(onlyMyGroups.size() > 0) {
+            	model.addAttribute("otherGroups", otherGroups);
+            	model.addAttribute("myGroups", onlyMyGroups);
+            } else {
+            	model.addAttribute("otherGroups", otherGroups);
+            	model.addAttribute("myGroups", null);
+            }
+        } else {
+        	 if(onlyMyGroups.size() > 0) {
+             	model.addAttribute("otherGroups", null);
+             	model.addAttribute("myGroups", onlyMyGroups);
+             } else {
+             	model.addAttribute("otherGroups", null);
+             	model.addAttribute("myGroups", null);
+             }
+        }
+        
 		model.addAttribute("groupsInvited", groupsInvited);
 		model.addAttribute("groupName", groupName);
 

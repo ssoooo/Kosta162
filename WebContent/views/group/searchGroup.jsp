@@ -69,38 +69,75 @@
 				<div id="features-wrapper">
 					<div class="container">
 						<div class="row">
-						<c:forEach items="${groups }" var="group" >
-							<c:forEach items="${myGroups }" var="myGroup" >
 								<c:choose>
-									<c:when test="${group.groupId eq myGroup.groupId }">
-										<div class="4u 12u(medium)">
-											<!-- Box -->
-												<section class="box feature">
-													<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${group.groupId }" class="image featured"><img src="../resources/images/pic01.jpg" alt="" /></a>
-													<div class="inner">
-														<header>
-															<h2>${group.groupName }</h2>
-														</header>
+								<c:when test="${otherGroups ne null }">
+									<c:choose>
+									<c:when test="${myGroups ne null }">
+										<c:forEach items="${otherGroups }" var="otherGroup" >
+											<div class="4u 12u(medium)">
+												<!-- Box -->
+													<section class="box feature">
+														<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${otherGroup.groupId }" class="image featured"><img src="../resources/images/pic01.jpg" alt="" /></a>
+														<div class="inner">
+															<header>
+																<h2>${otherGroup.groupName }<button class="sign">가입신청</button></h2>
+															</header>
 														</div>
-												</section>
-										</div>
+													</section>
+											</div>
+										</c:forEach>
+										<c:forEach items="${myGroups}" var="myGroup" >
+											<div class="4u 12u(medium)">
+												<!-- Box -->
+													<section class="box feature">
+														<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${myGroup.groupId }" class="image featured"><img src="../resources/images/pic01.jpg" alt="" /></a>
+														<div class="inner">
+															<header>
+																<h2>${myGroup.groupName }</h2>
+															</header>
+														</div>
+													</section>
+											</div>	
+										</c:forEach>
 									</c:when>
 									<c:otherwise>
-										<div class="4u 12u(medium)">
-											<!-- Box -->
-												<section class="box feature">
-													<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${group.groupId }" class="image featured"><img src="../resources/images/pic01.jpg" alt="" /></a>
-													<div class="inner">
-														<header>
-															<h2>${group.groupName }<button class="sign">가입신청</button></h2></header>
+										<c:forEach items="${otherGroups }" var="otherGroup" >
+											<div class="4u 12u(medium)">
+												<!-- Box -->
+													<section class="box feature">
+														<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${otherGroup.groupId }" class="image featured"><img src="../resources/images/pic01.jpg" alt="" /></a>
+														<div class="inner">
+															<header>
+																<h2>${otherGroup.groupName }<button class="sign">가입신청</button></h2>
+															</header>
 														</div>
-												</section>
-										</div>	
+													</section>
+											</div>
+										</c:forEach>
+									</c:otherwise>
+									</c:choose>
+								</c:when>
+								<c:otherwise>
+									<c:choose>
+									<c:when test="${myGroups ne null }">
+										<c:forEach items="${myGroups}" var="myGroup" >
+											<div class="4u 12u(medium)">
+												<!-- Box -->
+													<section class="box feature">
+														<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${myGroup.groupId }" class="image featured"><img src="../resources/images/pic01.jpg" alt="" /></a>
+														<div class="inner">
+															<header>
+																<h2>${myGroup.groupName }</h2></header>
+															</div>
+													</section>
+											</div>	
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+									</c:otherwise>
+									</c:choose>
 									</c:otherwise>
 								</c:choose>
-							
-							</c:forEach>
-						</c:forEach>
 						</div>
 					</div>
 				</div>

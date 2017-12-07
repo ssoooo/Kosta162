@@ -83,7 +83,14 @@
 							<div class="btn_hor">
 								<a href="groupStats.html"><button class="btn_graph">통계</button></a>
 								<a href="${pageContext.request.contextPath}/memberGroup/showModifyGroup.do?groupId=${group.groupId }"><button class="btn_modify">수정</button></a>
-								<a href="${pageContext.request.contextPath}/memberGroup/leaveGroup.do?groupId=${group.groupId }"><button class="btn_modify">탈퇴</button></a>
+								<c:choose>
+									<c:when test="${loginedMemberId eq group.memberId }">
+										<a href="#" onclick="alert('총무는 탈퇴할 수 없습니다. \n총무를 위임한 후 탈퇴할 수 있습니다.')"><button class="btn_modify">탈퇴</button></a>
+									</c:when>
+									<c:otherwise>
+										<a href="${pageContext.request.contextPath}/memberGroup/leaveGroup.do?groupId=${group.groupId }"><button class="btn_modify">탈퇴</button></a>
+									</c:otherwise>
+								</c:choose>
 								<a href="${pageContext.request.contextPath}/memberGroup/deleteGroup.do?groupId=${group.groupId }"><button class="btn_delete">삭제</button></a>
 							</div>
 						</div>
