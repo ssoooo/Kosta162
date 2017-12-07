@@ -31,15 +31,18 @@
 			}
 		})
 	});
-	
+
 	function setChildText() {
 		var parent = window.opener;
 
 		var answer = document.getElementById('get1').value;
 
-		parent.document.getElementById('get2').value = answer;
-		
-		
+		parent.document.getElementById('memberId').value = answer;
+
+		var answer2 = document.getElementById('get2').value;
+
+		parent.document.getElementById('memberId2').value = answer2;
+
 		window.close();
 
 	}
@@ -76,35 +79,53 @@
 						<div id="paymemt">
 							<div class="complete_member">
 								<h3>전체 완납 멤버</h3>
-								<div class="scroll_complete">
-									<ul>
-										<li id="get1"><c:forEach items="${members }" var="member">
+								<form
+									action="${pageContext.request.contextPath}/event/collectionDetail2.do?eventId=${event.eventId }"
+									class="bs-example form-horizontal" method="POST">
+
+									<div class="scroll_complete">
+										<ul>
+											<li name="get1"><c:forEach items="${memberss }"
+													var="member">
+													<input type=hidden name="memberId2"
+														value=${member.memberId }>
 											${member.memberId }
-											<button>완납</button>
-												<br>
-											</c:forEach></li>
-									</ul>
-								</div>
+											<button onclick="setChildText()">완납</button>
+
+													<br>
+												</c:forEach></li>
+										</ul>
+									</div>
+								</form>
 							</div>
+
 							<div class="notYet_member">
 								<h3>
 									<input type="checkbox" id="checkedAll">전체 미납 멤버
 								</h3>
-								<div class="scroll_notYet">
-									<ul>
-										<li id="get2"><c:forEach items="${memberss }" var="member">
-												<input name="subCheck" type="checkbox" value=0>
+								<form
+									action="${pageContext.request.contextPath}/event/collectionDetail.do?eventId=${event.eventId }"
+									class="bs-example form-horizontal" method="POST">
+									<div class="scroll_notYet" id="get">
+										<ul>
+											<li name="get2"><c:forEach items="${members }"
+													var="member">
+													<input name="subCheck" type="checkbox" value=0>
+													<input type=hidden name="memberId"
+														value=${member.memberId }>
 											${member.memberId }
 										<button class="button2" onclick="setChildText()">미납</button>
-												<br>
-											</c:forEach></li>
-									</ul>
-								</div>
+													<br>
+												</c:forEach></li>
+										</ul>
+									</div>
+								</form>
 							</div>
 						</div>
 					</div>
+					</form>
 					<button class="btn_send"
-						onclick="window.open('${pageContext.request.contextPath}/message/sendCollection.do?receivedMember='ho'','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">메시지
+						onclick="window.open('${pageContext.request.contextPath}/message/sendCollection.do','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">메시지
 						전송</button>
 				</div>
 			</div>

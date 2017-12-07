@@ -97,17 +97,18 @@
 
 	<select id="retrieveAllUnPaidMembers" parameterType="map"
 		resultType="Member">
-		<![CDATA[select eventId, memberId, payment
+		select eventId, memberId, payment
 		from eventMember_table
-		where eventId= #{eventId} AND payment <> '미납'
-		]]>
+		where eventId=
+		#{eventId} AND payment='미납'
 	</select>
 
 	<select id="retrieveAllPaidMembers" parameterType="map"
 		resultType="Member">
-		select eventId, memberId, payment
+		<![CDATA[select eventId, memberId, payment
 		from eventMember_table
-		where eventId= #{eventId} AND payment='미납'
+		where eventId= #{eventId} AND payment <> '미납'
+		]]>
 	</select>
 
 	<update id="updateGrade" parameterType="map">

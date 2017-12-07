@@ -95,7 +95,7 @@
 								</tr>
 								<tr>
 									<th class="info">실시간 모금액</th>
-									<td class="info_detail">0원</td>
+									<td class="info_detail">${event.collection/members.size()*memberss.size() }원</td>
 								</tr>
 							</tbody>
 						</table>

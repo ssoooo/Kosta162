@@ -142,4 +142,21 @@ public class EventStoreLogic implements EventStore {
 
 	}
 
+	@Override
+	public int updateUnPayment(int eventId, String memberId) {
+		int check = 0;
+		SqlSession session = SessionFactory.getInstance().getSession();
+		try {
+			EventMapper mapper = session.getMapper(EventMapper.class);
+			check = mapper.updateUnPayment(eventId, memberId);
+			if (check > 0) {
+				session.commit();
+			}
+		} finally {
+			session.close();
+		}
+
+		return check;
+	}
+
 }

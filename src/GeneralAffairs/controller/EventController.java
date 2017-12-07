@@ -168,13 +168,13 @@ public class EventController {
 	public String showChangePayment(int eventId, Model model) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
-		
+
 		Group group = mgService.findGroupById(event.getGroupId());
 		model.addAttribute("group", group);
 
 		List<Member> members = mgService.findAllUnPaidMembers(event.getMemberId(), eventId);
 		List<Member> memberss = mgService.findAllPaidMembers(event.getMemberId(), eventId);
-		
+
 		model.addAttribute("members", members);
 		model.addAttribute("memberss", memberss);
 
@@ -182,18 +182,37 @@ public class EventController {
 	}
 
 	@RequestMapping(value = "/collectionDetail.do", method = RequestMethod.POST)
-	public String ChangePayment(int eventId, Model model) { 
+	public String ChangePayment(int eventId, HttpServletRequest req, Model model) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
-		
+
+		String[] members = req.getParameterValues("memberId");
+		for (int i = 0; i < members.length; i++) {
+			event.setMemberId(members[i]);
+		}
+		System.out.println("..." + event.getMemberId());
 		eventService.changePayment(event.getMemberId(), eventId);
+
+		return "redirect:/event/collectionDetail.do?eventId=" + eventId;
+	}
+	
+	@RequestMapping(value = "/collectionDetail2.do", method = RequestMethod.POST)
+	public String ChangeUnPayment(int eventId, HttpServletRequest req, Model model) {
+		Event event = eventService.findEventById(eventId);
+		model.addAttribute("event", event);
+
+		String[] memberss = req.getParameterValues("memberId2");
+		for (int i = 0; i < memberss.length; i++) {
+			event.setMemberId(memberss[i]);
+		}
 		System.out.println("///" + event.getMemberId());
-		System.out.println("////" + eventId);
-		return "redirect:/event/collectionDetail.do?eventId=" + eventId + "&memberId=" + event.getMemberId();
+		eventService.changeUnPayment(event.getMemberId(), eventId);
+		
+		return "redirect:/event/collectionDetail.do?eventId=" + eventId;
 	}
 
 	@RequestMapping("/eventDetail.do")
-	public String showEventDetail(int eventId, Model model) {
+	public String showEventDetail(int eventId, HttpServletRequest req, Model model) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
 
@@ -202,6 +221,12 @@ public class EventController {
 
 		List<Member> members = mgService.findAllMembersByEvent(eventId);
 		model.addAttribute("members", members);
+		
+		List<Member> memberss = mgService.findAllPaidMembers(event.getMemberId(), eventId);
+		model.addAttribute("memberss", memberss);
+		
+		System.out.println("...." + memberss);
+		System.out.println("///" + memberss.toString());
 
 		return "event/eventDetail";
 	}

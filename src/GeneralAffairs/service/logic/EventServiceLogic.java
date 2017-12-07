@@ -92,5 +92,11 @@ import GeneralAffairs.store.GroupStore;
 	public void modifyEventBalance(Event event, int price) {
 		eventStore.updateEventBalance(event);
  	}
+
+	@Override
+	public void changeUnPayment(String memberId, int eventId) {
+		eventStore.updateUnPayment(eventId, memberId);
+		
+	}
 	
  }
