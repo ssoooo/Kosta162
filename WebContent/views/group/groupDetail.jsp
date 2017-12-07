@@ -47,6 +47,7 @@
 							</c:forEach>
 							</ul>
 						</li>
+						<c:if test="${loginedMemberId eq group.memberId }"> 
 						<li><a href="main.html">가입신청</a>
 							
 							<ul id="refresh" class="ul_accept">
@@ -55,12 +56,14 @@
 									<p class="group_invite_list">${signIn.memberId }</p>
 								<br>
 									<div class="accept_reject">
-										<input type="button" value = "수락" onclick="onclickFunction('${group.groupId}','${signIn.memberId }')"> 
-										<input type="button" value = "거절" onclick="onclickFunction1('${group.groupId}','${signIn.memberId }')">
+										<input type="button" value = "승인" onclick="onclickFunction('${group.groupId}','${signIn.memberId }')"> 
+										<input type="button" value = "거부" onclick="onclickFunction1('${group.groupId}','${signIn.memberId }')">
 									</div>
 									
 								</c:forEach>
-							</ul></li>
+							</ul>
+						</li>
+						</c:if>
 						<li class="current"><a href="login.html">Logout</a></li>
 					</ul>
 					
@@ -129,26 +132,16 @@
 						var openWin;
 						function windowOpen() {
 							openWin= window.open('showTradeGrade.do?groupId=${group.groupId}&managerId=${manager.memberId}','win','width=600,height=620,toolbar=0,scrollbars=0,resizable=0');
-							
-							
 						}
-						
-						
 						</script>
 
 
 						<div class="scroll">
-
 							<ul>
-
 								<c:forEach items="${members }" var="member">
-									<li><a
-										href="${pageContext.request.contextPath}/memberGroup/memberDetail.do?memberId=${member.memberId }">${member.memberId }</a></li>
+									<li><a href="${pageContext.request.contextPath}/memberGroup/memberDetail.do?memberId=${member.memberId }">${member.memberId }</a></li>
 								</c:forEach>
-
-
 							</ul>
-
 						</div>
 						
 
@@ -196,7 +189,7 @@
 	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 	
 	<script src="../resources/assets/js/main.js"></script>
-<script>
+	<script>
 		function onclickFunction(groupId,memberId){
 		    $.ajax({
 		        type: "POST",

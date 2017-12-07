@@ -72,7 +72,7 @@ public class MemberGroupController {
 	@RequestMapping(value="/login.do", method=RequestMethod.POST)
 	public String login(String memberId, String userPassword, HttpServletRequest req, Model model) {
 		Member member = new Member();
-
+		
 		member = mgService.findMemberById(memberId);
 		if(member!=null && userPassword.equals(member.getPassword())){
 		
@@ -219,8 +219,6 @@ public class MemberGroupController {
 		model.addAttribute("groupId", groupId);
 		return "redirect:/views/group/groupDetail.jsp";
 	}
-	
-	
 	
 	@RequestMapping("/denySignIn.do")
 	public String denySignInGroupReq(int groupId,String memberId,Model model) {
@@ -513,18 +511,12 @@ public class MemberGroupController {
 		
 		List<Group> groupList = mgService.findAllGroupsByGroupName(groupName);
 		
-//		System.out.println(groupList.get(0).getGroupName());
-		
 		model.addAttribute("groupList", groupList);
 		return"member/selectGroup";
 	}
 	
 	@RequestMapping("/searchAllGroups.do")
 	public String SearchAllGroups(HttpSession session, @RequestParam("groupNameInput") String groupName, Model model) {
-		/*
-		HttpServletRequest req �몴占� parameter嚥∽옙 獄쏆룇釉섓옙�궞 野껋럩�뒭 占쎈뼄占쎌벉�⑨옙 揶쏆늿�뵠 揶쏉옙占쎈뮟
-		List<Group> groups = mgService.findAllGroupsByGroupName(req.getParameter("groupNameInput"));
-		*/
 		
 		String myId = (String) session.getAttribute("loginedMemberId");
 
@@ -616,13 +608,13 @@ public class MemberGroupController {
 		
 		Group group = mgService.findGroupById(groupId);	
 		List<Event> events = eventService.findAllEventsByGroupId(groupId);
-//		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
+		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
 		List<Record> records = recordService.findAllRecordsByGroupId(groupId);
 
 		
 		model.addAttribute("events", events);
 		model.addAttribute("group", group);
-//		model.addAttribute("messages", messages);
+		model.addAttribute("messages", messages);
 		model.addAttribute("groupId", groupId);
 		model.addAttribute("records",records);
 		
@@ -636,14 +628,17 @@ public class MemberGroupController {
 		
 		Group group = mgService.findGroupById(groupId);
 		List<Member> signIns = mgService.findAllSignInGroupReq(groupId);
-//		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
+		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
 		List<Member> members = mgService.findAllMembersByGroup(groupId);
 		Member manager = mgService.findMemberById(group.getMemberId());
+		
+		
 		model.addAttribute("group", group);
 		model.addAttribute("signIns", signIns);
 		model.addAttribute("memberNum", members.size());
 		model.addAttribute("members", members);
 		model.addAttribute("manager", manager);
+		model.addAttribute("messages", messages);
 		
 		return "group/groupDetail";
 	}
