@@ -101,62 +101,52 @@
 											<th class="table_head"><span>금액</span></th>
 											<th class="table_head"><span>작성일</span></th>
 											<th class="table_head"><span>작성자</span></th>
-											<th class="table_head"><span>주의</span></th>
+											<th class="table_head"><span>상태</span></th>
 										</tr>
-										<tr>
-											<td>1</td>
-											<td><a href="recordDetail.html">그랜드 리뉴얼 오픈일</td>
-											<td>수입</td>
-											<td>3000원</td>
-											<td>2012/03/05</td>
-											<td>이호정</td>
-											<td><input type="checkbox" id="chk_list" name="chk_list" value="list1" /></td>
+										<c:forEach var="record" items="${records}" varStatus="status">
+										
+											<tr>
+											<td>${record.recordId}</td>
+											<td><a href="${pageContext.request.contextPath}/record/showRecordDetail.do?recordId=${record.recordId}">${record.title}</a></td>
+											<td>${record.accounting}</td>
+											<td>${record.price}원</td>
+											<td>${record.date}</td>
+											<td>${record.memberId}</td>
+											<!-- <script type="text/javascript">
+											var btnval=${record.caution};
+											if(btnval.equals("정상")){
+												btnval="주의";
+											}else{
+												btnval="정상";
+											}
+											
+											document.write(btnval+"</button>");
+											</script> -->
+											
+											<td>
+											
+											<button onclick="location.href='${pageContext.request.contextPath}/record/checkRecord.do?recordId=${record.recordId}'"  class="current">
+											${record.caution}
+											</button>
+											
+											</td>
 											</tr>
-										<tr>
-											<td>2</td>
-											<td><a href="recordDetail.html">그랜드 리뉴얼 오픈일</td>
-											<td>지출</td>
-											<td>100원</td>
-											<td>2012/03/05</td>
-											<td>민지쨩</td>
-											<td><input type="checkbox" id="chk_list" name="chk_list" value="list1" /></td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td><a href="recordDetail.html">그랜드 리뉴얼 오픈일</td>
-											<td>수입</td>
-											<td>100원</td>
-											<td>2012/03/05</td>
-											<td>망아지</td>
-											<td><input type="checkbox" id="chk_list" name="chk_list" value="list1" /></td>
-										</tr>
-										<tr>
-											<td>4</td>
-											<td><a href="recordDetail.html">그랜드 리뉴얼 오픈일</td>
-											<td>수입</td>
-											<td>3000원</td>
-											<td>2012/03/05</td>
-											<td>보노보노</td>
-											<td><input type="checkbox" id="chk_list" name="chk_list" value="list1" /></td>
-										</tr>
-										<tr>
-											<td>5</td>
-											<td><a href="recordDetail.html">그랜드 리뉴얼 오픈일</td>
-											<td>수입</td>
-											<td>3000원</td>
-											<td>2012/03/05</td>
-											<td>잡계부</td>
-											<td><input type="checkbox" id="chk_list" name="chk_list" value="list1" /></td>
-										</tr>
+										
+										
+										
+										</c:forEach>
+										
+										
 									</table>
 								<div class="text-right">
-									<a href="registRecord.html">
+								<input type="hidden" id="groupId" name="groupId" value="${group.groupId}">
+									<a href="${pageContext.request.contextPath}/record/showRegistGroupRecord.do?groupId=${group.groupId}">
 										<button class="btn_regist">등록</button>
 									</a>
 								</div>
 								<br />
 								<div class="total_account">
-									<h3>총액: 3000원</h3>
+									<h3>총액: ${group.balance}원</h3>
 								</div>
 							</div>
 						</div>

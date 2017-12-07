@@ -1,11 +1,12 @@
-<!DOCTYPE HTML>
-
+<%@ page language="java" contentType="text/html; charset=utf-8"
+    pageEncoding="utf-8"%>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
 		<title>모임 페이지</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="../../resources/assets/css/main2.css" />
+		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/main2.css" />
 
 	</head>
 	<body class="left-sidebar">
@@ -82,22 +83,22 @@
 
             <div class="panel panel-default">
                 <div class="panel-heading">
-                   신입생 환영회
+                   	${record.title}
                 </div>
                 <div class="panel-body">
                          <div class="post">
-                              <strong>보노보노</strong>
-                              &nbsp;<span class="text-muted">2017-11-24</span>
-                              &nbsp;<span class="text-muted">수입</span>
-                                <a href="${pageContext.request.contextPath}/article/modify.do?articleId=${article.articleId}&boardId=${article.boardId}" style="float:right; margin-left:20px;">수정</a>
-                                <a href="${pageContext.request.contextPath}/article/remove.do?articleId=${article.articleId}&boardId=${article.boardId}" style="float:right">삭제</a>
+                              <strong>${record.memberId}</strong>
+                              &nbsp;<span class="text-muted">${record.date}</span>
+                              &nbsp;<span class="text-muted">${record.accounting}</span>
+                                <a href="${pageContext.request.contextPath}/record/showModifyEventRecord.do?recordId=${record.recordId}" style="float:right; margin-left:20px;">수정</a>
+                                <a href="${pageContext.request.contextPath}/record/deleteEventRecord.do?=${record.recordId}" style="float:right">삭제</a>
                          </div>
                          <br>
                          <p style="padding:10px">
-                             3000원
+                             	${record.price} 원
 							 <br/>
 							 <br/>
-							 <img src="assets/css/images/bonobono.jpg">
+							 <img src="${record.image}">
                          </p>
                     
   

@@ -1,10 +1,13 @@
 package GeneralAffairs.store.logic;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
+
+import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Record;
 import GeneralAffairs.store.RecordStore;
 import GeneralAffairs.store.factory.SessionFactory;
@@ -176,8 +179,8 @@ public class RecordStoreLogic implements RecordStore{
 
 	
 	@Override
-	public int retrieveGroupAccountingResult(String accounting, int groupId,Date sDate,Date fDate) {
-		int groupAccounting=0;
+	public Integer retrieveGroupAccountingResult(String accounting, int groupId,Date sDate,Date fDate) {
+		Integer groupAccounting=null;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
@@ -185,7 +188,12 @@ public class RecordStoreLogic implements RecordStore{
 		}finally {
 			session.close();
 		}
-		return groupAccounting;
+		if(groupAccounting ==null) {
+		return 0;
+		}else {
+			return groupAccounting;
+		}
+		
 	}
 	
 
@@ -205,15 +213,16 @@ public class RecordStoreLogic implements RecordStore{
 	}
 
 	@Override
-	public List<Record> retrieveGroupStatsRecordByEvent(String accounting,Date sDate,Date fDate, int groupId,int eventId) {
+	public List<Record> retrieveGroupStatsRecordByEvent(String accounting,int groupId) {
 		List<Record> records = null;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		records=mapper.retrieveGroupStatsRecordByEvent(accounting,sDate,fDate, groupId,eventId);
+		records=mapper.retrieveGroupStatsRecordByEvent(accounting,groupId);
 		}finally {
 			session.close();
 		}
+		
 		return records;
 	}
 	
@@ -221,72 +230,62 @@ public class RecordStoreLogic implements RecordStore{
 	
 
 	@Override
-	public int retrieveGroupStatsRecordByCategoryMonth(String category,Date sDate,Date fDate, String accounting, int groupId) {
-		int sum=0;
+	public Integer retrieveGroupStatsRecordByCategory(String category, String accounting, int groupId) {
+		Integer sum=0;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		sum=mapper.retrieveGroupStatsRecordByCategoryMonth(category,sDate,fDate, accounting, groupId);
+		sum=mapper.retrieveGroupStatsRecordByCategory(category, accounting, groupId);
 		}finally {
 			session.close();
 		}
-		
-		
+		if(sum==null) {
+			return 0;
+		}else {
 		return sum;
-	}
-	
-	
-	@Override
-	public int retrieveGroupStatsRecordByCategoryYear(String category,Date sDate,Date fDate, String accounting, int groupId) {
-		int sum=0;
-		SqlSession session = SessionFactory.getInstance().getSession();
-		try {
-		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		sum=mapper.retrieveGroupStatsRecordByCategoryYear(category,sDate,fDate, accounting, groupId);
-		}finally {
-			session.close();
 		}
-		
-		
-		return sum;
 	}
 	
 
-	@Override
-	public int retrieveGroupStatsRecordByMonth(Date sDate,Date fDate, String accounting, int groupId) {
-		int sum=0;
-		SqlSession session = SessionFactory.getInstance().getSession();
-		try {
-		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		sum=mapper.retrieveGroupStatsRecordByMonth(sDate,fDate, accounting, groupId);
-		}finally {
-			session.close();
-		}
 		
-		return sum;
-	}
 	
 	
-	@Override
-	public int retrieveGroupStatsRecordByYear(Date sDate,Date fDate, String accounting, int groupId) {
-		int sum=0;
-		SqlSession session = SessionFactory.getInstance().getSession();
-		try {
-		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		sum=mapper.retrieveGroupStatsRecordByYear(sDate,fDate, accounting, groupId);
-		}finally {
-			session.close();
-		}
-		
-		return sum;
-	}
+
+//	@Override
+//	public int retrieveGroupStatsRecordByMonth(Date sDate,Date fDate, String accounting, int groupId) {
+//		int sum=0;
+//		SqlSession session = SessionFactory.getInstance().getSession();
+//		try {
+//		RecordMapper mapper =session.getMapper(RecordMapper.class);	
+//		sum=mapper.retrieveGroupStatsRecordByMonth(sDate,fDate, accounting, groupId);
+//		}finally {
+//			session.close();
+//		}
+//		
+//		return sum;
+//	}
+	
+	
+//	@Override
+//	public int retrieveGroupStatsRecordByYear(Date sDate,Date fDate, String accounting, int groupId) {
+//		int sum=0;
+//		SqlSession session = SessionFactory.getInstance().getSession();
+//		try {
+//		RecordMapper mapper =session.getMapper(RecordMapper.class);	
+//		sum=mapper.retrieveGroupStatsRecordByYear(sDate,fDate, accounting, groupId);
+//		}finally {
+//			session.close();
+//		}
+//		
+//		return sum;
+//	}
 	
 	
 
 	@Override
-	public int retrieveGroupStatsRecordByAccounting(int groupId, String accounting) {
+	public Integer retrieveGroupStatsRecordByAccounting(int groupId, String accounting) {
 
-		int sum = 0;
+		Integer sum = 0;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
@@ -294,35 +293,38 @@ public class RecordStoreLogic implements RecordStore{
 		}finally {
 			session.close();
 		}
-		
+		if(sum==null) {
+			return 0;
+		}else {
 		return sum;
+		}
 	}
 
+//	@Override
+//	public int retrieveEventStatsRecordByMonth(String accounting,Date sDate,Date fDate, int eventId) {
+//		
+//		int sum=0;
+//		
+//		SqlSession session = SessionFactory.getInstance().getSession();
+//		try {
+//		RecordMapper mapper =session.getMapper(RecordMapper.class);	
+//		sum=mapper.retrieveEventStatsRecordByMonth(accounting,sDate,fDate, eventId);
+//		}finally {
+//			session.close();
+//		}
+//		return sum;
+//	}
+	
+	
 	@Override
-	public int retrieveEventStatsRecordByMonth(String accounting,Date sDate,Date fDate, int eventId) {
+	public int retrieveEventStatsRecordByYear(String accounting,String year, int eventId) {
 		
 		int sum=0;
 		
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		sum=mapper.retrieveEventStatsRecordByMonth(accounting,sDate,fDate, eventId);
-		}finally {
-			session.close();
-		}
-		return sum;
-	}
-	
-	
-	@Override
-	public int retrieveEventStatsRecordByYear(String accounting,Date sDate,Date fDate, int eventId) {
-		
-		int sum=0;
-		
-		SqlSession session = SessionFactory.getInstance().getSession();
-		try {
-		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		sum=mapper.retrieveEventStatsRecordByYear(accounting,sDate,fDate, eventId);
+		sum=mapper.retrieveEventStatsRecordByYear(accounting,year, eventId);
 		}finally {
 			session.close();
 		}
@@ -332,23 +334,27 @@ public class RecordStoreLogic implements RecordStore{
 	
 
 	@Override
-	public int retrieveEventStatsRecordByCategory(String category, String accounting,Date sDate,Date fDate, int eventId) {
-		int sum = 0;
+	public Integer retrieveEventStatsRecordByCategory(String category, String accounting, int eventId) {
+		Integer sum =0;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		sum=mapper.retrieveEventStatsRecordByCategory(category, accounting,sDate,fDate, eventId);
+		sum=mapper.retrieveEventStatsRecordByCategory(category, accounting, eventId);
 		}finally {
 			session.close();
 		}
+		if(sum==null) {
+			return 0;
+		}else {
+			return sum;
+		}
 		
-		return sum;
 	}
 
 	@Override
-	public int retrieveEventStatsRecordByAccounting(String accounting, int eventId) {
+	public Integer retrieveEventStatsRecordByAccounting(String accounting, int eventId) {
 		
-		int sum = 0;
+		Integer sum = 0;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
@@ -356,8 +362,11 @@ public class RecordStoreLogic implements RecordStore{
 		}finally {
 			session.close();
 		}
-		
-		return sum;
+		if(sum == null) {
+			return 0;
+		}else {
+			return sum;
+		}
 	}
 
 	@Override
@@ -368,6 +377,21 @@ public class RecordStoreLogic implements RecordStore{
 		try {
 			RecordMapper mapper=session.getMapper(RecordMapper.class);
 			mapper.registRecordFromMessage(record);
+			session.commit();
+		}finally {
+			session.close();
+		}
+		
+	}
+
+
+	@Override
+	public void updateCaution(Record record) {
+		SqlSession session = SessionFactory.getInstance().getSession();
+		
+		try {
+			RecordMapper mapper=session.getMapper(RecordMapper.class);
+			mapper.updateCaution(record);
 			session.commit();
 		}finally {
 			session.close();
