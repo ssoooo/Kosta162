@@ -18,5 +18,6 @@ public interface MessageMapper {
 	void registMessageWithMember(@Param("memberId") String memberId, @Param("messageId") int messageId);
 	void deleteMessageWithMember(@Param("memberId") String memberId, @Param("messageId") int messageId);
 	List<Message> retrieveAllMyMessages(String memberId);
+	List<Message> retrieveAllSendMessages(@Param("memberId") String memberId);
 
 }

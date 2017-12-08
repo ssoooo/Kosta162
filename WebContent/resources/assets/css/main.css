@@ -1424,6 +1424,7 @@
 	
 	float:left;
 	margin-top:20px;
+	
 }
 
 .btn_trade{
@@ -1521,7 +1522,26 @@
 		height:10px;
 		
 	}
-	
+	.aa{
+		width:100%;
+		line-height:40px;
+		background-color: #F6F6F6;	
+				text-align:center;
+				margin:auto auto;
+	}
+	.ab{
+		width:100%;
+		text-align:center;
+		line-height:40px;
+						margin:auto auto;
+	}
+	.member_scroll{
+		display:block;
+		height:300px;
+		overflow:auto;
+				text-align:center;
+								margin:auto auto;
+	}
 	
 	
 	h1, h2, h3, h4, h5, h6 {

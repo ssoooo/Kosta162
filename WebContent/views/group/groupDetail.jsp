@@ -152,7 +152,7 @@
 							<button class="btn_trade" onclick="window.open('${pageContext.request.contextPath}/memberGroup/showKickMember.do?groupId=${group.groupId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">멤버추방</button>
 					 	</c:if>
 					 	
-								<button class="btn_invite" onclick="window.open('${pageContext.request.contextPath}/memberGroup/showSearchMember.do?groupId=${group.groupId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">멤버초대</button>
+								<button class="btn_invite" onclick="window.open('${pageContext.request.contextPath}/memberGroup/showSearchMember.do?groupId=${group.groupId }','win','width=600,height=600,toolbar=0,scrollbars=1,resizable=0')">멤버초대</button>
 							<!-- 	onclick="window.open('showTradeGrade.do?groupId=${group.groupId}','win','width=600,height=620,toolbar=0,scrollbars=0,resizable=0')">총무위임</button> -->
 							
 						</div>

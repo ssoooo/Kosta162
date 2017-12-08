@@ -96,5 +96,16 @@ public class MessageStoreLogic implements MessageStore{
 		return messages;
 	}
 
-	
+	@Override
+	public List<Message> retrieveAllSendMessages(String memberId) {
+		List<Message> messages=null;
+		SqlSession session = SessionFactory.getInstance().getSession();
+		try {
+		MessageMapper mapper =session.getMapper(MessageMapper.class);	
+		messages=mapper.retrieveAllSendMessages(memberId);
+		}finally {
+			session.close();
+		}
+		return messages;
+	}
 }

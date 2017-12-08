@@ -34,7 +34,8 @@
 										<c:forEach items="${groupsInvited }" var="group" >
 											<p class="group_invite_list">${group.groupName }
 												<div class="accept_reject">
-													<input id="accept" onclick="onclickFunction('${group.groupId }')" class="button3" type="button" value="수락" /><input class="button3" type="button" value="거절" />
+ 													<a href="${pageContext.request.contextPath}/memberGroup/acceptInvite.do?groupId=${group.groupId }" onclick="onclickFunction('${group.groupId }')">수락</a>
+ 													<a href="${pageContext.request.contextPath}/memberGroup/denyInvite.do?groupId=${group.groupId }" onclick="onclickFunction1('${group.groupId }')">거절</a>
 												</div>
 											</p>
 											<div class="clears"></div>
@@ -62,12 +63,8 @@
 							</div>
 							<div class="5u 12u(medium)">
 								<ul>
-
-
 									<li><a href="${pageContext.request.contextPath}/memberGroup/showRegistGroup.do" class="button big icon fa-arrow-circle-right">모임 생성</a></li>
 									<li><a href="${pageContext.request.contextPath}/memberGroup/myDetail.do" class="button alt big icon fa-question-circle">내 정보</a></li>
-
-
 								</ul>
 							</div>
 						</div>
@@ -84,7 +81,7 @@
 							
 								<!-- Box -->
 									<section class="box feature">
-										<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${group.groupId }" class="image featured"><img src="${group.groupImage }" alt="" /></a>
+										<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${group.groupId }" class="image featured"><img src="${group.groupImage }" alt="" style="height:240px; overflow:hidden;"/></a>
 										<div class="inner">
 											<header><h2>${group.groupName }</h2></header>
 										</div>
@@ -126,6 +123,24 @@
 				    $.ajax({
 				        type: "POST",
 				        url: "acceptInvite.do",
+				        data: {
+				        	groupId : groupId,
+				        	
+				        },
+				        dataType: "text",
+				        error : function() {
+				        	alert("모임 가입에 실패했습니다.")
+				        },
+				        success: function(response) { 
+					        alert("모임 가입이 완료되었습니다.");
+					        location.reload();
+				        }
+				    });
+				}
+				function onclickFunction1(groupId){
+				    $.ajax({
+				        type: "POST",
+				        url: "denyInvite.do",
 				        data: {
 				        	groupId : groupId,
 				        	

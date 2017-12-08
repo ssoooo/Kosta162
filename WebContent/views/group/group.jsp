@@ -40,7 +40,7 @@
 									<p class="group_invite_list">
 										${message.title }
 										<div class="accept_reject">
-											<a href="#" onclick="window.open('${pageContext.request.contextPath}/message/receivedMessage.do?messageId=${message.messageId }&groupId=${group.groupId }','win','width=700,height=600,toolbar=0,scrollbars=0,resizable=0')">보기</a>
+											<a href="" onclick="window.open('${pageContext.request.contextPath}/message/receivedMessage.do?messageId=${message.messageId }&groupId=${group.groupId }','win','width=700,height=600,toolbar=0,scrollbars=0,resizable=0')">보기</a>
 											<a href="${pageContext.request.contextPath}/message/deleteMyMessage.do?messageId=${message.messageId }" onclick="winClose('${message.memberId }')">삭제</a>
 										</div>
 									</p>
