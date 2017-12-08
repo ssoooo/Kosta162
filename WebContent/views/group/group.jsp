@@ -47,14 +47,14 @@
 
 					<!-- Logo -->
 					<div id="logo">
-						<h1><a href="main.html">알뜰총雜</a></h1>
+						<h1><a href="${pageContext.request.contextPath}/memberGroup/main.do">알뜰총雜</a></h1>
 						<span>${group.groupName }</span>
 					</div>
 					
 					<!-- Nav -->
 						<nav id="nav">
 						  <ul>
-							<li><a href="main.html">Home</a></li>
+							<li><a href="${pageContext.request.contextPath}/memberGroup/main.do">Home</a></li>
 							<li>
 								<a href="#">Message</a>
 								<ul class="ul_accept">
@@ -69,7 +69,7 @@
 								</c:forEach>
 								</ul>
 							</li>
-							<li class="current"><a href="login.html">Logout</a></li>
+							<li class="current"><a href="${pageContext.request.contextPath}/views/member/login.jsp">Logout</a></li>
 						  </ul>
 						</nav>
 				</header>
@@ -86,7 +86,7 @@
 								<section>
 									<h2>이벤트</h2>
 									<ul class="style2">
-										<li><a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=1"><h3>전체 보기</h3></a></li>
+										<li><a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${group.groupId }"><h3>전체 보기</h3></a></li>
 										<c:choose>
 										<c:when test="${empty events}">
 											<a class="list-group-item hidden-xs">개설된 이벤트가 없습니다.</a>
