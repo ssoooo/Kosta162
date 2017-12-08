@@ -46,7 +46,6 @@ public class MessageController {
 	public String sendCollectionMessage(HttpServletRequest req, @RequestBody List<String> receivedMember, Message message, Model model) {
 //		HttpSession session =req.getSession();
 //		session.setAttribute("loginedMemberId", message.getMemberId());	
-		receivedMember = message.getMemberId();
 		messageService.createMessage(message);
 		
 		model.addAttribute("message", message);

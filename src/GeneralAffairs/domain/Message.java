@@ -7,7 +7,7 @@ public class Message {
 
 	private int messageId;
 	private int eventId;
-	private List<String> memberId;
+	private String memberId;
 	private String title;
 	private String content;
 	private int groupId;
@@ -32,10 +32,10 @@ public class Message {
 	public void setEventId(int eventId) {
 		this.eventId = eventId;
 	}
-	public List<String> getMemberId() {
+	public String getMemberId() {
 		return memberId;
 	}
-	public void setMemberId(List<String> memberId) {
+	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
 	public String getTitle() {

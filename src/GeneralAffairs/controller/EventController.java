@@ -200,7 +200,6 @@ public class EventController {
 		}
 		event.setMemberId(members);
 		eventService.changePayment(event.getMemberId(), eventId);
-		System.out.println("..." + event.getMemberId());
 
 		return "redirect:/event/collectionDetail.do?eventId=" + eventId;
 	}
