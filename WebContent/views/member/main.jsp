@@ -9,6 +9,54 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="../resources/assets/css/main2.css" />
 		<script src="http://code.jquery.com/jquery-1.5.js"></script>
+		<script>
+		function onclickFunction(groupId){
+		    $.ajax({
+		        type: "POST",
+		        url: "acceptInvite.do",
+		        data: {
+		        	groupId : groupId
+		        	
+		        },
+		        dataType: "text",
+		        success: function(data) { //여기서 data 안에는 spring 에서 result 한 값이 포함되어 있으며 특정한 목록을 지정해서 보낼 수도있다.
+		        	console.log(data);
+		        	if(data == "success"){
+				        alert("모임 가입이 완료되었습니다.");
+				        location.reload();
+				        
+			        }else{
+				        alert("모임 가입에 실패하였습니다.");
+		        	}
+		        },
+		        error : function(e){
+		        	alert("디비실패")
+		        }
+		    });
+		}
+		function onclickFunction1(groupId){
+		    var loginedMemberId = "${loginedMemberId }";
+			$.ajax({
+		        type: "POST",
+		        url: "denyInvite.do",
+		        data: {
+		        	groupId : groupId,
+		        	memberId : loginedMemberId
+		        },
+		        dataType: "text",
+		        success: function(data) { //여기서 data 안에는 spring 에서 result 한 값이 포함되어 있으며 특정한 목록을 지정해서 보낼 수도있다.
+		        	console.log(data);
+		        	if(data == "success"){
+				        alert("초대가 삭제되었습니다.");
+				        location.reload();
+				        
+			        }else{
+				        alert("초대삭제에 실패하였습니다.");
+		        	}
+		        }
+		    });
+		}
+		</script>
 	
 	</head>
 	<body class="homepage">
@@ -34,7 +82,7 @@
 										<c:forEach items="${groupsInvited }" var="group" >
 											<p class="group_invite_list">${group.groupName }
 												<div class="accept_reject">
-													<input id="accept" onclick="onclickFunction('${group.groupId }')" class="button3" type="button" value="수락" /><input class="button3" type="button" value="거절" />
+													<input id="accept" onclick="onclickFunction('${group.groupId }')" class="button3" type="button" value="수락" /><input id="deny" class="button3" onclick="onclickFunction1('${group.groupId }')" type="button" value="거절" />
 												</div>
 											</p>
 											<div class="clears"></div>

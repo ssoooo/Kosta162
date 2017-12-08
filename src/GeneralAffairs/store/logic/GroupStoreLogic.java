@@ -252,4 +252,18 @@ public class GroupStoreLogic implements GroupStore {
 		return check;
 	}
 
+	@Override
+	public Group searchGroupByGroupName(String GroupName) {
+		Group group = null;
+		SqlSession session = SessionFactory.getInstance().getSession();
+		try {
+			GroupMapper mapper = session.getMapper(GroupMapper.class);
+			group = mapper.findGroupByGroupName(GroupName);
+
+		} finally {
+			session.close();
+		}
+		return group;
+	}
+
 }

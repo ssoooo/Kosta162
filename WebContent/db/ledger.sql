@@ -119,4 +119,5 @@ ALTER TABLE group_table ADD groupImage varchar(300);
 commit;
 ALTER TABLE event_table ADD budget NUMBER(10,1);
 ALTER TABLE event_table ADD groupSupport NUMBER(10,1);
+ALTER TABLE message_table ADD groupId NUMBER;
 commit;

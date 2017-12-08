@@ -12,6 +12,41 @@
     <script type="text/javascript">
 	var bank;
 	var phone;
+	$(document).ready(function(){
+		$("#InputId").keyup(function () {
+			var inputId = $("#InputId").val();
+			$.ajax({
+				type : 'POST',
+				url : '${pageContext.request.contextPath }/memberGroup/checkId.do',
+				data : {
+					memberId : inputId
+				},
+				dataType : 'text',
+				success: function(response){
+					
+					$("#idCheck").html("사용중인 ID입니다.")
+				},
+				error : function(){
+					$("#idCheck").html("사용가능한 ID입니다.")
+					
+				}
+				
+			});
+		});
+		$("#InputPassword2").keyup(function(){
+			var password1 = $('#InputPassword1').val();
+			var password2 = $('#InputPassword2').val();
+			
+				if(password1==password2){
+				$("#passwordCheck").html("비밀번호가 일치합니다.")
+				}else{
+				$("#passwordCheck").html("비밀번호가 일치하지않습니다.")
+				}
+				
+			}
+		);
+		
+	});
 	</script>
     <title>bootstrap template</title>
 
@@ -40,7 +75,7 @@
             <div class="form-group">
               <label for="InputId">아이디</label>
               <input type="text" class="form-control" id="InputId" name="memberId" placeholder="아이디" required="required">
-				<p class="help-block">사용 가능한 아이디입니다.</p>
+				<p id="idCheck" class="help-block"></p>
 			</div>
             <div class="form-group">
               <label for="InputPassword1">비밀번호</label>
@@ -49,7 +84,7 @@
             <div class="form-group">
               <label for="InputPassword2">비밀번호 확인</label>
               <input type="password" class="form-control" id="InputPassword2" placeholder="비밀번호 확인" required="required">
-				<p class="help-block">비밀번호가 일치합니다.</p>
+				<p id="passwordCheck" class="help-block"></p>
 			</div>
             <div class="form-group">
               <label for="username">이름</label>
@@ -143,6 +178,8 @@
 				$("#submit").click(phoneVals);
 
 				phoneVals();
+				
+				
 			</script>
           </form>
         </div>
