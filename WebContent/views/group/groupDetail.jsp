@@ -99,12 +99,26 @@
 								</tbody>
 							</table>
 							<div class="btn_hor">
-								<a href="${pageContext.request.contextPath}/record/groupStats.do?groupId=${group.groupId}"><button class="btn_graph">통계</button></a>
-								<c:if test="${loginedMemberId eq manager.memberId }"> 
-								<a href="${pageContext.request.contextPath}/memberGroup/showModifyGroup.do?groupId=${group.groupId }"><button class="btn_modify">수정</button></a>
-								<a href="${pageContext.request.contextPath}/memberGroup/deleteGroup.do?groupId=${group.groupId }"><button class="btn_delete">삭제</button></a>
-								</c:if>
-								<a href="${pageContext.request.contextPath}/memberGroup/leaveGroup.do?groupId=${group.groupId }"><button class="btn_modify">탈퇴</button></a>
+							
+							<script>
+							var myGroupIDS=${myGroupIds};
+							for(var i=0; i<myGroupIDS.length; i++){
+								if(myGroupIDS[i]==${group.groupId}){
+									document.write('<a href="${pageContext.request.contextPath}/record/groupStats.do?groupId=${group.groupId}"><button class="btn_graph">통계</button></a>');
+									document.write('<c:if test="${loginedMemberId eq manager.memberId }">');
+									document.write('<a href="${pageContext.request.contextPath}/memberGroup/showModifyGroup.do?groupId=${group.groupId }"><button class="btn_modify">수정</button></a>');
+									document.write('<a href="${pageContext.request.contextPath}/memberGroup/deleteGroup.do?groupId=${group.groupId }"><button class="btn_delete">삭제</button></a></c:if>');
+									document.write('<a href="${pageContext.request.contextPath}/memberGroup/leaveGroup.do?groupId=${group.groupId }"><button class="btn_modify">탈퇴</button></a>');
+								}
+							}
+							</script>
+								
+								 
+								
+								
+								
+								
+							
 							</div>
 						</div>
 					</div>
@@ -146,15 +160,19 @@
 						
 
 						<div class="btn_hor">
-					 	<c:if test="${loginedMemberId eq manager.memberId }"> 
-							<button class="btn_trade"
-							onclick="javascript:windowOpen();">총무위임</button>
-							<button class="btn_trade" onclick="window.open('${pageContext.request.contextPath}/memberGroup/showKickMember.do?groupId=${group.groupId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">멤버추방</button>
-					 	</c:if>
-					 	
-								<button class="btn_invite" onclick="window.open('${pageContext.request.contextPath}/memberGroup/showSearchMember.do?groupId=${group.groupId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">멤버초대</button>
-							<!-- 	onclick="window.open('showTradeGrade.do?groupId=${group.groupId}','win','width=600,height=620,toolbar=0,scrollbars=0,resizable=0')">총무위임</button> -->
-							
+						<script>
+							var myGroupIDS=${myGroupIds};
+							for(var i=0; i<myGroupIDS.length; i++){
+								if(myGroupIDS[i]==${group.groupId}){
+									document.write('<c:if test="${loginedMemberId eq manager.memberId }"> ');
+									document.write('<button class="btn_trade"');
+									document.write('onclick="javascript:windowOpen();">총무위임</button>');
+									document.write('<button class="btn_trade" onclick="window.open(\'${pageContext.request.contextPath}/memberGroup/showKickMember.do?groupId=${group.groupId }\',\'win\',\'width=600,height=600,toolbar=0,scrollbars=0,resizable=0\')">멤버추방</button></c:if>');
+									document.write('<button class="btn_invite" onclick="window.open(\'${pageContext.request.contextPath}/memberGroup/showSearchMember.do?groupId=${group.groupId }\',\'win\',\'width=600,height=600,toolbar=0,scrollbars=0,resizable=0\')">멤버초대</button>)');
+								
+								}
+							}
+							</script>
 						</div>
 					</div>
 					<br class="clear" />

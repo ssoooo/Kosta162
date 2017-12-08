@@ -218,6 +218,16 @@ public class MemberGroupServiceLogic implements MemberGroupService{
 	public List<Member> findAllPaidMembers(String memberId, int eventId) {
 		return mStore.retrieveAllPaidMembers(memberId, eventId);
 	}
+
+	@Override
+	public Group findGroupBygroupName(String groupName) {
+		return gStore.searchGroupByGroupName(groupName);
+	}
+
+	@Override
+	public List<Integer> checkMemberHasGroup(String memberId) {
+		return mStore.checkMemberHasGroup(memberId);
+	}
 	
 
 }

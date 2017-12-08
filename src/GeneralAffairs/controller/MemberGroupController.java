@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
@@ -16,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import GeneralAffairs.domain.Event;
@@ -162,7 +164,6 @@ public class MemberGroupController {
 		}
 		model.addAttribute("group", group);
 		model.addAttribute("managerId", managerId);
-		
 		model.addAttribute("memberList", newList);
 		
 		return "group/tradeGrade";
@@ -195,6 +196,19 @@ public class MemberGroupController {
 		
 		return "member/memberDetail";
 	}
+	@ResponseBody
+	@RequestMapping("/checkId.do")
+	public String checkMemberID(String memberId, Model model) {
+		System.out.println(memberId);
+		
+		
+		mgService.findMemberById(memberId);
+		model.addAttribute("memberId", memberId);
+		System.out.println("찾은멤버의 아이디"+mgService.findMemberById(memberId).getMemberId());
+		return "redirect:/views/member/main.jsp";
+	}
+	
+	
 	
 	@RequestMapping("/joinMemberAndSignIn.do")
 	public String joinMemberAndReqSignInGroup(Member member,int groupId) {
@@ -221,7 +235,7 @@ public class MemberGroupController {
 		mgService.denySignInGroupReq(memberId, groupId);
 		
 		model.addAttribute("groupId", groupId);
-		return "redirect:/views/group/groupDetail.jsp";
+		return "redirect:/views/group/group.jsp";
 	}
 	
 	
@@ -301,6 +315,18 @@ public class MemberGroupController {
 
 		return "redirect:/memberGroup/main.do";
 	}
+	@ResponseBody
+	@RequestMapping("/checkGroup.do")
+	public String checkGroup(String groupName1, Model model){
+		return mgService.findGroupBygroupName(groupName1).getGroupName();
+		
+//		model.addAttribute(groupName1);
+		
+//		return "memberGroup/searchGroupsByGroupName.do";
+//		return "redirect:/views/member/selectGroup.jsp";
+		
+	}
+	
 	
 	@RequestMapping("/registGroupAndJoinMember.do")
 	public String registGroupAndJoinMember(Member member,Group group, @RequestParam("imgFile")MultipartFile imgFile) {
@@ -440,7 +466,7 @@ public class MemberGroupController {
 		
 		return "redirect:/memberGroup/showSearchMember.do?groupId=" + groupId;
 	}
-	
+	@ResponseBody
 	@RequestMapping("/acceptInvite.do")
 	public String acceptInvite(HttpSession session, int groupId, Model model) {
 		
@@ -450,16 +476,18 @@ public class MemberGroupController {
 		
 		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(myId);
 		
-		model.addAttribute("result", "success");
-		
-		return "member/main";
+//		model.addAttribute("result", "success");
+		// 확인하려면 acceptInvite를 boolean으로 받아서 확인해야함.
+		// dataType를 JSON으로 해서 하는것이 이상적.
+		return "success";
 	}
-	
+	@ResponseBody
 	@RequestMapping("/denyInvite.do")
-	public void denyInvite(String memberId,int groupId,Model model) {
-		
+	public String denyInvite(String memberId,int groupId,Model model) {
+		System.out.println("memberId"+memberId);
+		System.out.println("groupId"+groupId);
 		mgService.deleteInvite(memberId, groupId);
-		
+		return "success";
 //		return "member/main"; // 처리한 화면으로... ajax필요!
 	}
 /*	
@@ -571,17 +599,19 @@ public class MemberGroupController {
 	public String showGroupDetail(HttpSession session, int groupId, Model model) {
 		
 		String myId = (String) session.getAttribute("loginedMemberId");
-		
+		List<Integer> myGroupIds = mgService.checkMemberHasGroup(myId);
 		Group group = mgService.findGroupById(groupId);
 		List<Member> signIns = mgService.findAllSignInGroupReq(groupId);
-//		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
+		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
 		List<Member> members = mgService.findAllMembersByGroup(groupId);
 		Member manager = mgService.findMemberById(group.getMemberId());
+		model.addAttribute("myGroupIds", myGroupIds);
 		model.addAttribute("group", group);
 		model.addAttribute("signIns", signIns);
 		model.addAttribute("memberNum", members.size());
 		model.addAttribute("members", members);
 		model.addAttribute("manager", manager);
+		model.addAttribute("messages", messages);
 		
 		return "group/groupDetail";
 	}
