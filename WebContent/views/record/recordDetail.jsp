@@ -3,6 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 		<title>모임 페이지</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -100,31 +101,50 @@
 							 <br/>
 							 <img src="${record.image}">
                          </p>
-                    
+                   <script type="text/javascript">
+                   
+                   </script> 
   
                    <table class="table" style="font-size:13px; padding:20px;">
+                   
+                   
+                   <c:forEach var="comment" items="${comments}" varStatus="status">
                    <tr>
                      <td>
-                       <span style="float:left"><strong>이호정</strong>
+                       <span style="float:left"><strong>${comment.memberId}</strong></span>
                      </td>
                      <td class="text-right">
-                       <span style="float:right">2017-11-23&nbsp;
-                       <a href="${pageContext.request.contextPath}/comment/remove.do?articleId=${article.articleId}&commentId=${comment.commentId}">수정</a>
+                       <span style="float:right">${comment.date }&nbsp;
+                       
+                       <a href="${pageContext.request.contextPath}/comment/commentDelete.do?commentId=${comment.commentId}">삭제</a>
+                     </span>
+                    
                      </td>
                    </tr>
-                   <tr>
+                   <tr><!-- <span style="float:left">${comment.content}</span>-->
                      <td colspan="2">
-                       <span style="float:left"><p class="txt">배고파요</p>
+                     <form action="${pageContext.request.contextPath}/comment/commentModify.do" method="POST">
+                       <div class="panel-footer">
+                      	${comment.content}
+                      
+                			
+                			</div>
+                			</form>
                      </td>
                    </tr>
+                   
+                   </c:forEach>
+                   
                    </table>
 
                 </div>
+                
                 <div class="panel-footer">
                 	<div class="write_area">
-                		<form action="${pageContext.request.contextPath}/comment/regist.do">
+                		<form action="${pageContext.request.contextPath}/comment/commentRegist.do" method="POST">
+                			<input type="hidden" name="recordId" value="${record.recordId}">
                 			<div class="comment_write">
-                				<textarea class="input_write_comment" name="comments" placeholder="댓글쓰기"></textarea>
+                				<textarea class="input_write_comment" name="content" placeholder="댓글쓰기"></textarea>
                 				<input type="submit" class="comment_submit" value="등록">
                 			</div>
                 		</form>

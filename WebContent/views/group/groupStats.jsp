@@ -71,15 +71,14 @@
 					<li><a href="#your-tab-id-1">정산 결과</a></li>
 					  <li><a href="#your-tab-id-2">기간</a></li>
 						 <li><a href="#your-tab-id-3">카테고리</a></li>
-						 <!--  -->
-						  <li> <a href="#your-tab-id-4">이벤트</a></li>
+						
 						  
 						  
 						  
 						  
 						  
 					 </ul>
-
+			
 
 		 <!-- 탭1번-->
 				 <div class="content_holder">
@@ -89,9 +88,13 @@
 							<br />
 						</div>
 						<div class="form-group">
+						
+						<label class="col-lg-2 control-label"><h2>${groupName} 정산결과</h2></label>
 								<label class="col-lg-2 control-label"><h2>수입 : ${income}원</h2></label>
 								<label class="col-lg-2 control-label"><h2>지출 : ${outlay}원</h2></label>
 								<label class="col-lg-2 control-label"><h2>합계 : ${groupBalance}원</h2></label>
+						
+						
 						</div>
 
 						<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -125,6 +128,20 @@
 						 chart.draw(data, options);
 					 }
 				 </script>
+				 
+				 <label class="col-lg-2 control-label">
+					 <h2>이벤트별 통계 보러가기</h3>															</label>
+					<div >
+					 
+					이벤트:&nbsp;
+					 <c:forEach var="event" items="${events}" varStatus="status">
+					 
+					<a href="${pageContext.request.contextPath}/record/eventStats.do?eventId=${event.eventId}">${event.eventName}</a>&nbsp;
+					  </c:forEach>
+					 
+				 </div>
+				
+				 
 				 </div>
 
 
@@ -154,26 +171,27 @@
  							 function drawChart(){
  								 var data3 = new google.visualization.arrayToDataTable([
  									 ['년대', '수입', '지출'], // 제목 그리고 항목들
-  									['${year4}', ${year4Income}, ${year4Outlay}], // 제목과 항목수를 맞춰주어야 합니다.
-  									['${year3}', ${year3Income}, ${year3Outlay}],
+  									['${year3}', ${year3Income}, ${year3Outlay}], // 제목과 항목수를 맞춰주어야 합니다.
   									['${year2}', ${year2Income}, ${year2Outlay}],
-  									['${year1}', ${year1Income}, ${year1Outlay}]
-  									]);
+  									['${year1}', ${year1Income}, ${year1Outlay}],
+  									['${year0}', ${year0Income}, ${year0Outlay}]
+  									]); 
 
 									var data4 = new google.visualization.arrayToDataTable([
-										['기준', '수입', '지출', '합계'],
-										['1달전', 10, 30, 40],
-										['2달전', 30, 30, 60],
-										['3달전', 25, 30, 50],
-										['4달전', 35, 20, 50],
-										['5달전', 60, 20, 50],
-										['6달전', 30, 20, 50],
-										['7달전', 30, 20, 50],
-										['8달전', 20, 20, 50],
-										['9달전', 32, 20, 50],
-										['10달전', 55, 20, 50],
-										['11달전', 34, 20, 50],
-										['12달전', 54, 20, 50]
+										['기준', '수입', '지출'],
+										['이번달', ${month_income_0}, ${month_outlay_0}],
+										['1달전', ${month_income_1}, ${month_outlay_1}],
+										['2달전', ${month_income_2}, ${month_outlay_2}],
+										['3달전', ${month_income_3}, ${month_outlay_3}],
+										['4달전', ${month_income_4}, ${month_outlay_4}],
+										['5달전', ${month_income_5}, ${month_outlay_5}],
+										['6달전', ${month_income_6}, ${month_outlay_6}],
+										['7달전', ${month_income_7}, ${month_outlay_7}],
+										['8달전', ${month_income_8}, ${month_outlay_8}],
+										['9달전', ${month_income_9}, ${month_outlay_9}],
+										['10달전', ${month_income_10}, ${month_outlay_10}],
+										['11달전', ${month_income_11}, ${month_outlay_11}]
+										
 									]);
 
  								 var chart3 = new google.visualization.ColumnChart(document.getElementById('chart_div3'));
@@ -247,7 +265,7 @@
 							]);
 
 							var options = {
-								title: '카테고리별',
+								title: '카테고리별 지출',
 								fontSize: '14',
 								fontName: '굴림체',
 								'is3D':true
@@ -260,63 +278,6 @@
 				</div>
 
 
-	<!-- 탭4번-->
-					 <div id="your-tab-id-4">
-					 
-
-					<c:forEach var="price" varStatus="status" items="${prices}">
-						
-						<div class="form-group">
-								<label class="col-lg-2 control-label"><h2>수입 : ${price.key}원</h2></label>
-								<label class="col-lg-2 control-label"><h2>지출 : ${price.value}원</h2></label>
-								<script type="text/javascript">
-								var i = ${price.key};
-								var o = ${price.value};
-								var b = i-o;
-								document.write("<label class='col-lg-2 control-label'><h2>합계 : ");
-								document.write(b);
-								document.write("원</h2></label>");
-								
-								</script>
-								
-								
-						</div>
-
-						<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-					 <script>
-						 google.charts.load('current', {packages:['corechart']});
-					 </script>
-
-					 <div style="display:inline-block;" id="chart_div"></div>
-
-					 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-					 <script type="text/javascript">
-					 google.load("visualization", "1", {'packages':["corechart"]});
-					 google.setOnLoadCallback(drawChart);	// pie
-
-					 function drawChart() {
-						 var data = new google.visualization.DataTable();
-						 data.addColumn('string', '카테고리');
-						 data.addColumn('number', '금액');
-						 data.addRows([
-							 ['수입', ${price.key}],['지출',${price.value}]
-						 ]);
-
-						 var options = {
-							 title: '수입 지출 정산',
-							 fontSize: '14',
-							 fontName: '돋움체',
-							 'is3D':true
-						 };
-
-						 var chart = new google.visualization.PieChart(document.getElementById('chart_div'));
-						 chart.draw(data, options);
-					 }
-				 </script>
-				 </c:forEach>
-				 
-					 </div>
-					 
 					
 					 
 					 
