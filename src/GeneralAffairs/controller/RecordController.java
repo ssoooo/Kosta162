@@ -437,6 +437,7 @@ public class RecordController {
 		Date year_3_fin =Date.valueOf(LocalDate.of(LocalDate.now().getYear()-3,12,31));
 		Date year_4_st =Date.valueOf(LocalDate.of(LocalDate.now().getYear()-4, 1, 1));
 		Date year_4_fin =Date.valueOf(LocalDate.of(LocalDate.now().getYear()-4,12,31));
+		//test2017/12/08
 		
 		Date month_0_st=Date.valueOf(LocalDate.now().minusMonths(0).with(TemporalAdjusters.firstDayOfMonth()));
 		Date month_0_fin=Date.valueOf(LocalDate.now().minusMonths(0).with(TemporalAdjusters.lastDayOfMonth()));
