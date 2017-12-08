@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-<<<<<<< HEAD
 import org.springframework.web.bind.annotation.RequestParam;
 
 import GeneralAffairs.domain.Event;
@@ -20,13 +19,11 @@ import GeneralAffairs.service.EventService;
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Message;
 import GeneralAffairs.service.EventService;
-=======
 import org.springframework.web.bind.annotation.ResponseBody;
 import GeneralAffairs.domain.Event;
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Message;
 import GeneralAffairs.service.EventService;
->>>>>>> master
 import GeneralAffairs.service.MemberGroupService;
 import GeneralAffairs.service.MessageService;
 
@@ -43,7 +40,6 @@ public class MessageController {
 	@Autowired
 	private EventService eventService;
 	
-<<<<<<< HEAD
 	@RequestMapping(value = "/sendCollection.do", method = RequestMethod.GET) 
 	public String showSendCollectionMessage(HttpServletRequest req, String receivedMember, Message message, Model model) {
 
@@ -60,12 +56,7 @@ public class MessageController {
 		model.addAttribute("message", message);
 		
 		System.out.println(receivedMember);
-=======
-	@RequestMapping("/sendCollection.do") 
-	public String sendCollectionMessage(HttpServletRequest req, List<String> receivedMember, Message message) {
 
-//		모금액
->>>>>>> master
 
 		return "";
 	}

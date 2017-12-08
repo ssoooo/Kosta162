@@ -26,11 +26,6 @@ public interface EventService {
 
 	void modifyEventBalance(Event event);
 
-<<<<<<< HEAD
-	void modifyEventBalance(Event event);
-
-=======
->>>>>>> master
 	void modifyEvent(Event event);
 
 	void createEvent(Event event);
