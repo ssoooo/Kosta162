@@ -106,20 +106,17 @@
 							<script>
 							var myGroupIDS=${myGroupIds};
 							for(var i=0; i<myGroupIDS.length; i++){
-								if(myGroupIDS[i]==${group.groupId}){
+								if(myGroupIDS[i]==${group.groupId }){
 									document.write('<a href="${pageContext.request.contextPath}/record/groupStats.do?groupId=${group.groupId}"><button class="btn_graph">통계</button></a>');
-									document.write('<c:if test="${loginedMemberId eq manager.memberId }">');
+									if("${loginedMemberId }" == "${manager.memberId }"){
 									document.write('<a href="${pageContext.request.contextPath}/memberGroup/showModifyGroup.do?groupId=${group.groupId }"><button class="btn_modify">수정</button></a>');
-									document.write('<a href="${pageContext.request.contextPath}/memberGroup/deleteGroup.do?groupId=${group.groupId }"><button class="btn_delete">삭제</button></a></c:if>');
-									
-								    document.write('<c:choose>');
-								    document.write('<c:when test="${loginedMemberId eq group.memberId }">');
-								    document.write('<a href="#" onclick="alert(\'총무는 탈퇴할 수 없습니다. \n총무를 위임한 후 탈퇴할 수 있습니다.\')"><button class="btn_delete">탈퇴</button></a>');
-								    document.write('</c:when>');
-								    document.write('<c:otherwise>');
-								    document.write('<a href="${pageContext.request.contextPath}/memberGroup/leaveGroup.do?groupId=${group.groupId }"><button class="btn_delete">탈퇴</button></a>');
-								    document.write('</c:otherwise>');
-								    document.write('</c:choose>');
+									document.write('<a href="${pageContext.request.contextPath}/memberGroup/deleteGroup.do?groupId=${group.groupId }"><button class="btn_delete">삭제</button></a>');
+									 document.write('<a href="#" onclick="alert(\'총무는 탈퇴할 수 없습니다. 총무를 위임한 후 탈퇴할 수 있습니다.\')"><button class="btn_delete">탈퇴</button></a>');
+									}
+									else{
+										 document.write('<a href="${pageContext.request.contextPath}/memberGroup/leaveGroup.do?groupId=${group.groupId }"><button class="btn_delete">탈퇴</button></a>');
+									 }
+								   
 								
 								
 								}

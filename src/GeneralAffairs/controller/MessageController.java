@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import GeneralAffairs.domain.Event;
 import GeneralAffairs.domain.Group;
@@ -42,13 +43,14 @@ public class MessageController {
 //		url 담아주기
 		return "";
 	}
-	
+	@ResponseBody
 	@RequestMapping("deleteMyMessage.do")
-	public String deleteMyMessage(int messageId, HttpSession session) {
+	public String deleteMyMessage(int messageId, String myId) {
+		System.out.println("메세지아이디"+messageId);
+		System.out.println("내아이디"+myId);
+		messageService.removeMyMessage(myId, messageId);
 		
-		messageService.removeMessage(messageId);
-		
-		return "";
+		return "success";
 		
 	}
 	
