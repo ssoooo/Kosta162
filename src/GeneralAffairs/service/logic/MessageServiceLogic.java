@@ -45,4 +45,9 @@ public class MessageServiceLogic implements MessageService{
 		return messageStore.retrieveAllMyMessages(memberId, groupId);
 	}
 	
+	@Override
+	public List<Message> findAllSendMessages(String memberId) {
+		return messageStore.retrieveAllSendMessages(memberId);
+	}
+	
 }

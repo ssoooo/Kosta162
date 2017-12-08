@@ -18,7 +18,6 @@ import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 
-import org.apache.jasper.tagplugins.jstl.core.ForEach;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -113,6 +112,8 @@ public class RecordController {
 //	        model.addAttribute("resultMsg", "업로드할 파일을 선택해주시기 바랍니다.");
 		}
 		
+		List<Event> events = eventService.findAllEventsByGroupId(groupId);
+		model.addAttribute("events", events);
 		
 		return "redirect:/memberGroup/group.do?groupId="+record.getGroupId();
 	}
@@ -262,7 +263,6 @@ public class RecordController {
 		recordService.modifyRecord(record);
 		
 		
-		
 		return "redirect:/record/showRecordDetail.do?recordId="+record.getRecordId();
 	
 	
@@ -309,6 +309,7 @@ public class RecordController {
 	@RequestMapping("/showRegistGroupRecord.do")
 	public String showRegistGroupRecord(HttpSession session,int groupId,Model model) {
 		List<Event> events = eventService.findAllEventsByGroupId(groupId);
+		
 		model.addAttribute("events",events);
 		Group group=msService.findGroupById(groupId);
 		model.addAttribute("memberId",session.getAttribute("memberId"));
@@ -342,7 +343,7 @@ public class RecordController {
 	public String showRecordDetail(int recordId,Model model) {
 		
 		Record record = recordService.findRecordById(recordId);
-		System.out.println(record.getDate());
+		System.out.println("..." + recordId);
 		List<Comment> comments = commentService.findAllCommentsByRecordId(recordId);
 		for (Comment comment : comments) {
 			System.out.println(comment.getDate());

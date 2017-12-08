@@ -10,14 +10,23 @@
 		<script src="http://code.jquery.com/jquery-1.5.js"></script>
 		<script type="text/javascript">
 		var bank;
+		
+		window.onload=function(){
+			var input = document.querySelector('#imgFile');
 			
+			if (input.files.length === 0) {
+				var ranPic = "pic0" + Math.floor((Math.random() * 3) + 1) + ".jpg";
+				$('#groupImage').val("${pageContext.request.contextPath}/resources/images/" + ranPic); 
+			}
+		}
+		
 		function readURL(input) {
 			if (input.files && input.files[0]) {
 				var reader = new FileReader();
 				
 				reader.onload = function (e) {
 					$('#imgHere').attr('src', e.target.result); 
-				} 
+				}
 				reader.readAsDataURL(input.files[0]); 
 			} 
 		} 
@@ -131,10 +140,10 @@
 															
 															<h3>대표 사진</h3>
 
-																<input type="file" name="imgFile" onchange="readURL(this);"/>
-																
+																<input type="file" id="imgFile" name="imgFile" onchange="readURL(this);"/>
+																<input type="hidden" id="groupImage" name="groupImage" value=""/>
 															<div class="col-lg-10">
-																  <img id="imgHere" src="#" style="max-width:400px;"/>
+																  <img id="imgHere" src="" style="max-width:400px;"/>
 															</div>
 														</div>
 													</div>
@@ -149,6 +158,7 @@
 														function accountVals() {
 															var accountNum = $('#accountNum').val();
 															$('#account').val(bank + "/" + accountNum);
+															
 														}
 														
 														$("#submit").click(accountVals); 

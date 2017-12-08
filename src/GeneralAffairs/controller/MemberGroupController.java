@@ -181,14 +181,17 @@ public class MemberGroupController {
 	}	
 	
 	@RequestMapping("/memberDetail.do")
-	public String showMemberDetail(String memberId,Model model) {
+	public String showMemberDetail(String memberId, Model model) {
 		Member member = new Member();
 		List<Group> list = new ArrayList<Group>();
 		list = mgService.findAllGroupsByMemberId(memberId);
 		member = mgService.findMemberById(memberId);
+		List<Message> sendMessages = messageService.findAllSendMessages(memberId);
+		
 		
 		model.addAttribute("list", list);
 		model.addAttribute("member", member);
+		model.addAttribute("sendMessages", sendMessages);
 		
 		return "member/memberDetail";
 	}
@@ -261,18 +264,18 @@ public class MemberGroupController {
 	
 	@RequestMapping("/registGroup.do")
 	public String registGroup(Group group, HttpSession session, @RequestParam("imgFile") MultipartFile imgFile, Model model) {
-		
 //		String currentPath = request.getSession().getServletContext().getRealPath("/");
 //		String savePath = currentPath + "WebContent" + File.separator + "upload";
 		String myId = (String)session.getAttribute("loginedMemberId");
 		
-		String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
-	    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
-	    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
-	    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
-		
 		if(!imgFile.isEmpty()) {
 			try {
+				
+				String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
+			    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
+			    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
+			    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
+				
 				byte [] bytes = imgFile.getBytes();
 				File dir = new File("c:\\" + File.separator + "tempFiles");
 				
@@ -295,9 +298,6 @@ public class MemberGroupController {
 			}
 		} else {
 			
-//			랜덤한 이미지 세팅
-			group.setGroupImage("/images/" + rename);
-			
 //	        model.addAttribute("resultMsg", "업로드할 파일을 선택해주시기 바랍니다.");
 		}
 		
@@ -308,7 +308,6 @@ public class MemberGroupController {
 		mgService.createManagerToGroup(myId, group.getGroupId());
 		
 //		model.addAttribute("resultMsg", "파일을 업로드 성공!");
-		model.addAttribute("img", "/images/" + rename);
 		
 		return "redirect:/memberGroup/main.do";
 	}
@@ -327,15 +326,14 @@ public class MemberGroupController {
 	
 	@RequestMapping("/registGroupAndJoinMember.do")
 	public String registGroupAndJoinMember(Member member,Group group, @RequestParam("imgFile")MultipartFile imgFile) {
-		System.out.println(member.getAccount());
-		String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
-	    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
-	    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
-	    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
-	    System.out.println(originalFilename);
 		
 		if(!imgFile.isEmpty()) {
 			try {
+				String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
+			    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
+			    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
+			    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
+			    
 				byte [] bytes = imgFile.getBytes();
 				File dir = new File("c:\\" + File.separator + "tempFiles");
 				
@@ -349,12 +347,8 @@ public class MemberGroupController {
 				out.close();
 				group.setGroupImage("/images/" + rename);
 				
-		mgService.createMember(member);
-		mgService.createGroup(group);
-		mgService.createManagerToGroup(member.getMemberId(), group.getGroupId());
 //		model.addAttribute("img", "/images/" + rename);
 		
-		return "redirect:/views/member/login.jsp";
 			} catch (IOException e) {
 				e.printStackTrace();
 //				model.addAttribute("resultMsg", "파일을 업로드하는 데에 실패했습니다.");
@@ -363,7 +357,10 @@ public class MemberGroupController {
 //	        model.addAttribute("resultMsg", "업로드할 파일을 선택해주시기 바랍니다.");
 		}
 
-
+		mgService.createMember(member);
+		mgService.createGroup(group);
+		mgService.createManagerToGroup(member.getMemberId(), group.getGroupId());
+		
 		return "redirect:/views/member/login.jsp";
 	}
 	
@@ -540,6 +537,7 @@ public class MemberGroupController {
 		List<Group> groupList = mgService.findAllGroupsByGroupName(groupName);
 		
 		model.addAttribute("groupList", groupList);
+		
 		return"member/selectGroup";
 	}
 	
@@ -551,7 +549,17 @@ public class MemberGroupController {
 		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(myId);
         
 		List<Group> myGroups = mgService.findAllGroupsByMemberId(myId);
-		List<Group> allGroups = mgService.findAllGroupsByGroupName(groupName);
+		
+		System.out.println("//groupName" + groupName);
+		
+		List<Group> allGroups = new ArrayList<>();
+		
+		if(groupName.isEmpty()) {
+			model.addAttribute("otherGroups", null);
+        	model.addAttribute("myGroups", null);
+		} else {
+			allGroups = mgService.findAllGroupsByGroupName(groupName);
+		}
 		
 //	    copy1은 for 교집합, copy2는 for 차집합
 		

@@ -45,9 +45,9 @@ public class FileController {
 		return null;
 		
 	}
- 
-/*	
-	@RequestMapping(value="/uploadFile.do", method=RequestMethod.POST)
+
+	
+/*	@RequestMapping(value="/uploadFile.do", method=RequestMethod.POST)
 	public @ResponseBody String uploadHandler(@RequestParam("name") String name,
 			@RequestParam("file") MultipartFile file){
 		

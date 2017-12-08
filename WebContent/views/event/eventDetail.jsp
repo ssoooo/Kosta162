@@ -14,7 +14,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/main.css" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/assets/css/main.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 </head>
 <body class="no-sidebar">
@@ -27,7 +28,7 @@
 				<!-- Logo -->
 				<div id="logo">
 					<h1>
-						<a href="main.do">알뜰총雜</a>
+						<a href="${pageContext.request.contextPath}/memberGroup/main.do">알뜰총雜</a>
 					</h1>
 					<span>${group.groupName} > ${event.eventName }</span>
 				</div>
@@ -35,21 +36,23 @@
 				<!-- Nav -->
 				<nav id="nav">
 					<ul>
-						<li><a href="main.do">Home</a></li>
-						<li><a href="main.do">Message</a>
+						<li><a
+							href="${pageContext.request.contextPath}/memberGroup/main.do">Home</a></li>
+						<li><a href="#">Message</a>
 							<ul class="ul_accept">
-								<p class="group_invite_list">제목
-								<div class="accept_reject">
-									<a href="">보기</a> <a href="">삭제</a>
-								</div>
-								</p>
-								<p class="group_invite_list">제목
-								<div class="accept_reject">
-									<a href="">보기</a> <a href="">삭제</a>
-								</div>
-								</p>
+								<c:forEach items="${messages }" var="message">
+									<p class="group_invite_list">${message.title }</p>
+									<div class="accept_reject">
+										<a href="#"
+											onclick="window.open('${pageContext.request.contextPath}/message/receivedMessage.do?messageId=${message.messageId }&groupId=${group.groupId }','win','width=700,height=600,toolbar=0,scrollbars=0,resizable=0')">보기</a>
+										<a
+											href="${pageContext.request.contextPath}/message/deleteMyMessage.do?messageId=${message.messageId }"
+											onclick="winClose('${message.memberId }')">삭제</a>
+									</div>
+								</c:forEach>
 							</ul></li>
-						<li class="current"><a href="login.do">Logout</a></li>
+						<li class="current"><a
+							href="${pageContext.request.contextPath}/views/member/login.jsp">Logout</a></li>
 					</ul>
 				</nav>
 
@@ -69,8 +72,8 @@
 							<tbody>
 								<tr>
 									<th class="info_first">이벤트 명</th>
-									<td class="info_detail_first">
-									<a href="${pageContext.request.contextPath}/event/event.do?eventId=${event.eventId }&groupId=${event.groupId}">${event.eventName }</a></td>
+									<td class="info_detail_first"><a
+										href="${pageContext.request.contextPath}/event/event.do?eventId=${event.eventId }&groupId=${event.groupId}">${event.eventName }</a></td>
 								</tr>
 								<tr>
 									<th class="info">이벤트 예산액</th>
@@ -103,9 +106,9 @@
 							<a
 								href="${pageContext.request.contextPath}/record/eventStats.do?eventId=${event.eventId }"><button
 									class="btn_graph">통계</button></a> <a
-								href="${pageContext.request.contextPath}/event/modifyEvent.do?eventId=${event.eventId }&groupId=${event.groupId }"><button
+								href="${pageContext.request.contextPath}/event/modifyEvent.do?eventId=${event.eventId }&groupId=${group.groupId }"><button
 									class="btn_modify">수정</button></a> <a
-								href="${pageContext.request.contextPath}/event/remove.do?eventId=${event.eventId}&groupId=${event.groupId }"><button
+								href="${pageContext.request.contextPath}/event/remove.do?eventId=${event.eventId}&groupId=${group.groupId }"><button
 									class="btn_delete">삭제</button></a>
 						</div>
 					</div>
@@ -149,10 +152,14 @@
 
 	<!-- Scripts -->
 
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.dropotron.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/skel.min.js"></script>
-	<script src="${pageContext.request.contextPath}/resources/assets/js/util.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/jquery.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/jquery.dropotron.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/skel.min.js"></script>
+	<script
+		src="${pageContext.request.contextPath}/resources/assets/js/util.js"></script>
 	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 	<script src="assets/js/main.js"></script>
 

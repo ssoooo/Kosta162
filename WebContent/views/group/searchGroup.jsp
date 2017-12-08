@@ -77,7 +77,7 @@
 											<div class="4u 12u(medium)">
 												<!-- Box -->
 													<section class="box feature">
-														<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${otherGroup.groupId }" class="image featured"><img src="../resources/images/pic01.jpg" alt="" /></a>
+														<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${otherGroup.groupId }" class="image featured"><img src="${otherGroup.groupImage }" alt="" /></a>
 														<div class="inner">
 															<header>
 																<h2>${otherGroup.groupName }<button class="sign">가입신청</button></h2>
@@ -90,7 +90,7 @@
 											<div class="4u 12u(medium)">
 												<!-- Box -->
 													<section class="box feature">
-														<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${myGroup.groupId }" class="image featured"><img src="../resources/images/pic01.jpg" alt="" /></a>
+														<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${myGroup.groupId }" class="image featured"><img src="${myGroup.groupImage }" alt="" /></a>
 														<div class="inner">
 															<header>
 																<h2>${myGroup.groupName }</h2>
@@ -105,7 +105,7 @@
 											<div class="4u 12u(medium)">
 												<!-- Box -->
 													<section class="box feature">
-														<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${otherGroup.groupId }" class="image featured"><img src="../resources/images/pic01.jpg" alt="" /></a>
+														<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${otherGroup.groupId }" class="image featured"><img src="${otherGroup.groupImage }" alt="" /></a>
 														<div class="inner">
 															<header>
 																<h2>${otherGroup.groupName }<button class="sign">가입신청</button></h2>
@@ -124,7 +124,7 @@
 											<div class="4u 12u(medium)">
 												<!-- Box -->
 													<section class="box feature">
-														<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${myGroup.groupId }" class="image featured"><img src="../resources/images/pic01.jpg" alt="" /></a>
+														<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${myGroup.groupId }" class="image featured"><img src="${myGroup.groupImage }" alt="" /></a>
 														<div class="inner">
 															<header>
 																<h2>${myGroup.groupName }</h2></header>
