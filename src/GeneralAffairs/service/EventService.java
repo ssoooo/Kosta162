@@ -26,6 +26,8 @@ public interface EventService {
 
 	void modifyEventBalance(Event event, int price);
 
+	void modifyEventBalance(Event event);
+
 	void modifyEvent(Event event);
 
 	void createEvent(Event event);

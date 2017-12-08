@@ -11,6 +11,7 @@ public class Member {
 	private String phoneNumber;
 	
 	
+
 	public String getMemberId() {
 		return memberId;
 	}

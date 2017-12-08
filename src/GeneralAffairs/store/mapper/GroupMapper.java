@@ -11,9 +11,8 @@ import GeneralAffairs.domain.Record;
 
 public interface GroupMapper {
 	void registGroup(Group group);
-
-	int registMemberToGroup(@Param("memberId") String memberId, @Param("groupId") int groupId);
-
+	int registMemberToGroup(@Param("memberId") String memberId,@Param("groupId")int groupId);
+	int registManagerToGroup(@Param("memberId") String memberId,@Param("groupId")int groupId);
 	int updateGroup(Group group);
 
 	void deleteGroup(int groupId);

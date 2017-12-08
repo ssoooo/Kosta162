@@ -39,7 +39,6 @@ public class MemberGroupServiceLogic implements MemberGroupService{
 
 	@Override
 	public Member findMemberById(String memberId) {
-		
 		return mStore.retrieveMemberById(memberId);
 	}
 
@@ -82,14 +81,20 @@ public class MemberGroupServiceLogic implements MemberGroupService{
 	@Override
 	public void createGroup(Group group) {
 		gStore.registGroup(group);
-		
 	}
 
 	@Override
 	public boolean createMemberToGroup(String memberId, int groupId) {
 		int check = 0;
 		check = gStore.registMemberToGroup(memberId, groupId);
-		return check>0;
+		return check > 0;
+	}
+	
+	@Override
+	public boolean createManagerToGroup(String memberId, int groupId) {
+		int check = 0;
+		check = gStore.registManagerToGroup(memberId, groupId);
+		return check > 0;
 	}
 
 	@Override
@@ -104,8 +109,41 @@ public class MemberGroupServiceLogic implements MemberGroupService{
 	public void removeGroup(int groupId) {
 		gStore.deleteGroup(groupId);
 		
+		List<Member> members = mStore.retrieveAllMembersByGroup(groupId);
+		
+		for(Member member: members) {
+			gStore.deleteMemberFromGroup(member.getMemberId(), groupId);
+		}
 	}
-
+	
+	@Override
+	public boolean leaveGroup(String memberId, int groupId) {
+		List<Integer> groupIds = mStore.checkMemberHasGroup(memberId);
+		
+		if(groupIds.size() > 1) {
+			gStore.deleteMemberFromGroup(memberId, groupId);
+			return true;
+			
+		} else {
+			gStore.deleteMemberFromGroup(memberId, groupId);
+			mStore.deleteMember(memberId);
+			return false;
+		}
+	}
+	
+	@Override
+	public void kickMember(String memberId, int groupId) {
+		List<Integer> groupIds = mStore.checkMemberHasGroup(memberId);
+		
+		if(groupIds.size() > 1) {
+			gStore.deleteMemberFromGroup(memberId, groupId);
+			
+		} else {
+			gStore.deleteMemberFromGroup(memberId, groupId);
+			mStore.deleteMember(memberId);
+		}
+	}
+	
 //	@Override
 //	public List<Group> findAllMyGroups(String memberId) {
 //		
@@ -140,17 +178,21 @@ public class MemberGroupServiceLogic implements MemberGroupService{
 	}
 
 	@Override
-	public void acceptInvite(String memberId, int groupId) {
+	public void createInvite(String memberId, int groupId) {
 		gStore.registInvite(memberId, groupId);
-		
 	}
 
 	@Override
-	public void denyInvite(String memberId, int groupId) {
+	public void deleteInvite(String memberId, int groupId) {
 		gStore.deleteInvite(memberId, groupId);
-		
 	}
 
+	@Override
+	public void acceptInvite(String memberId, int groupId) {
+		gStore.registMemberToGroup(memberId, groupId);
+		gStore.deleteInvite(memberId, groupId);
+	}
+	
 	@Override
 	public void modifyGroupBalance(Group group) {
 		gStore.updateGroupBalance(group);

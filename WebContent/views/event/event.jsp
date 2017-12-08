@@ -6,6 +6,8 @@
 
 <html>
 	<head>
+	
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 		<title>Event</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -64,7 +66,7 @@
 								<section>
 									<h2>게시판</h2>
 									<ul class="style2">
-										<li><a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${event.groupId}"><h3>전체 보기</h3></a></li>
+										<li><a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${event.groupId}"><h3>모임보기</h3></a></li>
 										<c:choose>
 										<c:when test="${empty events}">
 											<a class="list-group-item hidden-xs">개설된 이벤트가 없습니다.</a>
@@ -80,7 +82,7 @@
 										</c:otherwise>
 									</c:choose>
 								</ul>
-								<a href="${pageContext.request.contextPath}/event/registEvent.do?groupId=1" class="button icon fa-info-circle">이벤트
+								<a href="${pageContext.request.contextPath}/event/registEvent.do?eventId="${event.eventId} class="button icon fa-info-circle">이벤트
 
 
 
@@ -101,68 +103,43 @@
 											<th class="table_head"><span>금액</span></th>
 											<th class="table_head"><span>작성일</span></th>
 											<th class="table_head"><span>작성자</span></th>
-											<th class="table_head"><span>주의</span></th>
+											<th class="table_head"><span>상태</span></th>
 										</tr>
+										
+										<c:forEach var="record" items="${records}" varStatus="status">
+										
 										<tr>
-											<td>1</td>
-											<td><a href="recordDetail.html">그랜드 리뉴얼 오픈일</td>
-											<td>수입</td>
-											<td>3000원</td>
-											<td>2012/03/05</td>
-											<td>이호정</td>
-											<td><input type="checkbox" id="chk_list" name="chk_list" value="list1" /></td>
+											<td>${record.recordId}</td>
+											<td><a href="${pageContext.request.contextPath}/record/showRecordDetail.do?recordId=${record.recordId}">${record.title}</a></td>
+											<td>${record.accounting}</td>
+											<td>${record.price} 원</td>
+											<td>${record.date}</td>
+											<td>${record.memberId}</td>
+											<td><button onclick="location.href='${pageContext.request.contextPath}/record/checkRecord.do?recordId=${record.recordId}'"  class="current">${record.caution}</button></td>
 											</tr>
-										<tr>
-											<td>2</td>
-											<td><a href="recordDetail.html">그랜드 리뉴얼 오픈일</td>
-											<td>지출</td>
-											<td>100원</td>
-											<td>2012/03/05</td>
-											<td>민지쨩</td>
-											<td><input type="checkbox" id="chk_list" name="chk_list" value="list1" /></td>
-										</tr>
-										<tr>
-											<td>3</td>
-											<td><a href="recordDetail.html">그랜드 리뉴얼 오픈일</td>
-											<td>수입</td>
-											<td>100원</td>
-											<td>2012/03/05</td>
-											<td>망아지</td>
-											<td><input type="checkbox" id="chk_list" name="chk_list" value="list1" /></td>
-										</tr>
-										<tr>
-											<td>4</td>
-											<td><a href="recordDetail.html">그랜드 리뉴얼 오픈일</td>
-											<td>수입</td>
-											<td>3000원</td>
-											<td>2012/03/05</td>
-											<td>보노보노</td>
-											<td><input type="checkbox" id="chk_list" name="chk_list" value="list1" /></td>
-										</tr>
-										<tr>
-											<td>5</td>
-											<td><a href="recordDetail.html">그랜드 리뉴얼 오픈일</td>
-											<td>수입</td>
-											<td>3000원</td>
-											<td>2012/03/05</td>
-											<td>잡계부</td>
-											<td><input type="checkbox" id="chk_list" name="chk_list" value="list1" /></td>
-										</tr>
+										
+										
+										
+										</c:forEach>
+										
+										
 									</table>
 								<div class="text-right">
-									<a href="registRecord.html">
+									<a href="${pageContext.request.contextPath}/record/showRegistEventRecord.do?eventId=${event.eventId}">
 										<button class="btn_regist">등록</button>
 									</a>
 								</div>
 								<br />
-								<form>
+							<!-- 	<form action="${pageContext.request.contextPath}/event/addEventBalanceToGroup.do" method="POST"> -->
 									<div class="total_account">
-										<h3>총액: 3000원</h3>
-										<input type="button" value="결과합산" class="add_result"/>
+										 <input type="hidden" id="event" name="event" value="${event}">
+										 <h3>총액: ${event.balance}원</h3>
+										<button onclick="location.href='addEventBalanceToGroup.do?eventId=${event.eventId }'"  class="add_result">결과합산</button>
 									</div>
-								</form>
+								<!--</form>  -->
 							</div>
 						</div>
+					
 					</div>
 				</div>
 			</div>

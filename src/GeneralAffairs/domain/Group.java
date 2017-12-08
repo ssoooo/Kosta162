@@ -2,6 +2,8 @@ package GeneralAffairs.domain;
 
 import java.sql.Date;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Group {
 	
 	private int groupId;
@@ -11,8 +13,22 @@ public class Group {
 	private String groupIntroduce;
 	private Date date;
 	private double balance;
-	
 
+	private String groupImage;
+	private MultipartFile imgFile;
+
+	public MultipartFile getImgFile() {
+		return imgFile;
+	}
+	public void setImgFile(MultipartFile imgFile) {
+		this.imgFile = imgFile;
+	}
+	public String getGroupImage() {
+		return groupImage;
+	}
+	public void setGroupImage(String groupImage) {
+		this.groupImage = groupImage;
+	}
 	public int getGroupId() {
 		return groupId;
 	}
@@ -55,7 +71,5 @@ public class Group {
 	public void setBalance(double balance) {
 		this.balance = balance;
 	}
-
-	
 	
 }

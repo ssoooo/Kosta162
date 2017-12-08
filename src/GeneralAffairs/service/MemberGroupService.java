@@ -36,14 +36,13 @@ public interface MemberGroupService {
 	List<Member> findAllPaidMembers(String memberId, int eventId);
 
 	void createGroup(Group group);
-
-	boolean createMemberToGroup(String memberId, int groupId);
-
+	boolean createMemberToGroup(String memberId,int groupId);
+	boolean createManagerToGroup(String memberId,int groupId);
 	boolean modifyGroup(Group group);
-
 	void removeGroup(int groupId);
-
-	// List<Group> findAllMyGroups(String memberId);
+	boolean leaveGroup(String memberId, int groupId);
+	void kickMember(String memberId, int groupId);
+//	List<Group> findAllMyGroups(String memberId);
 	Group findGroupById(int groupId);
 
 	List<Group> findAllGroupsByMemberId(String memberId);
@@ -51,13 +50,10 @@ public interface MemberGroupService {
 	List<Group> findAllGroupsByGroupName(String groupName);
 
 	List<Group> findMyInvitationsByMemberId(String memberId);
-
-	void removeMemberFromGroup(String memberId, int groupId);
-
+	void removeMemberFromGroup(String memberId,int groupId);
+	void createInvite(String memberId,int groupId);
+	void deleteInvite(String memberId,int groupId);
 	void acceptInvite(String memberId, int groupId);
-
-	void denyInvite(String memberId, int groupId);
-
 	void modifyGroupBalance(Group group);
 
 }

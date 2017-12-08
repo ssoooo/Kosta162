@@ -1,3 +1,15 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
+<<<<<<< HEAD
+encoding//src/GeneralAffairs/controller/MemberGroupController.java=UTF-8
+<<<<<<< HEAD
+=======
 encoding//WebContent/views/event/collectionDetail.jsp=UTF-8
+>>>>>>> 614d9af0201fea48f369c212aed5616a3757eb4e
+=======
+encoding//src/GeneralAffairs/controller/EventController.java=UTF-8
+>>>>>>> woooo
 encoding/<project>=UTF-8
+encoding/src=UTF-8
+=======
+>>>>>>> master

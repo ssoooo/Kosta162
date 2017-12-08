@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -9,11 +10,34 @@
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="../resources/assets/css/main.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<script src="http://code.jquery.com/jquery-1.5.js"></script>
+		<script>
+		function onclickFunction(groupId){
+		    $.ajax({
+		        type: "POST",
+		        url: "acceptInvite.do",
+		        data: {
+		        	groupId : groupId
+		        },
+		        dataType: "text",
+		        success: function(data) { //여기서 data 안에는 spring 에서 result 한 값이 포함되어 있으며 특정한 목록을 지정해서 보낼 수도있다.
+			        if(data == 'success'){
+				        alert("모임 가입이 완료되었습니다.");
+				       
+			        }else{
+				        alert("모임 가입에 실패하였습니다.");
+		        	}
+		        }
+		    });
+		}
+		</script>
 	</head>
 	<body class="no-sidebar">
 		<div id="page-wrapper">
 
- 
+ <%@ include file="../../header/header.jspf"%>
+
+
 			<!-- Header -->
 				<div id="header-wrapper">
 					<header id="header" class="container">
@@ -21,7 +45,7 @@
 
 						<!-- Logo -->
 							<div id="logo">
-								<h1><a href="main.html">Verti</a></h1>
+								<h1><a href="main.do">알뜰총雜</a></h1>
 								<span>알뜰한 총무의 잡다한 가계부</span>
 							</div>
 
@@ -31,29 +55,17 @@
 									<li>
 										<a href="main.html">Invitation</a>
 										<ul class="ul_accept">
-											<p class="group_invite_list">
-												모임명
+										<c:forEach items="${groupsInvited }" var="group" >
+											<p class="group_invite_list">${group.groupName }
 												<div class="accept_reject">
-													<a href="">수락</a>
-													<a href="">거절</a>
+													<input id="accept" onclick="onclickFunction('${group.groupId }')" class="button3" type="button" value="수락" /><input class="button3" type="button" value="거절" />
 												</div>
 											</p>
-											<p class="group_invite_list">
-												보노보노
-												<div class="accept_reject">
-													<a href="">수락</a>
-													<a href="">거절</a>
-												</div>
-											</p>
+											
+										</c:forEach>
 										</ul>
 									</li>
-									<li><a href="main.html" >logout</a></li>
-									<form class="form_search">
-										<li class="search_div">
-											<input type="text" style="width:160px; height:40px; margin-right:10px; float:left; margin-top:10px;">
-											<input class="current" type="submit" style="background-color:#444; height:40px; float:left; margin-top:10px; font-size:9pt;" value="검색">
-										</li>
-									</form>
+									
 								</ul>
 							</nav>
 					</header>
@@ -78,35 +90,49 @@
 								</tr>
 								<tr>
 									<th class="info">별명</th>
-									<td class="info_detail">밍</td>
+									<td class="info_detail">${member.nickname }</td>
 								</tr>
 								
 								<tr>
 									<th class="info">이름</th>
-									<td class="info_detail">백민지</td>
+									<td class="info_detail">${member.name }</td>
 								</tr>
 								<tr>
 									<th class="info">이메일</th>
-									<td class="info_detail">jee@kosta.com</td>
+									<td class="info_detail">${member.email }</td>
 								</tr>
 								<tr>
 									<th class="info">계좌번호</th>
-									<td class="info_detail">123-13-142511</td>
+									<td class="info_detail">${member.account }</td>
 								</tr>
 								<tr>
 									<th class="info">휴대폰번호</th>
-									<td class="info_detail">010-2543-1321</td>
+									<td class="info_detail">${member.phoneNumber }</td>
 								</tr>
 								<tr>
 									<th class="info">가입한 모임</th>
-									<td class="info_detail"><a href="main.html">5</a>개</td>
+									<td class="info_detail"><a href="main.html">${fn:length(list) }</a>개</td>
 								</tr>
 								</tbody>
 							</table>
+							<c:if test="${member.memberId eq loginedMemberId}">
 							<div class="btn_hor">
-								<a href="modifyMember.html"><button class="btn_modify">수정</button></a>
-								<a href="#"><button class="btn_delete">탈퇴</button></a>
+								<a href="showModifyMember.do?memberId=${member.memberId }"><button class="btn_modify">수정</button></a>
+								<!-- <a href="deleteMember.do?memberId=${member.memberId }"><button class="btn_delete" onclick="comfirmDelete()">탈퇴</button></a> -->
+								<button class="btn_delete" onclick="comfirmDelete()">탈퇴</button>
 							</div>
+							</c:if>
+							<script type="text/javascript">
+								function comfirmDelete() {
+									var confirmflag = confirm("정말 회원삭제하실건가요");
+									if(confirmflag){
+										location.href="deleteMember.do?memberId=${member.memberId }";
+
+									}else{
+										history.go( 0 );
+									}							
+								}
+							</script>
 						</div>
 
 						<br class="clear" />
@@ -135,12 +161,14 @@
 		<!-- Scripts -->
  
 
+
 			<script src="../resources/assets/js/jquery.min.js"></script>
 			<script src="../resources/assets/js/jquery.dropotron.min.js"></script>
 			<script src="../resources/assets/js/skel.min.js"></script>
 			<script src="../resources/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="../resources/assets/js/main.js"></script>
+
 
 	</body>
 </html>
