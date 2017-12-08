@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import GeneralAffairs.domain.Event;
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Message;
@@ -32,9 +31,11 @@ public class MessageController {
 	@Autowired
 	private EventService eventService;
 	
-	@RequestMapping("sendCollection.do")
+	@RequestMapping("/sendCollection.do") 
 	public String sendCollectionMessage(HttpServletRequest req, List<String> receivedMember, Message message) {
+
 //		모금액
+
 		return "";
 	}
 	

@@ -61,6 +61,14 @@
 		eventId=#{eventId}
 	</update>
 
+	<update id="updateUnPayment" parameterType="map">
+		UPDATE
+		eventMember_table SET
+		payment='미납'
+		WHERE memberId=#{memberId} AND
+		eventId=#{eventId}
+	</update>
+
 	<update id="updateEventBalance" parameterType="Event">
 		UPDATE event_table
 		SET
