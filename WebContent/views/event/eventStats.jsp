@@ -1,100 +1,102 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="utf-8"%>
+	pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
-	<head>
-		<title>통계 페이지</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/main2.css" />
-		<script src="http://code.jquery.com/jquery-latest.min.js"></script>
-		<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-		<link type="text/css" rel="stylesheet" href="http://onlinehtmltools.com/tab-generator/skins/skin6/top.css"></script>
+<head>
+<title>통계 페이지</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="stylesheet"
+	href="${pageContext.request.contextPath}/resources/assets/css/main2.css" />
+<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link type="text/css" rel="stylesheet"
+	href="http://onlinehtmltools.com/tab-generator/skins/skin6/top.css">
+</script>
 
-	</head>
-	<body class="no-sidebar">
-		<div id="page-wrapper">
+</head>
+<body class="no-sidebar">
+	<div id="page-wrapper">
 
-			<!-- Header -->
-				<div id="header-wrapper">
-					<header id="header" class="container">
+		<!-- Header -->
+		<div id="header-wrapper">
+			<header id="header" class="container"> <!-- Logo -->
+			<div id="logo">
+				<h1>
+					<a href="${pageContext.request.contextPath}/memberGroup/main.do">알뜰총雜</a>
+				</h1>
+				<span>Kosta 162기</span>
+			</div>
 
-						<!-- Logo -->
-						<div id="logo">
-							<h1><a href="main.html">알뜰총雜</a></h1>
-							<span>Kosta 162기</span>
-						</div>
+			<!-- Nav --> 
+			<nav id="nav">
+				<ul>
+					<li><a
+						href="${pageContext.request.contextPath}/memberGroup/main.do">Home</a></li>
+					<li><a href="#">Message</a>
+						<ul class="ul_accept">
+							<c:forEach items="${messages }" var="message">
+								<p class="group_invite_list">${message.title }
+								<div class="accept_reject">
+									<a href="#"
+										onclick="window.open('${pageContext.request.contextPath}/message/receivedMessage.do?messageId=${message.messageId }&groupId=${group.groupId }','win','width=700,height=600,toolbar=0,scrollbars=0,resizable=0')">보기</a>
+									<a
+										href="${pageContext.request.contextPath}/message/deleteMyMessage.do?messageId=${message.messageId }"
+										onclick="winClose('${message.memberId }')">삭제</a>
+								</div>
+								</p>
+							</c:forEach>
+						</ul></li>
+					<li class="current"><a
+						href="${pageContext.request.contextPath}/views/member/login.jsp">Logout</a></li>
+				</ul>
+				</nav> 
+			</header>
+		</div>
 
-						<!-- Nav -->
-						<nav id="nav">
-						  <ul>
-							<li><a href="main.html">Home</a></li>
-							<li>
-								<a href="main.html">Message</a>
-									<ul class="ul_accept">
-										<p class="group_invite_list">
-											제목
-											<div class="accept_reject">
-												<a href="">보기</a>
-												<a href="">삭제</a>
-											</div>
-										</p>
-										<p class="group_invite_list">
-											제목
-											<div class="accept_reject">
-												<a href="">보기</a>
-												<a href="">삭제</a>
-											</div>
-										</p>
-									</ul>
-							</li>
-							<li class="current"><a href="login.html">Logout</a></li>
-						  </ul>
-						</nav>
+		<!-- Main -->
+		<div id="main-wrapper">
+			<div class="container">
+				<div id="content">
 
-					</header>
-				</div>
+					<!-- Content -->
 
-			<!-- Main -->
-				<div id="main-wrapper">
-					<div class="container">
-						<div id="content">
-
-							<!-- Content -->
-
-				<div class="tabs_holder">
-					 <ul>
-					  <li class="tab_selected">
+					<div class="tabs_holder">
+						<ul>
+							<li class="tab_selected">
 							<li><a href="#your-tab-id-1">정산 결과</a></li>
-					  <li><a href="#your-tab-id-2">기간</a></li>
-						 <li><a href="#your-tab-id-3">카테고리</a></li>
-						  
-					 </ul>
+							<li><a href="#your-tab-id-2">기간</a></li>
+							<li><a href="#your-tab-id-3">카테고리</a></li>
+
+						</ul>
 
 
-		 <!-- 탭1번-->
-				 <div class="content_holder">
-				  <div id="your-tab-id-1">
-					
-						<div>
-							<br />
-						</div>
-						<div class="form-group">
-								<label class="col-lg-2 control-label"><h2>수입 :  ${income}원</h2></label>
-								<label class="col-lg-2 control-label"><h2>지출 : ${outlay}원</h2></label>
-								<label class="col-lg-2 control-label"><h2>합계 : ${eventBalance}원</h2></label>
-						</div>
+						<!-- 탭1번-->
+						<div class="content_holder">
+							<div id="your-tab-id-1">
 
-						<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-					 <script>
+								<div>
+									<br />
+								</div>
+								<div class="form-group">
+									<label class="col-lg-2 control-label"><h2>수입 :
+											${income}원</h2></label> <label class="col-lg-2 control-label"><h2>지출
+											: ${outlay}원</h2></label> <label class="col-lg-2 control-label"><h2>합계
+											: ${eventBalance}원</h2></label>
+								</div>
+
+								<script type="text/javascript"
+									src="https://www.gstatic.com/charts/loader.js"></script>
+								<script>
 						 google.charts.load('current', {packages:['corechart']});
 					 </script>
 
-					 <div style="display:inline-block;" id="chart_div"></div>
+								<div style="display: inline-block;" id="chart_div"></div>
 
-					 <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-					 <script type="text/javascript">
+								<script type="text/javascript"
+									src="https://www.google.com/jsapi"></script>
+								<script type="text/javascript">
 					 google.load("visualization", "1", {'packages':["corechart"]});
 					 google.setOnLoadCallback(drawChart);	// pie
 
@@ -117,20 +119,21 @@
 						 chart.draw(data, options);
 					 }
 				 </script>
-				 </div>
+							</div>
 
 
-		<!-- 탭2번-->
-					 <div id="your-tab-id-2">
-						 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
- 							<script>
+							<!-- 탭2번-->
+							<div id="your-tab-id-2">
+								<script type="text/javascript"
+									src="https://www.gstatic.com/charts/loader.js"></script>
+								<script>
  							 google.charts.load('current', {packages:['corechart']});
  							</script>
 
- 							<div id="chart_div3"></div>
-							<div id="chart_div4"></div>
+								<div id="chart_div3"></div>
+								<div id="chart_div4"></div>
 
- 							<script type="text/javascript">
+								<script type="text/javascript">
  							 google.charts.setOnLoadCallback(drawChart);
 
  							 var chart_options = {
@@ -175,20 +178,21 @@
  							 }
 
  							</script>
-					</div>
+							</div>
 
 
-			<!-- 탭3번-->
-					 <div id="your-tab-id-3">
+							<!-- 탭3번-->
+							<div id="your-tab-id-3">
 
-						 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-						 <script>
+								<script type="text/javascript"
+									src="https://www.gstatic.com/charts/loader.js"></script>
+								<script>
 						 	google.charts.load('current', {packages:['corechart']});
 						 </script>
 
-						 <div style="display:inline-block;" id="chart_div7"></div>
+								<div style="display: inline-block;" id="chart_div7"></div>
 
-						 <script type="text/javascript">
+								<script type="text/javascript">
 
 						 		 google.charts.setOnLoadCallback(drawChart);
 
@@ -218,15 +222,17 @@
 						 		</script>
 
 
-						 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-						<script>
+								<script type="text/javascript"
+									src="https://www.gstatic.com/charts/loader.js"></script>
+								<script>
 							google.charts.load('current', {packages:['corechart']});
 						</script>
 
-						<div style="display:inline-block;" id="chart_div6"></div>
+								<div style="display: inline-block;" id="chart_div6"></div>
 
-						<script type="text/javascript" src="https://www.google.com/jsapi"></script>
-						<script type="text/javascript">
+								<script type="text/javascript"
+									src="https://www.google.com/jsapi"></script>
+								<script type="text/javascript">
 						google.load("visualization", "1", {'packages':["corechart"]});
 						google.setOnLoadCallback(drawChart);	// pie
 
@@ -249,51 +255,57 @@
 							chart6.draw(data6, options);
 						}
 					</script>
+							</div>
+
+
+							<!-- 탭4번-->
+
+
+						</div>
+					</div>
+					<!-- /.content_holder -->
 				</div>
-
-
-	<!-- 탭4번-->
-					
-
-				  </div>
-				</div><!-- /.content_holder -->
-			</div><!-- /.tabs_holder -->
+				<!-- /.tabs_holder -->
+			</div>
 		</div>
 	</div>
-</div>
 
-			<!-- Footer -->
-				<div id="footer-wrapper">
-					<footer id="footer" class="container">
-						<div class="row">
-							<div class="12u">
-								<div id="copyright">
-									<ul class="menu">
-										<li>&copy; Untitled. All rights reserved</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-									</ul>
-								</div>
-							</div>
-						</div>
-					</footer>
+	<!-- Footer -->
+	<div id="footer-wrapper">
+		<footer id="footer" class="container">
+		<div class="row">
+			<div class="12u">
+				<div id="copyright">
+					<ul class="menu">
+						<li>&copy; Untitled. All rights reserved</li>
+						<li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
 				</div>
+			</div>
+		</div>
+		</footer>
+	</div>
 
-			
-		<!-- Scripts -->
-		<script type="text/javascript" src="http://code.jquery.com/jquery-1.6.min.js"></script>
-		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
-		<script type="text/javascript" src="http://onlinehtmltools.com/tab-generator/skinable_tabs.min.js"></script>
-		<script type="text/javascript">
+
+	<!-- Scripts -->
+	<script type="text/javascript"
+		src="http://code.jquery.com/jquery-1.6.min.js"></script>
+	<script type="text/javascript"
+		src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.10/jquery-ui.min.js"></script>
+	<script type="text/javascript"
+		src="http://onlinehtmltools.com/tab-generator/skinable_tabs.min.js"></script>
+	<script type="text/javascript">
 			$('.tabs_holder').skinableTabs({
 				effect: 'basic_display',
 				skin: 'skin6',
 				position: 'top'
 			});
 		</script>
-			<script src="assets/js/jquery.min.js"></script>
-			<script src="assets/js/jquery.dropotron.min.js"></script>
-			<script src="assets/js/skel.min.js"></script>
-			<script src="assets/js/util.js"></script>
-			<script src="assets/js/main.js"></script>
+	<script src="assets/js/jquery.min.js"></script>
+	<script src="assets/js/jquery.dropotron.min.js"></script>
+	<script src="assets/js/skel.min.js"></script>
+	<script src="assets/js/util.js"></script>
+	<script src="assets/js/main.js"></script>
 
-			</body>
+</body>
 </html>

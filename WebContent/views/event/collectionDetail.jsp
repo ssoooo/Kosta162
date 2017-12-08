@@ -32,6 +32,24 @@
 		})
 	});
 
+	$(function() {
+		$('#subCheck').click(function() {
+			if ($('#subCheck').prop('checked')) {
+				$('input[name=subCheck]:checkbox').each(function() {
+					$(this).prop('checked', true);
+				});
+			}
+		})
+		var valueArr = new Array();
+		var list = $('input[name=subCheck]:checkbox]');
+		for (var i = 0; i < list.length; i++) {
+			if (list[i].checked) { //선택되어 있으면 배열에 값을 저장함
+				valueArr.push(list[i].value);
+			}
+		}
+
+	});
+
 	function setChildText() {
 		var parent = window.opener;
 
@@ -46,6 +64,29 @@
 		window.close();
 
 	}
+	function sendEventDetail() {
+		window.opener.top.location.href = "${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }"
+		//window.opener.top.location.reload();//새로고침
+		window.close()
+	}
+
+	function checkSelectedValue() {
+		var valueArr = new Array();
+		var list = $('input[name=subCheck]:checkbox]');
+		for (var i = 0; i < list.length; i++) {
+			if (list[i].checked) { //선택되어 있으면 배열에 값을 저장함
+				valueArr.push(list[i].value);
+			}
+		}
+
+		//선택된 체크박스의 값을 콘솔에 출력
+		var str = '';
+		for ( var i in valueArr) {
+			str += valueArr[i] + '<br />';
+		}
+		$('#dibugConsole').html(str);
+
+	}
 </script>
 </head>
 <body class="no-sidebar">
@@ -58,9 +99,10 @@
 				<!-- Logo -->
 				<div id="logo">
 					<h1>
-						<a href="index.html">모금액</a>
+						<a
+							href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }">모금액</a>
 					</h1>
-					<span>${group.groupName } > {event.eventName }</span>
+					<span>${group.groupName } > ${event.eventName }</span>
 				</div>
 
 			</header>
@@ -123,17 +165,18 @@
 							</div>
 						</div>
 					</div>
-					</form>
 					<button class="btn_send"
-						onclick="window.open('${pageContext.request.contextPath}/message/sendCollection.do?eventId=${event.eventId }&memberId=${event.memberId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">메시지
+						onclick="window.open('${pageContext.request.contextPath}/message/sendCollection.do?receivedMember=${event.memberId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">메시지
 						전송</button>
+					<button type="submit" onclick="sendEventDetail()"
+						class="record_submit">확인</button>
 				</div>
+
+
+				<!-- Footer -->
+
 			</div>
 		</div>
-
-		<!-- Footer -->
-
 	</div>
-
 </body>
 </html>

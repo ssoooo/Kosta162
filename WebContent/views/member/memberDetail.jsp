@@ -136,6 +136,62 @@
 						</div>
 
 						<br class="clear" />
+						
+						<div id="box3">
+						<h2>보낸 메시지</h2>
+						<hr>
+
+								<table id="message_list">
+									<tr class="aa">
+										<th style="width:20%;"><span>모임</span></th>
+										<th style="width:20%;"><span>이벤트</span></th>
+										<th style="width:20%;"><span>수신인</span></th>
+										<th style="width:20%;"><span>제목</span></th>
+										<th style="width:20%;"><span>작성일</span></th>
+									</tr>
+								</table>
+								<div class="member_scroll">
+							
+								<table id="message_list">
+									<c:forEach items="${sendMessages }" var="message" >
+									<tr class="ab">
+										<td style="width:20%;">kostaaaaaaaaaa</td>
+										<td style="width:20%;">가을 mt</td>
+										<td style="width:20%;">호정리 외 3인</td>
+										<td style="width:20%;"><a href="messageDetail">${message.title }</a></td>
+										<td style="width:20%;">2017-11-20</td>
+									</tr>
+									</c:forEach>					
+								</table>
+								</div>
+						</div>
+						
+						
+						<div id="box3">
+						<h2>멤버 초대</h2>
+						<hr>
+
+								<table id="message_list">
+									<tr class="aa">
+										<th style="width:33%;"><span>모임</span></th>
+										<th style="width:33%;"><span>초대 받은 멤버</span></th>
+										<th style="width:33%;"><span>초대한 날짜</span></th>
+									</tr>
+								</table>
+								<div class="member_scroll">
+							
+								<table id="message_list">
+									<c:forEach items="${sendMessages }" var="message" >
+									<tr class="ab">
+										<td style="width:33%;">kostaaaaaaaaaa</td>
+										<td style="width:33%;">호정리</td>
+										<td style="width:33%;">2017-11-20</td>
+									</tr>
+									</c:forEach>					
+								</table>
+								</div>
+						</div>
+						
 						</div>
 					</div>
 				</div>
