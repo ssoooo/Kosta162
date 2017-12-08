@@ -44,7 +44,7 @@ public interface MemberGroupService {
 	void kickMember(String memberId, int groupId);
 //	List<Group> findAllMyGroups(String memberId);
 	Group findGroupById(int groupId);
-
+	List<Integer> checkMemberHasGroup(String memberId);
 	List<Group> findAllGroupsByMemberId(String memberId);
 
 	List<Group> findAllGroupsByGroupName(String groupName);
@@ -55,5 +55,6 @@ public interface MemberGroupService {
 	void deleteInvite(String memberId,int groupId);
 	void acceptInvite(String memberId, int groupId);
 	void modifyGroupBalance(Group group);
+	Group findGroupBygroupName(String groupName);//
 
 }

@@ -9,9 +9,31 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="../resources/assets/css/main2.css" />
 		<script>
-		function winClose(memberId){
-    		alert(memberId + "님이 보낸 메시지를 삭제했습니다.");
-    		opener.location.reload();
+		function onclickFunction(messageId){
+			
+			
+		    $.ajax({
+		        type: "POST",
+		        url: "${pageContext.request.contextPath}/message/deleteMyMessage.do",
+		        data: {
+		        	messageId : messageId,
+		        	myId : "${loginedMemberId}"
+		        	
+		        },
+		        dataType: "text",
+		        success: function(data) { //여기서 data 안에는 spring 에서 result 한 값이 포함되어 있으며 특정한 목록을 지정해서 보낼 수도있다.
+		        	console.log(data);
+		        	if(data == "success"){
+				        alert("메세지가 삭제되었습니다.");
+				        location.reload();
+				        
+			        }
+		        },
+		        error : function(data){
+		        	console.log(data);
+		        	alert("디비실패")
+		        }
+		    });
 		}
 		</script>
 	</head>
@@ -41,7 +63,7 @@
 										${message.title }
 										<div class="accept_reject">
 											<a href="" onclick="window.open('${pageContext.request.contextPath}/message/receivedMessage.do?messageId=${message.messageId }&groupId=${group.groupId }','win','width=700,height=600,toolbar=0,scrollbars=0,resizable=0')">보기</a>
-											<a href="${pageContext.request.contextPath}/message/deleteMyMessage.do?messageId=${message.messageId }" onclick="winClose('${message.memberId }')">삭제</a>
+											<a href="" onclick="onclickFunction(${message.messageId })">삭제</a>
 										</div>
 									</p>
 								</c:forEach>

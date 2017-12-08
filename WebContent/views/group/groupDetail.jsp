@@ -102,19 +102,27 @@
 								</tbody>
 							</table>
 							<div class="btn_hor">
-								<a href="${pageContext.request.contextPath}/record/groupStats.do?groupId=${group.groupId}"><button class="btn_graph">통계</button></a>
-								<c:if test="${loginedMemberId eq manager.memberId }"> 
-									<a href="${pageContext.request.contextPath}/memberGroup/showModifyGroup.do?groupId=${group.groupId }"><button class="btn_modify">수정</button></a>
-									<a href="${pageContext.request.contextPath}/memberGroup/deleteGroup.do?groupId=${group.groupId }"><button class="btn_modify">삭제</button></a>
-								</c:if>
-								<c:choose>
-									<c:when test="${loginedMemberId eq group.memberId }">
-										<a href="#" onclick="alert('총무는 탈퇴할 수 없습니다. \n총무를 위임한 후 탈퇴할 수 있습니다.')"><button class="btn_delete">탈퇴</button></a>
-									</c:when>
-									<c:otherwise>
-										<a href="${pageContext.request.contextPath}/memberGroup/leaveGroup.do?groupId=${group.groupId }"><button class="btn_delete">탈퇴</button></a>
-									</c:otherwise>
-								</c:choose>
+							
+							<script>
+							var myGroupIDS=${myGroupIds};
+							for(var i=0; i<myGroupIDS.length; i++){
+								if(myGroupIDS[i]==${group.groupId }){
+									document.write('<a href="${pageContext.request.contextPath}/record/groupStats.do?groupId=${group.groupId}"><button class="btn_graph">통계</button></a>');
+									if("${loginedMemberId }" == "${manager.memberId }"){
+									document.write('<a href="${pageContext.request.contextPath}/memberGroup/showModifyGroup.do?groupId=${group.groupId }"><button class="btn_modify">수정</button></a>');
+									document.write('<a href="${pageContext.request.contextPath}/memberGroup/deleteGroup.do?groupId=${group.groupId }"><button class="btn_delete">삭제</button></a>');
+									 document.write('<a href="#" onclick="alert(\'총무는 탈퇴할 수 없습니다. 총무를 위임한 후 탈퇴할 수 있습니다.\')"><button class="btn_delete">탈퇴</button></a>');
+									}
+									else{
+										 document.write('<a href="${pageContext.request.contextPath}/memberGroup/leaveGroup.do?groupId=${group.groupId }"><button class="btn_delete">탈퇴</button></a>');
+									 }
+								   
+								
+								
+								}
+							}
+							</script>
+								 
 							</div>
 						</div>
 					</div>
@@ -146,15 +154,19 @@
 						
 
 						<div class="btn_hor">
-					 	<c:if test="${loginedMemberId eq manager.memberId }"> 
-							<button class="btn_trade"
-							onclick="javascript:windowOpen();">총무위임</button>
-							<button class="btn_trade" onclick="window.open('${pageContext.request.contextPath}/memberGroup/showKickMember.do?groupId=${group.groupId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">멤버추방</button>
-					 	</c:if>
-					 	
-								<button class="btn_invite" onclick="window.open('${pageContext.request.contextPath}/memberGroup/showSearchMember.do?groupId=${group.groupId }','win','width=600,height=600,toolbar=0,scrollbars=1,resizable=0')">멤버초대</button>
-							<!-- 	onclick="window.open('showTradeGrade.do?groupId=${group.groupId}','win','width=600,height=620,toolbar=0,scrollbars=0,resizable=0')">총무위임</button> -->
-							
+						<script>
+							var myGroupIDS=${myGroupIds};
+							for(var i=0; i<myGroupIDS.length; i++){
+								if(myGroupIDS[i]==${group.groupId}){
+									document.write('<c:if test="${loginedMemberId eq manager.memberId }"> ');
+									document.write('<button class="btn_trade"');
+									document.write('onclick="javascript:windowOpen();">총무위임</button>');
+									document.write('<button class="btn_trade" onclick="window.open(\'${pageContext.request.contextPath}/memberGroup/showKickMember.do?groupId=${group.groupId }\',\'win\',\'width=600,height=600,toolbar=0,scrollbars=0,resizable=0\')">멤버추방</button></c:if>');
+									document.write('<button class="btn_invite" onclick="window.open(\'${pageContext.request.contextPath}/memberGroup/showSearchMember.do?groupId=${group.groupId }\',\'win\',\'width=600,height=600,toolbar=0,scrollbars=0,resizable=0\')">멤버초대</button>)');
+								
+								}
+							}
+							</script>
 						</div>
 					</div>
 					<br class="clear" />

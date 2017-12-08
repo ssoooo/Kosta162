@@ -16,7 +16,7 @@
 	</insert>
 
 	<delete id="deleteMessage" parameterType="int">
-		DELETE FROM messageMember_table
+		DELETE FROM message_table
 		WHERE messageId=#{messageId}
 	</delete>
 
