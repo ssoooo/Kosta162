@@ -125,7 +125,7 @@
 					</div>
 					</form>
 					<button class="btn_send"
-						onclick="window.open('${pageContext.request.contextPath}/message/sendCollection.do','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">메시지
+						onclick="window.open('${pageContext.request.contextPath}/message/sendCollection.do?eventId=${event.eventId }&memberId=${event.memberId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">메시지
 						전송</button>
 				</div>
 			</div>

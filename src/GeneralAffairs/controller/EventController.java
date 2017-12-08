@@ -190,7 +190,6 @@ public class EventController {
 		for (int i = 0; i < members.length; i++) {
 			event.setMemberId(members[i]);
 		}
-		System.out.println("..." + event.getMemberId());
 		eventService.changePayment(event.getMemberId(), eventId);
 
 		return "redirect:/event/collectionDetail.do?eventId=" + eventId;
@@ -205,7 +204,6 @@ public class EventController {
 		for (int i = 0; i < memberss.length; i++) {
 			event.setMemberId(memberss[i]);
 		}
-		System.out.println("///" + event.getMemberId());
 		eventService.changeUnPayment(event.getMemberId(), eventId);
 		
 		return "redirect:/event/collectionDetail.do?eventId=" + eventId;
@@ -225,9 +223,6 @@ public class EventController {
 		List<Member> memberss = mgService.findAllPaidMembers(event.getMemberId(), eventId);
 		model.addAttribute("memberss", memberss);
 		
-		System.out.println("...." + memberss);
-		System.out.println("///" + memberss.toString());
-
 		return "event/eventDetail";
 	}
 

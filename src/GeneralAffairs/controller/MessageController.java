@@ -11,7 +11,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import GeneralAffairs.domain.Event;
 import GeneralAffairs.domain.Message;
+import GeneralAffairs.service.EventService;
 import GeneralAffairs.service.MessageService;
 
 @Controller
@@ -20,11 +22,14 @@ public class MessageController {
 	
 	@Autowired
 	private MessageService messageService;
-
 	
-	@RequestMapping("sendCollection.do")
+	@Autowired
+	private EventService eventService;
+	
+	@RequestMapping("/sendCollection.do") 
 	public String sendCollectionMessage(HttpServletRequest req, List<String> receivedMember, Message message) {
-		
+
+
 		return "";
 	}
 	
