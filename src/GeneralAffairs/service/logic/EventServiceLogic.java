@@ -99,10 +99,13 @@ import GeneralAffairs.store.GroupStore;
 		
 	}
 
+<<<<<<< HEAD
 	@Override
 	public void modifyEventBalance(Event event, int price) {
 		eventStore.updateEventBalance(event);
 		
 	}
+=======
+>>>>>>> master
 	
  }

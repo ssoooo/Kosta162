@@ -24,10 +24,13 @@ public interface EventService {
 
 	void removeFromEvent(String memberId, int eventId);
 
-	void modifyEventBalance(Event event, int price);
-
 	void modifyEventBalance(Event event);
 
+<<<<<<< HEAD
+	void modifyEventBalance(Event event);
+
+=======
+>>>>>>> master
 	void modifyEvent(Event event);
 
 	void createEvent(Event event);

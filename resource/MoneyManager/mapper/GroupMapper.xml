@@ -101,4 +101,9 @@
 		balance=#{balance}
 		WHERE groupId=#{groupId}
 	</update>
+	<select id="findGroupByGroupName" parameterType="String" resultMap="groupMap">
+		SELECT groupId, memberId, groupName, account, groupIntroduce, balance, regDate, groupImage
+		FROM group_table
+		WHERE groupName=#{groupName }
+	</select>
 </mapper>

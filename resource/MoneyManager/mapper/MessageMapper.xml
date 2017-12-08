@@ -16,8 +16,12 @@
 	</insert>
 
 	<delete id="deleteMessage" parameterType="int">
+<<<<<<< HEAD
 		DELETE FROM
 		messageMember_table
+=======
+		DELETE FROM message_table
+>>>>>>> master
 		WHERE messageId=#{messageId}
 	</delete>
 	<select id="retrieveMessageById" parameterType="int" resultMap="messageMap"> 

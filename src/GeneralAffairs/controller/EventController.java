@@ -230,6 +230,7 @@ public class EventController {
 
 		List<Member> members = mgService.findAllMembersByEvent(eventId);
 		model.addAttribute("members", members);
+<<<<<<< HEAD
 		
 		List<Member> memberss = mgService.findAllPaidMembers(event.getMemberId(), eventId);
 		model.addAttribute("memberss", memberss);
@@ -237,6 +238,14 @@ public class EventController {
 
 		List<Record> records = recordService.findAllRecordsByEventId(eventId);
 		model.addAttribute("records",records);
+=======
+
+		List<Record> records = recordService.findAllRecordsByEventId(eventId);
+		model.addAttribute("records",records);
+
+		List<Member> memberss = mgService.findAllPaidMembers(event.getMemberId(), eventId);
+		model.addAttribute("memberss", memberss);
+>>>>>>> master
 
 		return "event/eventDetail";
 	}

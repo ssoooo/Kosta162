@@ -31,6 +31,70 @@
 <script type="text/javascript">
 	var bank;
 	var phone;
+	$(document).ready(function(){
+		$("#InputId").keyup(function () {
+			var inputId = $("#InputId").val();
+			$.ajax({
+				type : 'POST',
+				url : '${pageContext.request.contextPath }/memberGroup/checkId.do',
+				data : {
+					memberId : inputId
+				},
+				dataType : 'text',
+				success: function(data){
+					
+					$("#idCheck").html("사용중인 ID입니다.")
+					console.log(data);
+				},
+				error : function(data){
+					console.log(data);
+					$("#idCheck").html("사용가능한 ID입니다.")
+					
+				}
+				
+			});
+		});
+		$("#groupName").keyup(function () {
+			var inputGroup = $("#groupName").val();
+			$.ajax({
+				type : 'POST',
+				url : '${pageContext.request.contextPath }/memberGroup/checkGroup.do',
+				data : {
+					groupName1 : inputGroup
+				},
+				dataType : 'text',
+				success: function(data){
+					var data111 = data
+					if(data111){
+					$("#groupCheck").html("사용중인 모임명입니다.")
+					console.log(data);
+					} else{
+						$("#groupCheck").html("이건뭔데 정신안차리나.")
+					}
+					
+				},
+				error : function(data){
+					console.log(data);
+					$("#groupCheck").html("사용할수 있는 모임명입니다.")
+					
+				}
+				
+			});
+		});
+		$("#InputPassword2").keyup(function(){
+			var password1 = $('#InputPassword1').val();
+			var password2 = $('#InputPassword2').val();
+			
+				if(password1==password2){
+				$("#passwordCheck").html("비밀번호가 일치합니다.")
+				}else{
+				$("#passwordCheck").html("비밀번호가 일치하지않습니다.")
+				}
+				
+			}
+		);
+		
+	});
 
 	function readURL(input) {
 		if (input.files && input.files[0]) {
@@ -58,7 +122,7 @@
 				<label for="InputId">아이디</label> <input type="text"
 					class="form-control" id="InputId" name="memberId" placeholder="아이디"
 					required="required">
-				<p class="help-block">사용 가능한 아이디입니다.</p>
+				<p id="idCheck" class="help-block"></p>
 			</div>
 			<div class="form-group">
 				<label for="InputPassword1">비밀번호</label> <input type="password"
@@ -69,7 +133,7 @@
 				<label for="InputPassword2">비밀번호 확인</label> <input type="password"
 					class="form-control" id="InputPassword2" placeholder="비밀번호 확인"
 					required="required">
-				<p class="help-block">비밀번호가 일치합니다.</p>
+				<p id="passwordCheck" class="help-block"></p>
 			</div>
 			<div class="form-group">
 				<label for="userName">이름</label> <input type="text"
@@ -135,6 +199,7 @@
 				<label for="groupName">모임명</label> <input type="text"
 					class="form-control" id="groupName" name="groupName"
 					placeholder="이름을 입력해 주세요" required="required">
+					<p id="groupCheck" class="help-block"></p>
 			</div>
 
 			<div class="form-group">
