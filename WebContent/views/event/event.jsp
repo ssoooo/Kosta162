@@ -22,7 +22,7 @@
 
 					<!-- Logo -->
 					<div id="logo">
-						<h1><a href="main.do">알뜰총雜</a></h1>
+						<h1><a href="${pageContext.request.contextPath}/memberGroup/main.do">알뜰총雜</a></h1>
 						<span>${group.groupName} > ${event.eventName }</span>
 					</div>
 
