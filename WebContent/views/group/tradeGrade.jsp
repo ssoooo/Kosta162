@@ -25,8 +25,8 @@
 
 				<!-- Logo -->
 				<div id="logo">
-					<h1>Verti</h1>
-					<span>Kosta 162기</span>
+					<h1>알뜰총雜</h1>
+					<span>${group.groupName }</span>
 				</div>
 
 			</header>
@@ -44,8 +44,9 @@
 						<div class="scroll">
 							<ul>
 								<c:forEach items="${memberList }" var="member">
-									<li>${member.name }
-									<a type="button" onclick="closeWindowAndTradeGrade()" href="tradeGrade.do?memberId=${member.memberId}&groupId=${groupId }&managerId=${managerId }&grade1=총무&grade2=멤버">위임</a>
+									<li>${member.memberId }
+									<a href="tradeGrade.do?memberId=${member.memberId}&groupId=${group.groupId }&managerId=${managerId }&grade1=총무&grade2=멤버"><button onclick="closeWindowAndTradeGrade()">위임</button></a>
+									<!-- <a onclick="closeWindowAndTradeGrade()" href="tradeGrade.do?memberId=${member.memberId}&groupId=${groupId }&managerId=${managerId }&grade1=총무&grade2=멤버">위임</a> -->
 										<!-- <button onclick="javascript:closeWindowAndTradeGrade();">위임</button> -->
 										
 									</li>
@@ -56,8 +57,7 @@
 											alert("${member.memberId}님이 총무가 되셨습니다.");
 											window.close();
 											opener.location.reload();
-											//document.grade.value=grade;
-											//window.close();
+											
 										}
 									</script>
 								</c:forEach>

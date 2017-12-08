@@ -8,7 +8,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/main.css" />
+<link rel="stylesheet" href="../resources/assets/css/main.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 </head>
@@ -33,37 +33,21 @@
 				
 					<ul >
 						<li><a href="main.html">Home</a></li>
-						<li>
-							<a>Message</a>
-							<ul class="ul_accept">
-							<c:forEach items="${messages }" var="message" >
-								<p class="group_invite_list">
-									${message.title }
-									<div class="accept_reject">
-										<a href="">보기</a>
-										<a href="">삭제</a>
-									</div>
-								</p>
-							</c:forEach>
-							</ul>
-						</li>
-						<c:if test="${loginedMemberId eq group.memberId }"> 
+						
 						<li><a href="main.html">가입신청</a>
-							
 							<ul id="refresh" class="ul_accept">
-							<c:forEach items="${signIns }" var="signIn" varStatus="sts">
+							
+								<c:forEach items="${signIns }" var="signIn" varStatus="sts">
 								<input type="hidden" id="signInMemberId${sts.count }" value="${signIn.memberId }">
-									<p class="group_invite_list">${signIn.memberId }</p>
-								<br>
+									<p class="group_invite_list">${signIn.memberId }
+								
 									<div class="accept_reject">
-										<input type="button" value = "승인" onclick="onclickFunction('${group.groupId}','${signIn.memberId }')"> 
-										<input type="button" value = "거부" onclick="onclickFunction1('${group.groupId}','${signIn.memberId }')">
+										<input type="button" value = "수락" onclick="onclickFunction('${group.groupId}','${signIn.memberId }')"> <a href="">삭제</a>
 									</div>
-									
+									</p>
 								</c:forEach>
-							</ul>
-						</li>
-						</c:if>
+								
+							</ul></li>
 						<li class="current"><a href="login.html">Logout</a></li>
 					</ul>
 					
@@ -93,7 +77,7 @@
 								</tr>
 								<tr>
 									<th class="info">총무</th>
-									<td class="info_detail">${manager.memberId }</td>
+									<td class="info_detail">${manager.nickname }</td>
 								</tr>
 								<tr>
 									<th class="info">총무계좌</th>
@@ -102,27 +86,9 @@
 								</tbody>
 							</table>
 							<div class="btn_hor">
-							
-							<script>
-							var myGroupIDS=${myGroupIds};
-							for(var i=0; i<myGroupIDS.length; i++){
-								if(myGroupIDS[i]==${group.groupId }){
-									document.write('<a href="${pageContext.request.contextPath}/record/groupStats.do?groupId=${group.groupId}"><button class="btn_graph">통계</button></a>');
-									if("${loginedMemberId }" == "${manager.memberId }"){
-									document.write('<a href="${pageContext.request.contextPath}/memberGroup/showModifyGroup.do?groupId=${group.groupId }"><button class="btn_modify">수정</button></a>');
-									document.write('<a href="${pageContext.request.contextPath}/memberGroup/deleteGroup.do?groupId=${group.groupId }"><button class="btn_delete">삭제</button></a>');
-									 document.write('<a href="#" onclick="alert(\'총무는 탈퇴할 수 없습니다. 총무를 위임한 후 탈퇴할 수 있습니다.\')"><button class="btn_delete">탈퇴</button></a>');
-									}
-									else{
-										 document.write('<a href="${pageContext.request.contextPath}/memberGroup/leaveGroup.do?groupId=${group.groupId }"><button class="btn_delete">탈퇴</button></a>');
-									 }
-								   
-								
-								
-								}
-							}
-							</script>
-								 
+								<a href="groupStats.html"><button class="btn_graph">통계</button></a>
+								<a href="${pageContext.request.contextPath}/memberGroup/showModifyGroup.do?groupId=${group.groupId }"><button class="btn_modify">수정</button></a>
+								<a href="${pageContext.request.contextPath}/memberGroup/deleteGroup.do?groupId=${group.groupId }"><button class="btn_delete">삭제</button></a>
 							</div>
 						</div>
 					</div>
@@ -140,33 +106,36 @@
 						var openWin;
 						function windowOpen() {
 							openWin= window.open('showTradeGrade.do?groupId=${group.groupId}&managerId=${manager.memberId}','win','width=600,height=620,toolbar=0,scrollbars=0,resizable=0');
+							
+							
 						}
+						
+						
 						</script>
 
 
 						<div class="scroll">
+
 							<ul>
+
 								<c:forEach items="${members }" var="member">
-									<li><a href="${pageContext.request.contextPath}/memberGroup/memberDetail.do?memberId=${member.memberId }">${member.memberId }</a></li>
+									<li><a
+										href="${pageContext.request.contextPath}/memberGroup/memberDetail.do?memberId=${member.memberId }">${member.memberId }</a></li>
 								</c:forEach>
+
+
 							</ul>
 						</div>
 						
 
 						<div class="btn_hor">
-						<script>
-							var myGroupIDS=${myGroupIds};
-							for(var i=0; i<myGroupIDS.length; i++){
-								if(myGroupIDS[i]==${group.groupId}){
-									document.write('<c:if test="${loginedMemberId eq manager.memberId }"> ');
-									document.write('<button class="btn_trade"');
-									document.write('onclick="javascript:windowOpen();">총무위임</button>');
-									document.write('<button class="btn_trade" onclick="window.open(\'${pageContext.request.contextPath}/memberGroup/showKickMember.do?groupId=${group.groupId }\',\'win\',\'width=600,height=600,toolbar=0,scrollbars=0,resizable=0\')">멤버추방</button></c:if>');
-									document.write('<button class="btn_invite" onclick="window.open(\'${pageContext.request.contextPath}/memberGroup/showSearchMember.do?groupId=${group.groupId }\',\'win\',\'width=600,height=600,toolbar=0,scrollbars=0,resizable=0\')">멤버초대</button>)');
-								
-								}
-							}
-							</script>
+					 	<c:if test="${loginedMemberId eq manager.memberId }"> 
+							<button class="btn_trade"
+							onclick="javascript:windowOpen();">총무위임</button>
+					 	</c:if>
+							<!-- 	onclick="window.open('showTradeGrade.do?groupId=${group.groupId}','win','width=600,height=620,toolbar=0,scrollbars=0,resizable=0')">총무위임</button> -->
+							<button class="btn_invite"
+								onclick="window.open('inviteMember.html','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">멤버초대</button>
 						</div>
 					</div>
 					<br class="clear" />
@@ -201,11 +170,11 @@
 	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 	
 	<script src="../resources/assets/js/main.js"></script>
-	<script>
+<script>
 		function onclickFunction(groupId,memberId){
 		    $.ajax({
 		        type: "POST",
-		        url: "acceptSignIn.do",
+		        url: "reqSignInAlreadyJoined.do",
 		        data: {
 		        	groupId : groupId,
 		        	memberId : memberId
@@ -215,30 +184,9 @@
 		        error : function() {
 		        	alert("가입실패했다임마")
 		        },
-		        success: function(response) { 
-			        	alert("가입이 성공했습니다.")
-			        	location.reload();
-			        	$("#refresh").load("groupDetail.do?groupId=2 #refresh");
-		        }
-		    });
-		}
-		function onclickFunction1(groupId,memberId){
-		    $.ajax({
-		        type: "POST",
-		        url: "denySignIn.do",
-		        data: {
-		        	groupId : groupId,
-		        	memberId : memberId
-		        	
-		        },
-		        dataType: "text",
-		        error : function() {
-		        	alert("거절실패했다임마")
-		        },
 		        success: function(response) { //여기서 data 안에는 spring 에서 result 한 값이 포함되어 있으며 특정한 목록을 지정해서 보낼 수도있다.
-			        	alert("가입신청을 거절하셨습니다.")
-			        	location.reload();
-			        	
+			        	alert("가입이 성공했습니다.")
+			        	$("#refresh").load("groupDetail.do?groupId=2 #refresh");
 		        }
 		    });
 		}

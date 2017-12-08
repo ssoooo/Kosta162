@@ -13,7 +13,7 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
-<link rel="stylesheet" href="../resources/assets/css/grade.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/grade.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 
@@ -68,7 +68,7 @@
 						<c:forEach items="${groupList }" var="group" varStatus="status">
 							<section class="group_box">
 							<input type="hidden" name = "groupName" value ="${group.groupName }">
-								<img src="../../resources/images/pic01.jpg" alt="noImage" />
+								<img src="${group.groupImage }" alt="noImage" />
 								<div class="signIn_group">
 									<header>
 										<h2 >
@@ -102,17 +102,7 @@
 						</c:forEach>
 									
 						<!-- Box -->
-						<section class="group_box">
-							<img src="../../resources/images/pic02.jpg" alt="" />
-							<div class="signIn_group">
-								<header>
-									<h2>
-										Group2
-										<button class="sign">선택</button>
-									</h2>
-								</header>
-							</div>
-						</section>
+					
 
 					</div>
 				</div>

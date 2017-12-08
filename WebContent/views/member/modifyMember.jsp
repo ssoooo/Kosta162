@@ -28,6 +28,11 @@
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 <script>
+$(document).ready(function(){
+    $("#selectBank").val('${bank }').attr("selected", true);
+    $("#selectPhone").val('${mobileCarrier }').attr("selected", true);
+});
+
 	var bank;
 	var phone;
 </script>
@@ -98,7 +103,7 @@
 				</script>
 				<input type="text" class="form-control" id="InputAccount"
 					name="InputAccount" placeholder="계좌를 입력해 주세요"
-					value="${member.account }"> <input type="hidden"
+					value="${accountNum }"> <input type="hidden"
 					id="account" name="account" />
 			</div>
 
@@ -119,7 +124,7 @@
 				</script>
 				<input type="text" class="form-control" id="InputPhoneNumber"
 					name="InputPhoneNumber" placeholder="- 없이 입력해 주세요"
-					value="${member.phoneNumber }"> <input type="hidden"
+					value="${phoneNum }"> <input type="hidden"
 					id="phoneNumber" name="phoneNumber" />
 			</div>
 
