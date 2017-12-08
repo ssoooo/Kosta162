@@ -8,8 +8,10 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import GeneralAffairs.domain.Event;
 import GeneralAffairs.domain.Message;
@@ -33,12 +35,24 @@ public class MessageController {
 	@Autowired
 	private EventService eventService;
 	
+	@RequestMapping(value = "/sendCollection.do", method = RequestMethod.GET) 
+	public String showSendCollectionMessage(HttpServletRequest req, String receivedMember, Message message, Model model) {
+
+		
+		return "";
+	}
 	
-	@RequestMapping("/sendCollection.do") 
-	public String sendCollectionMessage(HttpServletRequest req, List<String> receivedMember, Message message) {
+	@RequestMapping(value = "/sendCollection.do", method = RequestMethod.POST) 
+	public String sendCollectionMessage(HttpServletRequest req, @RequestBody List<String> receivedMember, Message message, Model model) {
+//		HttpSession session =req.getSession();
+//		session.setAttribute("loginedMemberId", message.getMemberId());	
+		receivedMember = message.getMemberId();
+		messageService.createMessage(message);
+		
+		model.addAttribute("message", message);
+		
+		System.out.println(receivedMember);
 
-
-//		모금액
 		return "";
 	}
 	

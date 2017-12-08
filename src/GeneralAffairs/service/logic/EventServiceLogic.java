@@ -98,5 +98,11 @@ import GeneralAffairs.store.GroupStore;
 		eventStore.updateUnPayment(eventId, memberId);
 		
 	}
+
+	@Override
+	public void modifyEventBalance(Event event, int price) {
+		eventStore.updateEventBalance(event);
+		
+	}
 	
  }

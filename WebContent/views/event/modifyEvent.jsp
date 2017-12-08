@@ -21,7 +21,7 @@
 				<!-- Logo -->
 				<div id="logo">
 					<h1>
-						<a href="main.do">알뜰총雜</a>
+						<a href="${pageContext.request.contextPath}/memberGroup/main.do">알뜰총雜</a>
 					</h1>
 					<span>${group.groupName} > ${event.eventName }</span>
 				</div>
@@ -29,21 +29,23 @@
 				<!-- Nav -->
 				<nav id="nav">
 					<ul>
-						<li><a href="main.do">Home</a></li>
-						<li><a href="main.do">Message</a>
+						<li><a
+							href="${pageContext.request.contextPath}/memberGroup/main.do">Home</a></li>
+						<li><a href="#">Message</a>
 							<ul class="ul_accept">
-								<p class="group_invite_list">제목
-								<div class="accept_reject">
-									<a href="">보기</a> <a href="">삭제</a>
-								</div>
-								</p>
-								<p class="group_invite_list">제목
-								<div class="accept_reject">
-									<a href="">보기</a> <a href="">삭제</a>
-								</div>
-								</p>
+								<c:forEach items="${messages }" var="message">
+									<p class="group_invite_list">${message.title }</p>
+									<div class="accept_reject">
+										<a href="#"
+											onclick="window.open('${pageContext.request.contextPath}/message/receivedMessage.do?messageId=${message.messageId }&groupId=${group.groupId }','win','width=700,height=600,toolbar=0,scrollbars=0,resizable=0')">보기</a>
+										<a
+											href="${pageContext.request.contextPath}/message/deleteMyMessage.do?messageId=${message.messageId }"
+											onclick="winClose('${message.memberId }')">삭제</a>
+									</div>
+								</c:forEach>
 							</ul></li>
-						<li class="current"><a href="login.do">Logout</a></li>
+						<li class="current"><a
+							href="${pageContext.request.contextPath}/views/member/login.jsp">Logout</a></li>
 					</ul>
 				</nav>
 			</header>
@@ -83,7 +85,7 @@
 									</c:choose>
 								</ul>
 								<a
-									href="${pageContext.request.contextPath}/event/registEvent.do?groupId=1"
+									href="${pageContext.request.contextPath}/event/registEvent.do?groupId=${group.groupId}"
 									class="button icon fa-info-circle">이벤트 추가</a>
 							</section>
 						</div>

@@ -45,10 +45,11 @@ public class EventController {
 		}
 
 		model.addAttribute("event", event);
+		model.addAttribute("group", group);
 		eventService.addMemberToEvent(event.getMemberId(), event.getEventId());
 		eventService.addMemberToEvent(group.getMemberId(), event.getEventId());
 
-		return "redirect:/event/event.do?eventId=" + event.getEventId() + "&groupId=" + event.getGroupId();
+		return "redirect:/event/event.do?eventId=" + event.getEventId() + "&groupId=" + group.getGroupId();
 	}
 
 	@RequestMapping(value = "/registEvent.do", method = RequestMethod.GET)
@@ -115,6 +116,7 @@ public class EventController {
 		model.addAttribute("event", event);
 
 		Group group = mgService.findGroupById(groupId);
+		model.addAttribute("group", group);
 
 		List<Member> members = mgService.findAllMembersExceptEventMembers(group.getGroupId(), eventId);
 		model.addAttribute("members", members);
@@ -192,11 +194,13 @@ public class EventController {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
 
-		String[] members = req.getParameterValues("memberId");
-		for (int i = 0; i < members.length; i++) {
-			event.setMemberId(members[i]);
+		String members = req.getParameter("memberId");
+		for (int i = 0; i < members.length(); i++) {
+			event.setMemberId(members);
 		}
+		event.setMemberId(members);
 		eventService.changePayment(event.getMemberId(), eventId);
+		System.out.println("..." + event.getMemberId());
 
 		return "redirect:/event/collectionDetail.do?eventId=" + eventId;
 	}
@@ -206,11 +210,13 @@ public class EventController {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
 
-		String[] memberss = req.getParameterValues("memberId2");
-		for (int i = 0; i < memberss.length; i++) {
-			event.setMemberId(memberss[i]);
-		}
+		String memberss = req.getParameter("memberId2");
+//		for (int i = 0; i < memberss.length; i++) {
+//			event.setMemberId(memberss[i]);
+//		}
+		event.setMemberId(memberss);
 		eventService.changeUnPayment(event.getMemberId(), eventId);
+		System.out.println("?//" + event.getMemberId());
 		
 		return "redirect:/event/collectionDetail.do?eventId=" + eventId;
 	}
@@ -242,12 +248,10 @@ public class EventController {
 		model.addAttribute("event", event);
 		Group group = mgService.findGroupById(groupId);
 		model.addAttribute("group", group);
-
+		
 		List<Event> events = eventService.findAllEventsByGroupId(groupId);
 		List<Record> records=recordService.findAllRecordsByEventId(eventId);
 		
-		
-	
 		model.addAttribute("events", events);
 		model.addAttribute("groupId", groupId);
 		model.addAttribute("records",records);

@@ -1,12 +1,13 @@
 package GeneralAffairs.domain;
 
 import java.sql.Date;
+import java.util.List;
 
 public class Message {
 
 	private int messageId;
 	private int eventId;
-	private String memberId;
+	private List<String> memberId;
 	private String title;
 	private String content;
 	private int groupId;
@@ -31,10 +32,10 @@ public class Message {
 	public void setEventId(int eventId) {
 		this.eventId = eventId;
 	}
-	public String getMemberId() {
+	public List<String> getMemberId() {
 		return memberId;
 	}
-	public void setMemberId(String memberId) {
+	public void setMemberId(List<String> memberId) {
 		this.memberId = memberId;
 	}
 	public String getTitle() {
