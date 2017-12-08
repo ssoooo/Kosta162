@@ -169,6 +169,25 @@
 			<script src="../resources/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="../resources/assets/js/main.js"></script>
-
+			<script>
+				function onclickFunction(groupId){
+				    $.ajax({
+				        type: "POST",
+				        url: "acceptInvite.do",
+				        data: {
+				        	groupId : groupId,
+				        	
+				        },
+				        dataType: "text",
+				        error : function() {
+				        	alert("모임 가입에 실패했습니다.")
+				        },
+				        success: function(response) { 
+					        alert("모임 가입이 완료되었습니다.");
+					        location.reload();
+				        }
+				    });
+				}
+			</script>
 	</body>
 </html>

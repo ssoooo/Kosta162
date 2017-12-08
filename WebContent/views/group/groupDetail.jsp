@@ -34,19 +34,20 @@
 					<ul >
 						<li><a href="main.html">Home</a></li>
 						<li>
-									<a>Message</a>
-									<ul class="ul_accept">
-									<c:forEach items="${messages }" var="message" >
-										<p class="group_invite_list">
-											${message.title }
-											<div class="accept_reject">
-												<a href="">보기</a>
-												<a href="">삭제</a>
-											</div>
-										</p>
-									</c:forEach>
-									</ul>
-								</li>
+							<a>Message</a>
+							<ul class="ul_accept">
+							<c:forEach items="${messages }" var="message" >
+								<p class="group_invite_list">
+									${message.title }
+									<div class="accept_reject">
+										<a href="">보기</a>
+										<a href="">삭제</a>
+									</div>
+								</p>
+							</c:forEach>
+							</ul>
+						</li>
+						<c:if test="${loginedMemberId eq group.memberId }"> 
 						<li><a href="main.html">가입신청</a>
 							
 							<ul id="refresh" class="ul_accept">
@@ -55,12 +56,14 @@
 									<p class="group_invite_list">${signIn.memberId }</p>
 								<br>
 									<div class="accept_reject">
-										<input type="button" value = "수락" onclick="onclickFunction('${group.groupId}','${signIn.memberId }')"> 
-										<input type="button" value = "거절" onclick="onclickFunction1('${group.groupId}','${signIn.memberId }')">
+										<input type="button" value = "승인" onclick="onclickFunction('${group.groupId}','${signIn.memberId }')"> 
+										<input type="button" value = "거부" onclick="onclickFunction1('${group.groupId}','${signIn.memberId }')">
 									</div>
 									
 								</c:forEach>
-							</ul></li>
+							</ul>
+						</li>
+						</c:if>
 						<li class="current"><a href="login.html">Logout</a></li>
 					</ul>
 					
@@ -108,17 +111,21 @@
 									document.write('<c:if test="${loginedMemberId eq manager.memberId }">');
 									document.write('<a href="${pageContext.request.contextPath}/memberGroup/showModifyGroup.do?groupId=${group.groupId }"><button class="btn_modify">수정</button></a>');
 									document.write('<a href="${pageContext.request.contextPath}/memberGroup/deleteGroup.do?groupId=${group.groupId }"><button class="btn_delete">삭제</button></a></c:if>');
-									document.write('<a href="${pageContext.request.contextPath}/memberGroup/leaveGroup.do?groupId=${group.groupId }"><button class="btn_modify">탈퇴</button></a>');
+									
+								    document.write('<c:choose>');
+								    document.write('<c:when test="${loginedMemberId eq group.memberId }">');
+								    document.write('<a href="#" onclick="alert(\'총무는 탈퇴할 수 없습니다. \n총무를 위임한 후 탈퇴할 수 있습니다.\')"><button class="btn_delete">탈퇴</button></a>');
+								    document.write('</c:when>');
+								    document.write('<c:otherwise>');
+								    document.write('<a href="${pageContext.request.contextPath}/memberGroup/leaveGroup.do?groupId=${group.groupId }"><button class="btn_delete">탈퇴</button></a>');
+								    document.write('</c:otherwise>');
+								    document.write('</c:choose>');
+								
+								
 								}
 							}
 							</script>
-								
 								 
-								
-								
-								
-								
-							
 							</div>
 						</div>
 					</div>
@@ -136,26 +143,16 @@
 						var openWin;
 						function windowOpen() {
 							openWin= window.open('showTradeGrade.do?groupId=${group.groupId}&managerId=${manager.memberId}','win','width=600,height=620,toolbar=0,scrollbars=0,resizable=0');
-							
-							
 						}
-						
-						
 						</script>
 
 
 						<div class="scroll">
-
 							<ul>
-
 								<c:forEach items="${members }" var="member">
-									<li><a
-										href="${pageContext.request.contextPath}/memberGroup/memberDetail.do?memberId=${member.memberId }">${member.memberId }</a></li>
+									<li><a href="${pageContext.request.contextPath}/memberGroup/memberDetail.do?memberId=${member.memberId }">${member.memberId }</a></li>
 								</c:forEach>
-
-
 							</ul>
-
 						</div>
 						
 
@@ -207,7 +204,7 @@
 	<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 	
 	<script src="../resources/assets/js/main.js"></script>
-<script>
+	<script>
 		function onclickFunction(groupId,memberId){
 		    $.ajax({
 		        type: "POST",

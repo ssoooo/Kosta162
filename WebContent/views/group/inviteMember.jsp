@@ -50,17 +50,34 @@
 									</form>
 									<c:choose>
 									<c:when test="${member ne null }">
-									<tr class="under">
-										<td class="th1"></td>
-										<td class="td2">
-												<ul id="ul_member">
-												<li>
-													<a href="${pageContext.request.contextPath}/memberGroup/memberDetail.do?memberId=${member.memberId }" class="member_list">${member.memberId }</a><a href="${pageContext.request.contextPath}/memberGroup/inviteMember.do?memberId=${member.memberId }&groupId=${group.groupId }"><button>초대</button></a>
-												</li>
-											</ul>
-											</td>
-										<td class="td3"></td>
-									</tr>
+											<c:choose>
+											<c:when test="${isGroupMember }">
+												<tr class="under">
+													<td class="th1"></td>
+													<td class="td2">
+														<ul id="ul_member">
+															<li>
+																<a href="${pageContext.request.contextPath}/memberGroup/memberDetail.do?memberId=${member.memberId }" class="member_list">${member.memberId }</a><a href="#"><button onclick="alert('이미 모임에 가입되어 있는 멤버입니다.')">초대</button></a>
+															</li>
+														</ul>
+													</td>
+													<td class="td3"></td>
+												</tr>
+											</c:when>
+											<c:otherwise>
+												<tr class="under">
+													<td class="th1"></td>
+													<td class="td2">
+														<ul id="ul_member">
+															<li>
+																<a href="${pageContext.request.contextPath}/memberGroup/memberDetail.do?memberId=${member.memberId }" class="member_list">${member.memberId }</a><a href="${pageContext.request.contextPath}/memberGroup/inviteMember.do?memberId=${member.memberId }&groupId=${group.groupId }"><button onclick="alert('${member.memberId }님을 모임에 초대했습니다.')">초대</button></a>
+															</li>
+														</ul>
+													</td>
+													<td class="td3"></td>
+												</tr>
+											</c:otherwise>
+											</c:choose>
 									</c:when>
 									<c:otherwise>
 									<tr class="under">

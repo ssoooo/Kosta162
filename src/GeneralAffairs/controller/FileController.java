@@ -3,7 +3,6 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
- 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
- 
+
 @Controller
 public class FileController {
 	
@@ -34,14 +33,15 @@ public class FileController {
 				
 				//ModelAndView modelAndView = new ModelAndView("result.jsp");
 				//modelAndView.addObject("img", "/images/" + name);
-				model.addAttribute("img", "C:"+File.separator+"tempFiles"+File.separator+ name);
+				model.addAttribute("img", "/images/" + name);
+				
 				return "group/result";
 				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
- 
+
 		return null;
 		
 	}

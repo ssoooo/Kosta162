@@ -127,7 +127,7 @@
 															<h3>대표 사진</h3>
 																
 																<input type="file" name="imgFile" onchange="readURL(this);"/>
-																
+																<input type="hidden" name="groupImage" value="${group.groupImage }"/>
 															<div class="col-lg-10">
 																  <img id="imgHere" src="${group.groupImage }" style="max-width:400px;"/>
 															</div>

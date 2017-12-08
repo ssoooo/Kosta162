@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
+<<<<<<< HEAD
 	<classpathentry kind="lib" path="C:/Users/yang/Downloads/javaTools/mybatis-3.4.5/mybatis-3.4.5/mybatis-3.4.5.jar"/>
+=======
+	<classpathentry kind="lib" path="C:/Users/kosta/Desktop/mybatis-3.4.5/mybatis-3.4.5/mybatis-3.4.5.jar"/>
+>>>>>>> master
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v9.0"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8">
