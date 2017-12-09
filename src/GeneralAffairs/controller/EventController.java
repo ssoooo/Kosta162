@@ -37,6 +37,54 @@ public class EventController {
 	public String registEvent(Event event, HttpSession session, HttpServletRequest req, Model model) {
 		event.setMemberId((String) session.getAttribute("loginedMemberId"));
 		eventService.createEvent(event);
+		
+		Record record = new Record();
+		
+		record.setEventId(event.getEventId());
+		record.setGroupId(event.getGroupId());
+		record.setMemberId(event.getMemberId());
+		record.setImage("none");
+		record.setTitle("지원금)"+event.getEventName());
+		record.setContent("모임"+event.getGroupId()+"의 지원금입니다.");
+		record.setCategory("미선택");
+		record.setPrice((int)event.getGroupSupport());
+		record.setCaution("정상");
+		record.setAccounting("수입");
+		recordService.createRecord(record);
+		
+		event.setBalance(record.getPrice());
+		eventService.modifyEventBalance(event);
+		
+		record.setEventId(0);
+		record.setGroupId(event.getGroupId());
+		record.setMemberId(event.getMemberId());
+		record.setImage("none");
+		record.setTitle("지원금)"+event.getEventName());
+		record.setContent("이벤트"+event.getEventName()+"의 지원금으로 지출되었습니다.");
+		record.setCategory("미선택");
+		record.setPrice((int)event.getGroupSupport());
+		record.setCaution("정상");
+		record.setAccounting("지출");
+		recordService.createRecord(record);
+		Group groups=new Group();
+		groups =mgService.findGroupById(event.getGroupId());
+		double balance= groups.getBalance()-event.getBalance();
+		groups.setBalance(balance);
+		mgService.modifyGroupBalance(groups);
+		
+		
+//		Record record = new Record();
+//		record.setEventId(0);
+//		record.setGroupId(group.getGroupId());
+//		record.setMemberId(event.getMemberId());
+//		record.setImage("none");
+//		record.setTitle("이)"+event.getEventName());
+//		record.setContent("이벤트 "+event.getEventName()+"의 합산결과");
+//		record.setCategory("이벤트");
+//		record.setPrice((int)event.getBalance());
+//		record.setAccounting("정상");
+//		recordService.createRecord(record);
+		
 		Group group = mgService.findGroupById(event.getGroupId());
 
 		String[] members = req.getParameterValues("get");
@@ -263,9 +311,20 @@ public class EventController {
 	public String addEventBalanceToGroup(int eventId) {
 		Event event= eventService.findEventById(eventId);
 		Group group =mgService.findGroupById(event.getGroupId());
-		System.out.println("이벤트이름"+event.getEventName());
-		System.out.println("이벤트발란스:"+event.getBalance());
+		
+		
 		double balance=group.getBalance()+event.getBalance();
+		Record record = new Record();
+		record.setEventId(0);
+		record.setGroupId(group.getGroupId());
+		record.setMemberId(event.getMemberId());
+		record.setImage("none");
+		record.setTitle("이)"+event.getEventName());
+		record.setContent("이벤트 "+event.getEventName()+"의 합산결과");
+		record.setCategory("미선택");
+		record.setPrice((int)event.getBalance());
+		record.setAccounting("정상");
+		recordService.createRecord(record);
 		group.setBalance(balance);
 		mgService.modifyGroupBalance(group);
 		

@@ -72,7 +72,7 @@ public class RecordServiceLogic implements RecordService{
 	}
 
 	@Override
-	public int findEventAccountingResult(String accounting, int eventId,Date sDate,Date fDate) {
+	public Integer findEventAccountingResult(String accounting, int eventId,Date sDate,Date fDate) {
 		return store.retrieveEventAccountingResult(accounting, eventId, sDate, fDate);
 	}
 

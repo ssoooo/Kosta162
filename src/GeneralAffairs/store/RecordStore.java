@@ -22,7 +22,7 @@ public interface RecordStore {
 //	List<Record> retrieveRecordsByCategoryMonth(String category,String accounting,Date sDate,Date fDate);
 //	List<Record> retrieveRecordsByCategoryYear(String category,String accounting,Date sDate,Date fDate);
 	Integer retrieveGroupAccountingResult(String accounting,int groupId,Date sDate,Date fDate);//지출,수입 조건에 따른 모임의 일정기간 금액 가져오기
-	int retrieveEventAccountingResult(String accounting,int eventId,Date sDate,Date fDate);//지출,수입 조건에 따른 이벤트의 일정기간 금액 가져오기
+	Integer retrieveEventAccountingResult(String accounting,int eventId,Date sDate,Date fDate);//지출,수입 조건에 따른 이벤트의 일정기간 금액 가져오기
 //	List<Record> retrieveGroupStatsRecordByEventMonth(String accounting,Date sDate,Date fDate,int groupId,int eventId);
 //	List<Record> retrieveGroupStatsRecordByEventYear(String accounting,Date sDate,Date fDate,int groupId,int eventId);
 	List<Record> retrieveGroupStatsRecordByEvent(String accounting,int groupId);//기간에 따른 이벤트별 수입 혹은 지출 합계 가져오기

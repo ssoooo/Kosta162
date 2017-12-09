@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html>
 	<head>
-		<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+	
 		<title>통계 페이지</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -140,7 +140,7 @@
 					  </c:forEach>
 					 
 				 </div>
-				
+				 
 				 
 				 </div>
 
@@ -179,18 +179,18 @@
 
 									var data4 = new google.visualization.arrayToDataTable([
 										['기준', '수입', '지출'],
-										['이번달', ${month_income_0}, ${month_outlay_0}],
-										['1달전', ${month_income_1}, ${month_outlay_1}],
-										['2달전', ${month_income_2}, ${month_outlay_2}],
-										['3달전', ${month_income_3}, ${month_outlay_3}],
-										['4달전', ${month_income_4}, ${month_outlay_4}],
-										['5달전', ${month_income_5}, ${month_outlay_5}],
-										['6달전', ${month_income_6}, ${month_outlay_6}],
-										['7달전', ${month_income_7}, ${month_outlay_7}],
-										['8달전', ${month_income_8}, ${month_outlay_8}],
-										['9달전', ${month_income_9}, ${month_outlay_9}],
-										['10달전', ${month_income_10}, ${month_outlay_10}],
-										['11달전', ${month_income_11}, ${month_outlay_11}]
+										['이번달', ${month0Income}, ${month0Outlay}],
+										['1달전', ${month1Income}, ${month1Outlay}],
+										['2달전', ${month2Income}, ${month2Outlay}],
+										['3달전', ${month3Income}, ${month3Outlay}],
+										['4달전', ${month4Income}, ${month4Outlay}],
+										['5달전', ${month5Income}, ${month5Outlay}],
+										['6달전', ${month6Income}, ${month6Outlay}],
+										['7달전', ${month7Income}, ${month7Outlay}],
+										['8달전', ${month8Income}, ${month8Outlay}],
+										['9달전', ${month9Income}, ${month9Outlay}],
+										['10달전', ${month10Income}, ${month10Outlay}],
+										['11달전', ${month11Income}, ${month11Outlay}]
 										
 									]);
 

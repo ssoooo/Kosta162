@@ -100,10 +100,12 @@
 	</select>
 
 	<select id="retrieveEventAccountingResult" parameterType="map"
-		resultType="int">
+		resultType="Integer">
 		SELECT sum(price)
 		FROM record_table
-		WHERE regDate <![CDATA[>=]]> #{sDate} AND regDate <![CDATA[<]]> #{fDate}+1 AND accounting=#{accounting} AND eventId=#{eventId}
+		WHERE regDate <![CDATA[>=]]> TO_CHAR(#{sDate},'yyyymmdd') 
+		AND regDate <![CDATA[<]]> TO_CHAR(#{fDate},'yyyymmdd')
+		AND accounting=#{accounting} AND eventId=#{eventId}
 	</select>
 	
 	<!-- 실험 -->

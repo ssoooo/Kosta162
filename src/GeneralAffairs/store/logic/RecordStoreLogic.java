@@ -180,18 +180,18 @@ public class RecordStoreLogic implements RecordStore{
 	
 	@Override
 	public Integer retrieveGroupAccountingResult(String accounting, int groupId,Date sDate,Date fDate) {
-		Integer groupAccounting=null;
+		Integer sum=null;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
-		groupAccounting=mapper.retrieveGroupAccountingResult(accounting, groupId,sDate,fDate);
+		sum=mapper.retrieveGroupAccountingResult(accounting, groupId,sDate,fDate);
 		}finally {
 			session.close();
 		}
-		if(groupAccounting ==null) {
+		if(sum ==null) {
 		return 0;
 		}else {
-			return groupAccounting;
+			return sum;
 		}
 		
 	}
@@ -199,8 +199,8 @@ public class RecordStoreLogic implements RecordStore{
 
 
 	@Override
-	public int retrieveEventAccountingResult(String accounting, int eventId,Date sDate,Date fDate) {
-		int sum=0;
+	public Integer retrieveEventAccountingResult(String accounting, int eventId,Date sDate,Date fDate) {
+		Integer sum =null;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 		RecordMapper mapper =session.getMapper(RecordMapper.class);	
@@ -208,8 +208,11 @@ public class RecordStoreLogic implements RecordStore{
 		}finally {
 			session.close();
 		}
-		
-		return sum;
+		if(sum ==null) {
+			return 0;
+			}else {
+				return sum;
+			}
 	}
 
 	@Override
