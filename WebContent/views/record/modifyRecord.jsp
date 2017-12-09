@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 	<head>
@@ -18,7 +19,14 @@
 						<!-- Logo -->
 						<div id="logo">
 							<h1><a href="main.html">알뜰총雜</a></h1>
-							<span>Kosta 162기 > 가을 MT</span>
+							<c:choose>
+								<c:when test="${event.eventName eq null}">
+									<span>${group.groupName}</span>
+								</c:when>
+								<c:otherwise>
+									<span>${group.groupName} > ${event.eventName }</span>
+								</c:otherwise>
+							</c:choose>
 						</div>
 
 						<!-- Nav -->
@@ -111,7 +119,6 @@
 														<label class="col-lg-2 control-label">
 														  <h3>수입 및 지출(단위/원)</h3>
 														  <select id="selectAccounting" name="accounting">
-																<option selected>수입/지출 선택 </option>
 																<option value="수입">수입</option>
 																<option value="지출">지출</option>
 														  </select>
