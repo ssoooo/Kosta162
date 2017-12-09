@@ -48,7 +48,7 @@ public class RecordController {
 	private EventService eventService;
 	
 	@Autowired
-	private MemberGroupService msService;
+	private MemberGroupService mgService;
 	
 	@Autowired
 	private CommentService commentService;
@@ -58,14 +58,15 @@ public class RecordController {
 	public String registGroupRecord(Record record,int groupId,HttpSession session, @RequestParam("imgFile") MultipartFile imgFile,Model model) {
 		
 		String myId = (String)session.getAttribute("loginedMemberId");
-		
-		String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
-	    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
-	    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
-	    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
-		System.out.println(groupId);
+	    
 		if(!imgFile.isEmpty()) {
 			try {
+				
+				String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
+			    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
+			    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
+			    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
+				
 				byte [] bytes = imgFile.getBytes();
 				File dir = new File("c:\\" + File.separator + "tempFiles");
 				
@@ -80,29 +81,6 @@ public class RecordController {
 				
 //			    group.setGroupImage(dir.getAbsolutePath() + File.separator + rename);
 				record.setImage("/images/" + rename);
-				record.setMemberId(myId);
-				
-				record.setEventId(0);
-				recordService.createRecord(record);
-				
-				
-				Group group = msService.findGroupById(groupId);
-				double groupBalance=group.getBalance();
-				int price =record.getPrice();
-				if(record.getAccounting().equals("지출")) {
-					groupBalance=groupBalance-price;
-					group.setBalance(groupBalance);
-					msService.modifyGroupBalance(group);
-				}else {
-					groupBalance=groupBalance+price;
-					group.setBalance(groupBalance);
-					msService.modifyGroupBalance(group);
-					
-				}
-				
-
-				
-				return "redirect:/memberGroup/group.do?groupId="+record.getGroupId();
 				
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -110,6 +88,24 @@ public class RecordController {
 			}
 		} else {
 //	        model.addAttribute("resultMsg", "업로드할 파일을 선택해주시기 바랍니다.");
+		}
+		
+		record.setMemberId(myId);
+		record.setEventId(0);
+		recordService.createRecord(record);
+		
+		Group group = mgService.findGroupById(groupId);
+		double groupBalance = group.getBalance();
+		int price = record.getPrice();
+
+		if(record.getAccounting().equals("지출")) {
+			groupBalance = groupBalance - price;
+			group.setBalance(groupBalance);
+			mgService.modifyGroupBalance(group);
+		} else {
+			groupBalance = groupBalance + price;
+			group.setBalance(groupBalance);
+			mgService.modifyGroupBalance(group);
 		}
 		
 		List<Event> events = eventService.findAllEventsByGroupId(groupId);
@@ -123,13 +119,14 @@ public class RecordController {
 		
 		String myId = (String)session.getAttribute("loginedMemberId");
 		
-		String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
-	    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
-	    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
-	    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
-		
 		if(!imgFile.isEmpty()) {
 			try {
+				
+				String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
+			    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
+			    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
+			    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
+				
 				byte [] bytes = imgFile.getBytes();
 				File dir = new File("c:\\" + File.separator + "tempFiles");
 				
@@ -144,29 +141,6 @@ public class RecordController {
 				
 //			    group.setGroupImage(dir.getAbsolutePath() + File.separator + rename);
 				record.setImage("/images/" + rename);
-				record.setEventId(eventId);
-				record.setMemberId(myId);
-				recordService.createRecord(record);
-				
-				
-				
-				Event event = eventService.findEventById(eventId);
-				double eventBalance=event.getBalance();
-				int price =record.getPrice();
-				if(record.getAccounting().equals("지출")) {
-					eventBalance=eventBalance-price;
-					event.setBalance(eventBalance);
-					eventService.modifyEventBalance(event);
-				}else {
-					eventBalance=eventBalance+price;
-					event.setBalance(eventBalance);
-					eventService.modifyEventBalance(event);
-				}
-				
-				
-
-				
-				return "redirect:/event/event.do?eventId="+record.getEventId()+"&groupId="+record.getGroupId();
 				
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -177,10 +151,25 @@ public class RecordController {
 		}
 		
 		
+		record.setEventId(eventId);
+		record.setMemberId(myId);
+		recordService.createRecord(record);
+		
+		Event event = eventService.findEventById(eventId);
+		double eventBalance=event.getBalance();
+		int price = record.getPrice();
+		
+		if(record.getAccounting().equals("지출")) {
+			eventBalance = eventBalance-price;
+			event.setBalance(eventBalance);
+			eventService.modifyEventBalance(event);
+		} else {
+			eventBalance = eventBalance+price;
+			event.setBalance(eventBalance);
+			eventService.modifyEventBalance(event);
+		}
+		
 		return  "redirect:/event/event.do?eventId="+record.getEventId()+"&groupId="+record.getGroupId();
-		
-		
-		
 	}
 	
 	@RequestMapping("/deleteRecord.do")
@@ -189,18 +178,21 @@ public class RecordController {
 		
 		int price = record.getPrice();
 		String recordAccounting = record.getAccounting();
-		Group group =msService.findGroupById(record.getGroupId());
+		Group group =mgService.findGroupById(record.getGroupId());
 		double groupBalance= group.getBalance();
 		Event event =eventService.findEventById(record.getEventId());
+		
 		if(record.getEventId()==0) {
+			
 			if(record.getAccounting().equals("수입")) {
 				group.setBalance(group.getBalance()-record.getPrice());
-				msService.modifyGroupBalance(group);
+				mgService.modifyGroupBalance(group);
 			}else {
 				group.setBalance(group.getBalance()+record.getPrice());
-				msService.modifyGroupBalance(group);
+				mgService.modifyGroupBalance(group);
 			}
-		}else {
+			
+		} else {
 			
 			if(record.getAccounting().equals("수입")) {
 				event.setBalance(event.getBalance()-record.getPrice());
@@ -216,81 +208,95 @@ public class RecordController {
 		return "redirect:/memberGroup/group.do?groupId="+record.getGroupId();
 	}
 	
-
-	
 	@RequestMapping(value="/modifyRecord.do",method=RequestMethod.POST)
 	public String modifyGroupRecord(Record record,String pastAccounting,int pastPrice,HttpSession session, @RequestParam("imgFile") MultipartFile imgFile) {
-		String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
-	    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
-	    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
-	    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
-		record.setImage("/images/" + rename);
-		record.setMemberId((String)session.getAttribute("loginedMemberId"));
+		System.out.println("eventId:" + record.getEventId());
+		System.out.println("groupId:" + record.getGroupId());
+		System.out.println("recordId:" + record.getRecordId());
+		System.out.println("getTitle:" + record.getTitle());
+		System.out.println("content:" + record.getContent());
+		System.out.println("price:" + record.getPrice());
+		System.out.println("category:" + record.getCategory());
+		System.out.println("accounting:" + record.getAccounting());
 		
-		
-		
-		if(record.getEventId()==0) {
-		int price = record.getPrice();
-		Group group =msService.findGroupById(record.getGroupId());
-		double groupBalance= group.getBalance();
-		System.out.println(groupBalance);
-		
-		if(pastAccounting.equals("수입")) {
-		 double incomeBalance=groupBalance-pastPrice;
-		 group.setBalance(incomeBalance);
-		 msService.modifyGroupBalance(group);
-		}else {
-		double outlayBalance = groupBalance+pastPrice;
-		group.setBalance(outlayBalance);
-		msService.modifyGroupBalance(group);
-		}
-		
-
-		recordService.modifyRecord(record);
-		
-		
-		if(record.getAccounting().equals("지출")) {
-			groupBalance=groupBalance-price;
-			group.setBalance(groupBalance);
-			msService.modifyGroupBalance(group);
-		}else {
-			groupBalance=groupBalance+price;
-			group.setBalance(groupBalance);
-			msService.modifyGroupBalance(group);
+		if(!imgFile.isEmpty()) {
 			
-			}
+			String originalFilename = imgFile.getOriginalFilename(); // fileName.jpg
+		    String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
+		    String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
+		    String rename = onlyFileName + extension; // fileName_20150721-14-07-50.jpg
+			
+		    record.setImage("/images/" + rename);
 		}
-		recordService.modifyRecord(record);
 		
+//		record.setMemberId((String)session.getAttribute("loginedMemberId"));
+		
+//		if(record.getEventId()==0) {
+//			
+//			int price = record.getPrice();
+//			Group group = mgService.findGroupById(record.getGroupId());
+//			double groupBalance= group.getBalance();
+//		
+//			if(pastAccounting.equals("수입")) {
+//				double incomeBalance=groupBalance-pastPrice;
+//				group.setBalance(incomeBalance);
+//				mgService.modifyGroupBalance(group);
+//			} else {
+//				double outlayBalance = groupBalance+pastPrice;
+//				group.setBalance(outlayBalance);
+//				mgService.modifyGroupBalance(group);
+//			}
+//		
+//			recordService.modifyRecord(record);
+//		
+//			if(record.getAccounting().equals("지출")) {
+//				groupBalance=groupBalance-price;
+//				group.setBalance(groupBalance);
+//				mgService.modifyGroupBalance(group);
+//			} else {
+//				groupBalance=groupBalance+price;
+//				group.setBalance(groupBalance);
+//				mgService.modifyGroupBalance(group);
+//			}
+//		}
+		
+		recordService.modifyRecord(record);
 		
 		return "redirect:/record/showRecordDetail.do?recordId="+record.getRecordId();
-	
-	
 	}
-	
-	
-	
-	
-	
 	
 	@RequestMapping("/showModifyRecord.do")
 	public String modifyEventRecord(int recordId,Model model) {
+		
 		Record record=recordService.findRecordById(recordId);
+		Group group = mgService.findGroupById(record.getGroupId());
+		Event event;
+		
+		if(record.getEventId() != 0) {
+			event = eventService.findEventById(record.getEventId());
+			model.addAttribute("event", event);
+		} else {
+			model.addAttribute("event", null);
+		}
+		
 		List<Event> events = eventService.findAllEventsByGroupId(record.getGroupId());
 		int pastPrice = record.getPrice();
-		String pastAccounting=record.getAccounting();
+		String pastAccounting = record.getAccounting();
+		String category = record.getCategory();
+		
+		model.addAttribute("group", group);
 		model.addAttribute("events",events);
 		model.addAttribute("record",record);
 		model.addAttribute("pastPrice",pastPrice);
 		model.addAttribute("pastAccounting",pastAccounting);
+		model.addAttribute("category", category);
+		
 		return "record/modifyRecord";
 	}
 	
 	@RequestMapping("/checkRecord.do")
 	public String checkRecord(int recordId,Model model) {
 		Record record=recordService.findRecordById(recordId);
-		System.out.println(recordId);
-		System.out.println(record.getCaution());
 		if(record.getCaution().equals("정상")) {
 			record.setCaution("주의");
 			recordService.modifyCaution(record);
@@ -311,15 +317,12 @@ public class RecordController {
 		List<Event> events = eventService.findAllEventsByGroupId(groupId);
 		
 		model.addAttribute("events",events);
-		Group group=msService.findGroupById(groupId);
+		Group group=mgService.findGroupById(groupId);
 		model.addAttribute("memberId",session.getAttribute("memberId"));
 		model.addAttribute("group",group);
 		
-		
 		return "record/registRecord";
 	}
-	
-
 	
 	@RequestMapping("/showRegistEventRecord.do")
 	public String showRegistEventRecord(HttpSession session,int eventId,Model model) {
@@ -343,7 +346,17 @@ public class RecordController {
 	public String showRecordDetail(int recordId,Model model) {
 		
 		Record record = recordService.findRecordById(recordId);
-		System.out.println("..." + recordId);
+		Group group = mgService.findGroupById(record.getGroupId());
+		
+		Event event;
+		
+		if(record.getEventId() != 0) {
+			event = eventService.findEventById(record.getEventId());
+			model.addAttribute("event", event);
+		} else {
+			model.addAttribute("event", null);
+		}
+		
 		List<Comment> comments = commentService.findAllCommentsByRecordId(recordId);
 		for (Comment comment : comments) {
 			System.out.println(comment.getDate());
@@ -351,15 +364,12 @@ public class RecordController {
 		
 		List<Event> events = eventService.findAllEventsByGroupId(record.getGroupId());
 		
+		model.addAttribute("group", group);
 		model.addAttribute("record",record);
 		model.addAttribute("comments",comments);
 		model.addAttribute("events",events);
 		return "record/recordDetail";
 	}
-	
-	
-	
-	
 	
 	@RequestMapping("/eventStatsByPeriod.do")
 	public String showEventStatsByPeriod(Date date,String accounting,int eventId,Model model) {
@@ -409,7 +419,7 @@ public class RecordController {
 		int groupIncome = recordService.findGroupStatsRecordByAccounting(groupId,"수입"); 
 		int groupOutlay= recordService.findGroupStatsRecordByAccounting(groupId,"지출");
 		int groupBalance = groupIncome-groupOutlay;
-		Group group = msService.findGroupById(groupId);
+		Group group = mgService.findGroupById(groupId);
 		model.addAttribute("groupName",group.getGroupName());
 		model.addAttribute("income",groupIncome);
 		model.addAttribute("outlay",groupOutlay);

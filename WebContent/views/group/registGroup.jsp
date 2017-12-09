@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 	<head>
@@ -43,7 +44,7 @@
 
 						<!-- Logo -->
 						<div id="logo">
-							<h1><a href="index.html">알뜰총雜</a></h1>
+							<h1><a href="${pageContext.request.contextPath}/memberGroup/main.do">알뜰총雜</a></h1>
 							<span>알뜰한 총무의 잡다한 가계부</span>
 						</div>
 
@@ -97,7 +98,7 @@
 													<div class="form-group">
 														<h3>모임 명</h3>
 														<div class="col-lg-10">
-															<input type="text" name="groupName" class="form-control">
+															<input type="text" name="groupName" class="form-control" required="required">
 														</div>
 													</div>
 													<br/>
@@ -105,12 +106,12 @@
 														
 														<h3>총무 계좌</h3>
 														<select id="selectBank" name="selectBank">
-															<option selected id="selectedBank" > 은행 선택 </option>
-															<option value="1">국민</option>
-															<option value="2">우리</option>
-															<option value="3">신한</option>
-															<option value="4">농협</option>
-															<option value="5">카카오</option>
+															<option value="미선택">은행 선택</option>
+															<option value="국민">국민</option>
+															<option value="우리">우리</option>
+															<option value="신한">신한</option>
+															<option value="농협">농협</option>
+															<option value="카카오">카카오</option>
 														</select>
 														<br/>
 														<div class="col-lg-10">
@@ -156,6 +157,11 @@
 														</div>
 														<script>
 														function accountVals() {
+															
+															if($('option:selected', $(this)).val('미선택')){
+																$('#account').val("미선택/" + accountNum);
+															}
+															
 															var accountNum = $('#accountNum').val();
 															$('#account').val(bank + "/" + accountNum);
 															

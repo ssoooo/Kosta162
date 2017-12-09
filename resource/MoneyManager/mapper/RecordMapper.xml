@@ -3,7 +3,10 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="GeneralAffairs.store.mapper.RecordMapper">
-
+	
+	<resultMap type="Record" id="recordMap">
+    	<result property="date" column="regDate"/>
+    </resultMap>
 
 	<insert id="registRecordFromMessage" parameterType="Record">
 		INSERT INTO
@@ -19,7 +22,7 @@
 
 	<update id="updateRecord" parameterType="Record">
 		UPDATE record_table SET
-		image=#{image},title=#{title},regDate=SYSDATE,content=#{content},price=#{price},category=#{category}
+		image=#{image},title=#{title},regDate=SYSDATE,content=#{content},accounting=#{accounting},price=#{price},category=#{category}
 		WHERE recordId=#{recordId}
 	</update>
 	<!-- 미사용 -->
@@ -39,30 +42,27 @@
 		WHERE recordId=#{recordId}
 	</delete>
 
-	<select id="retrieveRecordById" parameterType="int" resultType="Record">
+	<select id="retrieveRecordById" parameterType="int" resultMap="recordMap">
 		SELECT
 		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,caution,price,category
 		FROM record_table
 		WHERE recordId=#{recordId}
 	</select>
 
-	<select id="retrieveAllRecordsByEventId" parameterType="int"
-		resultType="Record">
+	<select id="retrieveAllRecordsByEventId" parameterType="int" resultMap="recordMap">
 		SELECT
 		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,caution,price,category
 		FROM record_table
 		WHERE eventId=#{eventId}
 	</select>
 
-	<select id="retrieveAllRecordsByGroupId" parameterType="int"
-		resultType="Record">
+	<select id="retrieveAllRecordsByGroupId" parameterType="int" resultMap="recordMap">
 		SELECT
 		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,caution,price,category
 		FROM record_table
 		WHERE groupId=#{groupId} AND eventId=0
+		order by recordId desc
 	</select>
-
-
 
 	<select id="retrieveRecordsByMonth" parameterType="map"
 		resultType="Record">
@@ -76,7 +76,6 @@
 		TO_CHAR(regDate,'MM') ASC<!--미완 -->
 	</select>
 
-
 	<select id="retrieveRecordsByYear" parameterType="map"
 		resultType="Record">
 		SELECT
@@ -88,7 +87,6 @@
 		ORDER BY
 		TO_CHAR(regDate,'yyyy') ASC<!--미완 -->
 	</select>
-
 
 	<select id="retrieveGroupAccountingResult" parameterType="map"
 		resultType="Integer">
@@ -107,7 +105,7 @@
 		AND regDate <![CDATA[<]]> TO_CHAR(#{fDate},'yyyymmdd')
 		AND accounting=#{accounting} AND eventId=#{eventId}
 	</select>
-	
+
 	<!-- 실험 -->
 	<!-- SELECT sum(price)
 		FROM record_table
@@ -118,7 +116,6 @@
 		FROM record_table
 		WHERE regDate<![CDATA[>=]]> TO_DATE(#{year}||'-01-01','yyyymmdd') AND regDate <![CDATA[<]]> TO_DATE(#{year}||'-12-31','yyyymmdd') AND accounting=#{accounting} AND eventId=#{eventId}  
 	</select>
-	
 
 	<select id="retrieveGroupStatsRecordByEvent" parameterType="map"
 		resultType="Record">
@@ -134,10 +131,7 @@
 		SELECT sum(price)
 		FROM record_table
 		WHERE accounting=#{accounting} AND groupId=#{groupId} AND category=#{category}
-		
-		
 	</select>
-	
 	
 	<!-- ? -->
 	<select id="retrieveGroupStatsRecordByMonth" parameterType="map"
@@ -149,6 +143,7 @@
 		ORDER BY TO_CHAR(regDate,'yyyymm') ASC
 	</select>
 	<!-- ? -->
+	
 	<select id="retrieveGroupStatsRecordByYear" parameterType="map"
 		resultType="int">
 		SELECT sum(price)
@@ -157,8 +152,6 @@
 		GROUP BY TO_CHAR(regDate,'yyyy')
 		ORDER BY TO_CHAR(regDate,'yyyy') ASC
 	</select>
-	
-	
 
 	<select id="retrieveGroupStatsRecordByAccounting" parameterType="map"
 		resultType="Integer">
@@ -176,39 +169,28 @@
 		GROUP BY TO_CHAR(regDate,'yyyymm')
 		ORDER BY TO_CHAR(regDate,'yyyymm') ASC
 	</select>
-	
-
-	
-	
-	
 
 	<select id="retrieveEventStatsRecordByCategory" parameterType="map"
 		resultType="Integer">
 		SELECT sum(price)
 		FROM record_table
 		WHERE accounting=#{accounting} AND eventId=#{eventId} AND category=#{category}
-		
 	</select>
 
 	<select id="retrieveEventStatsRecordByAccounting" parameterType="map"
 		resultType="Integer">
-
 		SELECT sum(price)
 		FROM record_table
 		WHERE accounting=#{accounting} AND eventId=#{eventId}
 	</select>
 	
-	
 	<select id="retrieveStatsByEvent" parameterType="map"
 		resultType="Record">
-
 		SELECT sum(price),eventId
 		FROM record_table
 		WHERE accounting=#{accounting} AND groupId=#{groupId}
 		GROUP BY eventId
 		ORDER BY eventId
 	</select>
-	
-
 
 </mapper>

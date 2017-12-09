@@ -20,7 +20,14 @@
 						<!-- Logo -->
 						<div id="logo">
 							<h1><a href="${pageContext.request.contextPath}/memberGroup/main.do">알뜰총雜</a></h1>
-							<span>알뜰한 총무의 잡다한 가계부</span>
+							<c:choose>
+								<c:when test="${event.eventName eq null}">
+									<span>${group.groupName}</span>
+								</c:when>
+								<c:otherwise>
+									<span>${group.groupName} > ${event.eventName }</span>
+								</c:otherwise>
+							</c:choose>
 						</div>
 
 						<!-- Nav -->
@@ -75,9 +82,9 @@
 												<li><a
 													href="${pageContext.request.contextPath}/event/event.do?eventId=${event.eventId }&groupId=${event.groupId}">
 														<h3>${event.eventName }
-															<a href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }"><img
-																class="event_info"
-																src="../resources/assets/css/images/info.png" /></a>
+															<a href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }">
+																<img class="event_info" src="../resources/assets/css/images/info.png"/>
+															</a>
 														</h3>
 												</a></li>
 											</c:forEach>
@@ -105,19 +112,21 @@
                          <div class="post">
                               <strong>${record.memberId}</strong>
                               &nbsp;<span class="text-muted">${record.date}</span>
-                              &nbsp;<span class="text-muted">${record.accounting}</span>
                                 <a href="${pageContext.request.contextPath}/record/showModifyRecord.do?recordId=${record.recordId}" style="float:right; margin-left:20px;">수정</a>
                                 <a href="${pageContext.request.contextPath}/record/deleteRecord.do?recordId=${record.recordId}" style="float:right">삭제</a>
                          </div>
                          <br>
                          <p style="padding:10px">
-                             	${record.price} 원
+                             	분류: ${record.category}
+							 <br/>
+							 	${record.accounting}내역: ${record.price} 원
+							 <br/>
+
+								${record.content}
 							 <br/>
 							 <br/>
-							 <img src="${record.image}">
-							 <br/>
-							 <br/>
-						
+							 <img src="${record.image}" style="max-width:580px;">
+
                          </p>
                    <script type="text/javascript">
                    
