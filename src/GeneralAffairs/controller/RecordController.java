@@ -210,6 +210,14 @@ public class RecordController {
 	
 	@RequestMapping(value="/modifyRecord.do",method=RequestMethod.POST)
 	public String modifyGroupRecord(Record record,String pastAccounting,int pastPrice,HttpSession session, @RequestParam("imgFile") MultipartFile imgFile) {
+		System.out.println("eventId:" + record.getEventId());
+		System.out.println("groupId:" + record.getGroupId());
+		System.out.println("recordId:" + record.getRecordId());
+		System.out.println("getTitle:" + record.getTitle());
+		System.out.println("content:" + record.getContent());
+		System.out.println("price:" + record.getPrice());
+		System.out.println("category:" + record.getCategory());
+		System.out.println("accounting:" + record.getAccounting());
 		
 		if(!imgFile.isEmpty()) {
 			
@@ -223,34 +231,34 @@ public class RecordController {
 		
 //		record.setMemberId((String)session.getAttribute("loginedMemberId"));
 		
-		if(record.getEventId()==0) {
-			
-			int price = record.getPrice();
-			Group group = mgService.findGroupById(record.getGroupId());
-			double groupBalance= group.getBalance();
-		
-			if(pastAccounting.equals("수입")) {
-				double incomeBalance=groupBalance-pastPrice;
-				group.setBalance(incomeBalance);
-				mgService.modifyGroupBalance(group);
-			} else {
-				double outlayBalance = groupBalance+pastPrice;
-				group.setBalance(outlayBalance);
-				mgService.modifyGroupBalance(group);
-			}
-		
-			recordService.modifyRecord(record);
-		
-			if(record.getAccounting().equals("지출")) {
-				groupBalance=groupBalance-price;
-				group.setBalance(groupBalance);
-				mgService.modifyGroupBalance(group);
-			} else {
-				groupBalance=groupBalance+price;
-				group.setBalance(groupBalance);
-				mgService.modifyGroupBalance(group);
-			}
-		}
+//		if(record.getEventId()==0) {
+//			
+//			int price = record.getPrice();
+//			Group group = mgService.findGroupById(record.getGroupId());
+//			double groupBalance= group.getBalance();
+//		
+//			if(pastAccounting.equals("수입")) {
+//				double incomeBalance=groupBalance-pastPrice;
+//				group.setBalance(incomeBalance);
+//				mgService.modifyGroupBalance(group);
+//			} else {
+//				double outlayBalance = groupBalance+pastPrice;
+//				group.setBalance(outlayBalance);
+//				mgService.modifyGroupBalance(group);
+//			}
+//		
+//			recordService.modifyRecord(record);
+//		
+//			if(record.getAccounting().equals("지출")) {
+//				groupBalance=groupBalance-price;
+//				group.setBalance(groupBalance);
+//				mgService.modifyGroupBalance(group);
+//			} else {
+//				groupBalance=groupBalance+price;
+//				group.setBalance(groupBalance);
+//				mgService.modifyGroupBalance(group);
+//			}
+//		}
 		
 		recordService.modifyRecord(record);
 		
@@ -273,13 +281,15 @@ public class RecordController {
 		
 		List<Event> events = eventService.findAllEventsByGroupId(record.getGroupId());
 		int pastPrice = record.getPrice();
-		String pastAccounting=record.getAccounting();
+		String pastAccounting = record.getAccounting();
+		String category = record.getCategory();
 		
 		model.addAttribute("group", group);
 		model.addAttribute("events",events);
 		model.addAttribute("record",record);
 		model.addAttribute("pastPrice",pastPrice);
 		model.addAttribute("pastAccounting",pastAccounting);
+		model.addAttribute("category", category);
 		
 		return "record/modifyRecord";
 	}

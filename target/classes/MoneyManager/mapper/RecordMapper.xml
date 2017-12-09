@@ -22,7 +22,7 @@
 
 	<update id="updateRecord" parameterType="Record">
 		UPDATE record_table SET
-		image=#{image},title=#{title},regDate=SYSDATE,content=#{content},price=#{price},category=#{category}
+		image=#{image},title=#{title},regDate=SYSDATE,content=#{content},accounting=#{accounting},price=#{price},category=#{category}
 		WHERE recordId=#{recordId}
 	</update>
 	<!-- 미사용 -->

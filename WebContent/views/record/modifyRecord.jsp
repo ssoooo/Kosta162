@@ -8,6 +8,30 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/main2.css" />
+		<script src="http://code.jquery.com/jquery-1.5.js"></script>
+		<script type="text/javascript">
+		var accounting;
+		var category;
+		
+		$(document).ready(function(){
+		    $('#selectAccounting').val('${pastAccounting }').attr("selected", true);
+		    accounting = $('#selectAccounting option:selected').val();
+
+		    $('#selectCategory').val('${record.category }').attr("selected", true);
+		    category = $('#selectCategory option:selected').val();
+		});
+		
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				
+				reader.onload = function (e) {
+					$('#imgHere').attr('src', e.target.result); 
+				} 
+				reader.readAsDataURL(input.files[0]); 
+			} 
+		} 
+		</script>
 	</head>
 	<body class="left-sidebar">
 		<div id="page-wrapper">
@@ -80,9 +104,9 @@
 												<li><a
 													href="${pageContext.request.contextPath}/event/event.do?eventId=${event.eventId }&groupId=${event.groupId}">
 														<h3>${event.eventName }
-															<a href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }"><img
-																class="event_info"
-																src="../resources/assets/css/images/info.png" /></a>
+															<a href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }">
+																<img class="event_info" src="../resources/assets/css/images/info.png" />
+															</a>
 														</h3>
 												</a></li>
 											</c:forEach>
@@ -106,6 +130,8 @@
 												<fieldset>
 													<div class="form-group">
 														<label class="col-lg-2 control-label">
+														<input type="hidden" name="recordId" value="${record.recordId }">
+														<input type="hidden" name="groupId" value="${record.groupId }">
 														<input type="hidden" id="pastPrice" name="pastPrice" value="${pastPrice}">
 														<input type="hidden" id="pastAccounting" name="pastAccounting" value="${pastAccounting}">
 															<h3>제목</h3>
@@ -118,29 +144,50 @@
 													<div class="form-group">
 														<label class="col-lg-2 control-label">
 														  <h3>수입 및 지출(단위/원)</h3>
-														  <select id="selectAccounting" name="accounting">
+														  <select id="selectAccounting" name="selectAccounting">
 																<option value="수입">수입</option>
 																<option value="지출">지출</option>
 														  </select>
+														  <input type="hidden" id="accounting" name="accounting" value=""/> 
 														</label>
 														<div class="col-lg-10">
-															<input type="text" name="title" class="form-control" value="${pastPrice }">
+															<input type="text" name="price" class="form-control" value="${pastPrice }" required="required">
 														</div>
 													</div>
+													<script type="text/javascript">
+														function changeAccounting() {
+															accounting = $('#selectAccounting option:selected').text();
+															alert(accounting);
+														}
+														
+														$("#selectAccounting").change(changeAccounting); 
+														
+														changeAccounting();
+													</script>
+													
 													<div class="form-group">
 															<label class="col-lg-2 control-label">
 															  <h3>카테고리</h3>
-															  <select id="selectCategory" name="category">
-																	<option selected>카테고리 선택 </option>
+															  <select id="selectCategory" name="selectCategory">
+																	<option value="미분류">카테고리 선택</option>
 																	<option value="교통비">교통비</option>
 																	<option value="식비">식비</option>
 																	<option value="생필품">생필품</option>
 																	<option value="기타">기타</option>
 															  </select>
+															  <input type="hidden" id="category" name="category"/> 
 															</label>
-															
-														</div>
-													
+													</div>
+													<script type="text/javascript">
+														function changeCategory() {
+															category = $('#selectCategory option:selected').text();
+															alert(category)
+														}
+														
+														$("#selectCategory").change(category); 
+														
+														changeCategory();
+													</script>													
 													<br/>
 													<div class="form-group">
 														<label class="col-lg-2 control-label">
@@ -157,8 +204,11 @@
 															<h3>사진</h3>
 														</label>
 														
-															<input type="file" name="imgFile" onchange="readURL(this);" value="${record.image}"/>
-														
+															<input type="file" name="imgFile" onchange="readURL(this);"/>
+															<input type="hidden" name="image" value="${record.image }"/>
+															<div class="col-lg-10">
+																  <img id="imgHere" src="${record.image }" style="max-width:400px;"/>
+															</div>
 														
 														</div>
 													</div>
@@ -168,6 +218,21 @@
 															<button type="submit" class="record_submit">확인</button>
 															<button type="reset" class="record_cancel">취소</button>
 														</div>
+														<script>
+														function confirm() {
+															
+															if($('#selectCategory option:selected', $(this)).val('미분류')){
+																$('#category').val('미분류');
+															}else{
+																$('#category').val(category);
+															}
+															$('#accounting').val(accounting);
+														}
+														
+														$("#submit").click(confirm); 
+														
+														confirm();
+														</script>
 													</div>
 												</fieldset>
 											</form>
