@@ -210,14 +210,6 @@ public class RecordController {
 	
 	@RequestMapping(value="/modifyRecord.do",method=RequestMethod.POST)
 	public String modifyGroupRecord(Record record,String pastAccounting,int pastPrice,HttpSession session, @RequestParam("imgFile") MultipartFile imgFile) {
-		System.out.println("eventId:" + record.getEventId());
-		System.out.println("groupId:" + record.getGroupId());
-		System.out.println("recordId:" + record.getRecordId());
-		System.out.println("getTitle:" + record.getTitle());
-		System.out.println("content:" + record.getContent());
-		System.out.println("price:" + record.getPrice());
-		System.out.println("category:" + record.getCategory());
-		System.out.println("accounting:" + record.getAccounting());
 		
 		if(!imgFile.isEmpty()) {
 			
@@ -326,8 +318,13 @@ public class RecordController {
 	
 	@RequestMapping("/showRegistEventRecord.do")
 	public String showRegistEventRecord(HttpSession session,int eventId,Model model) {
+		
 		Event event = eventService.findEventById(eventId);
+		Group group = mgService.findGroupById(event.getGroupId());
+		
 		List<Event> events=eventService.findAllEventsByGroupId(event.getGroupId());
+		
+		model.addAttribute("group", group);
 		model.addAttribute("events",events);
 		model.addAttribute("event",event);
 		model.addAttribute("memberId",session.getAttribute("memberId"));
@@ -344,7 +341,6 @@ public class RecordController {
 	
 	@RequestMapping("/showRecordDetail.do")
 	public String showRecordDetail(int recordId,Model model) {
-		System.out.println("레코드아이디"+recordId);
 		Record record = recordService.findRecordById(recordId);
 		Group group = mgService.findGroupById(record.getGroupId());
 		

@@ -10,6 +10,15 @@
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 		<link rel="stylesheet" href="../resources/assets/css/grade.css" />
 		<!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+		<script src="http://code.jquery.com/jquery-1.5.js"></script>
+		<script>
+		function onclickFunction(){
+			
+		opener.parent.location.reload('${pageContext.request.contextPath}/message/registMessageRecord.do?messageId=' + ${message.messageId });
+		window.close();
+		}
+		</script>
+	
 	</head>
 	<body class="no-sidebar">
 		<div id="page-wrapper">
@@ -73,7 +82,7 @@
 								</table>
 								<div id="two_btn">
 									<button class="btn_ok" onclick="window.close()">확인</button>
-									<button class="btn_regist" onclick="window.open('messageWrite.html','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">등록</button>
+									<button class="btn_regist" onclick="onclickFunction()">등록</button>
 								</div>
 						</div>
 

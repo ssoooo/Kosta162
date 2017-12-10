@@ -15,6 +15,7 @@ import GeneralAffairs.domain.Event;
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Member;
 import GeneralAffairs.domain.Record;
+import GeneralAffairs.service.CommentService;
 import GeneralAffairs.service.EventService;
 import GeneralAffairs.service.MemberGroupService;
 import GeneralAffairs.service.RecordService;
@@ -31,8 +32,7 @@ public class EventController {
 	
 	@Autowired
 	private RecordService recordService;
-
-
+	
 	@RequestMapping(value = "/registEvent.do", method = RequestMethod.POST)
 	public String registEvent(Event event, HttpSession session, HttpServletRequest req, Model model) {
 		event.setMemberId((String) session.getAttribute("loginedMemberId"));
@@ -245,6 +245,7 @@ public class EventController {
 
 	@RequestMapping("/event.do")
 	public String showEvent(int eventId, int groupId, Model model) {
+		
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
 		Group group = mgService.findGroupById(groupId);

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import GeneralAffairs.domain.Event;
 import GeneralAffairs.domain.Message;
+import GeneralAffairs.domain.Record;
 import GeneralAffairs.service.EventService;
 import GeneralAffairs.domain.Group;
 import GeneralAffairs.domain.Message;
@@ -74,7 +75,6 @@ public class MessageController {
 		messageService.removeMyMessage(myId, messageId);
 		
 		return "success";
-		
 	}
 	
 	@RequestMapping("sendMessage.do")
@@ -103,6 +103,21 @@ public class MessageController {
 		return "message/messageDetail";
 	}
 	
+	@RequestMapping("registMessageRecord.do")
+	public String moveToRegistEventRecord(int messageId, Model model) {
+		
+		Message message = messageService.findMessageById(messageId);
+		Event event = eventService.findEventById(message.getEventId());
+		Group group = mgService.findGroupById(event.getGroupId());
+		
+		model.addAttribute("event", event);
+		model.addAttribute("group", group);
+		
+		model.addAttribute("message", message);
+		
+		return "record/registMessageRecord";
+	}
+
 /*	
 	@RequestMapping(value="allMyMessages.do", method=RequestMethod.GET)
 	public String showAllMyMessage(HttpSession session, Model model) {

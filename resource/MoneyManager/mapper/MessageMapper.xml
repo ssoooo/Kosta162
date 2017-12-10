@@ -6,8 +6,8 @@
 	
 	<resultMap type="Message" id="messageMap">
 	 	<result property="memberId" column="sendMemberId"/>
+	 	<result property="date" column="regDate"/>
 	</resultMap>
-	
 	
 	<insert id="registMessage" parameterType="Message">
 		INSERT INTO
@@ -37,14 +37,14 @@
 		WHERE memberId=#{memberId} AND messageId=#{messageId}
 	</delete>
 
-	<select id="retrieveAllMyMessages" parameterType="map" resultType="Message">
-		SELECT a.messageId, a.eventId, a.sendmemberId memberId, a.title, a.content, a.regdate, a.groupId
+	<select id="retrieveAllMyMessages" parameterType="map" resultMap="messageMap">
+		SELECT a.messageId, a.eventId, a.sendmemberId, a.title, a.content, a.regDate, a.groupId
 		FROM message_table a, messageMember_table b
 		WHERE a.messageId=b.messageId and b.memberId=#{memberId} and a.groupId=#{groupId}
 	</select>
 	
-	<select id="retrieveAllSendMessages" parameterType="map" resultType="Message">
-		SELECT messageId, eventId, sendmemberId memberId, title, content, regdate, groupId
+	<select id="retrieveAllSendMessages" parameterType="map" resultMap="messageMap">
+		SELECT messageId, eventId, sendmemberId, title, content, regDate, groupId
 		FROM message_table
 		WHERE sendmemberId=#{memberId}
 	</select>

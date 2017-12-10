@@ -129,7 +129,7 @@
 							
 								<!-- Box -->
 									<section class="box feature">
-										<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${group.groupId }" class="image featured"><img src="${group.groupImage }" alt="" style="height:240px; overflow:hidden;"/></a>
+										<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${group.groupId }" class="image featured"><img src="${group.groupImage }" alt="" style="height:300px; overflow:hidden;"/></a>
 										<div class="inner">
 											<header><h2>${group.groupName }</h2></header>
 										</div>
