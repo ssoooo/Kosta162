@@ -54,7 +54,7 @@ public class MemberGroupController {
 		for(int i=0; i<members.size(); i++){
 			Member member = new Member();
 			member = members.get(i);
-			if(!member.getMemberId().equals(group.getMemberId())){
+			if(!member.getMemberId().equals(myId)){
 				newMembers.add(member);
 			} 
 		}
