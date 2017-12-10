@@ -73,8 +73,7 @@
 												<li><a
 													href="${pageContext.request.contextPath}/event/event.do?eventId=${event.eventId }&groupId=${event.groupId}">
 														<h3>${event.eventName }
-															<a
-																href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }">
+															<a href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }">
 																<img class="event_info"
 																src="../resources/assets/css/images/info.png" />
 															</a>
@@ -159,7 +158,7 @@
 												<div class="form-group">
 													<div class="align_btn">
 														<button type="submit" class="record_submit">확인</button>
-														<button type="reset" class="record_cancel">취소</button>
+														<button type="reset" class="record_cancel" >취소</button>
 													</div>
 												</div>
 											</fieldset>
