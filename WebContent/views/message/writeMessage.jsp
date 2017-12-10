@@ -10,6 +10,13 @@
 <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
 <link rel="stylesheet" href="../resources/assets/css/grade.css" />
 <!--[if lte IE 8]><link rel="stylesheet" href="assets/css/ie8.css" /><![endif]-->
+<script type="text/javascript">
+	function sendEventDetail() {
+		window.opener.top.location.href = "${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }"
+		//window.opener.top.location.reload();//새로고침
+		window.close()
+	}
+</script>
 </head>
 <body class="no-sidebar">
 	<div id="page-wrapper">
@@ -21,9 +28,9 @@
 				<!-- Logo -->
 				<div id="logo">
 					<h1>
-						<a href="index.html">Verti</a>
+						<a href="${pageContext.request.contextPath}/memberGroup/main.do">알뜰총雜</a>
 					</h1>
-					<span>Kosta 162기 > 가을 MT</span>
+					<span>${group.groupName} > ${event.eventName }</span>
 				</div>
 
 			</header>
@@ -39,31 +46,39 @@
 					<div id="box3">
 						<h2>메시지</h2>
 						<hr>
-						<form>
+						<form
+							action="${pageContext.request.contextPath}/message/sendCollection.do?eventId=${event.eventId}"
+							class="bs-example form-horizontal" method="POST">
 							<table id="message">
 								<tbody>
 									<tr>
 										<th>발신인</th>
-										<td>백민지</td>
+										<td>${loginedMemberId }</td>
 									</tr>
 									<tr>
 										<th>수신인</th>
-										<td>이호정, 양희수, 성우형</td>
+										<td><c:forEach var="member" items="${memberss }">
+												<input type=hidden name="memberId3"
+													value=${member.memberId }>
+												${member.memberId }&nbsp;
+											</c:forEach></td>
 									</tr>
 									<tr>
 										<th>제목</th>
-										<td><input class="input_title" type="text" name="title"></td>
+										<td><input class="input_title" type="text" name="title"
+										value="${event.collection/members.size() }"></td>
 									</tr>
 									<tr>
 										<div id="input_content">
 											<th>내용</th>
-											<td><textarea rows="4" cols="50" style="resize: none"></textarea>
-											</td>
+											<td><textarea name="content" rows="4" cols="50"
+													style="resize: none"></textarea></td>
 										</div>
 									</tr>
 								</tbody>
 							</table>
-							<input class="btn_send" type="submit" value="전송">
+							<input class="btn_send" type="submit" onclick="sendEventDetail()"
+								value="전송">
 						</form>
 					</div>
 				</div>

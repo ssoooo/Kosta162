@@ -28,9 +28,17 @@
 		WHERE memberId=#{memberId}
 	</delete>
 
-	<select id="retrieveMemberById" parameterType="String" resultType="Member">
-		SELECT memberId,password,nickname,name,email,account,phoneNumber
-		FROM member_table
+	<delete id="deleteNullMember" parameterType="String">
+		delete from eventMember_table
+		where memberId IS NULL
+	</delete>
+
+	<select id="retrieveMemberById" parameterType="String"
+		resultType="Member">
+		SELECT
+		memberId,password,nickname,name,email,account,phoneNumber
+		FROM
+		member_table
 		WHERE memberId=#{memberId}
 	</select>
 
@@ -38,7 +46,8 @@
 		resultType="Member">
 		SELECT m.memberId, m.password, m.nickname, m.name,
 		m.email,m.account,m.phoneNumber
-		FROM member_table m, groupMember_table g
+		FROM member_table m, groupMember_table
+		g
 		WHERE m.memberId=g.memberId and groupId=#{groupId}
 	</select>
 
@@ -96,14 +105,14 @@
 		select eventId, memberId, payment
 		from eventMember_table
 		where eventId=
-		#{eventId} AND payment='미납'
+		#{eventId} AND payment='미납' AND memberId IS NOT NULL
 	</select>
 
 	<select id="retrieveAllPaidMembers" parameterType="map"
 		resultType="Member">
 		<![CDATA[select eventId, memberId, payment
 		from eventMember_table
-		where eventId= #{eventId} AND payment <> '미납'
+		where eventId= #{eventId} AND payment <> '미납' AND memberId IS NOT NULL
 		]]>
 	</select>
 

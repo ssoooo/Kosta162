@@ -12,7 +12,7 @@ public interface MemberGroupService {
 	boolean modifyMember(Member member);
 
 	void removeMember(String memberId);
-
+	
 	Member findMemberById(String memberId);
 
 	List<Member> findAllMembersByGroup(int groupId);

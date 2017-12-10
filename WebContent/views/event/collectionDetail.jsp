@@ -69,26 +69,7 @@
 		//window.opener.top.location.reload();//새로고침
 		window.close()
 	}
-
-	function checkSelectedValue() {
-		var valueArr = new Array();
-		var list = $('input[name=subCheck]:checkbox]');
-		for (var i = 0; i < list.length; i++) {
-			if (list[i].checked) { //선택되어 있으면 배열에 값을 저장함
-				valueArr.push(list[i].value);
-			}
-		}
-
-		//선택된 체크박스의 값을 콘솔에 출력
-		var str = '';
-		for ( var i in valueArr) {
-			str += valueArr[i] + '<br />';
-		}
-		$('#dibugConsole').html(str);
-
-	}
 </script>
-</head>
 <body class="no-sidebar">
 	<div id="page-wrapper">
 
@@ -121,62 +102,72 @@
 						<div id="paymemt">
 							<div class="complete_member">
 								<h3>전체 완납 멤버</h3>
-								<form
-									action="${pageContext.request.contextPath}/event/collectionDetail2.do?eventId=${event.eventId }"
-									class="bs-example form-horizontal" method="POST">
+								<c:forEach items="${memberss }" var="member">
+								<!--  	<div class="scroll_complete">-->
+										<ul class="bs-example form-horizontal">
+											<li>
+												<form
+													action="${pageContext.request.contextPath}/event/collectionDetail2.do?eventId=${event.eventId }"
+													 method="POST">
 
-									<div class="scroll_complete">
-										<ul>
-											<li name="get1"><c:forEach items="${memberss }"
-													var="member">
-													<input type=hidden name="memberId2"
-														value=${member.memberId }>
-											${member.memberId }
-											<button onclick="setChildText()">완납</button>
+
+													<!--<li name="get1">-->
+													<input type=hidden name="memberId"
+														value=${member.memberId }> ${member.memberId }
+													<button type="submit">완납</button>
 
 													<br>
-												</c:forEach></li>
+
+												</form>
+											</li>
 										</ul>
-									</div>
-								</form>
+									
+
+								</c:forEach>
 							</div>
 
 							<div class="notYet_member">
 								<h3>
 									<input type="checkbox" id="checkedAll">전체 미납 멤버
 								</h3>
-								<form
-									action="${pageContext.request.contextPath}/event/collectionDetail.do?eventId=${event.eventId }"
-									class="bs-example form-horizontal" method="POST">
-									<div class="scroll_notYet" id="get">
-										<ul>
-											<li name="get2"><c:forEach items="${members }"
-													var="member">
-													<input name="subCheck" type="checkbox" value=0>
+
+								<c:forEach items="${members }" var="member">
+									<ul>
+										<li>
+									<!--  		<div class="scroll_notYet" id="get">-->	
+												<form
+													action="${pageContext.request.contextPath}/event/collectionDetail.do?eventId=${event.eventId }"
+													class="bs-example form-horizontal" method="POST">
+
+													<input name="subCheck" type="checkbox" value="check">
 													<input type=hidden name="memberId"
-														value=${member.memberId }>
-											${member.memberId }
-										<button class="button2" onclick="setChildText()">미납</button>
-													<br>
-												</c:forEach></li>
-										</ul>
-									</div>
-								</form>
-							</div>
+														value=${member.memberId }> ${member.memberId }
+
+													<button class="button2" type="submit">미납</button>
+												</form>
+											
+										</li>
+									</ul>
+								</c:forEach>
+								<br>
+
+							</div>		
+
 						</div>
 					</div>
-					<button class="btn_send"
-						onclick="window.open('${pageContext.request.contextPath}/message/sendCollection.do?receivedMember=${event.memberId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">메시지
-						전송</button>
-					<button type="submit" onclick="sendEventDetail()"
-						class="record_submit">확인</button>
 				</div>
-
-
-				<!-- Footer -->
-
+				<button class="btn_send"
+					onclick="window.open('${pageContext.request.contextPath}/message/sendCollection.do?memberId=${event.memberId }&eventId=${event.eventId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">메시지
+					전송</button>
+				<button type="submit" onclick="sendEventDetail()"
+					class="record_submit">확인</button>
 			</div>
+
+
+			<!-- Footer -->
+
 		</div>
+	</div>
 	</div>
 </body>
 </html>

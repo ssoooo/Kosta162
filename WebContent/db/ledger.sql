@@ -105,6 +105,7 @@ payment VARCHAR2(50) DEFAULT '미납'
 CREATE TABLE messageMember_table(
 memberId VARCHAR2(50),
 messageId NUMBER
+sendMemberId VARCHAR2(50)
 );
 
 

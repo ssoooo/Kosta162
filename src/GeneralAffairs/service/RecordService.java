@@ -21,7 +21,7 @@ public interface RecordService {
 	List<Record> findRecordsByYear(Date sDate,Date fDate,String accounting,int groupId);
 //	List<Record> findRecordsByCategory(String category,String accounting,Date sDate,Date fDate);
 	Integer findGroupAccountingResult(String accounting,int groupId,Date sDate,Date fDate);
-	int findEventAccountingResult(String accounting,int eventId,Date sDate,Date fDate);
+	Integer findEventAccountingResult(String accounting,int eventId,Date sDate,Date fDate);
 	List<Record> findGroupStatsRecordByEvent(String accounting,int groupId);
 	Integer findGroupStatsRecordByCategory(String category,String accounting,int groupId);
 //	List<Record> findGroupStatsRecordByPeriod(Date sDate,Date fDate,String accounting,int groupId);
@@ -29,4 +29,7 @@ public interface RecordService {
 	int findEventStatsRecordByYear(String accounting,String year,int eventId);
 	Integer findEventStatsRecordByCategory(String category,String accounting,int eventId);
 	Integer findEventStatsRecordByAccounting(String accounting,int eventId);
+	Record findRecordByTitle(String title,int eventId);
+	void modifyPrice(Record record);
+	Record findRecordByTitleAndCategory(String title);
 }

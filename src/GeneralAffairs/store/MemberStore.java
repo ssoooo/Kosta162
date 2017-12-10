@@ -12,7 +12,7 @@ public interface MemberStore {
 	int updateMember(Member member);
 
 	void deleteMember(String memberId);
-
+	
 	Member retrieveMemberById(String memberId);
 
 	List<Member> retrieveAllMembersByGroup(int groupId);
@@ -36,5 +36,7 @@ public interface MemberStore {
 	List<Member> retrieveAllUnPaidMembers(String memberId, int eventId);
 
 	List<Member> retrieveAllPaidMembers(String memberId, int eventId);
+	
+	
 
 }

@@ -29,24 +29,73 @@ public class EventController {
 
 	@Autowired
 	private MemberGroupService mgService;
-	
+
 	@Autowired
 	private RecordService recordService;
-	
+
 	@RequestMapping(value = "/registEvent.do", method = RequestMethod.POST)
 	public String registEvent(Event event, HttpSession session, HttpServletRequest req, Model model) {
 		event.setMemberId((String) session.getAttribute("loginedMemberId"));
 		eventService.createEvent(event);
+		
+		Record record = new Record();
+		
+		record.setEventId(event.getEventId());
+		record.setGroupId(event.getGroupId());
+		record.setMemberId(event.getMemberId());
+		record.setImage("none");
+		record.setTitle("지원금)"+event.getEventName());
+		record.setContent("모임"+event.getGroupId()+"의 지원금입니다.");
+		record.setCategory("지원금");
+		record.setPrice((int)event.getGroupSupport());
+		record.setCaution("정상");
+		record.setAccounting("수입");
+		recordService.createRecord(record);
+		
+		event.setBalance(record.getPrice());
+		eventService.modifyEventBalance(event);
+		
+		record.setEventId(0);
+		record.setGroupId(event.getGroupId());
+		record.setMemberId(event.getMemberId());
+		record.setImage("none");
+		record.setTitle("지원금)"+event.getEventName());
+		record.setContent("이벤트"+event.getEventName()+"의 지원금으로 지출되었습니다.");
+		record.setCategory("지원금");
+		record.setPrice((int)event.getGroupSupport());
+		record.setCaution("정상");
+		record.setAccounting("지출");
+		recordService.createRecord(record);
+		Group groups=new Group();
+		groups =mgService.findGroupById(event.getGroupId());
+		double balance= groups.getBalance()-event.getBalance();
+		groups.setBalance(balance);
+		mgService.modifyGroupBalance(groups);
+		
+		
+//		Record record = new Record();
+//		record.setEventId(0);
+//		record.setGroupId(group.getGroupId());
+//		record.setMemberId(event.getMemberId());
+//		record.setImage("none");
+//		record.setTitle("이)"+event.getEventName());
+//		record.setContent("이벤트 "+event.getEventName()+"의 합산결과");
+//		record.setCategory("이벤트");
+//		record.setPrice((int)event.getBalance());
+//		record.setAccounting("정상");
+//		recordService.createRecord(record);
+		
 		Group group = mgService.findGroupById(event.getGroupId());
 
 		String[] members = req.getParameterValues("get");
 		for (int i = 0; i < members.length; i++) {
 			group.setMemberId(members[i]);
-			
+
 		}
 
 		model.addAttribute("event", event);
 		model.addAttribute("group", group);
+
 		eventService.addMemberToEvent(event.getMemberId(), event.getEventId());
 		eventService.addMemberToEvent(group.getMemberId(), event.getEventId());
 
@@ -65,25 +114,60 @@ public class EventController {
 	}
 
 	@RequestMapping(value = "/modifyEvent.do", method = RequestMethod.POST)
-	public String modifyEvent(Event event, HttpServletRequest req, Model model) {
+	public String modifyEvent(Event event,double groupSupports, HttpServletRequest req, Model model) {
 		eventService.modifyEvent(event);
+		double suportBalance=groupSupports-event.getGroupSupport();
+		
+			Group gro = mgService.findGroupById(event.getGroupId());
+			gro.setBalance(gro.getBalance()+suportBalance);
+			mgService.modifyGroupBalance(gro);
+			Record record=	recordService.findRecordByTitle("지원금)"+event.getEventName(),0);
+			int priceModify=(int) (record.getPrice()-suportBalance); 
+			record.setPrice(priceModify);
+			record.setCategory("이벤트");
+			recordService.modifyPrice(record);
+		 
+			Event eve = eventService.findEventById(event.getEventId());
+			eve.setBalance(eve.getBalance()-suportBalance);
+			eventService.modifyEventBalance(eve);
+			Record records = recordService.findRecordByTitle("지원금)"+eve.getEventName(),eve.getEventId());
+			records.setPrice((int) (records.getPrice()-suportBalance));
+			records.setCategory("이벤트");
+			recordService.modifyPrice(records);
+		
+		
+		
 		model.addAttribute("event", event);
 		model.addAttribute("groupId", event.getGroupId());
-
+		
 		Group group = mgService.findGroupById(event.getGroupId());
-
-		String[] memberss = req.getParameterValues("get");
-		for (int i = 0; i < memberss.length; i++) {
-			group.setMemberId(memberss[i]);
-		}
-		eventService.addMemberToEvent(group.getMemberId(), event.getEventId());
-
-		String[] members = req.getParameterValues("get2");
-		for (int i = 0; i < members.length; i++) {
-			event.setMemberId(members[i]);
-		}
+		
+		System.out.println("이름" + event.getEventName());
+		System.out.println("1" + event.getBudget());
+		System.out.println("2" + event.getGroupSupport());
+		
+		
+		
+//		String[] members = req.getParameterValues("get2");
+//		for (int i = 0; i < members.length; i++) {
+//			event.setMemberId(members[i]);
+//		}
+		String members = req.getParameter("get2");
+		event.setMemberId(members);
+		
 		eventService.removeFromEvent(event.getMemberId(), event.getEventId());
-
+		
+//		String[] memberss = req.getParameterValues("get");
+//		for (int i = 0; i < memberss.length; i++) {
+//			group.setMemberId(memberss[i]);
+//		}
+		String memberss = req.getParameter("get");
+		group.setMemberId(memberss);
+		if (event.getMemberId() != group.getMemberId() && event.getMemberId() != null) {
+			eventService.addMemberToEvent(group.getMemberId(), event.getEventId());
+			
+		}
+		
 		return "redirect:/event/eventDetail.do?eventId=" + event.getEventId();
 	}
 
@@ -91,7 +175,8 @@ public class EventController {
 	public String showModifyEvent(int eventId, Model model) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
-
+		double groupSupports=event.getGroupSupport();
+		model.addAttribute("groupSupports",groupSupports);
 		List<Event> events = eventService.findAllEventsByGroupId(event.getGroupId());
 		model.addAttribute("events", events);
 
@@ -165,21 +250,25 @@ public class EventController {
 	// memberId;
 	// }
 
-	@RequestMapping("/addEventBalance.do")
-	public String addEventBalanceToGroupBalance(int eventId) {
-		Event event = eventService.findEventById(eventId);
-		eventService.addEventBalanceToGroupBalance(eventId, event.getGroupId());
-
-		return "memberGroup/group";
-	}
+	// @RequestMapping("/addEventBalance.do")
+	// public String addEventBalanceToGroupBalance(int eventId) {
+	// Event event = eventService.findEventById(eventId);
+	// eventService.addEventBalanceToGroupBalance(eventId, event.getGroupId());
+	//
+	// return "memberGroup/group";
+	// }
 
 	@RequestMapping(value = "/collectionDetail.do", method = RequestMethod.GET)
-	public String showChangePayment(int eventId, Model model) {
+	public String showChangePayment(int eventId, HttpServletRequest req, Model model) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
 
 		Group group = mgService.findGroupById(event.getGroupId());
 		model.addAttribute("group", group);
+
+		// String member = req.getParameter("get");
+		// event.setMemberId(member);
+		// System.out.println("eventMemberId:" + event.getMemberId());
 
 		List<Member> members = mgService.findAllUnPaidMembers(event.getMemberId(), eventId);
 		List<Member> memberss = mgService.findAllPaidMembers(event.getMemberId(), eventId);
@@ -191,33 +280,30 @@ public class EventController {
 	}
 
 	@RequestMapping(value = "/collectionDetail.do", method = RequestMethod.POST)
-	public String ChangePayment(int eventId, HttpServletRequest req, Model model) {
+	public String ChangePayment(int eventId, HttpServletRequest req, Model model, String memberId) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
 
-		String members = req.getParameter("memberId");
-		for (int i = 0; i < members.length(); i++) {
-			event.setMemberId(members);
-		}
-		event.setMemberId(members);
+		String member = req.getParameter("memberId");
+		// for (int i = 0; i < members.length(); i++) {
+		// event.setMemberId(members);
+		// }
+		event.setMemberId(member);
 		eventService.changePayment(event.getMemberId(), eventId);
 
 		return "redirect:/event/collectionDetail.do?eventId=" + eventId;
 	}
-	
+
 	@RequestMapping(value = "/collectionDetail2.do", method = RequestMethod.POST)
-	public String ChangeUnPayment(int eventId, HttpServletRequest req, Model model) {
+	public String ChangeUnPayment(int eventId, HttpServletRequest req, Model model, String memberId) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
-
+		System.out.println("멤버아이디체크" + memberId);
 		String memberss = req.getParameter("memberId2");
-//		for (int i = 0; i < memberss.length; i++) {
-//			event.setMemberId(memberss[i]);
-//		}
-		event.setMemberId(memberss);
-		eventService.changeUnPayment(event.getMemberId(), eventId);
+
+		eventService.changeUnPayment(memberId, eventId);
 		System.out.println("?//" + event.getMemberId());
-		
+
 		return "redirect:/event/collectionDetail.do?eventId=" + eventId;
 	}
 
@@ -225,20 +311,18 @@ public class EventController {
 	public String showEventDetail(int eventId, HttpServletRequest req, Model model) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
-		
+
 		Group group = mgService.findGroupById(event.getGroupId());
 		model.addAttribute("group", group);
 
 		List<Member> members = mgService.findAllMembersByEvent(eventId);
 		model.addAttribute("members", members);
-		
+
 		List<Member> memberss = mgService.findAllPaidMembers(event.getMemberId(), eventId);
 		model.addAttribute("memberss", memberss);
-		
 
 		List<Record> records = recordService.findAllRecordsByEventId(eventId);
-		model.addAttribute("records",records);
-
+		model.addAttribute("records", records);
 
 		return "event/eventDetail";
 	}
@@ -250,29 +334,67 @@ public class EventController {
 		model.addAttribute("event", event);
 		Group group = mgService.findGroupById(groupId);
 		model.addAttribute("group", group);
-		
+
 		List<Event> events = eventService.findAllEventsByGroupId(groupId);
-		List<Record> records=recordService.findAllRecordsByEventId(eventId);
-		
+		List<Record> records = recordService.findAllRecordsByEventId(eventId);
+
 		model.addAttribute("events", events);
 		model.addAttribute("groupId", groupId);
-		model.addAttribute("records",records);
+		model.addAttribute("records", records);
 
 		return "event/event";
 	}
-	
-	@RequestMapping(value="/addEventBalanceToGroup.do",method=RequestMethod.GET)
+
+	@RequestMapping(value = "/addEventBalanceToGroup.do", method = RequestMethod.GET)
 	public String addEventBalanceToGroup(int eventId) {
 		Event event= eventService.findEventById(eventId);
 		Group group =mgService.findGroupById(event.getGroupId());
-		System.out.println("이벤트이름"+event.getEventName());
-		System.out.println("이벤트발란스:"+event.getBalance());
+		Record checkRecord= recordService.findRecordByTitleAndCategory("합산)"+event.getEventName());
 		double balance=group.getBalance()+event.getBalance();
-		group.setBalance(balance);
-		mgService.modifyGroupBalance(group);
+		
+		if(checkRecord==null) {
+			
+			
+			Record record = new Record();
+			record.setEventId(0);
+			record.setGroupId(group.getGroupId());
+			record.setMemberId(event.getMemberId());
+			record.setImage("none");
+			record.setTitle("합산)"+event.getEventName());
+			record.setContent("이벤트 "+event.getEventName()+"의 합산결과");
+			record.setCategory("이벤트합산");
+			
+			if(event.getBalance()<0) {
+				record.setAccounting("지출");
+				record.setPrice(Math.abs((int)event.getBalance()));
+			}else {
+			record.setAccounting("수입");
+			record.setPrice((int)event.getBalance());
+			}
+			recordService.createRecord(record);
+			group.setBalance(balance);
+			mgService.modifyGroupBalance(group);
+			
+		}else {
+			
+			double nextBalance =checkRecord.getPrice()-event.getBalance();
+			group.setBalance(group.getBalance()-nextBalance);
+			mgService.modifyGroupBalance(group);
+			if(event.getBalance()<0) {
+			checkRecord.setPrice(Math.abs((int) event.getBalance()));
+			checkRecord.setAccounting("지출");
+			}else {
+				checkRecord.setPrice((int) event.getBalance());
+				checkRecord.setAccounting("수입");
+			}
+			
+			recordService.modifyPrice(checkRecord);
+			
+		}
+	
+		
 		
 		return "redirect:/memberGroup/group.do?groupId="+event.getGroupId();
 	}
-	
 
 }

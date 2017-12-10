@@ -9,7 +9,8 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/main2.css" />
 		<script src="http://code.jquery.com/jquery-1.5.js"></script>
-		<script type="text/javascript">
+		
+		<!-- <script type="text/javascript">
 		var accounting;
 		var category;
 		
@@ -48,7 +49,8 @@
 				reader.readAsDataURL(input.files[0]); 
 			} 
 		} 
-		</script>
+		</script> -->
+		
 	</head>
 	<body class="left-sidebar">
 		<div id="page-wrapper">
@@ -161,33 +163,39 @@
 													<div class="form-group">
 														<label class="col-lg-2 control-label">
 														  <h3>수입 및 지출(단위/원)</h3>
-														  <select id="selectAccounting" name="selectAccounting">
+														  <select id="selectAccounting" name="accounting">
+																<option value="${record.accounting}">${record.accounting}</option>
 																<option value="수입">수입</option>
 																<option value="지출">지출</option>
 														  </select>
+
 														  <input type="hidden" class="accounting" id="accounting" name="accounting"/> 
 													
+
 														</label>
 														<div class="col-lg-10">
-															<input type="text" name="price" class="form-control" value="${pastPrice }" required="required">
+															<input type="text" name="price" class="form-control" value="${record.price }" required="required">
 														</div>
 													</div>
+
 													
 													<div class="form-group">
 															<label class="col-lg-2 control-label">
 															  <h3>카테고리</h3>
-															  <select id="selectCategory" name="selectCategory">
-																	<option value="미분류">카테고리 선택</option>
+															  <select id="selectCategory" name="category">
+																	<option selected="selected" value="${record.category}">${record.category}</option>
 																	<option value="교통비">교통비</option>
 																	<option value="식비">식비</option>
 																	<option value="생필품">생필품</option>
 																	<option value="기타">기타</option>
+																	<option value="미분류">미분류</option>
 															  </select>
+
 															  <input type="hidden" class="category" id="category" name="category"/>
 															
 															</label>
 													</div>
-																										
+
 													<br/>
 													<div class="form-group">
 														<label class="col-lg-2 control-label">
@@ -220,7 +228,7 @@
 															<button type="submit" id="submit" class="record_submit">확인</button>
 															<button type="reset" class="record_cancel">취소</button>
 														</div>
-													
+
 													</div>
 												</fieldset>
 											</form>

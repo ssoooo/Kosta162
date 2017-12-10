@@ -7,7 +7,7 @@ import GeneralAffairs.domain.Event;
 public interface EventStore {
 
 	void registEvent(Event event);
-	void updateEvent(Event event);
+	int updateEvent(Event event);
 	void deleteEvent(int eventId);
 	Event retrieveEventById(int eventId);
 	List<Event> retrieveAllEventsByGroupId(int groupId);
