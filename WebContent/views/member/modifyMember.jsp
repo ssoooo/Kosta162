@@ -31,6 +31,20 @@
 $(document).ready(function(){
     $("#selectBank").val('${bank }').attr("selected", true);
     $("#selectPhone").val('${mobileCarrier }').attr("selected", true);
+    bank = $("#selectBank option:selected").text();
+    phone = $("#selectPhone option:selected").text();
+    $("#InputPassword2").keyup(function(){
+		var password1 = $('#InputPassword1').val();
+		var password2 = $('#InputPassword2').val();
+		
+			if(password1==password2){
+			$("#passwordCheck").html("비밀번호가 일치합니다.")
+			}else{
+			$("#passwordCheck").html("비밀번호가 일치하지않습니다.")
+			}
+			
+		}
+    );
 });
 
 	var bank;
@@ -59,7 +73,7 @@ $(document).ready(function(){
 				<label for="InputNickName">닉네임</label> <input type="text"
 					class="form-control" id="InputNickName" name="nickname"
 					placeholder="새 닉네임을 입력하세요" value="${member.nickname }">
-				<p class="help-block">사용 가능한 별명입니다.</p>
+				
 				<input type="hidden" id="memberId" name="memberId"
 					value="${member.memberId }" />
 			</div>
@@ -72,7 +86,7 @@ $(document).ready(function(){
 				<label for="InputPassword2">비밀번호 확인</label> <input type="password"
 					class="form-control" id="InputPassword2" placeholder="비밀번호 확인"
 					required="required">
-				<p class="help-block">비밀번호가 일치합니다.</p>
+				<p id="passwordCheck" class="help-block"></p>
 			</div>
 			<div class="form-group">
 				<label for="username">이름</label> <input type="text"
@@ -87,7 +101,7 @@ $(document).ready(function(){
 			<div class="form-group">
 				<label for="InputAccount">계좌번호</label><br /> <select
 					id="selectBank" name="selectBank">
-					<option selected>은행 선택</option>
+					<option value="미선택">은행 선택</option>
 					<option>국민</option>
 					<option>우리</option>
 					<option>신한</option>
@@ -110,7 +124,7 @@ $(document).ready(function(){
 			<div class="form-group">
 				<label for="phoneNumber">휴대폰 번호</label><br /> <select
 					id="selectPhone" name="selectPhone">
-					<option selected>통신사 선택</option>
+					<option value="미선택">통신사 선택</option>
 					<option>SKT</option>
 					<option>KT</option>
 					<option>LG</option>
@@ -141,6 +155,10 @@ $(document).ready(function(){
 			</div>
 			<script>
 				function accountVals() {
+					if($("#selectBank option:selected").val('미선택')){
+						$('#account').val("미선택/" + accountNum);
+					}
+					
 					var accountNum = $('#InputAccount').val();
 					$('#account').val(bank + "/" + accountNum);
 				}
@@ -148,7 +166,11 @@ $(document).ready(function(){
 				$("#submit").click(accountVals);
 
 				accountVals();
+				
 				function phoneVals() {
+					if($("#selectPhone option:selected").val('미선택')){
+						$('#phoneNumber').val("미선택/" + phoneNum);
+					}
 					var phoneNum = $('#InputPhoneNumber').val();
 					$('#phoneNumber').val(phone + "/" + phoneNum);
 				}

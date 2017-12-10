@@ -37,11 +37,12 @@ public class EventController {
 	public String registEvent(Event event, HttpSession session, HttpServletRequest req, Model model) {
 		event.setMemberId((String) session.getAttribute("loginedMemberId"));
 		eventService.createEvent(event);
-		Group group = mgService.findGroupById(event.getGroupId());
+		Group group = mgService.findGroupById(myId);
 
 		String[] members = req.getParameterValues("get");
 		for (int i = 0; i < members.length; i++) {
 			group.setMemberId(members[i]);
+			
 		}
 
 		model.addAttribute("event", event);

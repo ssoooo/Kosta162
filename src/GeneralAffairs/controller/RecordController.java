@@ -344,7 +344,7 @@ public class RecordController {
 	
 	@RequestMapping("/showRecordDetail.do")
 	public String showRecordDetail(int recordId,Model model) {
-		
+		System.out.println("레코드아이디"+recordId);
 		Record record = recordService.findRecordById(recordId);
 		Group group = mgService.findGroupById(record.getGroupId());
 		
@@ -368,7 +368,7 @@ public class RecordController {
 		model.addAttribute("record",record);
 		model.addAttribute("comments",comments);
 		model.addAttribute("events",events);
-		return "record/recordDetail";
+		return "record/recordDetail1";
 	}
 	
 	@RequestMapping("/eventStatsByPeriod.do")

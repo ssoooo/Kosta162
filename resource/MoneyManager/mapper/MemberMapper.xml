@@ -42,7 +42,7 @@
 		WHERE m.memberId=g.memberId and groupId=#{groupId}
 	</select>
 
-	<select id="retrieveAllMembersExceptManager" parameterType="int"
+	<select id="retrieveAllMembersExceptManager" parameterType="map"
 		resultType="Member">
 		select memberId
 		from groupMember_table

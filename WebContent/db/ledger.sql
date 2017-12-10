@@ -38,7 +38,7 @@ regDate DATE
 );
 
 CREATE TABLE comment_table(
-commnetId NUMBER PRIMARY KEY,
+commentId NUMBER PRIMARY KEY,
 recordId NUMBER,
 memberId VARCHAR2(50),
 content VARCHAR2(500),

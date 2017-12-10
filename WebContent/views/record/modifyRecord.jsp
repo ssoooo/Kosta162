@@ -204,13 +204,15 @@
 															<h3>사진</h3>
 														</label>
 														
+
 															<input type="file" name="imgFile" onchange="readURL(this);"/>
 															<input type="hidden" name="image" value="${record.image }"/>
 															<div class="col-lg-10">
 																  <img id="imgHere" src="${record.image }" style="max-width:400px;"/>
 															</div>
-														
+
 														</div>
+														
 													</div>
 													<br />
 													<div class="form-group">

@@ -112,7 +112,6 @@
 														}
 														
 														$("#selectBank").change(inputBankVals); 
-														
 														inputBankVals();
 													</script>
 													<div class="form-group">
