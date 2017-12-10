@@ -114,7 +114,14 @@
                               <strong>${record.memberId}</strong>
                               &nbsp;<span class="text-muted">${record.date}</span>
                                &nbsp;<span class="text-muted">${record.accounting}</span>
-                                <a href="${pageContext.request.contextPath}/record/showModifyRecord.do?recordId=${record.recordId}" style="float:right; margin-left:20px;">수정</a>
+                               <c:if test="${record.category ne '이벤트합산'}">
+                               <c:if test="${record.memberId eq loginedMemberId}">
+                                 <a href="${pageContext.request.contextPath}/record/showModifyRecord.do?recordId=${record.recordId}" style="float:right; margin-left:20px;">수정</a>
+                               </c:if>
+                               </c:if>
+                               <c:if test="${record.category eq '이벤트합산'}">
+                               <a href="javascript:window.alert('결과합산 내역은 수정이 불가능합니다.');" style="float:right">수정</a>
+                               </c:if>
                                 <a href="${pageContext.request.contextPath}/record/deleteRecord.do?recordId=${record.recordId}" style="float:right">삭제</a>
                          </div>
                          <br>
