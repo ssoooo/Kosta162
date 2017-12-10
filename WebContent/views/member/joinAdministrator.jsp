@@ -42,13 +42,15 @@
 				},
 				dataType : 'text',
 				success: function(data){
-					
-					$("#idCheck").html("사용중인 ID입니다.")
-					console.log(data);
+					if(data == "success"){
+						$("#idCheck").html("사용가능한 ID입니다.")
+						} else{
+							$("#idCheck").html("사용중인 ID입니다.")
+						}
 				},
 				error : function(data){
 					console.log(data);
-					$("#idCheck").html("사용가능한 ID입니다.")
+					$("#idCheck").html("디비조회실패.")
 					
 				}
 				

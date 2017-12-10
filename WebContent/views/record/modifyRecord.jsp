@@ -151,9 +151,12 @@
 														</label>
 														
 															<input type="file" name="imgFile" onchange="readURL(this);" value="${record.image}"/>
-														
-														
+															<input type="hidden" name="groupImage" value="${record.image }"/>
+															<div class="col-lg-10">
+																  <img id="imgHere" src="${record.image }" style="max-width:400px;"/>
+															</div>
 														</div>
+														
 													</div>
 													<br />
 													<div class="form-group">

@@ -42,6 +42,7 @@ public class EventController {
 		String[] members = req.getParameterValues("get");
 		for (int i = 0; i < members.length; i++) {
 			group.setMemberId(members[i]);
+			
 		}
 
 		model.addAttribute("event", event);

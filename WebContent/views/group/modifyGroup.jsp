@@ -10,6 +10,7 @@
 		<link rel="stylesheet" href="../resources/assets/css/main2.css" />
 		<script src="http://code.jquery.com/jquery-1.5.js"></script>
 		<script type="text/javascript">
+		
 		$(document).ready(function(){
 		    $("select option[value='${bank }']").attr("selected", true);
 		});
@@ -109,9 +110,9 @@
 														function inputBankVals() {
 															bank = $('option:selected', $(this)).text();
 														}
+
 														
 														$("select").change(inputBankVals); 
-														
 														inputBankVals();
 													</script>
 													<div class="form-group">
