@@ -306,7 +306,6 @@ public class MemberGroupController {
 //			    group.setGroupImage(dir.getAbsolutePath() + File.separator + rename);
 				group.setGroupImage("/images/" + rename);
 
-				
 			} catch (IOException e) {
 				e.printStackTrace();
 //				model.addAttribute("resultMsg", "파일을 업로드하는 데에 실패했습니다.");

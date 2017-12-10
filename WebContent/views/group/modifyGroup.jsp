@@ -9,14 +9,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="../resources/assets/css/main2.css" />
 		<script src="http://code.jquery.com/jquery-1.5.js"></script>
-		<script type="text/javascript">
+		<script>
+		var bank;
 		
 		$(document).ready(function(){
 		    $("select option[value='${bank }']").attr("selected", true);
+			bank = $('option:selected', $(this)).val();
 		});
 		
-		var bank;
-			
 		function readURL(input) {
 			if (input.files && input.files[0]) {
 				var reader = new FileReader();
@@ -92,7 +92,7 @@
 														
 														<h3>총무 계좌</h3>
 															<select id="selectBank" name="selectBank">
-																<option selected> 은행 선택 </option>
+																<option value="미선택">은행 선택</option>
 																<option value="국민">국민</option>
 																<option value="우리">우리</option>
 																<option value="신한">신한</option>
@@ -108,11 +108,10 @@
 													<br/>
 													<script>
 														function inputBankVals() {
-															bank = $('option:selected', $(this)).text();
+															bank = $('option:selected', $(this)).val();
 														}
-
 														
-														$("select").change(inputBankVals); 
+														$("#selectBank").change(inputBankVals); 
 														inputBankVals();
 													</script>
 													<div class="form-group">
@@ -143,6 +142,11 @@
 														</div>
 														<script>
 														function accountVals() {
+															
+															if($('option:selected', $(this)).val('미선택')){
+																$('#account').val("미선택/" + accountNum);
+															}
+															
 															var accountNum = $('#accountNum').val();
 															$('#account').val(bank + "/" + accountNum);
 														}
