@@ -52,7 +52,7 @@
 
 	<select id="retrieveAllSendMessages" parameterType="map"
 		resultType="Message">
-		SELECT messageId, eventId, sendmemberId memberId, title,
+		SELECT messageId, eventId, sendmemberId, title,
 		content, regDate, groupId
 		FROM message_table
 		WHERE

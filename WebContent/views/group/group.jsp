@@ -60,7 +60,7 @@
 								<ul class="ul_accept">
 								<c:forEach items="${messages }" var="message" >
 									<p class="group_invite_list">
-										${message.title }
+										${message.title } | ${message.sendMemberId }
 										<div class="accept_reject">
 											<a href="" onclick="window.open('${pageContext.request.contextPath}/message/receivedMessage.do?messageId=${message.messageId }&groupId=${group.groupId }','win','width=700,height=600,toolbar=0,scrollbars=0,resizable=0')">보기</a>
 											<a href="" onclick="onclickFunction(${message.messageId })">삭제</a>

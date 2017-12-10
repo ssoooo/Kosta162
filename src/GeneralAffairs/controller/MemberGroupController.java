@@ -659,12 +659,13 @@ public class MemberGroupController {
 		Group group = mgService.findGroupById(groupId);	
 		List<Event> events = eventService.findAllEventsByGroupId(groupId);
 //		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
+		List<Message> messages = messageService.findAllSendMessages(myId);
 		List<Record> records = recordService.findAllRecordsByGroupId(groupId);
 
 		
 		model.addAttribute("events", events);
 		model.addAttribute("group", group);
-//		model.addAttribute("messages", messages);
+		model.addAttribute("messages", messages);
 		model.addAttribute("groupId", groupId);
 		model.addAttribute("records",records);
 		

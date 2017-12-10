@@ -72,7 +72,7 @@ public class MessageController {
 //		}
 		String members = req.getParameter("memberId3");
 		event.setMemberId(members);
-		
+		System.out.println("...?갑자기안됌" + event.getMemberId());
 		messageService.createMessage(message);
 		messageService.sendMessage(event.getMemberId(), message.getMessageId(), message.getSendMemberId());
 		
