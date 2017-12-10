@@ -176,7 +176,7 @@
 								<div class="member_scroll">
 							
 								<table id="message_list">
-									<c:forEach items="${messages }" var="message" >
+									<c:forEach items="${sendMessages }" var="message" >
 									<tr class="ab">
 										<td style="width:20%;">${message.groupId }</td>
 										<td style="width:20%;">${message.eventId }</td>

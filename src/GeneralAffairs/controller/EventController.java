@@ -41,11 +41,12 @@ public class EventController {
 		String[] members = req.getParameterValues("get");
 		for (int i = 0; i < members.length; i++) {
 			group.setMemberId(members[i]);
-			
+
 		}
 
 		model.addAttribute("event", event);
 		model.addAttribute("group", group);
+
 		eventService.addMemberToEvent(event.getMemberId(), event.getEventId());
 		eventService.addMemberToEvent(group.getMemberId(), event.getEventId());
 
@@ -71,17 +72,25 @@ public class EventController {
 
 		Group group = mgService.findGroupById(event.getGroupId());
 
-		String[] memberss = req.getParameterValues("get");
-		for (int i = 0; i < memberss.length; i++) {
-			group.setMemberId(memberss[i]);
-		}
-		eventService.addMemberToEvent(group.getMemberId(), event.getEventId());
-
-		String[] members = req.getParameterValues("get2");
-		for (int i = 0; i < members.length; i++) {
-			event.setMemberId(members[i]);
-		}
+//		String[] members = req.getParameterValues("get2");
+//		for (int i = 0; i < members.length; i++) {
+//			event.setMemberId(members[i]);
+//		}
+		String members = req.getParameter("get2");
+		event.setMemberId(members);
+		
 		eventService.removeFromEvent(event.getMemberId(), event.getEventId());
+		
+//		String[] memberss = req.getParameterValues("get");
+//		for (int i = 0; i < memberss.length; i++) {
+//			group.setMemberId(memberss[i]);
+//		}
+		String memberss = req.getParameter("get");
+		group.setMemberId(memberss);
+		if (event.getMemberId() != group.getMemberId() && event.getMemberId() != null) {
+			eventService.addMemberToEvent(group.getMemberId(), event.getEventId());
+			
+		}
 
 		return "redirect:/event/eventDetail.do?eventId=" + event.getEventId();
 	}
@@ -173,12 +182,16 @@ public class EventController {
 	// }
 
 	@RequestMapping(value = "/collectionDetail.do", method = RequestMethod.GET)
-	public String showChangePayment(int eventId, Model model) {
+	public String showChangePayment(int eventId, HttpServletRequest req, Model model) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
 
 		Group group = mgService.findGroupById(event.getGroupId());
 		model.addAttribute("group", group);
+
+		// String member = req.getParameter("get");
+		// event.setMemberId(member);
+		// System.out.println("eventMemberId:" + event.getMemberId());
 
 		List<Member> members = mgService.findAllUnPaidMembers(event.getMemberId(), eventId);
 		List<Member> memberss = mgService.findAllPaidMembers(event.getMemberId(), eventId);

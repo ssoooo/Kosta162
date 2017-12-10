@@ -21,7 +21,7 @@
 				<!-- Logo -->
 				<div id="logo">
 					<h1>
-						<a href="index.html">Verti</a>
+						<a href="${pageContext.request.contextPath}/memberGroup/main.do">알뜰총雜</a>
 					</h1>
 					<c:choose>
 						<c:when test="${event eq null }">
@@ -54,11 +54,11 @@
 								<tbody>
 									<tr>
 										<th>발신인</th>
-										<td>${message.memberId }</td>
+										<td>${event.memberId }</td>
 									</tr>
 									<tr>
 										<th>수신인</th>
-										<td>${event.memberId }</td>
+										<td>${messages.memberId }</td>
 									</tr>
 									<tr>
 										<th>제목</th>

@@ -44,7 +44,7 @@
 	<delete id="deleteMemberFromEvent" parameterType="map">
 		DELETE FROM
 		eventMember_table
-		WHERE memberId=#{memberId} AND eventId=#{eventId}
+		WHERE eventId=#{eventId} AND memberId=#{memberId}
 	</delete>
 
 	<insert id="registMemberToEvent" parameterType="map">

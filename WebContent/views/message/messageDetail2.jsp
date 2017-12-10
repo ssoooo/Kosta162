@@ -21,7 +21,7 @@
 				<!-- Logo -->
 				<div id="logo">
 					<h1>
-						<a href="index.html">Verti</a>
+						<a href="${pageContext.request.contextPath}/memberGroup/main.do">알뜰총雜</a>
 					</h1>
 					<c:choose>
 						<c:when test="${event eq null }">

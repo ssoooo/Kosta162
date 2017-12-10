@@ -64,12 +64,15 @@ public class MessageController {
 		message.setMemberId((String) session.getAttribute("loginedMemberId"));
 		message.setGroupId(event.getGroupId());
 		
-		String[] members = req.getParameterValues("memberId3");
-		for (int i = 0; i < members.length; i++) {
-			message.setMemberId(members[i]);
-		}
+//		String[] members = req.getParameterValues("memberId3");
+//		for (int i = 0; i < members.length; i++) {
+//			message.setMemberId(members[i]);
+//		}
+		String members = req.getParameter("memberId3");
+		event.setMemberId(members);
+		
 		messageService.createMessage(message);
-		messageService.sendMessage(message.getMemberId(), message.getMessageId());
+		messageService.sendMessage(event.getMemberId(), message.getMessageId());
 		System.out.println("...." + message.getMemberId());
 		
 		return "redirect:/message/receivedMessage.do?messageId=" + message.getMessageId() + "&groupId=" + message.getGroupId();
@@ -80,16 +83,9 @@ public class MessageController {
 		Message message = messageService.findMessageById(messageId);
 		model.addAttribute("message", message);
 		
-		System.out.println("........" + message.getMemberId());
-		System.out.println("JIMIN" + message);
-		
-		
 		Message messages = messageService.findSendedMessageById(messageId);
 		model.addAttribute("messages", messages);
 		
-		System.out.println("JK" + messages.getMemberId());
-		
-
 		Event event = eventService.findEventById(message.getEventId());
 		model.addAttribute("event", event);
 		
@@ -132,10 +128,6 @@ public class MessageController {
 		Message messages = messageService.findSendedMessageById(messageId);
 		model.addAttribute("messages", messages);
 		
-		System.out.println("........" + message.getMemberId());
-		System.out.println("JIMIN" + message);
-		System.out.println("JK" + messages.getMemberId());
-
 		Event event = eventService.findEventById(message.getEventId());
 		
 		model.addAttribute("message", message);

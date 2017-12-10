@@ -12,7 +12,7 @@ import GeneralAffairs.store.factory.SessionFactory;
 import GeneralAffairs.store.mapper.MemberMapper;
 
 @Repository
-public class MemberStoreLogic implements MemberStore{
+public class MemberStoreLogic implements MemberStore {
 
 	@Override
 	public void registMember(Member member) {
@@ -23,7 +23,7 @@ public class MemberStoreLogic implements MemberStore{
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
 			mapper.registMember(member);
 			session.commit();
-		}finally {
+		} finally {
 			session.close();
 		}
 
@@ -32,20 +32,19 @@ public class MemberStoreLogic implements MemberStore{
 	@Override
 	public int updateMember(Member member) {
 
-		int check=0;
+		int check = 0;
 		SqlSession session = SessionFactory.getInstance().getSession();
 
-		try {	
+		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			check=mapper.updateMember(member);
-			if(check>0) {
+			check = mapper.updateMember(member);
+			if (check > 0) {
 				session.commit();
 			}
 
-		}finally {
+		} finally {
 			session.close();
 		}
-
 
 		return check;
 	}
@@ -58,7 +57,7 @@ public class MemberStoreLogic implements MemberStore{
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
 			mapper.deleteMember(memberId);
 			session.commit();
-		}finally {
+		} finally {
 			session.close();
 		}
 
@@ -67,14 +66,14 @@ public class MemberStoreLogic implements MemberStore{
 	@Override
 	public Member retrieveMemberById(String memberId) {
 
-		SqlSession session =SessionFactory.getInstance().getSession();
+		SqlSession session = SessionFactory.getInstance().getSession();
 		Member member = null;
 
 		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
 			member = mapper.retrieveMemberById(memberId);
 
-		}finally {
+		} finally {
 			session.close();
 		}
 
@@ -90,7 +89,7 @@ public class MemberStoreLogic implements MemberStore{
 		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
 			members = mapper.retrieveAllMembersByGroup(groupId);
-		}finally {
+		} finally {
 			session.close();
 		}
 
@@ -104,8 +103,8 @@ public class MemberStoreLogic implements MemberStore{
 		List<Member> members = null;
 		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			members= mapper.retrieveMembersByEvent(eventId);
-		}finally {
+			members = mapper.retrieveMembersByEvent(eventId);
+		} finally {
 			session.close();
 		}
 
@@ -117,17 +116,16 @@ public class MemberStoreLogic implements MemberStore{
 		int check = 0;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
-			MemberMapper mapper =session.getMapper(MemberMapper.class);
-			check=mapper.updateGrade(memberId, groupId, grade);
-			if(check>0) {
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
+			check = mapper.updateGrade(memberId, groupId, grade);
+			if (check > 0) {
 				session.commit();
 			}
-			
-		}finally {
+
+		} finally {
 			session.close();
 		}
-		
-		
+
 		return check;
 	}
 
@@ -135,12 +133,12 @@ public class MemberStoreLogic implements MemberStore{
 	public void registReqSignInMember(String memberId, int groupId) {
 
 		SqlSession session = SessionFactory.getInstance().getSession();
-		
+
 		try {
-			MemberMapper mapper= session.getMapper(MemberMapper.class);
+			MemberMapper mapper = session.getMapper(MemberMapper.class);
 			mapper.registReqSignInMember(memberId, groupId);
 			session.commit();
-		}finally {
+		} finally {
 			session.close();
 		}
 	}
@@ -148,12 +146,12 @@ public class MemberStoreLogic implements MemberStore{
 	@Override
 	public void deleteSignInGroupReq(String memberId, int groupId) {
 		SqlSession session = SessionFactory.getInstance().getSession();
-		
+
 		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
 			mapper.deleteSignInGroupReq(memberId, groupId);
 			session.commit();
-		}finally {
+		} finally {
 			session.close();
 		}
 
@@ -165,28 +163,26 @@ public class MemberStoreLogic implements MemberStore{
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			list=mapper.checkMemberHasGroup(memberId);
-			if(list.size()>0) {
+			list = mapper.checkMemberHasGroup(memberId);
+			if (list.size() > 0) {
 				session.commit();
 			}
-		}finally {
+		} finally {
 			session.close();
 		}
 
-		
-		
 		return list;
 	}
 
 	@Override
 	public List<Member> retrieveAllSignInGroupReq(int groupId) {
-		
+
 		SqlSession session = SessionFactory.getInstance().getSession();
-		List<Member> members=null;
+		List<Member> members = null;
 		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			members=mapper.retrieveAllSignInGroupReq(groupId);
-		}finally {
+			members = mapper.retrieveAllSignInGroupReq(groupId);
+		} finally {
 			session.close();
 		}
 
@@ -196,11 +192,11 @@ public class MemberStoreLogic implements MemberStore{
 	@Override
 	public List<Member> retrieveAllMembersExceptEventMembers(int groupId, int eventId) {
 		SqlSession session = SessionFactory.getInstance().getSession();
-		List<Member> members=null;
+		List<Member> members = null;
 		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			members=mapper.retrieveAllMembersExceptEventMembers(groupId, eventId);
-		}finally {
+			members = mapper.retrieveAllMembersExceptEventMembers(groupId, eventId);
+		} finally {
 			session.close();
 		}
 
@@ -210,11 +206,11 @@ public class MemberStoreLogic implements MemberStore{
 	@Override
 	public List<Member> retrieveAllMembersExceptManager(int groupId) {
 		SqlSession session = SessionFactory.getInstance().getSession();
-		List<Member> members=null;
+		List<Member> members = null;
 		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			members=mapper.retrieveAllMembersExceptManager(groupId);
-		}finally {
+			members = mapper.retrieveAllMembersExceptManager(groupId);
+		} finally {
 			session.close();
 		}
 
@@ -224,11 +220,11 @@ public class MemberStoreLogic implements MemberStore{
 	@Override
 	public List<Member> retrieveAllUnPaidMembers(String memberId, int eventId) {
 		SqlSession session = SessionFactory.getInstance().getSession();
-		List<Member> members=null;
+		List<Member> members = null;
 		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			members=mapper.retrieveAllUnPaidMembers(memberId, eventId);
-		}finally {
+			members = mapper.retrieveAllUnPaidMembers(memberId, eventId);
+		} finally {
 			session.close();
 		}
 
@@ -238,16 +234,15 @@ public class MemberStoreLogic implements MemberStore{
 	@Override
 	public List<Member> retrieveAllPaidMembers(String memberId, int eventId) {
 		SqlSession session = SessionFactory.getInstance().getSession();
-		List<Member> members=null;
+		List<Member> members = null;
 		try {
 			MemberMapper mapper = session.getMapper(MemberMapper.class);
-			members=mapper.retrieveAllPaidMembers(memberId, eventId);
-		}finally {
+			members = mapper.retrieveAllPaidMembers(memberId, eventId);
+		} finally {
 			session.close();
 		}
 
 		return members;
 	}
-
 
 }
