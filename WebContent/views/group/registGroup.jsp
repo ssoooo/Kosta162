@@ -52,7 +52,7 @@
 							<nav id="nav">
 								<ul>
 									<li>
-										<a href="main.html">Invitation</a>
+										<a href="">Invitation</a>
 										<ul class="ul_accept">
 											<p class="group_invite_list">
 												모임명

@@ -179,19 +179,18 @@
 
 									var data4 = new google.visualization.arrayToDataTable([
 										['기준', '수입', '지출'],
-										['이번달', ${month0Income}, ${month0Outlay}],
-										['1달전', ${month1Income}, ${month1Outlay}],
-										['2달전', ${month2Income}, ${month2Outlay}],
-										['3달전', ${month3Income}, ${month3Outlay}],
-										['4달전', ${month4Income}, ${month4Outlay}],
-										['5달전', ${month5Income}, ${month5Outlay}],
-										['6달전', ${month6Income}, ${month6Outlay}],
-										['7달전', ${month7Income}, ${month7Outlay}],
-										['8달전', ${month8Income}, ${month8Outlay}],
-										['9달전', ${month9Income}, ${month9Outlay}],
+										['11달전', ${month11Income}, ${month11Outlay}],
 										['10달전', ${month10Income}, ${month10Outlay}],
-										['11달전', ${month11Income}, ${month11Outlay}]
-										
+										['9달전', ${month9Income}, ${month9Outlay}],
+										['8달전', ${month8Income}, ${month8Outlay}],
+										['7달전', ${month7Income}, ${month7Outlay}],
+										['6달전', ${month6Income}, ${month6Outlay}],
+										['5달전', ${month5Income}, ${month5Outlay}],
+										['4달전', ${month4Income}, ${month4Outlay}],
+										['3달전', ${month3Income}, ${month3Outlay}],
+										['2달전', ${month2Income}, ${month2Outlay}],
+										['1달전', ${month1Income}, ${month1Outlay}],
+										['이번달', ${month0Income}, ${month0Outlay}]
 									]);
 
  								 var chart3 = new google.visualization.ColumnChart(document.getElementById('chart_div3'));

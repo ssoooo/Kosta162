@@ -10,7 +10,7 @@
 <title>Event</title>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="stylesheet" href="../resources/assets/css/main2.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/main2.css" />
 </head>
 <script src="http://code.jquery.com/jquery-1.5.js"></script>
 <script type="text/javascript">
@@ -71,7 +71,9 @@
 								<h2>게시판</h2>
 								<ul class="style2">
 									<li><a
+
 										href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${event.groupId}"><h2>${group.groupName }</h2></a></li>
+
 									<c:choose>
 										<c:when test="${empty events}">
 											<a class="list-group-item hidden-xs">개설된 이벤트가 없습니다.</a>

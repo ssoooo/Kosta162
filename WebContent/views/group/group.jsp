@@ -94,6 +94,7 @@
 								<section>
 									<h2>이벤트</h2>
 									<ul class="style2">
+
 										<li><a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${group.groupId }"><h2>${group.groupName }</h2></a></li>
 										<c:choose>
 										<c:when test="${empty events}">

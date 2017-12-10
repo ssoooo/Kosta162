@@ -77,7 +77,7 @@
 							<nav id="nav">
 								<ul>
 									<li>
-										<a href="main.jsp">Invitation</a>
+										<a href="">Invitation</a>
 										<ul class="ul_accept">
 										<c:forEach items="${groupsInvited }" var="group" >
 											<p class="group_invite_list">${group.groupName }
