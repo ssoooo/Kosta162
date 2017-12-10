@@ -9,6 +9,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,24 +46,34 @@ public class MemberGroupController {
 	private RecordService recordService;
 	
 	@RequestMapping(value= "/memberList.do", method=RequestMethod.GET)
-	public String showMemberListByGroup(int groupId, Model model) {
-		List<Member> members = mgService.findAllMembersExceptManager(groupId);
-		model.addAttribute("members", members);
-		
-		
-		
+	public String showMemberListByGroup(int groupId, HttpSession session, Model model) {
+		List<Member> members = mgService.findAllMembersByGroup(groupId);
+		String myId = (String)session.getAttribute("loginedMemberId");
 		Group group = mgService.findGroupById(groupId);
+		List<Member> newMembers = new ArrayList<Member>();
+		for(int i=0; i<members.size(); i++){
+			Member member = new Member();
+			member = members.get(i);
+			if(!member.getMemberId().equals(myId)){
+				newMembers.add(member);
+			} 
+		}
+		
+		model.addAttribute("members", newMembers);
 		model.addAttribute("group", group);
-		System.out.println("///////" + members.size());
-		return "event/eventMember";
+
+		return "event/eventMemberRegist";
 	}
 	
 	@RequestMapping(value= "/memberList.do", method=RequestMethod.POST)
 	public String findMemberListByGroup(int groupId, String memberId, Model model) {
 		Group group = mgService.findGroupById(groupId);
+//		String myId = (String)session.getAttribute("loginedMemberId");
+		List<Member> members = mgService.findAllMembersByGroup(groupId);
+		
+		
 		model.addAttribute("group", group);
 		
-		List<Member> members = mgService.findAllMembersByGroup(groupId);
 		model.addAttribute("members", members);
 
 		return "redirect:/event/registEvent.do?memberId=" + memberId;
@@ -142,7 +154,6 @@ public class MemberGroupController {
 		mgService.modifyGroup(group);
 		mgService.tradeGrade(memberId, groupId, grade1);
 		mgService.tradeGrade(managerId, groupId, grade2);
-		System.out.println("매니저아이디 :"+managerId);
 		return "redirect:/views/member/login.jsp";
 	}
 	
@@ -175,6 +186,7 @@ public class MemberGroupController {
 		list = mgService.findAllGroupsByMemberId(myId);
 		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(myId);
 		member = mgService.findMemberById(myId);
+		List<Message> sendMessages = messageService.findAllSendMessages(myId);
 		
 		List<Message> messages = messageService.findAllSendMessages(member.getMemberId());
 		model.addAttribute("messages", messages);
@@ -182,6 +194,8 @@ public class MemberGroupController {
 		model.addAttribute("groupsInvited", groupsInvited);
 		model.addAttribute("list", list);
 		model.addAttribute("member", member);
+		model.addAttribute("sendMessages", sendMessages);
+		
 		return "member/memberDetail";
 	}	
 	
@@ -191,25 +205,24 @@ public class MemberGroupController {
 		List<Group> list = new ArrayList<Group>();
 		list = mgService.findAllGroupsByMemberId(memberId);
 		member = mgService.findMemberById(memberId);
-		List<Message> sendMessages = messageService.findAllSendMessages(memberId);
+		
 		
 		
 		model.addAttribute("list", list);
 		model.addAttribute("member", member);
-		model.addAttribute("sendMessages", sendMessages);
+		
 		
 		return "member/memberDetail";
 	}
 	@ResponseBody
 	@RequestMapping("/checkId.do")
 	public String checkMemberID(String memberId, Model model) {
-		System.out.println(memberId);
-		
-		
-		mgService.findMemberById(memberId);
-		model.addAttribute("memberId", memberId);
-		System.out.println("찾은멤버의 아이디"+mgService.findMemberById(memberId).getMemberId());
-		return "redirect:/views/member/main.jsp";
+		System.out.println("체크맴버아이디:"+memberId);
+		if(mgService.findMemberById(memberId) == null){
+			return "success";
+		}else{
+		return "fail";
+		}
 	}
 	
 	
@@ -296,7 +309,6 @@ public class MemberGroupController {
 //			    group.setGroupImage(dir.getAbsolutePath() + File.separator + rename);
 				group.setGroupImage("/images/" + rename);
 
-				
 			} catch (IOException e) {
 				e.printStackTrace();
 //				model.addAttribute("resultMsg", "파일을 업로드하는 데에 실패했습니다.");
