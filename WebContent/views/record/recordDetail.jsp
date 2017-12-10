@@ -122,10 +122,12 @@
 							 <br/>
 							 	${record.accounting}내역: ${record.price} 원
 							 <br/>
+
 								${record.content}
 							 <br/>
 							 <br/>
 							 <img src="${record.image}" style="max-width:580px;">
+
                          </p>
                 
   

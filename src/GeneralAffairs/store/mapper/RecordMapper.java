@@ -56,7 +56,7 @@ public interface RecordMapper {
 //	List<Record> retrieveRecordsByCategoryYear(String category,String accounting,Date sDate,Date fDate);
 	
 	Integer retrieveGroupAccountingResult(@Param("accounting")String accounting,@Param("groupId")int groupId,@Param("sDate")Date sDate,@Param("fDate")Date fDate);//지출,수입 조건에 따른 모임의 일정기간 금액 가져오기
-	int retrieveEventAccountingResult(@Param("accounting")String accounting,@Param("eventId")int eventId,@Param("sDate")Date sDate,@Param("fDate")Date fDate);//지출,수입 조건에 따른 이벤트의 일정기간 금액 가져오기
+	Integer retrieveEventAccountingResult(@Param("accounting")String accounting,@Param("eventId")int eventId,@Param("sDate")Date sDate,@Param("fDate")Date fDate);//지출,수입 조건에 따른 이벤트의 일정기간 금액 가져오기
 
 	
 //	List<Record> retrieveGroupStatsRecordByEventMonth(String accounting,Date sDate,Date fDate,int groupId,int eventId);
@@ -80,4 +80,7 @@ public interface RecordMapper {
 	
 	Integer retrieveEventStatsRecordByCategory(@Param("category")String category,@Param("accounting")String accounting,@Param("eventId")int eventId);//카테고리와 기간에 따른 수입 혹은 지출 합계가져오기
 	Integer retrieveEventStatsRecordByAccounting(@Param("accounting")String accounting,@Param("eventId")int eventId); //이벤트의 수입 혹은 지출 합계 가져오기
+	Record retrieveRecordByTitle(@Param("title")String title,@Param("eventId")int eventId);
+	void updatePrice(Record record);
+	Record retrieveRecordByTitleAndCategory(String title);
 }

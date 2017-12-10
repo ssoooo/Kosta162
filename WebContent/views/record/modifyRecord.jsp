@@ -9,16 +9,34 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/main2.css" />
 		<script src="http://code.jquery.com/jquery-1.5.js"></script>
-		<script type="text/javascript">
+		
+		<!-- <script type="text/javascript">
 		var accounting;
 		var category;
 		
 		$(document).ready(function(){
-		    $('#selectAccounting').val('${pastAccounting }').attr("selected", true);
+			
+		    $("#selectAccounting").val('${record.accounting }').attr("selected", true);
 		    accounting = $('#selectAccounting option:selected').val();
 
-		    $('#selectCategory').val('${record.category }').attr("selected", true);
+		    $("#selectCategory").val('${record.category }').attr("selected", true);
 		    category = $('#selectCategory option:selected').val();
+		    
+		    $("#selectAccounting").change(function(){
+		    	accounting = $('#selectAccounting option:selected').val();
+		    });
+		    
+		    $("#selectCategory").change(function(){
+		    	category = $('#selectCategory option:selected').val();
+		    });
+		    
+		    $("#submit").click(function(){
+
+				$('#category').val(category);
+				$('#accounting').val(accounting);
+				
+		    });
+		    
 		});
 		
 		function readURL(input) {
@@ -31,7 +49,8 @@
 				reader.readAsDataURL(input.files[0]); 
 			} 
 		} 
-		</script>
+		</script> -->
+		
 	</head>
 	<body class="left-sidebar">
 		<div id="page-wrapper">
@@ -144,50 +163,39 @@
 													<div class="form-group">
 														<label class="col-lg-2 control-label">
 														  <h3>수입 및 지출(단위/원)</h3>
-														  <select id="selectAccounting" name="selectAccounting">
+														  <select id="selectAccounting" name="accounting">
+																<option value="${record.accounting}">${record.accounting}</option>
 																<option value="수입">수입</option>
 																<option value="지출">지출</option>
 														  </select>
-														  <input type="hidden" id="accounting" name="accounting" value=""/> 
+
+														  <input type="hidden" class="accounting" id="accounting" name="accounting"/> 
+													
+
 														</label>
 														<div class="col-lg-10">
-															<input type="text" name="price" class="form-control" value="${pastPrice }" required="required">
+															<input type="text" name="price" class="form-control" value="${record.price }" required="required">
 														</div>
 													</div>
-													<script type="text/javascript">
-														function changeAccounting() {
-															accounting = $('#selectAccounting option:selected').text();
-															alert(accounting);
-														}
-														
-														$("#selectAccounting").change(changeAccounting); 
-														
-														changeAccounting();
-													</script>
+
 													
 													<div class="form-group">
 															<label class="col-lg-2 control-label">
 															  <h3>카테고리</h3>
-															  <select id="selectCategory" name="selectCategory">
-																	<option value="미분류">카테고리 선택</option>
+															  <select id="selectCategory" name="category">
+																	<option selected="selected" value="${record.category}">${record.category}</option>
 																	<option value="교통비">교통비</option>
 																	<option value="식비">식비</option>
 																	<option value="생필품">생필품</option>
 																	<option value="기타">기타</option>
+																	<option value="미분류">미분류</option>
 															  </select>
-															  <input type="hidden" id="category" name="category"/> 
+
+															  <input type="hidden" class="category" id="category" name="category"/>
+															
 															</label>
 													</div>
-													<script type="text/javascript">
-														function changeCategory() {
-															category = $('#selectCategory option:selected').text();
-															alert(category)
-														}
-														
-														$("#selectCategory").change(category); 
-														
-														changeCategory();
-													</script>													
+
 													<br/>
 													<div class="form-group">
 														<label class="col-lg-2 control-label">
@@ -217,24 +225,10 @@
 													<br />
 													<div class="form-group">
 														<div class="align_btn">
-															<button type="submit" class="record_submit">확인</button>
+															<button type="submit" id="submit" class="record_submit">확인</button>
 															<button type="reset" class="record_cancel">취소</button>
 														</div>
-														<script>
-														function confirm() {
-															
-															if($('#selectCategory option:selected', $(this)).val('미분류')){
-																$('#category').val('미분류');
-															}else{
-																$('#category').val(category);
-															}
-															$('#accounting').val(accounting);
-														}
-														
-														$("#submit").click(confirm); 
-														
-														confirm();
-														</script>
+
 													</div>
 												</fieldset>
 											</form>

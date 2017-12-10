@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=EUC-KR"
 	pageEncoding="utf-8"%>
+	<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
@@ -13,7 +14,7 @@
 <script src="http://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <link type="text/css" rel="stylesheet"
 	href="http://onlinehtmltools.com/tab-generator/skins/skin6/top.css">
-</script>
+
 
 </head>
 <body class="no-sidebar">
@@ -148,27 +149,28 @@
 
  							 function drawChart(){
  								 var data3 = new google.visualization.arrayToDataTable([
-									 ['년대', '수입', '지출'], // 제목 그리고 항목들
- 									['2015', 10, 20], // 제목과 항목수를 맞춰주어야 합니다.
- 									['2016', 15, 30],
- 									['2017',10,20],
- 									['2018', 10, 30]
- 									]);
+ 									 ['년대', '수입', '지출'], // 제목 그리고 항목들
+   									['${year3}', ${year3Income}, ${year3Outlay}], // 제목과 항목수를 맞춰주어야 합니다.
+   									['${year2}', ${year2Income}, ${year2Outlay}],
+   									['${year1}', ${year1Income}, ${year1Outlay}],
+   									['${year0}', ${year0Income}, ${year0Outlay}]
+   									]); 
 
 									var data4 = new google.visualization.arrayToDataTable([
-										['달', '수입', '지출', '합계'],
-										['1월', 10, 30, 40],
-										['2월', 30, 30, 60],
-										['3월', 25, 30, 50],
-										['4월', 35, 20, 50],
-										['5월', 60, 20, 50],
-										['6월', 30, 20, 50],
-										['7월', 30, 20, 50],
-										['8월', 20, 20, 50],
-										['9월', 32, 20, 50],
-										['10월', 55, 20, 50],
-										['11월', 34, 20, 50],
-										['12월', 54, 20, 50]
+										['기준', '수입', '지출'],
+										['이번달', ${month0Income}, ${month0Outlay}],
+										['1달전', ${month1Income}, ${month1Outlay}],
+										['2달전', ${month2Income}, ${month2Outlay}],
+										['3달전', ${month3Income}, ${month3Outlay}],
+										['4달전', ${month4Income}, ${month4Outlay}],
+										['5달전', ${month5Income}, ${month5Outlay}],
+										['6달전', ${month6Income}, ${month6Outlay}],
+										['7달전', ${month7Income}, ${month7Outlay}],
+										['8달전', ${month8Income}, ${month8Outlay}],
+										['9달전', ${month9Income}, ${month9Outlay}],
+										['10달전', ${month10Income}, ${month10Outlay}],
+										['11달전', ${month11Income}, ${month11Outlay}]
+										 
 									]);
 
  								 var chart3 = new google.visualization.ColumnChart(document.getElementById('chart_div3'));

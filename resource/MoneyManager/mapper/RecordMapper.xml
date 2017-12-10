@@ -36,32 +36,47 @@
 	UPDATE record_table SET caution=#{caution}
 	WHERE recordId=#{recordId}
 	</update>
+	<update id="updatePrice" parameterType="Record">
+	UPDATE record_table SET accounting=#{accounting},price=#{price},category=#{category},regDate=SYSDATE
+	WHERE recordId=#{recordId}
+	</update>
 
 	<delete id="deleteRecord" parameterType="int">
 		DELETE FROM record_table
 		WHERE recordId=#{recordId}
 	</delete>
 
-	<select id="retrieveRecordById" parameterType="int" resultMap="recordMap">
+	<select id="retrieveRecordById" parameterType="int" resultType="record">
 		SELECT
 		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,caution,price,category
 		FROM record_table
 		WHERE recordId=#{recordId}
 	</select>
+	
+	
+	<select id="retrieveRecordByTitle" parameterType="map" resultType="record">
+		SELECT
+		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,caution,price,category
+		FROM record_table
+		WHERE title=#{title} AND eventId=${eventId}
+	</select>
+	
+	
 
-	<select id="retrieveAllRecordsByEventId" parameterType="int" resultMap="recordMap">
+	<select id="retrieveAllRecordsByEventId" parameterType="int" resultType="record">
 		SELECT
 		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,caution,price,category
 		FROM record_table
 		WHERE eventId=#{eventId}
+		ORDER BY regDate desc
 	</select>
 
-	<select id="retrieveAllRecordsByGroupId" parameterType="int" resultMap="recordMap">
+	<select id="retrieveAllRecordsByGroupId" parameterType="int" resultType="record">
 		SELECT
 		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,caution,price,category
 		FROM record_table
 		WHERE groupId=#{groupId} AND eventId=0
-		order by recordId desc
+		order by regDate desc
 	</select>
 
 	<select id="retrieveRecordsByMonth" parameterType="map"
@@ -98,10 +113,12 @@
 	</select>
 
 	<select id="retrieveEventAccountingResult" parameterType="map"
-		resultType="int">
+		resultType="Integer">
 		SELECT sum(price)
 		FROM record_table
-		WHERE regDate <![CDATA[>=]]> #{sDate} AND regDate <![CDATA[<]]> #{fDate}+1 AND accounting=#{accounting} AND eventId=#{eventId}
+		WHERE regDate <![CDATA[>=]]> TO_CHAR(#{sDate},'yyyymmdd') 
+		AND regDate <![CDATA[<]]> TO_CHAR(#{fDate},'yyyymmdd')
+		AND accounting=#{accounting} AND eventId=#{eventId}
 	</select>
 
 	<!-- 실험 -->
@@ -113,6 +130,13 @@
 		SELECT sum(price)
 		FROM record_table
 		WHERE regDate<![CDATA[>=]]> TO_DATE(#{year}||'-01-01','yyyymmdd') AND regDate <![CDATA[<]]> TO_DATE(#{year}||'-12-31','yyyymmdd') AND accounting=#{accounting} AND eventId=#{eventId}  
+	</select>
+
+	<select id="retrieveRecordByTitleAndCategory" parameterType="String" resultType="Record">
+	SELECT recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,caution,price,category
+	FROM record_table
+	WHERE title=#{title} AND category='이벤트합산' AND eventId=0 
+	
 	</select>
 
 	<select id="retrieveGroupStatsRecordByEvent" parameterType="map"
