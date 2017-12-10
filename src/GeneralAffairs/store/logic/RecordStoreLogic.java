@@ -402,6 +402,47 @@ public class RecordStoreLogic implements RecordStore{
 		
 	}
 
+	@Override
+	public Record retrieveRecordByTitle(String title,int eventId) {
+		Record record=null;
+		SqlSession session = SessionFactory.getInstance().getSession();
+		try {
+		RecordMapper mapper =session.getMapper(RecordMapper.class);	
+		record=mapper.retrieveRecordByTitle(title,eventId);
+		}finally {
+			session.close();
+		}
+		
+		return record;
+	}
+
+	@Override
+	public void updatePrice(Record record) {
+		SqlSession session = SessionFactory.getInstance().getSession();
+		
+		try {
+			RecordMapper mapper=session.getMapper(RecordMapper.class);
+			mapper.updatePrice(record);
+			session.commit();
+		}finally {
+			session.close();
+		}
+	}
+
+	@Override
+	public Record retrieveRecordByTitleAndCategory(String title) {
+		Record record=null;
+		SqlSession session = SessionFactory.getInstance().getSession();
+		try {
+		RecordMapper mapper =session.getMapper(RecordMapper.class);	
+		record=mapper.retrieveRecordByTitleAndCategory(title);
+		}finally {
+			session.close();
+		}
+		
+		return record;
+	}
+
 
 	
 }

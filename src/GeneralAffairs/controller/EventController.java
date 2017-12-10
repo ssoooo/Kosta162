@@ -46,7 +46,7 @@ public class EventController {
 		record.setImage("none");
 		record.setTitle("지원금)"+event.getEventName());
 		record.setContent("모임"+event.getGroupId()+"의 지원금입니다.");
-		record.setCategory("미선택");
+		record.setCategory("지원금");
 		record.setPrice((int)event.getGroupSupport());
 		record.setCaution("정상");
 		record.setAccounting("수입");
@@ -61,7 +61,7 @@ public class EventController {
 		record.setImage("none");
 		record.setTitle("지원금)"+event.getEventName());
 		record.setContent("이벤트"+event.getEventName()+"의 지원금으로 지출되었습니다.");
-		record.setCategory("미선택");
+		record.setCategory("지원금");
 		record.setPrice((int)event.getGroupSupport());
 		record.setCaution("정상");
 		record.setAccounting("지출");
@@ -112,8 +112,34 @@ public class EventController {
 	}
 
 	@RequestMapping(value = "/modifyEvent.do", method = RequestMethod.POST)
-	public String modifyEvent(Event event, HttpServletRequest req, Model model) {
+	public String modifyEvent(Event event,double groupSupports, HttpServletRequest req, Model model) {
 		eventService.modifyEvent(event);
+		double suportBalance=groupSupports-event.getGroupSupport();
+
+		
+		
+		
+		
+			Group gro = mgService.findGroupById(event.getGroupId());
+			gro.setBalance(gro.getBalance()+suportBalance);
+			mgService.modifyGroupBalance(gro);
+			Record record=	recordService.findRecordByTitle("지원금)"+event.getEventName(),0);
+			int priceModify=(int) (record.getPrice()-suportBalance); 
+			record.setPrice(priceModify);
+			record.setCategory("이벤트");
+			recordService.modifyPrice(record);
+		
+		 
+			Event eve = eventService.findEventById(event.getEventId());
+			eve.setBalance(eve.getBalance()-suportBalance);
+			eventService.modifyEventBalance(eve);
+			Record records = recordService.findRecordByTitle("지원금)"+eve.getEventName(),eve.getEventId());
+			records.setPrice((int) (records.getPrice()-suportBalance));
+			records.setCategory("이벤트");
+			recordService.modifyPrice(records);
+		
+		
+		
 		model.addAttribute("event", event);
 		model.addAttribute("groupId", event.getGroupId());
 
@@ -138,7 +164,8 @@ public class EventController {
 	public String showModifyEvent(int eventId, Model model) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
-
+		double groupSupports=event.getGroupSupport();
+		model.addAttribute("groupSupports",groupSupports);
 		List<Event> events = eventService.findAllEventsByGroupId(event.getGroupId());
 		model.addAttribute("events", events);
 
@@ -309,24 +336,54 @@ public class EventController {
 	
 	@RequestMapping(value="/addEventBalanceToGroup.do",method=RequestMethod.GET)
 	public String addEventBalanceToGroup(int eventId) {
+		
+		
 		Event event= eventService.findEventById(eventId);
 		Group group =mgService.findGroupById(event.getGroupId());
-		
-		
+		Record checkRecord= recordService.findRecordByTitleAndCategory("합산)"+event.getEventName());
 		double balance=group.getBalance()+event.getBalance();
-		Record record = new Record();
-		record.setEventId(0);
-		record.setGroupId(group.getGroupId());
-		record.setMemberId(event.getMemberId());
-		record.setImage("none");
-		record.setTitle("이)"+event.getEventName());
-		record.setContent("이벤트 "+event.getEventName()+"의 합산결과");
-		record.setCategory("미선택");
-		record.setPrice((int)event.getBalance());
-		record.setAccounting("정상");
-		recordService.createRecord(record);
-		group.setBalance(balance);
-		mgService.modifyGroupBalance(group);
+		
+		if(checkRecord==null) {
+			
+			
+			Record record = new Record();
+			record.setEventId(0);
+			record.setGroupId(group.getGroupId());
+			record.setMemberId(event.getMemberId());
+			record.setImage("none");
+			record.setTitle("합산)"+event.getEventName());
+			record.setContent("이벤트 "+event.getEventName()+"의 합산결과");
+			record.setCategory("이벤트합산");
+			
+			if(event.getBalance()<0) {
+				record.setAccounting("지출");
+				record.setPrice(Math.abs((int)event.getBalance()));
+			}else {
+			record.setAccounting("수입");
+			record.setPrice((int)event.getBalance());
+			}
+			recordService.createRecord(record);
+			group.setBalance(balance);
+			mgService.modifyGroupBalance(group);
+			
+		}else {
+			
+			double nextBalance =checkRecord.getPrice()-event.getBalance();
+			group.setBalance(group.getBalance()-nextBalance);
+			mgService.modifyGroupBalance(group);
+			if(event.getBalance()<0) {
+			checkRecord.setPrice(Math.abs((int) event.getBalance()));
+			checkRecord.setAccounting("지출");
+			}else {
+				checkRecord.setPrice((int) event.getBalance());
+				checkRecord.setAccounting("수입");
+			}
+			
+			recordService.modifyPrice(checkRecord);
+			
+		}
+	
+		
 		
 		return "redirect:/memberGroup/group.do?groupId="+event.getGroupId();
 	}

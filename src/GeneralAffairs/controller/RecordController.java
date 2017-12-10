@@ -187,9 +187,11 @@ public class RecordController {
 			if(record.getAccounting().equals("수입")) {
 				group.setBalance(group.getBalance()-record.getPrice());
 				mgService.modifyGroupBalance(group);
+				recordService.removeRecord(recordId);
 			}else {
 				group.setBalance(group.getBalance()+record.getPrice());
 				mgService.modifyGroupBalance(group);
+				recordService.removeRecord(recordId);
 			}
 			
 		} else {
@@ -197,27 +199,24 @@ public class RecordController {
 			if(record.getAccounting().equals("수입")) {
 				event.setBalance(event.getBalance()-record.getPrice());
 				eventService.modifyEventBalance(event);
+				recordService.removeRecord(recordId);
+				return "redirect:/event/event.do?eventId="+event.getEventId()+"&groupId="+event.getGroupId();
 			}else {
-				event.setBalance(group.getBalance()+record.getPrice());
+				event.setBalance(event.getBalance()+record.getPrice());
 				eventService.modifyEventBalance(event);
+				recordService.removeRecord(recordId);
+				return "redirect:/event/event.do?eventId="+event.getEventId()+"&groupId="+event.getGroupId();
 			}
 			
 		}
 		
-		recordService.removeRecord(recordId);
+	
 		return "redirect:/memberGroup/group.do?groupId="+record.getGroupId();
 	}
 	
 	@RequestMapping(value="/modifyRecord.do",method=RequestMethod.POST)
 	public String modifyGroupRecord(Record record,String pastAccounting,int pastPrice,HttpSession session, @RequestParam("imgFile") MultipartFile imgFile) {
-		System.out.println("eventId:" + record.getEventId());
-		System.out.println("groupId:" + record.getGroupId());
-		System.out.println("recordId:" + record.getRecordId());
-		System.out.println("getTitle:" + record.getTitle());
-		System.out.println("content:" + record.getContent());
-		System.out.println("price:" + record.getPrice());
-		System.out.println("category:" + record.getCategory());
-		System.out.println("accounting:" + record.getAccounting());
+	
 		
 		if(!imgFile.isEmpty()) {
 			
@@ -228,39 +227,65 @@ public class RecordController {
 			
 		    record.setImage("/images/" + rename);
 		}
-		
-//		record.setMemberId((String)session.getAttribute("loginedMemberId"));
-		
-//		if(record.getEventId()==0) {
-//			
-//			int price = record.getPrice();
-//			Group group = mgService.findGroupById(record.getGroupId());
-//			double groupBalance= group.getBalance();
-//		
-//			if(pastAccounting.equals("수입")) {
-//				double incomeBalance=groupBalance-pastPrice;
-//				group.setBalance(incomeBalance);
-//				mgService.modifyGroupBalance(group);
-//			} else {
-//				double outlayBalance = groupBalance+pastPrice;
-//				group.setBalance(outlayBalance);
-//				mgService.modifyGroupBalance(group);
-//			}
-//		
-//			recordService.modifyRecord(record);
-//		
-//			if(record.getAccounting().equals("지출")) {
-//				groupBalance=groupBalance-price;
-//				group.setBalance(groupBalance);
-//				mgService.modifyGroupBalance(group);
-//			} else {
-//				groupBalance=groupBalance+price;
-//				group.setBalance(groupBalance);
-//				mgService.modifyGroupBalance(group);
-//			}
-//		}
-		
 		recordService.modifyRecord(record);
+		Record rc=recordService.findRecordById(record.getRecordId());
+		double changeGroupBalance = 0;
+		double changeEventBalance=0;
+		int price= record.getPrice();
+		if(rc.getEventId()==0) {
+			
+			
+			Group group = mgService.findGroupById(rc.getGroupId());
+			double groupBalance=group.getBalance();
+			if(rc.getAccounting().equals("수입")) {
+				if(pastAccounting.equals("수입")) {
+					changeGroupBalance=pastPrice-price;
+					group.setBalance(groupBalance-changeGroupBalance);
+					mgService.modifyGroupBalance(group);
+				}else {
+					changeGroupBalance=price+pastPrice;
+					group.setBalance(groupBalance+changeGroupBalance);
+					mgService.modifyGroupBalance(group);
+				}
+			}else {
+				if(pastAccounting.equals("수입")) {
+					changeGroupBalance=price+pastPrice;
+					group.setBalance(groupBalance-changeGroupBalance);
+					mgService.modifyGroupBalance(group);
+				}else {
+					changeGroupBalance=pastPrice-price;
+					group.setBalance(groupBalance+changeGroupBalance);
+					mgService.modifyGroupBalance(group);
+				}
+			}
+			
+		}else {
+			Event event = eventService.findEventById(rc.getEventId());
+			double eventBalance = event.getBalance();
+			if(rc.getAccounting().equals("수입")) {
+				if(pastAccounting.equals("수입")) {
+					changeEventBalance=pastPrice-price;
+					event.setBalance(eventBalance-changeEventBalance);
+					eventService.modifyEventBalance(event);
+				}else {
+					changeEventBalance=price+pastPrice;
+					event.setBalance(eventBalance+changeEventBalance);
+					eventService.modifyEventBalance(event);
+				}
+			}else {
+				if(pastAccounting.equals("수입")) {
+					changeEventBalance=price+pastPrice;
+					event.setBalance(eventBalance-changeEventBalance);
+					eventService.modifyEventBalance(event);
+				}else {
+					changeEventBalance=pastPrice-price;
+					event.setBalance(eventBalance+changeEventBalance);
+					eventService.modifyEventBalance(event);
+				}
+			}
+			
+		}
+
 		
 		return "redirect:/record/showRecordDetail.do?recordId="+record.getRecordId();
 	}
@@ -271,13 +296,9 @@ public class RecordController {
 		Record record=recordService.findRecordById(recordId);
 		Group group = mgService.findGroupById(record.getGroupId());
 		Event event;
-		
-		if(record.getEventId() != 0) {
-			event = eventService.findEventById(record.getEventId());
-			model.addAttribute("event", event);
-		} else {
-			model.addAttribute("event", null);
-		}
+		event = eventService.findEventById(record.getEventId());
+		model.addAttribute("event", event);
+	
 		
 		List<Event> events = eventService.findAllEventsByGroupId(record.getGroupId());
 		int pastPrice = record.getPrice();

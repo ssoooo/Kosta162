@@ -124,6 +124,24 @@ public class RecordServiceLogic implements RecordService{
 		
 	}
 
+	@Override
+	public Record findRecordByTitle(String title,int eventId) {
+		// TODO Auto-generated method stub
+		return store.retrieveRecordByTitle(title,eventId);
+	}
+
+	@Override
+	public void modifyPrice(Record record) {
+		// TODO Auto-generated method stub
+		store.updatePrice(record);
+	}
+
+	@Override
+	public Record findRecordByTitleAndCategory(String title) {
+		// TODO Auto-generated method stub
+		return store.retrieveRecordByTitleAndCategory(title);
+	}
+
 	
 	
 }

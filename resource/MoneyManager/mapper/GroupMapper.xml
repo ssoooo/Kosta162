@@ -98,7 +98,7 @@
 	
 	<update id="updateGroupBalance" parameterType="Group">
 		UPDATE group_table SET
-		balance=#{balance}
+		balance=#{balance},regDate=SYSDATE
 		WHERE groupId=#{groupId}
 	</update>
 	<select id="findGroupByGroupName" parameterType="String" resultMap="groupMap">
