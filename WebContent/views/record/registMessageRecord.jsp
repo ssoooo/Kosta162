@@ -33,7 +33,7 @@
 
 						<!-- Logo -->
 							<div id="logo">
-								<h1><a href="${pageContext.request.contextPath}/memberGroup/main.do">알뜰총雜</a></h1>
+								<a href="${pageContext.request.contextPath}/memberGroup/main.do"><img src="${pageContext.request.contextPath}/resources/images/alal.png" width="320px;"/></a>
 								<span>${group.groupName} > ${event.eventName }</span>
 							</div>
 
@@ -118,7 +118,7 @@
 																<h3>제목</h3>
 															</label>
 															<div class="col-lg-10">
-																<input type="text" name="title" value="re)${message.title }" class="form-control" required="required">
+																<input type="text" name="title" value="re)" class="form-control" required="required">
 															</div>
 														</div>
 														<br/>
@@ -131,7 +131,7 @@
 															  </select>
 															</label>
 															<div class="col-lg-10">
-																<input type="text" name="price" placeholder="(ex. 30000)" class="form-control" required="required">
+																<input type="text" name="price" value="${message.title }" class="form-control" required="required">
 															</div>
 														</div>
 														

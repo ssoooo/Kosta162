@@ -152,7 +152,6 @@ public class MessageController {
 		
 		model.addAttribute("event", event);
 		model.addAttribute("group", group);
-		
 		model.addAttribute("message", message);
 		
 		return "record/registMessageRecord";

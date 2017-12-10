@@ -25,7 +25,7 @@
 
 				<!-- Logo -->
 				<div id="logo">
-					<h1>알뜰총雜</h1>
+					<a href="${pageContext.request.contextPath}/memberGroup/main.do"><img src="${pageContext.request.contextPath}/resources/images/alal.png" width="320px;"/></a>
 					<span>${group.groupName }</span>
 				</div>
 

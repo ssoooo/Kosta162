@@ -20,9 +20,7 @@
 
 				<!-- Logo -->
 				<div id="logo">
-					<h1>
-						<a href="${pageContext.request.contextPath}/memberGroup/main.do">알뜰총雜</a>
-					</h1>
+					<a href="${pageContext.request.contextPath}/memberGroup/main.do"><img src="${pageContext.request.contextPath}/resources/images/alal.png" width="320px;"/></a>
 					<c:choose>
 						<c:when test="${event eq null }">
 							<span>${group.groupName }</span>

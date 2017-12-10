@@ -46,7 +46,7 @@
 		WHERE recordId=#{recordId}
 	</delete>
 
-	<select id="retrieveRecordById" parameterType="int" resultType="record">
+	<select id="retrieveRecordById" parameterType="int" resultMap="recordMap">
 		SELECT
 		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,caution,price,category
 		FROM record_table
@@ -54,7 +54,7 @@
 	</select>
 	
 	
-	<select id="retrieveRecordByTitle" parameterType="map" resultType="record">
+	<select id="retrieveRecordByTitle" parameterType="map" resultMap="recordMap">
 		SELECT
 		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,caution,price,category
 		FROM record_table
@@ -63,7 +63,7 @@
 	
 	
 
-	<select id="retrieveAllRecordsByEventId" parameterType="int" resultType="record">
+	<select id="retrieveAllRecordsByEventId" parameterType="int" resultMap="recordMap">
 		SELECT
 		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,caution,price,category
 		FROM record_table
@@ -71,7 +71,7 @@
 		ORDER BY regDate desc
 	</select>
 
-	<select id="retrieveAllRecordsByGroupId" parameterType="int" resultType="record">
+	<select id="retrieveAllRecordsByGroupId" parameterType="int" resultMap="recordMap">
 		SELECT
 		recordId,eventId,groupId,memberId,image,title,regDate,content,accounting,caution,price,category
 		FROM record_table

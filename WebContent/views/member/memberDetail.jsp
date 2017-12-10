@@ -67,8 +67,8 @@
 
 						<!-- Logo -->
 							<div id="logo">
-								<h1><a href="main.do">알뜰총雜</a></h1>
-								<span>알뜰한 총무의 잡다한 가계부</span>
+								<a href="${pageContext.request.contextPath}/memberGroup/main.do"><img src="${pageContext.request.contextPath}/resources/images/alal.png" width="320px;"/></a>
+								<span>알아두면 쓸데있는 신박하고 잡다한 가계부</span>
 							</div>
 
 						<!-- Nav -->

@@ -19,8 +19,8 @@
 
 						<!-- Logo -->
 							<div id="logo">
-								<h1><a href="index.html">알뜰총雜</a></h1>
-								<span>알뜰한 총무의 잡다한 가계부</span>
+								<a href="${pageContext.request.contextPath}/memberGroup/main.do"><img src="${pageContext.request.contextPath}/resources/images/alal.png" width="320px;"/></a>
+								<span>알아두면 쓸데있는 신박하고 잡다한 가계부</span>
 							</div>
 
 						<!-- Nav -->
@@ -77,7 +77,7 @@
 											<div class="4u 12u(medium)">
 												<!-- Box -->
 													<section class="box feature">
-														<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${otherGroup.groupId }" class="image featured"><img src="${otherGroup.groupImage }" alt="" /></a>
+														<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${otherGroup.groupId }" class="image featured"><img src="${otherGroup.groupImage }" style="height:300px; overflow:hidden;" alt="" /></a>
 														<div class="inner">
 															<header>
 																<h2>${otherGroup.groupName }<button class="sign">가입신청</button></h2>
@@ -90,7 +90,7 @@
 											<div class="4u 12u(medium)">
 												<!-- Box -->
 													<section class="box feature">
-														<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${myGroup.groupId }" class="image featured"><img src="${myGroup.groupImage }" alt="" /></a>
+														<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${myGroup.groupId }" class="image featured"><img src="${myGroup.groupImage }" style="height:300px; overflow:hidden;" alt="" /></a>
 														<div class="inner">
 															<header>
 																<h2>${myGroup.groupName }</h2>
@@ -105,7 +105,7 @@
 											<div class="4u 12u(medium)">
 												<!-- Box -->
 													<section class="box feature">
-														<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${otherGroup.groupId }" class="image featured"><img src="${otherGroup.groupImage }" alt="" /></a>
+														<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${otherGroup.groupId }" class="image featured"><img src="${otherGroup.groupImage }" style="height:300px; overflow:hidden;" alt="" /></a>
 														<div class="inner">
 															<header>
 																<h2>${otherGroup.groupName }<button class="sign">가입신청</button></h2>
@@ -124,7 +124,7 @@
 											<div class="4u 12u(medium)">
 												<!-- Box -->
 													<section class="box feature">
-														<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${myGroup.groupId }" class="image featured"><img src="${myGroup.groupImage }" alt="" /></a>
+														<a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${myGroup.groupId }" class="image featured"><img src="${myGroup.groupImage }" style="height:300px; overflow:hidden;" alt="" /></a>
 														<div class="inner">
 															<header>
 																<h2>${myGroup.groupName }</h2></header>

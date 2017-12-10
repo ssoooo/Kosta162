@@ -57,7 +57,8 @@
 	<select id="retrieveAllGroupsByMemberId" parameterType="String" resultType="Group">
 		SELECT f.groupId, f.memberId, f.groupName, f.account, f.groupIntroduce, f.balance, f.regDate, f.groupImage
 		FROM group_table f, groupMember_table g
-		WHERE g.groupId = f.groupId and g.memberId=#{memberId }
+		WHERE g.groupId = f.groupId and g.memberId=#{memberId,jdbcType=VARCHAR}
+		order by f.regDate desc
 	</select>
 
 	<select id="retrieveAllGroupsByName" parameterType="String" resultType="Group">

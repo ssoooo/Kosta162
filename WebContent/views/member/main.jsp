@@ -69,8 +69,8 @@
 
 						<!-- Logo -->
 							<div id="logo">
-								<h1><a href="main.do">알뜰총雜</a></h1>
-								<span>알뜰한 총무의 잡다한 가계부</span>
+								<a href="${pageContext.request.contextPath}/memberGroup/main.do"><img src="${pageContext.request.contextPath}/resources/images/alal.png" width="320px;"/></a>
+								<span>알아두면 쓸데있는 신박하고 잡다한 가계부</span>
 							</div>
 
 						<!-- Nav -->
@@ -106,7 +106,7 @@
 					<div id="banner" class="box container">
 						<div class="row">
 							<div class="7u 12u(medium)">
-								<h2>알뜰총雜에 오신 것을 환영합니다!</h2>
+								<h2>알쓸신잡에 오신 것을 환영합니다!</h2>
 								<p>feat.니가해라 총무</p>
 							</div>
 							<div class="5u 12u(medium)">

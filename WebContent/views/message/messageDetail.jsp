@@ -29,9 +29,7 @@
 
 				<!-- Logo -->
 				<div id="logo">
-					<h1>
-						<a href="${pageContext.request.contextPath}/memberGroup/main.do">알뜰총雜</a>
-					</h1>
+					<a href="${pageContext.request.contextPath}/memberGroup/main.do"><img src="${pageContext.request.contextPath}/resources/images/alal.png" width="320px;"/></a>
 					<c:choose>
 						<c:when test="${event eq null }">
 							<span>${group.groupName }</span>
@@ -79,26 +77,12 @@
 											<td><textarea name="content" readonly rows="4"
 													style="resize: none">${message.content }</textarea></td>
 										</div>
-<<<<<<< HEAD
-			
-									</tr>
-									</tbody>
-								</table>
-								<div id="two_btn">
-									<button class="btn_ok" onclick="window.close()">확인</button>
-									<button class="btn_regist" onclick="onclickFunction()">등록</button>
-								</div>
-						</div>
-=======
->>>>>>> master
-
 									</tr>
 								</tbody>
 							</table>
 							<div id="two_btn">
 								<button class="btn_ok" onclick="window.close()">확인</button>
-								<button class="btn_regist"
-									onclick="window.open('${pageContext.request.contextPath}/record/showRegistEventRecord.do?eventId=${event.eventId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">등록</button>
+								<button class="btn_regist" onclick="onclickFunction()">등록</button>
 							</div>
 						</form>
 					</div>
