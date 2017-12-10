@@ -12,7 +12,7 @@ public class Message {
 	private String content;
 	private int groupId;
 	private double collectionPerMember;
-	private Date date;
+	private Date regDate;
 	
 	public int getGroupId() {
 		return groupId;
@@ -57,10 +57,10 @@ public class Message {
 		this.collectionPerMember = collectionPerMember;
 	}
 	public Date getDate() {
-		return date;
+		return regDate;
 	}
-	public void setDate(Date date) {
-		this.date = date;
+	public void setDate(Date regDate) {
+		this.regDate = regDate;
 	}
 	
 	

@@ -28,10 +28,9 @@ public class EventController {
 
 	@Autowired
 	private MemberGroupService mgService;
-	
+
 	@Autowired
 	private RecordService recordService;
-
 
 	@RequestMapping(value = "/registEvent.do", method = RequestMethod.POST)
 	public String registEvent(Event event, HttpSession session, HttpServletRequest req, Model model) {
@@ -164,13 +163,13 @@ public class EventController {
 	// memberId;
 	// }
 
-	@RequestMapping("/addEventBalance.do")
-	public String addEventBalanceToGroupBalance(int eventId) {
-		Event event = eventService.findEventById(eventId);
-		eventService.addEventBalanceToGroupBalance(eventId, event.getGroupId());
-
-		return "memberGroup/group";
-	}
+	// @RequestMapping("/addEventBalance.do")
+	// public String addEventBalanceToGroupBalance(int eventId) {
+	// Event event = eventService.findEventById(eventId);
+	// eventService.addEventBalanceToGroupBalance(eventId, event.getGroupId());
+	//
+	// return "memberGroup/group";
+	// }
 
 	@RequestMapping(value = "/collectionDetail.do", method = RequestMethod.GET)
 	public String showChangePayment(int eventId, Model model) {
@@ -190,33 +189,30 @@ public class EventController {
 	}
 
 	@RequestMapping(value = "/collectionDetail.do", method = RequestMethod.POST)
-	public String ChangePayment(int eventId, HttpServletRequest req, Model model) {
+	public String ChangePayment(int eventId, HttpServletRequest req, Model model, String memberId) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
 
-		String members = req.getParameter("memberId");
-		for (int i = 0; i < members.length(); i++) {
-			event.setMemberId(members);
-		}
-		event.setMemberId(members);
+		String member = req.getParameter("memberId");
+		// for (int i = 0; i < members.length(); i++) {
+		// event.setMemberId(members);
+		// }
+		event.setMemberId(member);
 		eventService.changePayment(event.getMemberId(), eventId);
 
 		return "redirect:/event/collectionDetail.do?eventId=" + eventId;
 	}
-	
+
 	@RequestMapping(value = "/collectionDetail2.do", method = RequestMethod.POST)
-	public String ChangeUnPayment(int eventId, HttpServletRequest req, Model model) {
+	public String ChangeUnPayment(int eventId, HttpServletRequest req, Model model, String memberId) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
-
+		System.out.println("멤버아이디체크" + memberId);
 		String memberss = req.getParameter("memberId2");
-//		for (int i = 0; i < memberss.length; i++) {
-//			event.setMemberId(memberss[i]);
-//		}
-		event.setMemberId(memberss);
-		eventService.changeUnPayment(event.getMemberId(), eventId);
+
+		eventService.changeUnPayment(memberId, eventId);
 		System.out.println("?//" + event.getMemberId());
-		
+
 		return "redirect:/event/collectionDetail.do?eventId=" + eventId;
 	}
 
@@ -224,20 +220,18 @@ public class EventController {
 	public String showEventDetail(int eventId, HttpServletRequest req, Model model) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
-		
+
 		Group group = mgService.findGroupById(event.getGroupId());
 		model.addAttribute("group", group);
 
 		List<Member> members = mgService.findAllMembersByEvent(eventId);
 		model.addAttribute("members", members);
-		
+
 		List<Member> memberss = mgService.findAllPaidMembers(event.getMemberId(), eventId);
 		model.addAttribute("memberss", memberss);
-		
 
 		List<Record> records = recordService.findAllRecordsByEventId(eventId);
-		model.addAttribute("records",records);
-
+		model.addAttribute("records", records);
 
 		return "event/eventDetail";
 	}
@@ -248,29 +242,28 @@ public class EventController {
 		model.addAttribute("event", event);
 		Group group = mgService.findGroupById(groupId);
 		model.addAttribute("group", group);
-		
+
 		List<Event> events = eventService.findAllEventsByGroupId(groupId);
-		List<Record> records=recordService.findAllRecordsByEventId(eventId);
-		
+		List<Record> records = recordService.findAllRecordsByEventId(eventId);
+
 		model.addAttribute("events", events);
 		model.addAttribute("groupId", groupId);
-		model.addAttribute("records",records);
+		model.addAttribute("records", records);
 
 		return "event/event";
 	}
-	
-	@RequestMapping(value="/addEventBalanceToGroup.do",method=RequestMethod.GET)
+
+	@RequestMapping(value = "/addEventBalanceToGroup.do", method = RequestMethod.GET)
 	public String addEventBalanceToGroup(int eventId) {
-		Event event= eventService.findEventById(eventId);
-		Group group =mgService.findGroupById(event.getGroupId());
-		System.out.println("이벤트이름"+event.getEventName());
-		System.out.println("이벤트발란스:"+event.getBalance());
-		double balance=group.getBalance()+event.getBalance();
+		Event event = eventService.findEventById(eventId);
+		Group group = mgService.findGroupById(event.getGroupId());
+		System.out.println("이벤트이름" + event.getEventName());
+		System.out.println("이벤트발란스:" + event.getBalance());
+		double balance = group.getBalance() + event.getBalance();
 		group.setBalance(balance);
 		mgService.modifyGroupBalance(group);
-		
-		return "redirect:/memberGroup/group.do?groupId="+event.getGroupId();
+
+		return "redirect:/memberGroup/group.do?groupId=" + event.getGroupId();
 	}
-	
 
 }

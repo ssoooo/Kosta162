@@ -44,42 +44,36 @@
 					<!-- Content -->
 
 					<div id="box3">
-						<form
-							action="${pageContext.request.contextPath}/record/registEventRecord.do?eventId=${event.eventId}"
-							class="bs-example form-horizontal" method="POST"
-							enctype="multipart/form-data">
-							<h2>메시지</h2>
-							<hr>
-							<table id="message">
-								<tbody>
-									<tr>
-										<th>발신인</th>
-										<td>${message.memberId }</td>
-									</tr>
-									<tr>
-										<th>수신인</th>
-										<td>${event.memberId }</td>
-									</tr>
-									<tr>
-										<th>제목</th>
-										<td>${message.title }</td>
-									</tr>
-									<tr>
-										<div id="input_content">
-											<th>내용</th>
-											<td><textarea name="content" readonly rows="4"
-													style="resize: none">${message.content }</textarea></td>
-										</div>
+						<h2>메시지</h2>
+						<hr>
+						<table id="message">
+							<tbody>
+								<tr>
+									<th>발신인</th>
+									<td>${message.memberId }</td>
+								</tr>
+								<tr>
+									<th>수신인</th>
+									<td>${messages.memberId }</td>
+								</tr>
+								<tr>
+									<th>제목</th>
+									<td>${message.title }</td>
+								</tr>
+								<tr>
+									<div id="input_content">
+										<th>내용</th>
+										<td><textarea name="content" readonly rows="4"
+												style="resize: none">${message.content }</textarea></td>
+									</div>
 
-									</tr>
-								</tbody>
-							</table>
-							<div id="two_btn">
-								<button class="btn_ok" onclick="window.close()">확인</button>
-								<button class="btn_regist"
-									onclick="window.open('${pageContext.request.contextPath}/record/showRegistEventRecord.do?eventId=${event.eventId }','win','width=600,height=600,toolbar=0,scrollbars=0,resizable=0')">등록</button>
-							</div>
-						</form>
+								</tr>
+							</tbody>
+						</table>
+						<div id="two_btn">
+							<a href="${pageContext.request.contextPath}/memberGroup/myDetail.do"><button
+									class="btn_graph">확인</button></a>
+						</div>
 					</div>
 
 				</div>

@@ -1,5 +1,7 @@
 package GeneralAffairs.service.logic;
  
+import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
  
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,8 @@ public class MessageServiceLogic implements MessageService{
  
 	@Override
 	public void createMessage(Message message) {
+		Date today = new Date(Calendar.getInstance().getTimeInMillis());
+		message.setDate(today);
 		messageStore.registMessage(message);
 	}
  
@@ -48,6 +52,11 @@ public class MessageServiceLogic implements MessageService{
 	@Override
 	public List<Message> findAllSendMessages(String memberId) {
 		return messageStore.retrieveAllSendMessages(memberId);
+	}
+
+	@Override
+	public Message findSendedMessageById(int messageId) {
+		return messageStore.retrieveSendedMessageById(messageId);
 	}
 	
 }

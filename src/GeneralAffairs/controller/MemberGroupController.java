@@ -48,6 +48,8 @@ public class MemberGroupController {
 		List<Member> members = mgService.findAllMembersExceptManager(groupId);
 		model.addAttribute("members", members);
 		
+		
+		
 		Group group = mgService.findGroupById(groupId);
 		model.addAttribute("group", group);
 		System.out.println("///////" + members.size());
@@ -173,6 +175,9 @@ public class MemberGroupController {
 		list = mgService.findAllGroupsByMemberId(myId);
 		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(myId);
 		member = mgService.findMemberById(myId);
+		
+		List<Message> messages = messageService.findAllSendMessages(member.getMemberId());
+		model.addAttribute("messages", messages);
 		
 		model.addAttribute("groupsInvited", groupsInvited);
 		model.addAttribute("list", list);

@@ -63,8 +63,7 @@
 								<h2>게시판</h2>
 								<ul class="style2">
 									<li><a
-										href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${event.groupId}"><h3>전체
-												보기</h3></a></li>
+										href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${event.groupId}"><h2>${group.groupName }</h2></a></li>
 									<c:choose>
 										<c:when test="${empty events}">
 											<a class="list-group-item hidden-xs">개설된 이벤트가 없습니다.</a>
@@ -74,7 +73,8 @@
 												<li><a
 													href="${pageContext.request.contextPath}/event/event.do?eventId=${event.eventId }&groupId=${event.groupId}">
 														<h3>${event.eventName }
-															<a href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }">
+															<a
+																href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }">
 																<img class="event_info"
 																src="../resources/assets/css/images/info.png" />
 															</a>
@@ -141,8 +141,8 @@
 
 													<br />
 													<div class="col-lg-10">
-														<input type="hidden" class="form-control" name="get"
-															rows="2" id="get"> <input type="hidden"
+														<input type="text" class="form-control" name="get"
+															rows="2" id="get"> <input type="text"
 															class="form-control" name="get2" rows="2" id="get2">
 													</div>
 

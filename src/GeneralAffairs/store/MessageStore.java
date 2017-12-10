@@ -15,4 +15,5 @@ public interface MessageStore {
 	void deleteMessageWithMember(String memberId,int messageId);
 	List<Message> retrieveAllMyMessages(String memberId, int groupId);
 	List<Message> retrieveAllSendMessages(String memberId);
+	Message retrieveSendedMessageById(int messageId);
 }

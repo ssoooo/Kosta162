@@ -3,25 +3,30 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="GeneralAffairs.store.mapper.MessageMapper">
-	
+
 	<resultMap type="Message" id="messageMap">
-	 	<result property="memberId" column="sendMemberId"/>
+		<result property="memberId" column="sendMemberId" />
 	</resultMap>
-	
-	
+
+
 	<insert id="registMessage" parameterType="Message">
 		INSERT INTO
-		message_table(messsageId,eventId,sendMemberId,title,content,regDate)
-		VALUES(message_seq.nextval,#{eventId},#{memberId},#{title},#{content},SYSDATE)
+		message_table(messageId,eventId,sendMemberId,title,content,regDate,groupId)
+		VALUES(message_seq.nextval,#{eventId,jdbcType=INTEGER},#{memberId,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},SYSDATE,#{groupId,jdbcType=INTEGER})
+		<selectKey resultType="int" keyProperty="messageId" order="AFTER">
+			SELECT message_seq.currval FROM dual
+		</selectKey>
 	</insert>
 
 	<delete id="deleteMessage" parameterType="int">
-		DELETE FROM message_table
+		DELETE FROM
+		message_table
 		WHERE messageId=#{messageId}
 	</delete>
 
 	<select id="retrieveMessageById" parameterType="int" resultMap="messageMap">
-		SELECT messageId ,eventId, sendMemberId, title, content, regDate, groupId
+		SELECT messageId ,eventId, sendMemberId, title, content, regDate,
+		groupId
 		FROM message_table
 		WHERE messageId=#{messageId}
 	</select>
@@ -33,20 +38,36 @@
 	</insert>
 
 	<delete id="deleteMessageWithMember" parameterType="map">
-		DELETE FROM messageMember_table
-		WHERE memberId=#{memberId} AND messageId=#{messageId}
+		DELETE FROM
+		messageMember_table
+		WHERE memberId=#{memberId} AND
+		messageId=#{messageId}
 	</delete>
 
-	<select id="retrieveAllMyMessages" parameterType="map" resultType="Message">
-		SELECT a.messageId, a.eventId, a.sendmemberId memberId, a.title, a.content, a.regdate, a.groupId
-		FROM message_table a, messageMember_table b
-		WHERE a.messageId=b.messageId and b.memberId=#{memberId} and a.groupId=#{groupId}
+	<select id="retrieveAllMyMessages" parameterType="map"
+		resultType="Message">
+		SELECT a.messageId, a.eventId, a.sendmemberId memberId,
+		a.title, a.content, a.regdate, a.groupId
+		FROM message_table a,
+		messageMember_table b
+		WHERE a.messageId=b.messageId and
+		b.memberId=#{memberId} and a.groupId=#{groupId}
 	</select>
-	
-	<select id="retrieveAllSendMessages" parameterType="map" resultType="Message">
-		SELECT messageId, eventId, sendmemberId memberId, title, content, regdate, groupId
+
+	<select id="retrieveAllSendMessages" parameterType="map"
+		resultType="Message">
+		SELECT messageId, eventId, sendmemberId memberId, title,
+		content, regDate, groupId
 		FROM message_table
-		WHERE sendmemberId=#{memberId}
+		WHERE
+		sendmemberId=#{memberId}
+	</select>
+
+	<select id="retrieveSendedMessageById" parameterType="map"
+		resultType="Message">
+		select memberId
+		from messageMember_table
+		where messageId=#{messageId}
 	</select>
 
 </mapper>

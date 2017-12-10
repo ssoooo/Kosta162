@@ -13,46 +13,46 @@ import GeneralAffairs.store.factory.SessionFactory;
 import GeneralAffairs.store.mapper.MessageMapper;
 
 @Repository
-public class MessageStoreLogic implements MessageStore{
+public class MessageStoreLogic implements MessageStore {
 
 	@Override
 	public void registMessage(Message message) {
 
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
-		MessageMapper mapper =session.getMapper(MessageMapper.class);	
-		mapper.registMessage(message);
-		session.commit();
-		}finally {
+			MessageMapper mapper = session.getMapper(MessageMapper.class);
+			mapper.registMessage(message);
+			session.commit();
+		} finally {
 			session.close();
 		}
-		
+
 	}
 
 	@Override
 	public void deleteMessage(int messageId) {
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
-		MessageMapper mapper =session.getMapper(MessageMapper.class);	
-		mapper.deleteMessage(messageId);
-		session.commit();
-		}finally {
+			MessageMapper mapper = session.getMapper(MessageMapper.class);
+			mapper.deleteMessage(messageId);
+			session.commit();
+		} finally {
 			session.close();
 		}
-		
+
 	}
 
 	@Override
 	public Message retrieveMessageById(int messageId) {
-		Message message =null;
+		Message message = null;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
-		MessageMapper mapper =session.getMapper(MessageMapper.class);	
-		message=mapper.retrieveMessageById(messageId);
-		}finally {
+			MessageMapper mapper = session.getMapper(MessageMapper.class);
+			message = mapper.retrieveMessageById(messageId);
+		} finally {
 			session.close();
 		}
-		
+
 		return message;
 	}
 
@@ -60,37 +60,37 @@ public class MessageStoreLogic implements MessageStore{
 	public void registMessageWithMember(String memberId, int messageId) {
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
-		MessageMapper mapper =session.getMapper(MessageMapper.class);	
-		mapper.registMessageWithMember(memberId, messageId);
-		session.commit();
-		}finally {
+			MessageMapper mapper = session.getMapper(MessageMapper.class);
+			mapper.registMessageWithMember(memberId, messageId);
+			session.commit();
+		} finally {
 			session.close();
 		}
-		
+
 	}
 
 	@Override
 	public void deleteMessageWithMember(String memberId, int messageId) {
-		
+
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
-		MessageMapper mapper =session.getMapper(MessageMapper.class);	
-		mapper.deleteMessageWithMember(memberId, messageId);
-		session.commit();
-		}finally {
+			MessageMapper mapper = session.getMapper(MessageMapper.class);
+			mapper.deleteMessageWithMember(memberId, messageId);
+			session.commit();
+		} finally {
 			session.close();
 		}
-		
+
 	}
 
 	@Override
 	public List<Message> retrieveAllMyMessages(String memberId, int groupId) {
-		List<Message> messages=null;
+		List<Message> messages = null;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
-		MessageMapper mapper =session.getMapper(MessageMapper.class);	
-		messages=mapper.retrieveAllMyMessages(memberId, groupId);
-		}finally {
+			MessageMapper mapper = session.getMapper(MessageMapper.class);
+			messages = mapper.retrieveAllMyMessages(memberId, groupId);
+		} finally {
 			session.close();
 		}
 		return messages;
@@ -98,14 +98,28 @@ public class MessageStoreLogic implements MessageStore{
 
 	@Override
 	public List<Message> retrieveAllSendMessages(String memberId) {
-		List<Message> messages=null;
+		List<Message> messages = null;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
-		MessageMapper mapper =session.getMapper(MessageMapper.class);	
-		messages=mapper.retrieveAllSendMessages(memberId);
-		}finally {
+			MessageMapper mapper = session.getMapper(MessageMapper.class);
+			messages = mapper.retrieveAllSendMessages(memberId);
+		} finally {
 			session.close();
 		}
 		return messages;
+	}
+
+	@Override
+	public Message retrieveSendedMessageById(int messageId) {
+		Message message = null;
+		SqlSession session = SessionFactory.getInstance().getSession();
+		try {
+			MessageMapper mapper = session.getMapper(MessageMapper.class);
+			message = mapper.retrieveSendedMessageById(messageId);
+		} finally {
+			session.close();
+		}
+
+		return message;
 	}
 }

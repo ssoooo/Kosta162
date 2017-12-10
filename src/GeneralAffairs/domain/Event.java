@@ -16,15 +16,15 @@ public class Event {
 	private double groupSupport;
 	private Date date;
 	
-	private List<Member> eventMembers;
-	
-	
-	public List<Member> getEventMembers() {
-		return eventMembers;
-	}
-	public void setEventMembers(List<Member> eventMembers) {
-		this.eventMembers = eventMembers;
-	}
+//	private List<Member> eventMembers;
+//	
+//	
+//	public List<Member> getEventMembers() {
+//		return eventMembers;
+//	}
+//	public void setEventMembers(List<Member> eventMembers) {
+//		this.eventMembers = eventMembers;
+//	}
 	public int getEventId() {
 		return eventId;
 	}

@@ -65,7 +65,7 @@
 								<h2>게시판</h2>
 								<ul class="style2">
 									<li><a
-										href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${event.groupId}"><h3>전체 보기</h3></a></li>
+										href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${event.groupId}"><h2>${group.groupName }</h2></a></li>
 									<c:choose>
 										<c:when test="${empty events}">
 											<a class="list-group-item hidden-xs">개설된 이벤트가 없습니다.</a>
