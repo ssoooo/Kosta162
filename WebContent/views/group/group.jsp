@@ -126,9 +126,9 @@
 											<th class="table_head"><span>상태</span></th>
 										</tr>
 										<c:forEach var="record" items="${records}" varStatus="status">
-										
+											<c:set var="count" value="${count + 1 }" />
 											<tr>
-											<td>${record.recordId}</td>
+											<td><c:out value="${count }" /></td>
 											<td><a href="${pageContext.request.contextPath}/record/showRecordDetail.do?recordId=${record.recordId}">${record.title}</a></td>
 											<td>${record.accounting}</td>
 											<td>${record.price}원</td>

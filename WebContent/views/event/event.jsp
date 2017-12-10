@@ -110,11 +110,10 @@
 								</tr>
 
 								<c:forEach var="record" items="${records}" varStatus="status">
-
-									<tr>
-										<td>${record.recordId}</td>
-										<td><a
-											href="${pageContext.request.contextPath}/record/showRecordDetail.do?recordId=${record.recordId}">${record.title}</a></td>
+									<c:set var="count" value="${count + 1 }" />
+										<tr>
+										<td><c:out value="${count }" /></td>
+										<td><a href="${pageContext.request.contextPath}/record/showRecordDetail.do?recordId=${record.recordId}">${record.title}</a></td>
 										<td>${record.accounting}</td>
 										<td>${record.price}원</td>
 										<td>${record.date}</td>

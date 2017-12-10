@@ -23,9 +23,31 @@
 		        success: function(data) { //여기서 data 안에는 spring 에서 result 한 값이 포함되어 있으며 특정한 목록을 지정해서 보낼 수도있다.
 			        if(data == 'success'){
 				        alert("모임 가입이 완료되었습니다.");
-				       
+				        location.reload();
 			        }else{
 				        alert("모임 가입에 실패하였습니다.");
+		        	}
+		        }
+		    });
+		}
+		function onclickFunction1(groupId){
+		    var loginedMemberId = "${loginedMemberId }";
+			$.ajax({
+		        type: "POST",
+		        url: "denyInvite.do",
+		        data: {
+		        	groupId : groupId,
+		        	memberId : loginedMemberId
+		        },
+		        dataType: "text",
+		        success: function(data) { //여기서 data 안에는 spring 에서 result 한 값이 포함되어 있으며 특정한 목록을 지정해서 보낼 수도있다.
+		        	console.log(data);
+		        	if(data == "success"){
+				        alert("초대가 삭제되었습니다.");
+				        location.reload();
+				        
+			        }else{
+				        alert("초대삭제에 실패하였습니다.");
 		        	}
 		        }
 		    });
@@ -58,7 +80,8 @@
 										<c:forEach items="${groupsInvited }" var="group" >
 											<p class="group_invite_list">${group.groupName }
 												<div class="accept_reject">
-													<input id="accept" onclick="onclickFunction('${group.groupId }')" class="button3" type="button" value="수락" /><input class="button3" type="button" value="거절" />
+														<a href="" onclick="onclickFunction('${group.groupId }')">수락</a>
+ 													<a href="" onclick="onclickFunction1('${group.groupId }')">거절</a>
 												</div>
 											</p>
 											
@@ -111,15 +134,15 @@
 								</tr>
 								<tr>
 									<th class="info">가입한 모임</th>
-									<td class="info_detail"><a href="main.html">${fn:length(list) }</a>개</td>
+									<td class="info_detail">${fn:length(list) }개</td>
 								</tr>
 								</tbody>
 							</table>
 							<c:if test="${member.memberId eq loginedMemberId}">
 							<div class="btn_hor">
-								<a href="showModifyMember.do?memberId=${member.memberId }"><button class="btn_modify">수정</button></a>
+								<a href="showModifyMember.do?memberId=${member.memberId }"><button class="btn_modify">회원 수정</button></a>
 								<!-- <a href="deleteMember.do?memberId=${member.memberId }"><button class="btn_delete" onclick="comfirmDelete()">탈퇴</button></a> -->
-								<button class="btn_delete" onclick="comfirmDelete()">탈퇴</button>
+								<button class="btn_delete" onclick="comfirmDelete()">회원 탈퇴</button>
 							</div>
 							</c:if>
 							<script type="text/javascript">
