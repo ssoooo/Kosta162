@@ -80,7 +80,7 @@
 														<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${otherGroup.groupId }" class="image featured"><img src="${otherGroup.groupImage }" alt="" /></a>
 														<div class="inner">
 															<header>
-																<h2>${otherGroup.groupName }<button class="sign">가입신청</button></h2>
+																<h2>${otherGroup.groupName }<button class="sign" onclick="location.href='${pageContext.request.contextPath}/memberGroup/reqSignInAlreadyJoined.do?groupId=${otherGroup.groupId }'">가입신청</button></h2>
 															</header>
 														</div>
 													</section>
@@ -108,7 +108,7 @@
 														<a href="${pageContext.request.contextPath}/memberGroup/groupDetail.do?groupId=${otherGroup.groupId }" class="image featured"><img src="${otherGroup.groupImage }" alt="" /></a>
 														<div class="inner">
 															<header>
-																<h2>${otherGroup.groupName }<button class="sign">가입신청</button></h2>
+																<h2>${otherGroup.groupName }<button class="sign" onclick="location.href='${pageContext.request.contextPath}/memberGroup/reqSignInAlreadyJoined.do?groupId=${otherGroup.groupId }'">가입신청</button></h2>
 															</header>
 														</div>
 													</section>

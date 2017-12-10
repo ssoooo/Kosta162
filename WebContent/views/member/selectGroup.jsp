@@ -68,7 +68,7 @@
 						<c:forEach items="${groupList }" var="group" varStatus="status">
 							<section class="group_box">
 							<input type="hidden" name = "groupName" value ="${group.groupName }">
-								<img src="${group.groupImage }" alt="noImage" />
+								<img src="${group.groupImage }" alt="noImage" style="height:150px;"/>
 								<div class="signIn_group">
 									<header>
 										<h2 >
@@ -83,9 +83,6 @@
 											function setChildText${status.count }() {
 												var parent = window.opener;
 												var groupId = ${group.groupId };
-												//case1. var groupName1 = ${group.groupName }; 영어이름은 안받아지고 숫자이름만 받아지는데 왜그런건가? 아마도 var타입문제인듯하다.
-												//case1. document.getElementById('groupName1+${status.count}');
-												
 												
 												//console.log(groupName);
 												var groupName = document.getElementsByName('groupName')[${status.count }].value;
@@ -93,7 +90,7 @@
 												parent.document.getElementById('groupId').value=groupId;
 
 												parent.document.getElementById('groupName').value=groupName;
-												// case1.  parent.document.getElementById('groupName').value=groupName1;
+												
 												
 												window.close();
 

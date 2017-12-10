@@ -56,8 +56,8 @@
 									<p class="group_invite_list">${signIn.memberId }</p>
 								<br>
 									<div class="accept_reject">
-										<input type="button" value = "승인" onclick="onclickFunction('${group.groupId}','${signIn.memberId }')"> 
-										<input type="button" value = "거부" onclick="onclickFunction1('${group.groupId}','${signIn.memberId }')">
+										<a href="" onclick="onclickFunction('${group.groupId}','${signIn.memberId }')">승인</a>
+										<a href="" onclick="onclickFunction1('${group.groupId}','${signIn.memberId }')">거절</a>
 									</div>
 									
 								</c:forEach>
@@ -106,7 +106,7 @@
 							<script>
 							var myGroupIDS=${myGroupIds};
 							for(var i=0; i<myGroupIDS.length; i++){
-								if(myGroupIDS[i]==${group.groupId }){
+								if(myGroupIDS[i]==${group.groupId}){
 									document.write('<a href="${pageContext.request.contextPath}/record/groupStats.do?groupId=${group.groupId}"><button class="btn_graph">통계</button></a>');
 									if("${loginedMemberId }" == "${manager.memberId }"){
 									document.write('<a href="${pageContext.request.contextPath}/memberGroup/showModifyGroup.do?groupId=${group.groupId }"><button class="btn_modify">수정</button></a>');
@@ -213,7 +213,7 @@
 		        },
 		        dataType: "text",
 		        error : function() {
-		        	alert("가입실패했다임마")
+		        	alert("가입실패했습니다.")
 		        },
 		        success: function(response) { 
 			        	alert("가입이 성공했습니다.")

@@ -54,7 +54,7 @@ public class MemberGroupController {
 		for(int i=0; i<members.size(); i++){
 			Member member = new Member();
 			member = members.get(i);
-			if(!member.getMemberId().equals(group.getMemberId())){
+			if(!member.getMemberId().equals(myId)){
 				newMembers.add(member);
 			} 
 		}
@@ -90,7 +90,8 @@ public class MemberGroupController {
 		Member member = new Member();
 		
 		member = mgService.findMemberById(memberId);
-		if(member!=null && userPassword.equals(member.getPassword())){
+		
+		if(member!=null && userPassword.equals(member.getPassword())&& mgService.checkMemberHasGroup(memberId).size() > 0){
 		
 		HttpSession session =req.getSession();
 		session.setAttribute("loginedMemberId", member.getMemberId());	
@@ -192,7 +193,9 @@ public class MemberGroupController {
 		model.addAttribute("list", list);
 		model.addAttribute("member", member);
 		model.addAttribute("sendMessages", sendMessages);
-		
+		System.out.println("샌드매세지날짜"+sendMessages.get(0).getDate());
+		System.out.println("샌드매세지 맴버아이디"+sendMessages.get(0).getMemberId());
+		System.out.println("새드매세지 내용"+sendMessages.get(0).getContent());
 		return "member/memberDetail";
 	}	
 	

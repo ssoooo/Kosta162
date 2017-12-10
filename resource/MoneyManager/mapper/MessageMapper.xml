@@ -6,6 +6,7 @@
 	
 	<resultMap type="Message" id="messageMap">
 	 	<result property="memberId" column="sendMemberId"/>
+	 	<result property="date" column="regdate"/>
 	</resultMap>
 	
 	
@@ -43,8 +44,8 @@
 		WHERE a.messageId=b.messageId and b.memberId=#{memberId} and a.groupId=#{groupId}
 	</select>
 	
-	<select id="retrieveAllSendMessages" parameterType="map" resultType="Message">
-		SELECT messageId, eventId, sendmemberId memberId, title, content, regdate, groupId
+	<select id="retrieveAllSendMessages" parameterType="map" resultMap="messageMap">
+		SELECT messageId, eventId, sendmemberId, title, content, regdate, groupId
 		FROM message_table
 		WHERE sendmemberId=#{memberId}
 	</select>

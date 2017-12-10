@@ -178,11 +178,11 @@
 								<table id="message_list">
 									<c:forEach items="${sendMessages }" var="message" >
 									<tr class="ab">
-										<td style="width:20%;">kostaaaaaaaaaa</td>
+										<td style="width:20%;">${message.groupId}</td>
 										<td style="width:20%;">가을 mt</td>
 										<td style="width:20%;">호정리 외 3인</td>
 										<td style="width:20%;"><a href="messageDetail">${message.title }</a></td>
-										<td style="width:20%;">2017-11-20</td>
+										<td style="width:20%;">${message.date }</td>
 									</tr>
 									</c:forEach>					
 								</table>
@@ -206,9 +206,9 @@
 								<table id="message_list">
 									<c:forEach items="${sendMessages }" var="message" >
 									<tr class="ab">
-										<td style="width:33%;">kostaaaaaaaaaa</td>
-										<td style="width:33%;">호정리</td>
-										<td style="width:33%;">2017-11-20</td>
+										<td style="width:33%;">${message.groupId}</td>
+										<td style="width:33%;">${meesage.memberId }</td>
+										<td style="width:33%;">${message.date }</td>
 									</tr>
 									</c:forEach>					
 								</table>
