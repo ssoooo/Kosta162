@@ -22,11 +22,11 @@
 		        success: function(data) { //여기서 data 안에는 spring 에서 result 한 값이 포함되어 있으며 특정한 목록을 지정해서 보낼 수도있다.
 		        	console.log(data);
 		        	if(data == "success"){
-				        alert("모임 가입이 완료되었습니다.");
+				        alert("모임 가입이 완료되었습니다.")
 				        location.reload();
 				        
 			        }else{
-				        alert("모임 가입에 실패하였습니다.");
+				        alert("모임 가입에 실패하였습니다.")
 		        	}
 		        },
 		        error : function(e){
@@ -166,43 +166,6 @@
 			<script src="../resources/assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
 			<script src="../resources/assets/js/main.js"></script>
-			<script>
-				function onclickFunction(groupId){
-				    $.ajax({
-				        type: "POST",
-				        url: "acceptInvite.do",
-				        data: {
-				        	groupId : groupId,
-				        	
-				        },
-				        dataType: "text",
-				        error : function() {
-				        	alert("모임 가입에 실패했습니다.")
-				        },
-				        success: function(response) { 
-					        alert("모임 가입이 완료되었습니다.");
-					        location.reload();
-				        }
-				    });
-				}
-				function onclickFunction1(groupId){
-				    $.ajax({
-				        type: "POST",
-				        url: "denyInvite.do",
-				        data: {
-				        	groupId : groupId,
-				        	
-				        },
-				        dataType: "text",
-				        error : function() {
-				        	alert("모임 가입에 실패했습니다.")
-				        },
-				        success: function(response) { 
-					        alert("모임 가입이 완료되었습니다.");
-					        location.reload();
-				        }
-				    });
-				}
-			</script>
+		
 	</body>
 </html>

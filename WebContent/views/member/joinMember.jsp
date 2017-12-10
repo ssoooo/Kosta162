@@ -22,12 +22,15 @@
 					memberId : inputId
 				},
 				dataType : 'text',
-				success: function(response){
-					
-					$("#idCheck").html("사용중인 ID입니다.")
-				},
-				error : function(){
+				success: function(data){
+					if(data == "success"){
 					$("#idCheck").html("사용가능한 ID입니다.")
+					} else{
+						$("#idCheck").html("사용중인 ID입니다.")
+					}
+				},
+				error : function(e){
+					$("#idCheck").html("디비조회실패.")
 					
 				}
 				

@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="../resources/assets/css/main2.css" />
 </head>
 <body class="left-sidebar">
+	<%@ include file="../../header/header.jspf"%>
 	<div id="page-wrapper">
 
 		<!-- Header -->
