@@ -73,7 +73,8 @@
 												<li><a
 													href="${pageContext.request.contextPath}/event/event.do?eventId=${event.eventId }&groupId=${event.groupId}">
 														<h3>${event.eventName }
-															<a href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }">
+															<a
+																href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }">
 																<img class="event_info"
 																src="../resources/assets/css/images/info.png" />
 															</a>
@@ -98,7 +99,7 @@
 								<div class="table-responsive">
 									<div class="well">
 										<form
-											action="${pageContext.request.contextPath}/event/modifyEvent.do?eventId=${event.eventId }&groupId=${event.groupId }"
+											action="${pageContext.request.contextPath}/event/modifyEvent.do?eventId=${event.eventId }"
 											method="POST" class="bs-example form-horizontal">
 											<fieldset>
 												<div class="form-group">
@@ -127,7 +128,8 @@
 													</label>
 													<div class="col-lg-10">
 														<input type="text" name="groupSupport"
-															value="${event.groupSupport }" class="form-control">
+															value="${event.collection/members.size() }"
+															class="form-control">
 													</div>
 												</div>
 												<br />
@@ -158,7 +160,7 @@
 												<div class="form-group">
 													<div class="align_btn">
 														<button type="submit" class="record_submit">확인</button>
-														<button type="reset" class="record_cancel" >취소</button>
+														<button type="reset" class="record_cancel">취소</button>
 													</div>
 												</div>
 											</fieldset>

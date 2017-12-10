@@ -28,8 +28,12 @@ public class EventServiceLogic implements EventService {
 	}
 
 	@Override
-	public void modifyEvent(Event event) {
-		eventStore.updateEvent(event);
+	public boolean modifyEvent(Event event) {
+		int check = 0;
+
+		check = eventStore.updateEvent(event);
+
+		return check > 0;
 
 	}
 

@@ -10,7 +10,7 @@ public interface EventMapper {
 
 	void registEvent(Event event);
 
-	void updateEvent(Event event);
+	int updateEvent(Event event);
 
 	void deleteEvent(int eventId);
 

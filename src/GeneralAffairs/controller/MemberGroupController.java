@@ -186,8 +186,7 @@ public class MemberGroupController {
 		list = mgService.findAllGroupsByMemberId(myId);
 		List<Group> groupsInvited = mgService.findMyInvitationsByMemberId(myId);
 		member = mgService.findMemberById(myId);
-		List<Message> sendMessages = messageService.findAllSendMessages(myId);
-		
+		List<Message> sendMessages = messageService.findMySendMessage(myId);
 		
 		model.addAttribute("groupsInvited", groupsInvited);
 		model.addAttribute("list", list);

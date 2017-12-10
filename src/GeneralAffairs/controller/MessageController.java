@@ -51,6 +51,9 @@ public class MessageController {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
 		
+		List<Member> members = mgService.findAllMembersByEvent(eventId);
+		model.addAttribute("members", members);
+		
 		List<Member> memberss= mgService.findAllUnPaidMembers(event.getMemberId(), event.getEventId());
 		model.addAttribute("memberss", memberss);
 		
@@ -61,9 +64,8 @@ public class MessageController {
 	public String sendCollectionMessage(HttpSession session,HttpServletRequest req, Message message, int eventId, Model model) {
 		Event event = eventService.findEventById(eventId);
 		model.addAttribute("event", event);
-		message.setMemberId((String) session.getAttribute("loginedMemberId"));
+		message.setSendMemberId((String) session.getAttribute("loginedMemberId"));
 		message.setGroupId(event.getGroupId());
-		
 //		String[] members = req.getParameterValues("memberId3");
 //		for (int i = 0; i < members.length; i++) {
 //			message.setMemberId(members[i]);
@@ -72,8 +74,7 @@ public class MessageController {
 		event.setMemberId(members);
 		
 		messageService.createMessage(message);
-		messageService.sendMessage(event.getMemberId(), message.getMessageId());
-		System.out.println("...." + message.getMemberId());
+		messageService.sendMessage(event.getMemberId(), message.getMessageId(), message.getSendMemberId());
 		
 		return "redirect:/message/receivedMessage.do?messageId=" + message.getMessageId() + "&groupId=" + message.getGroupId();
 	}

@@ -4,15 +4,11 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="GeneralAffairs.store.mapper.MessageMapper">
 
-	<resultMap type="Message" id="messageMap">
-		<result property="memberId" column="sendMemberId" />
-	</resultMap>
-
 
 	<insert id="registMessage" parameterType="Message">
 		INSERT INTO
 		message_table(messageId,eventId,sendMemberId,title,content,regDate,groupId)
-		VALUES(message_seq.nextval,#{eventId,jdbcType=INTEGER},#{memberId,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},SYSDATE,#{groupId,jdbcType=INTEGER})
+		VALUES(message_seq.nextval,#{eventId,jdbcType=INTEGER},#{sendMemberId,jdbcType=VARCHAR},#{title,jdbcType=VARCHAR},#{content,jdbcType=VARCHAR},SYSDATE,#{groupId,jdbcType=INTEGER})
 		<selectKey resultType="int" keyProperty="messageId" order="AFTER">
 			SELECT message_seq.currval FROM dual
 		</selectKey>
@@ -24,7 +20,7 @@
 		WHERE messageId=#{messageId}
 	</delete>
 
-	<select id="retrieveMessageById" parameterType="int" resultMap="messageMap">
+	<select id="retrieveMessageById" parameterType="int" resultType="Message">
 		SELECT messageId ,eventId, sendMemberId, title, content, regDate,
 		groupId
 		FROM message_table
@@ -33,8 +29,8 @@
 
 	<insert id="registMessageWithMember" parameterType="map">
 		INSERT INTO
-		messageMember_table(memberId,messageId)
-		VALUES(#{memberId},#{messageId})
+		messageMember_table(memberId,messageId,sendMemberId)
+		VALUES(#{memberId},#{messageId},#{sendMemberId})
 	</insert>
 
 	<delete id="deleteMessageWithMember" parameterType="map">
@@ -60,14 +56,26 @@
 		content, regDate, groupId
 		FROM message_table
 		WHERE
-		sendmemberId=#{memberId}
+		sendMemberId=#{sendMemberId}
+	</select>
+
+	<select id="retrieveMySendMessage" parameterType="map"
+		resultType="Message">
+		SELECT M.eventId, MM.memberId, M.title,
+		M.regDate,
+		M.groupId, M.messageId
+		FROM message_table M, messageMember_table MM
+		WHERE
+		M.messageId = MM.messageId AND
+		M.sendMemberId=#{sendMemberId}
 	</select>
 
 	<select id="retrieveSendedMessageById" parameterType="map"
 		resultType="Message">
 		select memberId
 		from messageMember_table
-		where messageId=#{messageId}
+		where
+		messageId=#{messageId}
 	</select>
 
 </mapper>

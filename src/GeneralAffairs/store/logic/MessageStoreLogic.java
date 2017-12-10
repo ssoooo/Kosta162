@@ -57,11 +57,11 @@ public class MessageStoreLogic implements MessageStore {
 	}
 
 	@Override
-	public void registMessageWithMember(String memberId, int messageId) {
+	public void registMessageWithMember(String memberId, int messageId, String sendMemberId) {
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 			MessageMapper mapper = session.getMapper(MessageMapper.class);
-			mapper.registMessageWithMember(memberId, messageId);
+			mapper.registMessageWithMember(memberId, messageId, sendMemberId);
 			session.commit();
 		} finally {
 			session.close();
@@ -121,5 +121,18 @@ public class MessageStoreLogic implements MessageStore {
 		}
 
 		return message;
+	}
+
+	@Override
+	public List<Message> retrieveMySendMessage(String sendMemberId) {
+		List<Message> messages = null;
+		SqlSession session = SessionFactory.getInstance().getSession();
+		try {
+			MessageMapper mapper = session.getMapper(MessageMapper.class);
+			messages = mapper.retrieveMySendMessage(sendMemberId);
+		} finally {
+			session.close();
+		}
+		return messages;
 	}
 }

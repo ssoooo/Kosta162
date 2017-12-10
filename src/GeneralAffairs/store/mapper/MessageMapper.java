@@ -15,10 +15,11 @@ public interface MessageMapper {
 
 	Message retrieveMessageById(int messageId);
 	List<Message> retrieveAllMyMessages(@Param("memberId") String memberId, @Param("groupId") int groupId);
-	void registMessageWithMember(@Param("memberId") String memberId, @Param("messageId") int messageId);
+	void registMessageWithMember(@Param("memberId") String memberId, @Param("messageId") int messageId, @Param("sendMemberId")String sendMemberId);
 	void deleteMessageWithMember(@Param("memberId") String memberId, @Param("messageId") int messageId);
 	List<Message> retrieveAllMyMessages(String memberId);
 	List<Message> retrieveAllSendMessages(@Param("memberId") String memberId);
+	List<Message> retrieveMySendMessage(String sendMemberId);
 	Message retrieveSendedMessageById(int messageId);
 
 }

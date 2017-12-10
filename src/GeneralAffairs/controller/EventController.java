@@ -69,9 +69,15 @@ public class EventController {
 		eventService.modifyEvent(event);
 		model.addAttribute("event", event);
 		model.addAttribute("groupId", event.getGroupId());
-
+		
 		Group group = mgService.findGroupById(event.getGroupId());
-
+		
+		System.out.println("이름" + event.getEventName());
+		System.out.println("1" + event.getBudget());
+		System.out.println("2" + event.getGroupSupport());
+		
+		
+		
 //		String[] members = req.getParameterValues("get2");
 //		for (int i = 0; i < members.length; i++) {
 //			event.setMemberId(members[i]);
@@ -91,7 +97,7 @@ public class EventController {
 			eventService.addMemberToEvent(group.getMemberId(), event.getEventId());
 			
 		}
-
+		
 		return "redirect:/event/eventDetail.do?eventId=" + event.getEventId();
 	}
 

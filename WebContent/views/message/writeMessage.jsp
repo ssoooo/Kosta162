@@ -65,7 +65,8 @@
 									</tr>
 									<tr>
 										<th>Á¦¸ñ</th>
-										<td><input class="input_title" type="text" name="title"></td>
+										<td><input class="input_title" type="text" name="title"
+										value="${event.collection/members.size() }"></td>
 									</tr>
 									<tr>
 										<div id="input_content">

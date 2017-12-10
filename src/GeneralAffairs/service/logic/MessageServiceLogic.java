@@ -35,8 +35,8 @@ public class MessageServiceLogic implements MessageService{
 	}
  
 	@Override
-	public void sendMessage(String memberId, int messageId) {
-		messageStore.registMessageWithMember(memberId, messageId);
+	public void sendMessage(String memberId, int messageId, String sendMemberId) {
+		messageStore.registMessageWithMember(memberId, messageId, sendMemberId);
 	}
  
 	@Override
@@ -57,6 +57,11 @@ public class MessageServiceLogic implements MessageService{
 	@Override
 	public Message findSendedMessageById(int messageId) {
 		return messageStore.retrieveSendedMessageById(messageId);
+	}
+
+	@Override
+	public List<Message> findMySendMessage(String sendMemberId) {
+		return messageStore.retrieveMySendMessage(sendMemberId);
 	}
 	
 }
