@@ -68,6 +68,8 @@ balance NUMBER(10,1) DEFAULT 0,
 eventName VARCHAR2(100),
 collection NUMBER(10,1) DEFAULT 0,
 regDate DATE
+budget NUMBER(10,1) DEFAULT 0,
+groupSupport NUMBER(10,1) DEFAULT 0
 );
 
 CREATE TABLE message_table(

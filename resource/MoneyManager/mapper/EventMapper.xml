@@ -8,7 +8,7 @@
 	<insert id="registEvent" parameterType="Event">
 		INSERT INTO
 		event_table(eventId,groupId,memberId,eventName,regDate,budget,groupSupport)
-		VALUES(event_seq.nextval,#{groupId},#{memberId},#{eventName},SYSDATE,#{budget},#{groupSupport})
+		VALUES(event_seq.nextval,#{groupId,jdbcType=INTEGER},#{memberId,jdbcType=VARCHAR},#{eventName,jdbcType=VARCHAR},SYSDATE,#{budget,jdbcType=INTEGER},#{groupSupport,jdbcType=INTEGER})
 		<selectKey resultType="int" keyProperty="eventId" order="AFTER">
 			SELECT event_seq.currval FROM dual
 		</selectKey>

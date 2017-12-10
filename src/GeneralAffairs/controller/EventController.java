@@ -156,6 +156,7 @@ public class EventController {
 		System.out.println("퉤" + group.getMemberId());
 		// if (event.getMemberId() != group.getMemberId() && event.getMemberId() !=
 		// null) {
+		
 		eventService.addMemberToEvent(group.getMemberId(), event.getEventId());
 
 		// }
