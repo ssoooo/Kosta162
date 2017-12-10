@@ -661,13 +661,13 @@ public class MemberGroupController {
 		
 		Group group = mgService.findGroupById(groupId);	
 		List<Event> events = eventService.findAllEventsByGroupId(groupId);
-		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
+//		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
 		List<Record> records = recordService.findAllRecordsByGroupId(groupId);
 
 		
 		model.addAttribute("events", events);
 		model.addAttribute("group", group);
-		model.addAttribute("messages", messages);
+//		model.addAttribute("messages", messages);
 		model.addAttribute("groupId", groupId);
 		model.addAttribute("records",records);
 		
@@ -681,7 +681,7 @@ public class MemberGroupController {
 		List<Integer> myGroupIds = mgService.checkMemberHasGroup(myId);
 		Group group = mgService.findGroupById(groupId);
 		List<Member> signIns = mgService.findAllSignInGroupReq(groupId);
-		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
+//		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
 		List<Member> members = mgService.findAllMembersByGroup(groupId);
 		Member manager = mgService.findMemberById(group.getMemberId());
 		model.addAttribute("myGroupIds", myGroupIds);
@@ -690,7 +690,7 @@ public class MemberGroupController {
 		model.addAttribute("memberNum", members.size());
 		model.addAttribute("members", members);
 		model.addAttribute("manager", manager);
-		model.addAttribute("messages", messages);
+//		model.addAttribute("messages", messages);
 		
 		return "group/groupDetail";
 	}
