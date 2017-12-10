@@ -33,7 +33,7 @@ public class EventStoreLogic implements EventStore {
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 			EventMapper mapper = session.getMapper(EventMapper.class);
-			mapper.updateEvent(event);
+			check = mapper.updateEvent(event);
 			if (check > 0) {
 				session.commit();
 			}

@@ -108,7 +108,7 @@
 													</label>
 													<div class="col-lg-10">
 														<input type="text" name="eventName"
-															value="${event.eventName }" class="form-control" readonly="readonly">
+															value="${event.eventName }" class="form-control">
 													</div>
 												</div>
 												<br />
@@ -125,12 +125,12 @@
 												<div class="form-group">
 													<label class="col-lg-2 control-label">
 														<h3>모임 지원금</h3>
-													</label>
-													<input type="hidden" name="groupSupports" value="${groupSupports}">
+													</label> <input type="hidden" name="groupSupports"
+														value="${groupSupports}">
 													<div class="col-lg-10">
+
 														<input type="text" name="groupSupport"
-															value="${event.collection/members.size() }"
-															class="form-control">
+															value="${event.groupSupport }" class="form-control">
 													</div>
 												</div>
 												<br />
@@ -143,8 +143,8 @@
 
 													<br />
 													<div class="col-lg-10">
-														<input type="text" class="form-control" name="get"
-															rows="2" id="get"> <input type="text"
+														<input type="hidden" class="form-control" name="get"
+															rows="2" id="get"> <input type="hidden"
 															class="form-control" name="get2" rows="2" id="get2">
 													</div>
 
