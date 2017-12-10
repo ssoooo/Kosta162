@@ -13,7 +13,7 @@ public interface MemberMapper {
 	int updateMember(Member member);
 
 	void deleteMember(String memberId);
-
+	
 	Member retrieveMemberById(String memberId);
 
 	List<Member> retrieveAllMembersByGroup(int groupId);

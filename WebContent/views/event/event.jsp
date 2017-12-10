@@ -12,6 +12,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/main2.css" />
 </head>
+<script src="http://code.jquery.com/jquery-1.5.js"></script>
+<script type="text/javascript">
+		function checkRecord(recordId) {
+	   		
+		location.href='${pageContext.request.contextPath}/record/checkRecord.do?recordId=' + recordId;
+		
+		}
+</script>
 <body class="left-sidebar">
 	<div id="page-wrapper">
 
@@ -37,7 +45,7 @@
 								<c:forEach items="${messages }" var="message">
 									<p class="group_invite_list">${message.title }
 									<div class="accept_reject">
-										<a href="#"
+										<a href=""
 											onclick="window.open('${pageContext.request.contextPath}/message/receivedMessage.do?messageId=${message.messageId }&groupId=${group.groupId }','win','width=700,height=600,toolbar=0,scrollbars=0,resizable=0')">보기</a>
 										<a
 											href="${pageContext.request.contextPath}/message/deleteMyMessage.do?messageId=${message.messageId }"
@@ -65,7 +73,9 @@
 								<h2>게시판</h2>
 								<ul class="style2">
 									<li><a
-										href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${event.groupId}"><h3>모임 보기</h3></a></li>
+
+										href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${event.groupId}"><h2>${group.groupName }</h2></a></li>
+
 									<c:choose>
 										<c:when test="${empty events}">
 											<a class="list-group-item hidden-xs">개설된 이벤트가 없습니다.</a>
@@ -106,28 +116,42 @@
 									<th class="table_head"><span>금액</span></th>
 									<th class="table_head"><span>작성일</span></th>
 									<th class="table_head"><span>작성자</span></th>
-									<th class="table_head"><span>상태</span></th>
+									<c:if test="${loginedMemberId eq group.memberId}">
+										<th class="table_head"><span>상태</span></th>
+									</c:if>
 								</tr>
 
 								<c:forEach var="record" items="${records}" varStatus="status">
 									<c:set var="count" value="${count + 1 }" />
-										<tr>
+									<c:choose>
+									<c:when test="${record.caution eq '주의'}">
+										<tr style="background-color:#FFC6C6;">
 										<td><c:out value="${count }" /></td>
 										<td><a href="${pageContext.request.contextPath}/record/showRecordDetail.do?recordId=${record.recordId}">${record.title}</a></td>
 										<td>${record.accounting}</td>
 										<td>${record.price}원</td>
 										<td>${record.date}</td>
 										<td>${record.memberId}</td>
-										<td><button
-												onclick="location.href='${pageContext.request.contextPath}/record/checkRecord.do?recordId=${record.recordId}'"
-												class="current">${record.caution}</button></td>
+										<c:if test="${loginedMemberId eq group.memberId}">
+											<td><button style="font-size:0.8em; background-color:#FFC6C6;  text-align:center;" onclick="checkRecord('${record.recordId}');"><img class="status" src="${pageContext.request.contextPath}/resources/images/warn.png" style="width:26px" /></button></td>
+										</c:if>
+										</tr>
+									</c:when>
+									<c:otherwise>
+									<tr>
+										<td><c:out value="${count }" /></td>
+										<td><a href="${pageContext.request.contextPath}/record/showRecordDetail.do?recordId=${record.recordId}">${record.title}</a></td>
+										<td>${record.accounting}</td>
+										<td>${record.price}원</td>
+										<td>${record.date}</td>
+										<td>${record.memberId}</td>
+										<c:if test="${loginedMemberId eq group.memberId}">
+											<td><button style="font-size:0.8em; background-color:#ffffff;  text-align:center;" onclick="checkRecord('${record.recordId}');"><img class="status" src="${pageContext.request.contextPath}/resources/images/ok.png" style="width:26px" /></button></td>
+										</c:if>
 									</tr>
-
-
-
+									</c:otherwise>
+									</c:choose>
 								</c:forEach>
-
-
 							</table>
 							<div class="text-right">
 								<a

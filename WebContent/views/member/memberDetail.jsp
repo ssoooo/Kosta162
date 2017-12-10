@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Verti by HTML5 UP</title>
+		<title>내 정보</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -178,11 +178,11 @@
 								<table id="message_list">
 									<c:forEach items="${sendMessages }" var="message" >
 									<tr class="ab">
-										<td style="width:20%;">kostaaaaaaaaaa</td>
-										<td style="width:20%;">가을 mt</td>
-										<td style="width:20%;">호정리 외 3인</td>
-										<td style="width:20%;"><a href="messageDetail">${message.title }</a></td>
-										<td style="width:20%;">2017-11-20</td>
+										<td style="width:20%;">${message.groupId }</td>
+										<td style="width:20%;">${message.eventId }</td>
+										<td style="width:20%;">${message.memberId }</td>
+										<td style="width:20%;"><a href="${pageContext.request.contextPath}/message/messageDetail.do?messageId=${message.messageId }">${message.title }</a></td>
+										<td style="width:20%;">${message.date }</td>
 									</tr>
 									</c:forEach>					
 								</table>

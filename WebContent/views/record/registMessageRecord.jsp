@@ -1,11 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
     pageEncoding="utf-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+    
 <!DOCTYPE HTML>
 
 <html>
 	<head>
-		<title>내역 등록</title>
+		<title>이벤트 내역 등록</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/main2.css" />
@@ -33,7 +34,7 @@
 						<!-- Logo -->
 							<div id="logo">
 								<h1><a href="${pageContext.request.contextPath}/memberGroup/main.do">알뜰총雜</a></h1>
-								<span>${group.groupName}</span>
+								<span>${group.groupName} > ${event.eventName }</span>
 							</div>
 
 						<!-- Nav -->
@@ -62,7 +63,6 @@
 								<li class="current"><a href="${pageContext.request.contextPath}/views/member/login.jsp">Logout</a></li>
 							  </ul>
 							</nav>
-							
 					</header>
 				</div>
 
@@ -78,7 +78,7 @@
 								<h2>이벤트</h2>
 								<ul class="style2">
 									<li><a
-										href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${group.groupId}"><h3>모임보기</h3></a></li>
+										href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${event.groupId}"><h3>모임보기</h3></a></li>
 									<c:choose>
 										<c:when test="${empty events}">
 											<a class="list-group-item hidden-xs">개설된 이벤트가 없습니다.</a>
@@ -86,14 +86,13 @@
 										<c:otherwise>
 											<c:forEach var="event" items="${events }">
 												<li>
-												<a href="${pageContext.request.contextPath}/event/event.do?eventId=${event.eventId }&groupId=${event.groupId}">
-													<h3>${event.eventName }
-														<a href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }">
-															<img class="event_info" src="../resources/assets/css/images/info.png" />
-														</a>
-													</h3>
-												</a>
-												</li>
+													<a href="${pageContext.request.contextPath}/event/event.do?eventId=${event.eventId }&groupId=${event.groupId}">
+														<h3>${event.eventName }
+															<a href="${pageContext.request.contextPath}/event/eventDetail.do?eventId=${event.eventId }">
+																<img class="event_info" src="../resources/assets/css/images/info.png" />
+															</a>
+														</h3>
+												</a></li>
 											</c:forEach>
 										</c:otherwise>
 									</c:choose>
@@ -101,7 +100,6 @@
 								<a href="${pageContext.request.contextPath}/event/registEvent.do?groupId=${group.groupId}"
 									class="button icon fa-info-circle">이벤트 추가</a>
 							</section>
-
 								</div>
 							</div>
 							<div class="8u 12u$(medium) important(medium)">
@@ -110,16 +108,17 @@
 										<div><h3>내역 등록</h3></div>
 										<div class="table-responsive">
 											<div class="well">
-												<form action="${pageContext.request.contextPath}/record/registGroupRecord.do"
+												<form action="${pageContext.request.contextPath}/record/registEventRecord.do"
 													  class="bs-example form-horizontal" method="POST" enctype="multipart/form-data">
 													<fieldset>
 														<div class="form-group">
 															<label class="col-lg-2 control-label">
-																<input type="hidden" id="group" name="groupId" value="${group.groupId}">
+															<input type="hidden" id="eventId" name="eventId" value="${message.eventId}">
+															<input type="hidden" id="groupId" name="groupId" value="${message.groupId}">
 																<h3>제목</h3>
 															</label>
 															<div class="col-lg-10">
-																<input type="text" name="title" class="form-control" required="required">
+																<input type="text" name="title" value="re)${message.title }" class="form-control" required="required">
 															</div>
 														</div>
 														<br/>
@@ -156,7 +155,7 @@
 																<h3>내용</h3>
 															</label>
 															<div class="col-lg-10">
-																<textarea class="form-control" name="content" rows="2" id="textArea"></textarea>
+																<textarea class="form-control" name="content" rows="2" id="textArea">${message.content }</textarea>
 															</div>
 														</div>
 														<br />
@@ -166,7 +165,7 @@
 																<h3>사진</h3>
 															</label>
 		
-																<input type="file" name="imgFile" onchange="readURL(this);" />
+																<input type="file" name="imgFile" onchange="readURL(this);"/>
 																<input type="hidden" id="image" name="image" value=""/>
 																
 																<div class="col-lg-10">
@@ -211,12 +210,12 @@
 
 		<!-- Scripts -->
 
-			<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.min.js"></script>
-			<script src="${pageContext.request.contextPath}/resources/assets/js/jquery.dropotron.min.js"></script>
-			<script src="${pageContext.request.contextPath}/resources/assets/js/skel.min.js"></script>
-			<script src="${pageContext.request.contextPath}/resources/assets/js/util.js"></script>
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.dropotron.min.js"></script>
+			<script src="assets/js/skel.min.js"></script>
+			<script src="assets/js/util.js"></script>
 			<!--[if lte IE 8]><script src="assets/js/ie/respond.min.js"></script><![endif]-->
-			<script src="${pageContext.request.contextPath}/resources/assets/js/main.js"></script>
+			<script src="assets/js/main.js"></script>
 
 	</body>
 </html>

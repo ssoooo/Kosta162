@@ -28,18 +28,19 @@ public class EventStoreLogic implements EventStore {
 	}
 
 	@Override
-	public void updateEvent(Event event) {
+	public int updateEvent(Event event) {
 		int check = 0;
 		SqlSession session = SessionFactory.getInstance().getSession();
 		try {
 			EventMapper mapper = session.getMapper(EventMapper.class);
 			mapper.updateEvent(event);
-			session.commit();
-
+			if (check > 0) {
+				session.commit();
+			}
 		} finally {
 			session.close();
 		}
-
+		return check;
 	}
 
 	@Override

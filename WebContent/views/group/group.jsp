@@ -9,6 +9,14 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<link rel="stylesheet" href="../resources/assets/css/main2.css" />
 		<script>
+		
+		function checkRecord(recordId) {
+	   		
+			location.href='${pageContext.request.contextPath}/record/checkRecord.do?recordId=' + recordId;
+			
+		}
+		
+		
 		function onclickFunction(messageId){
 			
 			
@@ -86,7 +94,8 @@
 								<section>
 									<h2>이벤트</h2>
 									<ul class="style2">
-										<li><a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${group.groupId }"><h3>모임 보기</h3></a></li>
+
+										<li><a href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${group.groupId }"><h2>${group.groupName }</h2></a></li>
 										<c:choose>
 										<c:when test="${empty events}">
 											<a class="list-group-item hidden-xs">개설된 이벤트가 없습니다.</a>
@@ -123,42 +132,41 @@
 											<th class="table_head"><span>금액</span></th>
 											<th class="table_head"><span>작성일</span></th>
 											<th class="table_head"><span>작성자</span></th>
-											<th class="table_head"><span>상태</span></th>
+											<c:if test="${loginedMemberId eq group.memberId}">
+												<th class="table_head"><span>상태</span></th>
+											</c:if>
 										</tr>
+										
 										<c:forEach var="record" items="${records}" varStatus="status">
 											<c:set var="count" value="${count + 1 }" />
-											<tr>
-											<td><c:out value="${count }" /></td>
-											<td><a href="${pageContext.request.contextPath}/record/showRecordDetail.do?recordId=${record.recordId}">${record.title}</a></td>
-											<td>${record.accounting}</td>
-											<td>${record.price}원</td>
-											<td>${record.date}</td>
-											<td>${record.memberId}</td>
-											<!-- <script type="text/javascript">
-											var btnval=${record.caution};
-											if(btnval.equals("정상")){
-												btnval="주의";
-											}else{
-												btnval="정상";
-											}
-											
-											document.write(btnval+"</button>");
-											</script> -->
-											
-											<td>
-											
-											<button onclick="location.href='${pageContext.request.contextPath}/record/checkRecord.do?recordId=${record.recordId}'"  class="current">
-											${record.caution}
-											</button>
-											
-											</td>
-											</tr>
-										
-										
-										
+											<c:choose>
+											<c:when test="${record.caution eq '주의'}">
+												<tr style="background-color:#FFC6C6;">
+												<td><c:out value="${count }" /></td>
+												<td><a href="${pageContext.request.contextPath}/record/showRecordDetail.do?recordId=${record.recordId}">${record.title}</a></td>
+												<td>${record.accounting}</td>
+												<td>${record.price}원</td>
+												<td>${record.date}</td>
+												<td>${record.memberId}</td>
+												<c:if test="${loginedMemberId eq group.memberId}">
+													<td><button style="font-size:0.8em; background-color:#FFC6C6;  text-align:center;" onclick="checkRecord('${record.recordId}');"><img class="status" src="${pageContext.request.contextPath}/resources/images/warn.png" style="width:26px" /></button></td>
+												</c:if>
+												</tr>
+											</c:when>
+											<c:otherwise>
+												<tr>
+													<td><c:out value="${count }" /></td>
+													<td><a href="${pageContext.request.contextPath}/record/showRecordDetail.do?recordId=${record.recordId}">${record.title}</a></td>
+													<td>${record.accounting}</td>
+													<td>${record.price}원</td>
+													<td>${record.date}</td>
+													<td>${record.memberId}</td>
+													<c:if test="${loginedMemberId eq group.memberId}">
+														<td><button style="font-size:0.8em; background-color:#ffffff;  text-align:center;" onclick="checkRecord('${record.recordId}');"><img class="status" src="${pageContext.request.contextPath}/resources/images/ok.png" style="width:26px" /></button></td>
+													</c:if>
+											</c:otherwise>
+											</c:choose>
 										</c:forEach>
-										
-										
 									</table>
 								<div class="text-right">
 								<input type="hidden" id="groupId" name="groupId" value="${group.groupId}">

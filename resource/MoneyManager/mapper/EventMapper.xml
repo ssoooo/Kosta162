@@ -16,7 +16,7 @@
 
 	<update id="updateEvent" parameterType="Event">
 		UPDATE event_table SET
-		eventName=#{eventName}, budget=#{budget}, groupSupport=#{groupSupport}
+		eventName=#{eventName,jdbcType=VARCHAR}, budget=#{budget,jdbcType=INTEGER}, groupSupport=#{groupSupport,jdbcType=INTEGER}
 		WHERE eventId=#{eventId}
 	</update>
 
@@ -44,7 +44,7 @@
 	<delete id="deleteMemberFromEvent" parameterType="map">
 		DELETE FROM
 		eventMember_table
-		WHERE memberId=#{memberId} AND eventId=#{eventId}
+		WHERE eventId=#{eventId} AND memberId=#{memberId}
 	</delete>
 
 	<insert id="registMemberToEvent" parameterType="map">
