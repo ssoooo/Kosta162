@@ -10,7 +10,7 @@
 <title>Event</title>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<link rel="stylesheet" href="../resources/assets/css/main2.css" />
+<link rel="stylesheet" href="${pageContext.request.contextPath}/resources/assets/css/main2.css" />
 </head>
 <body class="left-sidebar">
 	<div id="page-wrapper">
@@ -65,7 +65,7 @@
 								<h2>게시판</h2>
 								<ul class="style2">
 									<li><a
-										href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${event.groupId}"><h3>전체 보기</h3></a></li>
+										href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${event.groupId}"><h3>모임 보기</h3></a></li>
 									<c:choose>
 										<c:when test="${empty events}">
 											<a class="list-group-item hidden-xs">개설된 이벤트가 없습니다.</a>

@@ -61,7 +61,7 @@
 
 						<!-- Logo -->
 						<div id="logo">
-							<h1><a href="main.html">알뜰총雜</a></h1>
+							<h1><a href="${pageContext.request.contextPath}/memberGroup/main.do">알뜰총雜</a></h1>
 							<c:choose>
 								<c:when test="${event.eventName eq null}">
 									<span>${group.groupName}</span>
@@ -75,7 +75,7 @@
 						<!-- Nav -->
 						<nav id="nav">
 						  <ul>
-							<li><a href="main.html">Home</a></li>
+							<li><a href="${pageContext.request.contextPath}/memberGroup/main.do">Home</a></li>
 							<li>
 								<a href="main.html">Message</a>
 								<ul class="ul_accept">
@@ -113,7 +113,7 @@
 								<h2>게시판</h2>
 								<ul class="style2">
 									<li><a
-										href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${event.groupId}"><h3>모임보기</h3></a></li>
+										href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${group.groupId}"><h3>모임보기</h3></a></li>
 									<c:choose>
 										<c:when test="${empty events}">
 											<a class="list-group-item hidden-xs">개설된 이벤트가 없습니다.</a>

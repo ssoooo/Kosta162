@@ -21,7 +21,14 @@
 						<!-- Logo -->
 						<div id="logo">
 							<h1><a href="${pageContext.request.contextPath}/memberGroup/main.do">알뜰총雜</a></h1>
-							<span>알뜰한 총무의 잡다한 가계부</span>
+							<c:choose>
+								<c:when test="${event.eventName eq null}">
+									<span>${group.groupName}</span>
+								</c:when>
+								<c:otherwise>
+									<span>${group.groupName} > ${event.eventName }</span>
+								</c:otherwise>
+							</c:choose>
 						</div>
 
 						<!-- Nav -->
@@ -66,7 +73,7 @@
 								<h2>게시판</h2>
 								<ul class="style2">
 									<li><a
-										href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${event.groupId}"><h3>모임보기</h3></a></li>
+										href="${pageContext.request.contextPath}/memberGroup/group.do?groupId=${group.groupId}"><h3>모임보기</h3></a></li>
 									<c:choose>
 										<c:when test="${empty events}">
 											<a class="list-group-item hidden-xs">개설된 이벤트가 없습니다.</a>
@@ -142,6 +149,7 @@
                 			
                      </td>
                    </tr>
+                   
                    <script>
                    function modifyComment${status.count}() {
 						var a ='';

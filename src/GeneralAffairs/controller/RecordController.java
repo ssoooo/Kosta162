@@ -389,7 +389,7 @@ public class RecordController {
 		model.addAttribute("record",record);
 		model.addAttribute("comments",comments);
 		model.addAttribute("events",events);
-		return "record/recordDetail1";
+		return "record/recordDetail";
 	}
 	
 	@RequestMapping("/eventStatsByPeriod.do")
