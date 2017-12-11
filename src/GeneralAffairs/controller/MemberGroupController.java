@@ -658,8 +658,8 @@ public class MemberGroupController {
 		
 		Group group = mgService.findGroupById(groupId);	
 		List<Event> events = eventService.findAllEventsByGroupId(groupId);
-//		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
-		List<Message> messages = messageService.findAllSendMessages(myId);
+		List<Message> messages = messageService.findAllMyMessages(myId, groupId);
+//		List<Message> messages = messageService.findAllSendMessages(myId);
 		List<Record> records = recordService.findAllRecordsByGroupId(groupId);
 
 		

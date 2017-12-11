@@ -143,8 +143,8 @@
 
 													<br />
 													<div class="col-lg-10">
-														<input type="hidden" class="form-control" name="get"
-															rows="2" id="get"> <input type="hidden"
+														<input type="text" class="form-control" name="get"
+															rows="2" id="get"> <input type="text"
 															class="form-control" name="get2" rows="2" id="get2">
 													</div>
 
